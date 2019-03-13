@@ -1,0 +1,129 @@
+#!/usr/bin/perl
+
+sub usage {
+
+print <<EOM;
+
+Usage: fa_fsa2dot [OPTIONS] < fsm.txt > info.txt
+
+This program converts textual representation of FSA into dotty format. Works
+with Rabin-Scott, Moore and Moore Multi NFA/DFA.
+
+  --fsm-type=<type> - specifies input automaton type
+    the following types are available:
+      rs-nfa     - Rabin-Scott NFA
+      rs-dfa     - Rabin-Scott DFA
+      moore-dfa  - Moore DFA
+      moore-mdfa - Moore DFA with multiple outputs (the default value)
+      mealy-nfa  - Mealy NFA
+      mealy-dfa  - Mealy DFA
+EOM
+
+}
+
+$fsm_type = "moore-mdfa";
+
+while (0 < 1 + $#ARGV) {
+
+    if("--help" eq $ARGV [0]) {
+
+        usage ();
+        exit (0);
+
+    } elsif ($ARGV [0] =~ /^--fsm-type=(.+)/) {
+
+        $fsm_type = $1;
+    }
+
+    shift @ARGV;
+}
+
+# print header
+print "digraph fsm {\n\tnode [shape = circle];\n";
+
+# print transitions and collect states
+while(<STDIN>) {
+
+    s/[\r\n]+//g;
+
+    if ("" eq $_) {
+
+        last;
+
+    } elsif (/^initial: (.+)$/) {
+
+        $initials{$1} = 1;
+        $states{$1} = 1;
+        next;
+
+    } elsif (/^final: (.+)$/) {
+
+        $finals{$1} = 1;
+        $states{$1} = 1;
+        next;
+
+    } elsif (/^([0-9-]+) ([0-9-]+) ([0-9-]+)$/) {
+
+        $from = $1;
+        $states{$from} = 1;
+
+        $to = $2;
+        $states{$to} = 1;
+
+        $iw = $3;
+
+        print "$from -> $to  [label=\"$iw\"];\n";
+        next;
+
+    } elsif (/^([0-9-]+) ([0-9-]+) ([0-9-]+) ([0-9-]+)$/) {
+
+        $from = $1;
+        $states{$from} = 1;
+
+        $to = $2;
+        $states{$to} = 1;
+
+        $iw = $3;
+        $ow = $4;
+
+        print "$from -> $to  [label=\"$iw : $ow\"];\n";
+        next;
+
+    }
+}
+
+# print states
+while (($state, ) = each %states) {
+
+    print "$state [label=\"$state\"";
+
+    if (defined $initials{$state}) {
+        print ", style = filled, color = green";
+    }
+
+    if (defined $finals{$state}) {
+        print ", shape = doublecircle";
+    }
+
+    print "];\n";
+}
+
+# print the state2ow or state2ows map
+if($fsm_type eq "moore-mdfa" || $fsm_type eq "moore-dfa") {
+
+    while(<STDIN>) {
+
+        s/[\r\n]+//g;
+
+        if (/^(.+) -> [0-9]*(.+)$/) {
+
+            print "$1 [label = \"$1\"];\n" ;
+            print "R$1 [label = \"\[ $2 \]\", shape = plaintext];\n" ;
+            print "$1 -> R$1 [style=dashed];\n" ;
+        }
+    }
+    print "\n";
+}
+
+# print footer
+print "}\n";

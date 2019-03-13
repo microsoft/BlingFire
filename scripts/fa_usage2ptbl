@@ -1,0 +1,83 @@
+#!/usr/bin/perl
+
+
+sub usage {
+
+print <<EOM;
+
+Usage: fa_usage2ptbl [OPTIONS] < usage.txt > ptbl.txt
+
+Takes a program usage (in BlingFire format) and returns a tab separated parameter
+table. The columns are parameter name (e.g. --in=<file>), description and
+tool name.
+
+EOM
+
+}
+
+
+while (0 < 1 + $#ARGV) {
+
+    if("--help" eq $ARGV [0]) {
+
+        usage ();
+        exit (0);
+
+    } elsif ($ARGV [0] =~ /^-.*/) {
+
+        print STDERR "ERROR: Unknown parameter $$ARGV[0], see fa_usage2ptbl --help";
+        exit (1);
+
+    } else {
+
+        last;
+    }
+    shift @ARGV;
+}
+
+
+#
+# process the WTBT file
+#
+
+$tool = "";
+$parameter = "";
+$description = "";
+
+while(<>) { 
+
+    s/[\r\n]+$//;
+
+    if (/^[ ]*[Uu]sage: ([^ ]+)/) {
+
+      $tool = $1;
+      $parameter = "";
+      $description = "";
+
+    } elsif (/^[ ][ ]([-][-][^ ]+)[ ]+([-][ ]+)?(.+)$/) {
+
+      if("" ne $tool && "" ne $parameter && "" ne $description) {
+        print $tool . "\t" . $parameter . "\t" . $description . "\n" ;
+      }
+
+      $parameter = $1;
+      $description = $3;
+
+    } elsif (/^[ ][ ][ ]+([^ ].+)$/ && "" ne $parameter) {
+
+      $description .= (" " . $1);
+
+    } elsif (/^[ ]*$/) {
+
+      if("" ne $tool && "" ne $parameter && "" ne $description) {
+        print $tool . "\t" . $parameter . "\t" . $description . "\n" ;
+      }
+
+      $parameter = "";
+      $description = "";
+    }
+}
+
+if("" ne $tool && "" ne $parameter && "" ne $description) {
+  print $tool . "\t" . $parameter . "\t" . $description . "\n" ;
+}

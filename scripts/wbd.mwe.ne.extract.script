@@ -1,0 +1,45 @@
+REFERENCE @"MsfsaScopeExt.dll";
+RESOURCE "blingfirecosmosdll.dll";
+RESOURCE "tagset.txt";
+RESOURCE "naivewbd.bin";
+RESOURCE "english_addr.bin";
+
+
+SELECT DocumentURL, documentraw AS InputText, ErrorCode
+FROM "D:\\scope\\Scratch\\chunks1"
+/// FROM "/public/web/snapshot/2008_02_07.HF.HI.content.chunks"
+USING ContentChunkParserScope
+WHERE ErrorCode == "0" AND (documentraw).Length < 1000000;
+
+/// wordbreakfile / fa_lex
+PROCESS PRODUCE OutputText, FaLexErrorCode
+USING FaLexProc("--ldb=naivewbd.bin");
+
+SELECT OutputText AS InputText
+WHERE FaLexErrorCode == "0";
+
+/// fa_ts2ts_mwe
+PROCESS PRODUCE OutputText, MweErrorCode
+USING MweProc("--ldb=english_addr.bin");
+
+SELECT OutputText AS InputText
+WHERE MweErrorCode == "0";
+
+/// fa_ts2ps --alg=wre-lex ...
+PROCESS PRODUCE OutputText, WreLexErrorCode
+USING WreLexProc("--ldb=english_addr.bin" "--tagset=tagset.txt");
+
+SELECT OutputText AS InputText
+WHERE WreLexErrorCode == "0";
+
+/// fa_extract
+PROCESS PRODUCE OutputText
+USING FaExtractProc ("--name=ADDRESS");
+
+/// get statistics
+SELECT COUNT(*) AS N, OutputText AS Address;
+
+OUTPUT
+/// TO "/my/scratch/address.stats";
+TO "D:\\scope\\Scratch\\address";
+

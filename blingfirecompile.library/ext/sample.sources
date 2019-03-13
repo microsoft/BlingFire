@@ -1,0 +1,171 @@
+#
+# Builds msfsa.lib using the NT Build Environment
+#
+# Sergei Olonichev, sergeio@microsoft.com, 06/15/2004
+#
+
+NOUNICODE=1
+
+!include $(SRCROOT)\nlg\src\inc\sources.all
+
+PERL = perl.exe
+YACC = $(SRCROOT)\nlg\extern\bin\x86\yacc.exe
+
+NTTARGETFILE0=\
+    $(O)\FARegexpParser_msyacc.cpp
+
+TARGETNAME=msfsa
+TARGETTYPE=LIBRARY
+TARGETLIBS=
+
+USE_CRTDLL=1
+USE_STL=1
+
+INCLUDES=\
+    $(INCLUDES);\
+    $(NLP_SRCROOT)\lib\msfsa
+
+SOURCES=\
+    $(O)\FARegexpParser_msyacc.cpp \
+    FAAllocator.cpp \
+    FAAutIOTools.cpp \
+    FABitArray.cpp \
+    FABitTree.cpp \
+    FABrResult.cpp \
+    FACalcIwEqClasses.cpp \
+    FAChain2Num_hash.cpp \
+    FAChain2Num_judy.cpp \
+    FAChains2MinDfa_sort.cpp \
+    FAChains2MinDfa_sort_hash.cpp \
+    FAChainsPack_triv.cpp \
+    FAChains_pack_triv.cpp \
+    FADebugStreamKeeper.cpp \
+    FADfaPack_triv.cpp \
+    FADict2Classifier.cpp \
+    FAEncoder_delta_pref.cpp \
+    FAEncoder_delta_pref_mask.cpp \
+    FAEncoder_mask.cpp \
+    FAEncoder_pm_dpm.cpp \
+    FAEncoder_pref.cpp \
+    FAEncoder_pref_mask.cpp \
+    FAEpsilonGraph.cpp \
+    FAEpsilonRemoval.cpp \
+    FAFsmRenum.cpp \
+    FAIOTools.cpp \
+    FAImageDump.cpp \
+    FAIwMapPack.cpp \
+    FAIwMap_pack.cpp \
+    FAMapIOTools.cpp \
+    FAMap_judy.cpp \
+    FAMap_std.cpp \
+    FAMultiMapPack.cpp \
+    FAMultiMap_ar.cpp \
+    FAMultiMap_ar_uniq.cpp \
+    FAMultiMap_judy.cpp \
+    FAMultiMap_pack.cpp \
+    FANfaCreator_base.cpp \
+    FANfaCreator_char.cpp \
+    FANfaCreator_digit.cpp \
+    FANfaCreator_wre.cpp \
+    FANfas2CommonENfa.cpp \
+    FAOffsetTablePack.cpp \
+    FAOffsetTable_pack.cpp \
+    FAParsedRegexp2TrBrMaps.cpp \
+    FAPosNfaPack_triv.cpp \
+    FAPosNfa_pack_triv.cpp \
+    FAPrintUtils.cpp \
+    FARSDfaRenum_depth_first.cpp \
+    FARSDfaRenum_remove_gaps.cpp \
+    FARSDfa_ar_judy.cpp \
+    FARSDfa_pack_triv.cpp \
+    FARSDfa_renum.cpp \
+    FARSDfa_short.cpp \
+    FARSDfa_short_def.cpp \
+    FARSDfa_stdout.cpp \
+    FARSNfa_ar_judy.cpp \
+    FARSNfa_fast.cpp \
+    FARSNfa_short.cpp \
+    FARSNfa_stdout.cpp \
+    FARegexpLexer_char.cpp \
+    FARegexpLexer_triv.cpp \
+    FARegexpLexer_utf8.cpp \
+    FARegexpLexer_wre.cpp \
+    FARegexpTree.cpp \
+    FARegexpTree2Funcs.cpp \
+    FARegexpTree2Hash.cpp \
+    FARegexpTree2PosEqs.cpp \
+    FARegexpTree2Str.cpp \
+    FARegexpTreeSimplify_disj.cpp \
+    FARegexpTreeSort.cpp \
+    FARegexpTreeTopoGraph.cpp \
+    FARemoveUnreachable.cpp \
+    FASetUtils.cpp \
+    FAState2Ow.cpp \
+    FAState2Ow_pack_triv.cpp \
+    FAState2Ows.cpp \
+    FAState2Ows_amb.cpp \
+    FAState2Ows_ar_uniq.cpp \
+    FAState2Ows_pack_triv.cpp \
+    FAState2TrBr_pack_triv.cpp \
+    FAStr2Int_hash.cpp \
+    FAStr2Utf16.cpp \
+    FAStringTokenizer.cpp \
+    FASubstRules2Regexp.cpp \
+    FASuffixRules2Chains.cpp \
+    FATagSet.cpp \
+    FATestCmpDfa.cpp \
+    FATestCmpPosNfa.cpp \
+    FAToken.cpp \
+    FATypeMinDfa2MinMooreDfa.cpp \
+    FATypesNfaList2TypeNfa.cpp \
+    FAUtf8Utils.cpp \
+    FAUtils.cpp \
+    FAWREToken.cpp \
+    FAWRETokenParser.cpp \
+    FAWRETokens2Dicts.cpp \
+    FAConfParser.cpp \
+    FADictStr2SuffixRule.cpp \
+    FALDB.cpp \
+    FAMergeDumps.cpp \
+    FADfaTopoGraph.cpp \
+    FAMealyDfa_pack_triv.cpp \
+    FAMultiMapPack_mph.cpp \
+    FAMultiMap_pack_mph.cpp \
+    FAOw2Iw_pack_triv.cpp \
+    FARSDfa2PerfHash.cpp \
+    FASortMultiMap.cpp \
+    FATestCmpMultiMap.cpp \
+    FATestMorph.cpp \
+    FATestMorph_b2w.cpp \
+    FATestMorph_w2b.cpp \
+    FAUtf32ToLower.cpp \
+    FAUtf32ToUpper.cpp \
+    FAUtf32Utils.cpp \
+    FARSDfa2MooreDfa.cpp \
+    FATestMorph_w2s.cpp \
+    FAWord2WordSuff.cpp \
+    FAException.cpp \
+    FAMsg.cpp \
+    FATestMorph_w2t.cpp \
+    FAIsDotNfa.cpp \
+    FANfas2TupleNfa.cpp \
+    FAParser2WRE.cpp \
+    FACorpusIOTools_utf8.cpp \
+    FAParseTree.cpp \
+    FATaggedText.cpp \
+    FACalcMealy1.cpp \
+    FACalcMealy2.cpp \
+    FAMealyDfa.cpp \
+    FAMealyNfa.cpp \
+    FAMealyNfa2Dfa.cpp \
+    FANfa2EqPairs.cpp \
+    FATrBr2Symbol.cpp \
+    FATrBrNfa2MealyNfa.cpp \
+    FAEpsilonGraph_mealy.cpp \
+    FASplitStates.cpp \
+    FASplitSets.cpp \
+    FAUnAmbiguous.cpp \
+    FAMergeSets.cpp \
+    FAGcLDB.cpp \
+    FACmpTrBrOws_greedy.cpp \
+    FAResolveMatch_nest.cpp \

@@ -1,0 +1,285 @@
+@perl -Sx %0 %*
+@goto :eof
+#!perl
+
+use File::Temp qw/ :mktemp  /;
+
+
+sub usage {
+
+print <<EOM;
+
+Usage: fa_build_lex [OPTIONS]
+
+This program builds lexical analyzer rules.
+
+  --in=<input-rules> - specifies the file name of input rules,
+    stdin is used if omited
+
+  --out=<output-file> - output file name for compiled rules,
+    lex.out is used by default - this is a concatenation of
+    outfsa, outfsaiwmap, and outmap.
+    
+  --out-fsa=<output-file> - output file name for fsa
+
+  --out-fsa-iwmap=<output-file> - output file name for fsa input
+    weight map
+
+  --out-map=<output-file> - output file name for action map
+
+  --tagset=<input-file> - reads input tagset from the <input-file>,
+    is not used by default
+
+  --input-enc=<enc> - input encoding, "UTF-8" - is used by default
+
+  --build-dump - builds a single memory-dump output file
+
+  --dict-root=<path> - specifies dictionary path, if not specified the
+    dictionary path is taken from the \$DICTS_ROOT environment variable
+
+  --rev - compiles in right-to-left direction
+
+  --fsm-type=<type> - specifies automaton type, the default value is moore-dfa
+    moore-dfa - Moore DFA is used, only one lexicographically smallest rule
+      is associated with each final state
+    moore-mdfa - Moore Multi DFA is used, all requred by the grammar rules
+      are associated with the final state
+
+  --act-format=<format> - specifies the action format, see fa_pr2wre --help
+    for mode details, by default the default format is used
+
+  --out-actions-data=<output-file> - writes serialized multi map with,
+    action data, can be only used with --act-format=tag-num-array
+
+  --no-min - skips minimization stage
+
+  --full-unicode - supports all the characters from 0 to 10FFFF, otherwise
+    just works for the BMP characters only
+EOM
+
+}
+
+
+#
+# *** Process command line parameters ***
+#
+
+$in = "" ;
+$out = "" ;
+$out_fsa = "" ;
+$out_fsa_iwmap = "" ;
+$out_map = "" ;
+$input_enc = "--input-enc=UTF-8" ;
+$tagset = "" ;
+$build_dump = "" ;
+$rev = "" ;
+$fsm_type = "moore-dfa";
+$act_format = "";
+$out_act_data_map = "";
+$no_min = "";
+$full_unicode = "";
+
+while (0 < 1 + $#ARGV) {
+
+    if("--help" eq $ARGV [0]) {
+
+        usage ();
+        exit (0);
+
+    } elsif ($ARGV [0] =~ /^--input-enc=./) {
+
+        $input_enc = $ARGV [0];
+
+    } elsif ($ARGV [0] =~ /^--tagset=(.+)/) {
+
+        $tagset = $ARGV [0];
+
+    } elsif ($ARGV [0] =~ /^--in=(.+)/) {
+
+        $in = $1;
+
+    } elsif ($ARGV [0] =~ /^--out=(.+)/) {
+
+        $out = $1;
+
+    } elsif ($ARGV [0] =~ /^--out-fsa=(.+)/) {
+
+        $out_fsa = $1;
+
+    } elsif ($ARGV [0] =~ /^--out-fsa-iwmap=(.+)/) {
+
+        $out_fsa_iwmap = $1;
+
+    } elsif ($ARGV [0] =~ /^--out-map=(.+)/) {
+
+        $out_map = $1;
+
+    } elsif ($ARGV [0] =~ /^--fsm-type=(.+)/) {
+
+        $fsm_type = $1;
+
+    } elsif ($ARGV [0] =~ /^--act-format=./) {
+
+        $act_format = $ARGV [0];
+
+    } elsif ($ARGV [0] =~ /^--out-actions-data=./) {
+
+        $out_act_data_map = $ARGV [0];
+
+    } elsif ("--rev" eq $ARGV [0]) {
+
+        $rev = $ARGV [0] ;
+
+    } elsif ("--build-dump" eq $ARGV [0]) {
+
+        $build_dump = $ARGV [0];
+
+    } elsif ($ARGV [0] =~ /^--dict-root=(.+)/) {
+
+        $ENV{'DICTS_ROOT'} = $1;
+
+    } elsif ("--no-min" eq $ARGV [0]) {
+
+        $no_min = $ARGV [0];
+
+    } elsif ($ARGV [0] =~ /^--full-unicode/) {
+
+        $full_unicode = $ARGV [0];
+
+    } elsif ($ARGV [0] =~ /^-.*/) {
+
+        print STDERR "ERROR: Unknown parameter $$ARGV[0], see fa_build_lex --help";
+        exit (1);
+
+    } else {
+
+        last;
+    }
+    shift @ARGV;
+}
+
+
+$SIG{PIPE} = sub { die "ERROR: Broken pipe at fa_build_lex" };
+
+
+
+$iw_max = "65535" ;
+$ow_base = "65536" ;
+$ow_max = "100000" ;
+# full unicode range support, slows down the compilation
+if("" ne $full_unicode) {
+    # U10FFFFh
+    $iw_max = "1114111" ;
+    # U10FFFFh + 1
+    $ow_base = "1114112" ;
+    # U10FFFFh + 1 + 1072627711
+    $ow_max = "1073741823" ;
+}
+
+
+#
+#  *** Create temporary files ***
+#
+
+($fh, $tmp1) = mkstemp ("fa_build_lex_XXXXX");
+close $fh;
+($fh, $tmp2) = mkstemp ("fa_build_lex_XXXXX");
+close $fh;
+($fh, $tmp3) = mkstemp ("fa_build_lex_XXXXX");
+close $fh;
+($fh, $tmp4) = mkstemp ("fa_build_lex_XXXXX");
+close $fh;
+($fh, $tmp5) = mkstemp ("fa_build_lex_XXXXX");
+close $fh;
+
+
+#
+# 1. Preprocessing
+#
+
+$command = "".
+  "fa_preproc --act-out=$tmp1 < $in > $tmp2" ;
+
+`$command` ;
+
+
+#
+# 2. Compilation
+#
+
+$command = "".
+  "fa_pr2wre $input_enc $tagset --in=$tmp2 --in-actions=$tmp1 --label=char $act_format --out-actions=$tmp5 $out_act_data_map | ".
+  "fa_re2re_simplify $input_enc --label=char | ".
+  "fa_re2nfa $input_enc $rev --label=char --keep-pos | ".
+  "fa_nfalist2nfa --epsilon=3 --nfa-num-base=$ow_base | ".
+  "fa_fsm2fsm_iwec --fsm-type=rs-nfa --iw-base=3 --iw-max=$iw_max --new-iw-base=3 --out-map=$tmp3 | ".
+  "fa_nfa2dfa --spec-any=0 | ".
+  "fa_fsm_renum --fsm-type=rs-dfa | ";
+
+# skip minimization stage, if needed
+if ("" eq $no_min) {
+  $command .=  "fa_dfa2mindfa | ";
+}
+
+$command .= "".
+  "fa_fsm_renum --fsm-type=rs-dfa --alg=remove-gaps | ".
+  "fa_fsm2fsm --out=$tmp4 --in-type=rs-dfa --out-type=$fsm_type --ow-base=$ow_base --ow-max=$ow_max" ;
+
+`$command` ;
+
+
+#
+# 3. Build a single file output.
+#
+
+if ("--build-dump" eq $build_dump) {
+
+  `fa_fsm2fsm_pack --in=$tmp4 --out=$tmp1 --type=$fsm_type --use-iwia --auto-test` ;
+  `fa_fsm2fsm_pack --in=$tmp4 --iw-map=$tmp3 --out=$tmp1 --type=$fsm_type --remap-iws --use-iwia` ;
+  `fa_fsm2fsm_pack --in=$tmp5 --out=$tmp2 --type=mmap --auto-test` ;
+  `fa_merge_dumps --out=$out $tmp1 $tmp2` ;
+
+} else {
+
+  if ("" ne $out) {
+  
+    `cat $tmp3 $tmp4 $tmp5 > $out`
+  
+  } else {
+
+    if ("" ne $out_fsa) {
+      rename $tmp4, $out_fsa ;
+    }
+
+    if ("" ne $out_fsa_iwmap) {
+      rename $tmp3, $out_fsa_iwmap ;
+    }
+
+    if ("" ne $out_map) {
+      rename $tmp5, $out_map ;
+    }
+  }
+}
+
+
+#
+#  Remove temporary files
+#
+
+END {
+    if (-e $tmp1) {
+        unlink ($tmp1);
+    }
+    if (-e $tmp2) {
+        unlink ($tmp2);
+    }
+    if (-e $tmp3) {
+        unlink ($tmp3);
+    }
+    if (-e $tmp4) {
+        unlink ($tmp4);
+    }
+    if (-e $tmp5) {
+        unlink ($tmp5);
+    }
+}

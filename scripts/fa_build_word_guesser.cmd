@@ -1,0 +1,399 @@
+@perl -Sx %0 %*
+@goto :eof
+#!perl
+
+use File::Temp qw/ :mktemp  /;
+
+sub usage {
+
+print <<EOM;
+
+Usage: fa_build_word_guesser [OPTIONS] [< dict.txt] [> output.txt]
+
+This program reads plain text file of Word\\tTag pairs and builds classifying
+automaton. The automaton is constructed in the way that it won't do mistakes 
+with respect to the dictionary (if no trimming was made).
+
+
+  --in=<dict> - specifies the file name of input dictionary,
+    stdin is used by default
+
+  --tagset=<input-file> - reads input tagset from the <input-file>,
+    tagset.txt is used by default
+
+  --out=<fsa> - specifies the file name of the output automaton,
+    classifier.fsa.txt is used by default
+
+  --dir=<direction> - specifies classification direction:
+    l2r - left to right (the dafault value)
+    r2l - right to left
+    aff - affix first, e.g. last, first, last - 1, first + 1, ...
+
+  --input-enc=<enc> - input encoding, "UTF-8" - is used by default
+
+  --full-unicode - supports all the characters from 0 to 10FFFF, otherwise
+    just works for the BMP characters only
+
+  --line-step=N - the amount of entries processed at once,
+    by default processes the whole input
+
+Transformation:
+
+  --in-tr=<trs> - specifies input transformation type
+    <trs> is comma-separated array of the following:
+      hyph-redup - hyphenated reduplication
+      hyph-redup-rev - reverse hyphenated reduplication
+      pref - prefix transformation: represents special prefixes as suffixes
+      pref-rev - reversed prefix transformation
+      ucf - encodes upper-case-first symbol in a suffix
+      ucf-rev - reversed UCF transformation
+
+  --redup-delim=N - reduplication delimiter.
+
+  --pref-delim=N - prefix transformation delimiter
+
+  --pref-fsm=<fsm> - keeps dictionary of prefixes to be treated as suffix,
+    used only with --in-tr=pref or --out-tr=pref
+
+  --ignore-case - converts input symbols to the lower case,
+    uses simple case folding algorithm due to Unicode 4.1.0
+
+  --charmap=<mmap-dump> - applies a custom character normalization procedure
+    according to the <mmap-dump>, the dump should be in "fixed" format
+
+Generalization:
+
+  --trim=N - words will be trimmed to have up to N letters,
+    no trimming is made by default
+
+  --dict-mode - does not shrink the paths, and does not modify State -> Ows map
+
+  --keep-state2ows - won't make any extension of State -> Ows map,
+    --min-depth=N parameter will be ignored
+
+  --min-depth=N - sets up minimum prefix length starting from which
+    each state in automaton will have a reaction, 3 is used by default
+
+  --ows-merge=<type> - specifies how Ows are merged, if extending state2ows
+    or - union of Ows, is used by default
+    and - intersection of Ows
+
+  --ows-bound=N - sets up % of Ows to be used for State2Ow extension, from
+    more to less frequent; all are taken by default
+
+  --no-key-delim - do not add delimiter 0 before keys, must be
+    combined with --dict-mode
+
+Input format:
+  ...
+  Word1\\tTag1\\n
+  Word2\\tTag2\\n
+  Word3\\tTag3\\n
+  ...
+EOM
+
+}
+
+#
+# Iw classification
+#
+
+$ow_base = "100000" ;
+$ow_max = "200000" ;
+$num_size = "" ;
+
+
+#
+# *** Process command line parameters ***
+#
+
+$in_dict = "" ;
+$tagset = "tagset.txt" ;
+$out_fsa = "classifier.fsa.txt" ;
+$dir = "--dir=l2r" ;
+$input_enc = "--input-enc=UTF-8" ;
+$trim = "" ;
+$min_depth = "--min-depth=3" ;
+$keep_state2ows = "" ;
+$ows_merge = "";
+$ows_bound = "";
+$in_tr = "" ;
+$key_delim = "--key-delim" ;
+$pref_delim = "" ;
+$redup_delim = "" ;
+$ucf_delim = "" ;
+$pref_fsm = "" ;
+$ignore_case = "" ;
+$dict_mode = "";
+$MAX_LINES_AT_ONCE = 0 ;
+$full_unicode = "";
+
+while (0 < 1 + $#ARGV) {
+
+    if("--help" eq $ARGV [0]) {
+
+        usage ();
+        exit (0);
+
+    } elsif ($ARGV [0] =~ /^--input-enc=./) {
+
+        $input_enc = $ARGV [0];
+
+    } elsif ($ARGV [0] =~ /^--full-unicode/) {
+
+        $full_unicode = $ARGV [0];
+
+    } elsif ($ARGV [0] =~ /^--min-depth=./) {
+
+        $min_depth = $ARGV [0];
+
+    } elsif ($ARGV [0] =~ /^--ows-merge=./) {
+
+        $ows_merge = $ARGV [0];
+
+    } elsif ($ARGV [0] =~ /^--ows-bound=./) {
+
+        $ows_bound = $ARGV [0];
+
+    } elsif ($ARGV [0] =~ /^--keep-state2ows/) {
+
+        $keep_state2ows = $ARGV [0];
+
+    } elsif ($ARGV [0] =~ /^--dict-mode/) {
+
+        $dict_mode = $ARGV [0];
+
+    } elsif ($ARGV [0] =~ /^--in=(.+)/) {
+
+        $in_dict = $1;
+
+    } elsif ($ARGV [0] =~ /^--tagset=./) {
+
+        $tagset = $ARGV [0];
+
+    } elsif ($ARGV [0] =~ /^--out=(.+)/) {
+
+        $out_fsa = $1;
+
+    } elsif ($ARGV [0] =~ /^--dir=./) {
+
+        $dir = $ARGV [0];
+
+    } elsif ($ARGV [0] =~ /^--trim=./) {
+
+        $trim = $ARGV [0];
+
+    } elsif ($ARGV [0] =~ /^--in-tr=(.+)/) {
+
+        $in_tr = $1;
+
+    } elsif ("--no-key-delim" eq $ARGV [0]) {
+
+        $key_delim = "";
+
+    } elsif ($ARGV [0] =~ /^--redup-delim=(.+)/) {
+
+        $redup_delim = $1;
+
+    } elsif ($ARGV [0] =~ /^--ucf-delim=(.+)/) {
+
+        $ucf_delim = $1;
+
+    } elsif ($ARGV [0] =~ /^--pref-delim=(.+)/) {
+
+        $pref_delim = $1;
+
+    } elsif ($ARGV [0] =~ /^--pref-fsm=(.+)/) {
+
+        $pref_fsm = $1;
+
+    } elsif ("--ignore-case" eq $ARGV [0]) {
+
+        $ignore_case .= (" " . $ARGV [0]);
+
+    } elsif ($ARGV [0] =~ /^--charmap=./) {
+
+        $ignore_case .= (" " . $ARGV [0]);
+
+    } elsif ($ARGV [0] =~ /^--line-step=(.+)/) {
+
+        $MAX_LINES_AT_ONCE = 0 + $1;
+
+    } elsif ($ARGV [0] =~ /^-.*/) {
+
+        print STDERR "ERROR: Unknown parameter $$ARGV[0], see fa_build_word_guesser --help";
+        exit (1);
+
+    } else {
+
+        last;
+    }
+    shift @ARGV;
+}
+
+if ("" eq $dict_mode && "" eq $key_delim) {
+    print STDERR "ERROR: --no-key-delim is allowed only if --dict-mode is specified, see fa_build_word_guesser --help";
+    exit (2);
+}
+
+
+# full unicode range support, slows down the compilation
+if("" ne $full_unicode) {
+    # U10FFFFh + 1
+    $ow_base = "1114112" ;
+    # U10FFFFh + 1 + 1072627711
+    $ow_max = "1073741823" ;
+    # use 6 digit hex numbers for sorting
+    $num_size = "--num-size=6" ;
+}
+
+
+#
+#  *** Create temporary files ***
+#
+
+($fh, $tmp1) = mkstemp ("fa_build_word_guesser_XXXXXXXX");
+close $fh;
+($fh, $tmp2) = mkstemp ("fa_build_word_guesser_XXXXXXXX");
+close $fh;
+($fh, $tmp3) = mkstemp ("fa_build_word_guesser_XXXXXXXX");
+close $fh;
+($fh, $tmp4) = mkstemp ("fa_build_word_guesser_XXXXXXXX");
+close $fh;
+
+
+$SIG{PIPE} = sub { die "ERROR: Broken pipe at fa_build_word_guesser" };
+$ENV{"LC_ALL"} = "C";
+
+#
+#  *** Build Word-Guesser FSA ***
+#
+
+if(0 == $MAX_LINES_AT_ONCE) {
+
+  # 1. Digitize input lines
+  # 2. Sort, Unique
+  # 3. Build Min RS FSA
+  # 4. Build Multi Moore Dfa dictionary
+
+  $command = "".
+    "cat $in_dict | ".
+    "fa_line2chain_unicode $num_size --out-key2f=$tmp2 --base=16 --use-keys --key-base=$ow_base $key_delim $tagset $input_enc $dir $trim $in_tr $pref_delim $redup_delim $ucf_delim $pref_fsm $ignore_case | ".
+    "sort | uniq | ".
+    "fa_chains2mindfa --base=hex | ".
+    "fa_fsm2fsm --in-type=rs-dfa --out-type=moore-mdfa --ow-base=$ow_base --ow-max=$ow_max --out=$tmp1" ;
+
+  `$command` ;
+
+} else {
+
+  $line_num = 0 ;
+
+  # 1. cat from file or standard input
+  # 2. convert input suffix rules into chains and build a global action map
+  $command1 = "".
+    "cat $in_dict | ".
+    "fa_line2chain_unicode $num_size --out-key2f=$tmp2 --base=16 --use-keys --key-base=$ow_base $key_delim $tagset $input_enc $dir $trim $in_tr $pref_delim $redup_delim $ucf_delim $pref_fsm $ignore_case | " ;
+
+  # 1. lexicographically sort chains and build an RS DFA
+  $command2 = "| sort | uniq | fa_chains2mindfa --base=hex > $tmp1" ;
+
+  # 1. merge common RS DFA and a portion RS DFA inot one RS NFA
+  # 2. make determinization and minimization
+  $command3 = "".
+    "cat $tmp3 $tmp1 | ".
+    "fa_nfalist2nfa --alg=dfa-union | ".
+    "fa_nfa2mindfa --alg=br > $tmp4" ;
+
+  open INPUT, $command1 ;
+
+  while(<INPUT>) {
+
+    if (0 == $line_num) {
+      open OUTPUT, $command2 ;
+    }
+
+    $line_num++;
+    print OUTPUT $_ ;
+
+    if ($MAX_LINES_AT_ONCE == $line_num) {
+
+      # close is waiting for $command2 pipe to be finished
+      close OUTPUT ;
+
+      if(-z $tmp3) {
+        rename $tmp1, $tmp3 ;
+      } else {
+        # merge a big dictionary (tmp3) and a small portion (tmp1) together
+        `$command3` ;
+        rename $tmp4, $tmp3 ;
+      }
+
+      $line_num = 0;
+    }
+  }
+
+  # close is waiting for $command2 pipe to be finished
+  close OUTPUT;
+
+  if (0 != $line_num) {
+
+    if (-z $tmp3) {
+      rename $tmp1, $tmp3 ;
+    } else {
+      # merge a big dictionary (tmp3) and a small portion (tmp1) together
+      `$command3` ;
+      rename $tmp4, $tmp3 ;
+    }
+  }
+
+  close INPUT ;
+
+  # 1. Convert Common RS DFA into a Moore DFA
+  $command = "".
+    "fa_fsm2fsm --in-type=rs-dfa --out-type=moore-mdfa --ow-base=$ow_base --ow-max=$ow_max --out=$tmp1 < $tmp3 " ;
+
+  `$command` ;
+}
+
+#
+# Build a classifier from the dictionary, if needed
+#
+
+if ("" eq $dict_mode) {
+
+  # 1. Build classifier from dictionary
+  # 2. Make gaps-removal renumeration
+
+  $command = "".
+    "fa_dict2classifier $keep_state2ows $min_depth $ows_merge $ows_bound --in=$tmp1 --in-ow2f=$tmp2 | ".
+    "fa_fsm_renum --fsm-type=moore-mdfa --alg=remove-gaps --out=$out_fsa " ;
+
+  `$command` ;
+
+} else {
+
+  # 1. Make gaps-removal renumeration
+
+  `fa_fsm_renum --fsm-type=moore-mdfa --alg=remove-gaps --in=$tmp1 --out=$out_fsa` ;
+}
+
+
+#
+#  *** Remove temporary files ***
+#
+
+END {
+    if ($tmp1 && -e $tmp1) {
+        unlink ($tmp1);
+    }
+    if ($tmp2 && -e $tmp2) {
+        unlink ($tmp2);
+    }
+    if ($tmp3 && -e $tmp3) {
+        unlink ($tmp3);
+    }
+    if ($tmp4 && -e $tmp4) {
+        unlink ($tmp4);
+    }
+}

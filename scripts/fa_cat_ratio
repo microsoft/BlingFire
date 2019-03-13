@@ -1,0 +1,102 @@
+#!/usr/bin/perl
+
+#
+# usage
+#
+
+sub usage {
+
+print <<EOM;
+
+Prints input lines to the output with a given ratio.
+
+Usage: fa_cat_ratio [OPTIONS] [FILES]
+
+  --ratio=R - the |Input|/|Output| ratio, e.g. 10 means each 10-th input line
+    will be put to the output, 0.1 means each input line will be repeated
+    10 times at the output, 1 (the default value) acts like a "cat" utility.
+
+EOM
+
+}
+
+
+#
+# process command line parameters
+#
+
+$ratio = 1.0 ;
+
+while (0 < 1 + $#ARGV) {
+
+    if("--help" eq $ARGV [0]) {
+
+        usage ();
+        exit (0);
+
+    } elsif ($ARGV [0] =~ /^--ratio=(.+)/) {
+
+        $ratio = 0.0 + $1;
+
+        if(0.0 >= $ratio) {
+          print STDERR "\nERROR: --ratio=R should be positive.\n\n";
+          exit (1);
+        }
+
+    } elsif ($ARGV [0] =~ /^--/) {
+
+        # skip unknown options
+        next;
+
+    } else {
+
+        last;
+    }
+    shift @ARGV;
+}
+
+
+#
+# process intput
+#
+
+$input = 1.0 ;
+$output = 1.0 ;
+
+if(1.0 == $ratio) {
+
+  # acts like a cat
+  while (<>) {
+    print ;
+  }
+
+} elsif (1.0 < $ratio) {
+
+  # reduces output
+  while (<>) {
+
+    $input++ ;
+
+    if ($input/$output >= $ratio) {
+
+      $output++ ;
+      print ;
+    }
+  }
+
+} else {
+
+  # increases output
+  while (<>) {
+
+    $input++ ;
+
+    while ($input/$output >= $ratio) {
+
+      $output++ ;
+      print ;
+    }
+  }
+
+}
+

@@ -1,0 +1,17 @@
+WORD 1
+XWORD 2
+SEG 3
+IGNORE 4
+FnSpecialWord 100
+FnTokExcludePunktNoSpecWordsHighPri 101
+FnHex 102
+FnCurrency 103
+FnCxNumberComma 104
+FnCxNumberDot 105
+FnCxNumberCommaNoFormat 106
+FnTokenizePossesive 107
+FnTokExcludePunktNoSpecWords 108
+FnTokExcludePunktAddSpecWords 109
+FnTokIncludePunkt 110
+FnSeparateContractions 111
+FnDelete 112

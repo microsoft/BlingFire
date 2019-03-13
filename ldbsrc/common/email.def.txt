@@ -1,0 +1,123 @@
+#
+# Email extraction regular expression.
+#
+# Follows RFC 5322: http://tools.ietf.org/html/rfc5322, with some
+# important exceptions:
+#    - Some valid but rare characters are excluded
+#    - Comments and quoting are not implemented
+#    - Length is limited, but not correctly
+#
+
+ # all white space characters
+_define WHITESPACE [\x0004-\x0020\x007F-\x009F\x00A0\x2000-\x200B\x200E\x200F\x202F\x205F\x2060\x2420\x2422\x2423\x2424\x3000\xFEFF\xFF02]
+
+_define DIGIT [0-9]
+_define ALPHA [a-zA-Z]
+
+# This is the actual definition from the RFC.  
+# Some of these characters could be more 
+# trouble than they're worth, though
+#_define atext (ALPHA | DIGIT | [!#$%&'*+/=?^_`{|}~] | -)
+_define atext (ALPHA | DIGIT | [!#$%&*+?^_`|~] | -)
+
+# For safety, we only allow a limited number of characters in the email address
+#_define dot_atom (atext+ ([.] atext+)? ([.] atext+)? ([.] atext+)? ([.] atext+)? ([.] atext+)? ([.] atext+)?)
+_define one_to_twenty_atext
+(
+  atext  atext? atext? atext? atext? atext? atext? atext? atext? atext? 
+  atext? atext? atext? atext? atext? atext? atext? atext? atext? atext?
+)
+_end
+
+_define dot_atom
+(
+  one_to_twenty_atext         ([.] one_to_twenty_atext )? ([.] one_to_twenty_atext )?
+  ([.] one_to_twenty_atext )? ([.] one_to_twenty_atext )? ([.] one_to_twenty_atext )?
+)
+_end
+
+_define local_part (dot_atom)
+
+#
+# TLDs from IANA: http://www.iana.org/domains/root/db/
+#
+
+_define g_tld
+(
+   (biz)|(com)|(info)|(name)|(net)|(org)|(pro)
+  |(BIZ)|(COM)|(INFO)|(NAME)|(NET)|(ORG)|(PRO)
+)
+_end
+
+_define s_tld
+(
+   (aero)|(asia)|(cat)|(coop)|(edu)|(gov)|(int)|(jobs)|(mil)|(mobi)|(museum)|(tel)|(travel)
+  |(AERO)|(ASIA)|(CAT)|(COOP)|(EDU)|(GOV)|(INT)|(JOBS)|(MIL)|(MOBI)|(MUSEUM)|(TEL)|(TRAVEL)
+)
+_end
+
+_define cc_tld
+(
+   (us)|(ca)|(uk)
+  |(US)|(CA)|(UK)
+)
+_end
+
+_define tld (cc_tld | s_tld | g_tld)
+
+# Domain name rules from RFC 1034.  For safety, use the one with a limited number of characters between dots
+# _define label (ALPHA ((ALPHA | DIGIT | [-])* (ALPHA | DIGIT))?)
+
+_define label_middle (ALPHA | DIGIT | [-])
+
+_define zero_to_eighteen_label_middle
+(
+  label_middle? label_middle? label_middle? label_middle?
+  label_middle? label_middle? label_middle? label_middle?
+  label_middle? label_middle? label_middle? label_middle?
+  label_middle? label_middle? label_middle? label_middle?
+  label_middle? label_middle?
+)
+_end
+
+_define label
+(
+  ALPHA (zero_to_eighteen_label_middle (ALPHA | DIGIT))?
+)
+_end
+
+# _define subdomain (label ([.] label)*)
+_define subdomain (label ([.] label)? ([.] label)? ([.] label)? ([.] label)? ([.] label)? )
+
+_define domain_part (subdomain [.] tld)
+
+_define address (local_part [@] domain_part)
+
+#
+# Exclude
+#
+
+# Common patterns used in the local part of "example" emails (e.g.,
+# "enter an address of the form user@domain.com").  If any of these
+# makes up the entire local part, the email is ignored
+_define local_exclude
+(
+    (user) | (recipient) | (someaddress) | (yourname)
+  | (firstname [.] surname) | (name) | (you)
+)
+_end
+
+# These domains are reserved for examples in RFC 2606.  Any email
+# found with these domains is ignored
+_define reserved_second_level_domains
+(
+  (example [.] com) | (example [.] net) | (example [.] org)
+)
+_end
+
+_define domain_exclude
+(
+    (reserved_second_level_domains)
+  | (subdomain [.] reserved_second_level_domains)
+)
+_end

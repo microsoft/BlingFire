@@ -1,0 +1,286 @@
+#
+# Default word-breaking rules, the dictionary of special words and tech-search
+# tokenization rules are included
+#
+
+_include ../common/chu.fullunicode.def.txt
+
+# previous contsin some errors --> _define WHITESPACE [\x0004-\x0020\x007F-\x009F\x00A0\x2000-\x200B\x200E\x200F\x202F\x205F\x2060\x2420\x2422\x2423\x2424\x3000\xFEFF\xFF02]
+_define WHITESPACE [\x0004-\x0020\x007F-\x009F\x00A0\x2000-\x200B\x200E\x200F\x202F\x205F\x2060\x2420\x2424\x3000\xFEFF]
+_define CURRENCY [\x0024\x0080\x00A2-\x00A5\x09F2\x09F3\x0E3F\x20A0\x20A2\x20A3\x20A4\x20A6-\x20AF]
+_define CURRENCY_MINUS_EURO [\x0024\x0080\x00A2-\x00A5\x09F2\x09F3\x0E3F\x20A0\x20A2\x20A3\x20A4\x20A6-\x20AB\x20AD-\x20AF]
+_define EURO_CURRENCY [\x20AC]
+_define HYPHEN [\x002D\x2010\x2011]
+_define MINUS [\x002D\x2012\x207B\x208B\x2212]
+_define NUM [0-9]
+_define NOT0NUM [1-9]
+
+ # APOSTROPHE \x0027
+ # GRAVE ACCENT \x0060
+ # ACUTE ACCENT \x00B4
+ # LEFT SINGLE QUOTATION MARK \x2018
+ # RIGHT SINGLE QUOTATION MARK \x2019
+_define APOSTROPHE [\x0027\x0060\x00B4\x2018\x2019]
+
+ #
+ # Define a regular letter
+ #
+_define LETTER (ChuLX|ChuMc|ChuMn|ChuMe|[&_])
+
+ #
+ # Regular Words (numbers and letters go together)
+ #
+< ((LETTER)|(ChuNX))+ > --> WORD
+
+ #
+ # Preserve punctuation
+ #
+< ChuPX | ChuSc | ChuSm | ChuSo > --> WORD
+< CURRENCY > --> WORD
+< [%] > --> WORD
+< [HYPHEN] > --> WORD
+
+ #
+ # Special words are always preffered
+ #
+_define SpecWordDelim (WHITESPACE|ChuPX|ChuSm|ChuSc|ChuSk|ChuSo|ChuNX|$)
+_define SpecWordDelimNoNum (WHITESPACE|ChuPX|ChuSm|ChuSc|ChuSk|ChuSo|$)
+_define SpecWordDelimNoNumNoEnd (WHITESPACE|ChuPX|ChuSm|ChuSc|ChuSk|ChuSo)
+
+ #
+ # Contractions
+ #
+
+ # no apostrophe
+< [cC][aA][nN][nN][oO][tT] > SpecWordDelim --> _call FnSplitCannot
+_function FnSplitCannot
+  < ^ [cC][aA][nN] > --> WORD
+  < [nN][oO][tT] $ > --> WORD
+_end
+
+ # with apostrophe
+_define CONTRACTIONS
+(
+  # you'd, we'll, apple's
+  (APOSTROPHE
+   (
+     (ll)|(LL)|
+     (re)|(RE)|
+     (ve)|(VE)|
+     (d)|(D)|
+     (s)|(S)|
+     (on)|(ON)|
+     (il)|(IL)
+   )
+  )
+  |
+  # shouldn't
+  (
+    [Nn] APOSTROPHE [Tt]
+  )
+)
+_end
+
+# words with contractions
+< ((LETTER)|(ChuNX))+ CONTRACTIONS > SpecWordDelim --> _call FnSeparateContractions
+
+_function FnSeparateContractions
+  < ^ ((LETTER)|(ChuNX))+ > CONTRACTIONS --> WORD
+  < CONTRACTIONS $ > --> WORD
+_end
+
+ # with apostrophe in the beginning (French + o'clock)
+_define PRECONTRACTIONS
+(
+  (([lLcCjJdDtTsSoO])|([qQ][uU])) APOSTROPHE
+)
+_end
+
+# words with precontractions
+< PRECONTRACTIONS ((LETTER)|(ChuNX))+ > SpecWordDelim --> _call FnSeparatePreContractions
+
+_function FnSeparatePreContractions
+  < ^ PRECONTRACTIONS > --> WORD
+  < ((LETTER)|(ChuNX))+ $ > --> WORD
+_end
+
+
+ #
+ # Abbreviations
+ #
+### changed in v5 _define AbbrLetterWord ((LETTER)(LETTER)?)
+_define AbbrLetterWord (LETTER)
+
+### # Single-word abbreviation:
+### #  "Dr.Anderson", "Dr. Anderson"
+### < UpToThreeLetterWord [.] > . --> WORD
+### < UpToThreeLetterWord [.] (WHITESPACE|['"])* $ > --> _call FnTokExcludePunktNoSpecWords
+
+_define ABBREVIATION_SEQUENCE
+(
+ # U.S.A, A.B.Jr., e.g., ...
+ (AbbrLetterWord [.])+ AbbrLetterWord
+)
+_end
+
+ # "e.g." --> [e.g.]
+< ABBREVIATION_SEQUENCE [.] > --> WORD
+
+ # "e.g," --> [e.g]
+< ABBREVIATION_SEQUENCE [.]? > SpecWordDelim --> WORD
+
+ # "etc.$" --> [etc][.]
+< ABBREVIATION_SEQUENCE [.] (WHITESPACE|['"])* $ > --> _call FnExcludeLastDotFromAbbr
+_function FnExcludeLastDotFromAbbr
+ < ^ ABBREVIATION_SEQUENCE > --> WORD
+ < [.'"] > --> WORD
+_end
+
+
+
+### # special words
+### # TODO: should be cleaned up
+###_define SPECIAL_WORDS
+### (
+###   ([Cc][+][+])
+###  |([Cc][#])
+###  |([Cc][Oo][Mm][+])
+###  |([Jj][#])
+###  |([Jj][+][+])
+###  |([Gg][Dd][Ii][+])
+###  |([.][Nn][Ee][Tt])
+###  |([Gg][+][+])
+###  |([Aa][*])
+###  |([Ff][#])
+### )
+###_end
+
+###< SPECIAL_WORDS > SpecWordDelim --> _call FnSpecialWord
+###
+###_function FnSpecialWord
+###  < ^ .+ > --> WORD
+###_end
+
+
+ #
+ # Numbers
+ #
+ # Note: formatted number cannot start with 0, e.g. 01,000 or 000,000
+ #
+
+ # comma delimited number (american/european) format 1,000,000.00
+###< MINUS? (NOT0NUM)(NUM)?(NUM)?([,](NUM)(NUM)(NUM))+ ([.](NUM)+)? > (SpecWordDelimNoNum) --> WORD
+ # not formatted number with matched right context (for optimization)
+###< MINUS? (NUM)+ > (SpecWordDelimNoNum) --> WORD
+ # not formatted numbers "1000.0", "10.5"
+###< MINUS? (NUM)+([.](NUM)+)? > (SpecWordDelimNoNum) --> WORD
+ # versions with up to three segments, e.g. "2.95.3"
+###< (NUM)+ [.](NUM)+[.](NUM)+ > (SpecWordDelimNoNum) --> WORD
+ # only with decimal part .99
+###< MINUS? [.](NUM)+ > (SpecWordDelimNoNum) --> WORD
+
+ # comma delimited number (american/european) format 1,000,000.00. 10PM, 10bn, 3d?
+< (NOT0NUM)(NUM)?(NUM)?([,](NUM)(NUM)(NUM))+ ([.](NUM)+)? (LETTER)* > (SpecWordDelimNoNum) --> WORD
+ # not formatted number with matched right context (for optimization)
+< (NUM)+ (LETTER)* > (SpecWordDelimNoNum) --> WORD
+ # not formatted numbers "1000.0", "10.5"
+< (NUM)+([.](NUM)+)? (LETTER)* > (SpecWordDelimNoNum) --> WORD
+ # versions with up to three segments, e.g. "2.95.3"
+< (NUM)+ [.](NUM)+[.](NUM)+ (LETTER)* > (SpecWordDelimNoNum) --> WORD
+ # only with decimal part .99
+< [.](NUM)+ (LETTER)* > (SpecWordDelimNoNum) --> WORD
+
+
+ # Suppress all sequences which start with number or dot and have dots in them and
+ # end with number but are not of the format above.
+### < MINUS? (NUM)+[.](NUM)+[.]((NUM)|[.])+(NUM) > (SpecWordDelimNoNum) --> IGNORE _call FnTokExcludePunktNoSpecWords
+
+
+ #
+ # Tech-terms
+ #
+
+ # Plus in a post position of a single letter:
+ # For exampe,  valid ones: c++, g++, A+, COM+, Star+
+ #              invalid ones: c+b  +c, , i+++, i--, z+++++++
+ # Note: 1. no exclusion is necessary as right context is specified
+ #       2. we don't do this for '-' because often is a dash as well
+ #       3. bad exaples: SmartMovie+video+, presure+pumps+, irs+ pay online
+ #
+< [A-Za-z]+[+][+]? > (SpecWordDelim) --> WORD
+< [A-Za-z]+[+][+][+]+ > --> _call FnTokExcludePunktNoSpecWords
+
+ # Chords: D#m7, D#7, D# 7
+< ([ABCDEFGabcdefg][#]) > ((SpecWordDelim)|([A-Za-z])) --> WORD
+
+ # make sure we break domains with .net or without as old wb does
+ #     "user@softhome.net" --> [user][softhome][net]
+ # and     "users of .net" --> [users][of][.net]
+ # Note: asp.net is also broken in the way the old word-breaker does: [asp][net]
+ # Tricky examples: "emanila.net46.net/for3968.html" --> [emanila][net46][net][for3968][html]
+ # Tricky examples: "benidorm @euskalnet.net.net" --> [benidorm][euskalnet][net][net]
+ # Note2: FnTokExcludePunktNoSpecWords has lower priority than FnSpecialWord, so just .net is always tokenized by FnSpecialWord
+### < [A-Za-z0-9_.-]*[.][Nn][Ee][Tt]([A-Za-z0-9_.-]*[A-Za-z0-9_-])? > (SpecWordDelimNoNum) --> _call FnTokExcludePunktNoSpecWords
+
+ # teams.microsoft.com, softhome.net, 3.1, 8.x
+### changed in v5 ### < (((LETTER)|(ChuNX))+[.])+((LETTER)|(ChuNX))+ > --> WORD
+< (((LETTER)|(ChuNX))+[.])+((LETTER)|(ChuNX))+ > --> _call FnBreakApartNoSpace
+
+_function FnBreakApartNoSpace
+  < ((LETTER)|(ChuNX))+ > --> WORD
+  < [.] > --> WORD
+_end
+
+< ([#]|[\xff03]) > ((LETTER)|(ChuNX)) --> WORD
+
+< ([@]|[\xff20]) > ((LETTER)|(ChuNX)) --> WORD
+
+< [/] > ((LETTER)|(ChuNX)) --> WORD
+
+ # a standalone file extensions .MHT , .HTM , .HTML and .Net, .mde , .ade , and .accde, .mp3 files .Net
+< [.][A-Za-z0-9]+ > (SpecWordDelim) --> WORD
+
+
+ #
+ # Ip addresses and alike:
+ # Note: we need to define the IP address tokenization because it conflicts with
+ #  the European format of number both IPs 10.10.12.102 and 100.100.120.102
+ #  should be tokenized respectevely: [10][10][12][102] and [100][100][120][102]
+ #
+### < [0-9][0-9]?[0-9]?[.][0-9][0-9]?[0-9]?[.][0-9][0-9]?[0-9]?[.][0-9][0-9]?[0-9]? > (SpecWordDelimNoNum) --> _call FnTokExcludePunktNoSpecWordsHighPri
+
+ #
+ # Single word identifiers starting with '_', e.g. _access, _wcsicmp, _wcsicmp_s, __try, __file__, etc.
+ #
+ # Note: 1. only upto two underscores are allowed on each side
+ #       2. the token cannot be a part of a longer sequence with '_', e.g. http_access
+ #
+### < [_][_]?[A-Za-z]+[_]?[_]? > (SpecWordDelimNoNum) --> WORD
+
+ # anything longer or with more '_' will be broken in a regular way
+### < ((LETTER)|(ChuNX)|[_])+[_]((LETTER)|(ChuNX)|[_])+ > (SpecWordDelimNoNum) --> IGNORE _call FnTokExcludePunktNoSpecWords
+
+ # also block things like part of the URL path:
+ #  /John_C._Reilly 
+ #  /Tenchi_Muyo!_Ryo-Ohki
+ #  /Chesapeake_Ranch_Estates,_Maryland
+### < [/]((LETTER)|(ChuNX)|[_])((LETTER)|(ChuNX)|[-_.,!?%])*[_]((LETTER)|(ChuNX)|[-_.,!?%])*((LETTER)|(ChuNX)|[_]) > (SpecWordDelimNoNum) --> IGNORE _call FnTokExcludePunktNoSpecWords
+
+
+ #
+ # common functions
+ #
+
+_function FnTokExcludePunktNoSpecWords
+  < ((LETTER)|(ChuNX))+ > --> WORD
+  < ChuPX | ChuSc | ChuSm | ChuSo > --> WORD
+_end
+
+_function FnTokExcludePunktNoSpecWordsHighPri
+  < ((LETTER)|(ChuNX))+ > --> WORD
+  < ChuPX | ChuSc | ChuSm | ChuSo > --> WORD
+_end
+
+_function FnDelete
+  < $ $ $ > --> WORD
+_end

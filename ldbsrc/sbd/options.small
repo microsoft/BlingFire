@@ -1,0 +1,17 @@
+#
+# Compilation options
+#
+
+OUTPUT = tp3.sbd.bin
+
+opt_build_wbd = --dict-root=.
+
+opt_pack_wbd_fsa = --alg=triv --type=moore-dfa --remap-iws --use-iwia
+opt_pack_wbd_mmap = --alg=triv --type=mmap
+
+
+# USE_TEST_WTBT_DICT = 1
+
+resources = \
+	$(tmpdir)/wbd.fsa.$(mode).dump \
+	$(tmpdir)/wbd.mmap.$(mode).dump \

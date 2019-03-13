@@ -1,0 +1,148 @@
+#!/usr/bin/perl
+
+
+sub usage {
+
+print <<EOM;
+
+Usage: fa_nlgcli2tagdict [OPTIONS] < nlgcli.utf8 > tag.dict.utf8
+
+Converts NLGCLI's lexical output into tag dictionary format ready for
+compilation with PRM LDB.
+
+ --lang=<Lang> - specifies the language, the following are available:
+   default - the value used by default
+   english - English specific
+
+ --out-tagset=<filename> - builds tag dictionary tagset file, if specified
+EOM
+
+}
+
+$[ = 1;			# set array base to 1
+$, = ' ';		# set output field separator
+$\ = "\n";		# set output record separator
+
+$word = '';
+$pos = '';
+$tags = '';
+$lang = '';
+$tf = '';
+
+while (0 < 1 + $#ARGV) {
+
+    if("--help" eq $ARGV [1]) {
+        usage ();
+        exit (0);
+    } elsif ($ARGV [1] =~ /^--lang=(.+)/) {
+        $lang = $1;
+    } elsif ($ARGV [1] =~ /^--out-tagset=(.+)/) {
+        $tf = $1;
+    } else {
+        last;
+    }
+    shift @ARGV;
+}
+
+
+$ignore{'LexicalProcessingComplete'} = 1;
+$ignore{'LogProb'} = 1;
+$ignore{'SkipMorphRec'} = 1;
+
+$combine{'Sing'} = 1;
+$combine{'Plur'} = 1;
+$combine{'Pers1'} = 1;
+$combine{'Pers2'} = 1;
+$combine{'Pers3'} = 1;
+
+
+while (<STDIN>) {
+
+  s/[\r\n]+//g;
+
+  @Fld = split(' ', $_, 9999);
+
+  if (/^[ ].*[{].*[}]/) {
+
+    $word = substr($_, 2, index($_, ', ') - 2);
+    $pos = substr($Fld[3], 1, length($Fld[3]) - 1);
+    $tags = '';
+
+    for ($i = 5; $i <= $#Fld; ++$i) {
+      &ProcessBit($Fld[$i]);
+    }
+    $tagset{$pos} = 1;
+
+    if ('' ne $pos) {
+      print $word . "\t" . $pos . '' . $tags;
+    }
+    if ('' eq $tags) {
+      print STDERR "WARNING: No tags extracted from line: \"" . $_ . "\"";
+    }
+    if ('' eq $pos) {
+      print STDERR "ERROR: No pos extracted from line: \"" . $_ .  "\"";
+    }
+  }
+}
+
+
+#
+# uses global variables: pos, tags, ignore, combine
+#
+
+sub ProcessBit {
+  local($bit) = @_;
+
+  if ('english' eq $lang) {
+
+    if ($bit =~ /^[+]/) {
+      $t = substr($bit, 2, index($bit, ';') - 2);
+      if (!(defined $ignore{$t})) {
+        if (defined $combine{$t}) {
+          &PutTag($pos . '_' . $t);
+        } else {
+          &PutTag($t);
+        }
+      }
+    }
+    if ($bit =~ /^Vptc=/ || $bit =~ /^Vprp=/) {
+      $vp = substr($bit, 1, 4);
+      $t = substr($bit, 7, index($bit, ';') - 8);
+      &PutTag($vp . '_' . $t);
+    }
+
+  } else {
+
+    if ($bit =~ /^[+]/) {
+      $t = substr($bit, 2, index($bit, ';') - 2);
+      if (!(defined $ignore{$t})) {
+        &PutTag($pos . '_' . $t);
+      }
+    }
+  }
+}
+
+#
+# uses global variables: tags, tagset
+#
+
+sub PutTag {
+  local($tag) = @_;
+  $tags = $tags . "\t" . $tag;
+  $tagset{$tag} = 1;
+}
+
+
+if('' ne $tf) {
+
+  open TAGSET, ">$tf" ;
+
+  my $i = 1;
+
+  for my $tag ( sort keys %tagset ) {
+    print TAGSET $tag . " " . "$i" ;
+    $i = $i + 1;
+  }  
+
+  close TAGSET ;
+}

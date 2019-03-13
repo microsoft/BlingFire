@@ -1,0 +1,10 @@
+
+LIBRARY     blingfiretokdll.dll
+
+EXPORTS 
+	TextToSentences
+	TextToWords
+	TextToSentencesWithOffsets
+	TextToWordsWithOffsets
+	GetBlingFireTokVersion
+    TextToHashes

@@ -1,0 +1,210 @@
+@perl -Sx %0 %*
+@goto :eof
+#!perl
+
+use File::Temp qw/ :mktemp  /;
+
+
+#    T:     P(t) == N(t) / N
+#    TT:    P(t2|t1) == N(t1,t2) / N(t1)
+#    TTT:   P(t3|t1,t2) == N(t1,t2,t3) / N(t1,t2)
+#    TTTT:  P(t4|t1,t2,t3) == N(t1,t2,t3,t4) / N(t1,t2,t3)
+#    W:     P(w) == N(w) / N
+#    TWT:   P(t2|t1,w2) == N(t1,w2,t2) / N(t1,w2)
+#    WTT:   P(t2|w1,t1) == N(w1,t1,t2) / N(w1,t1)
+#    WTWT:  P(t2|w1,t1,w2) == N(w1,t1,w2,t2) / N(w1,t1,w2)
+#    WT:    P(w|t) == N(w,t) / N(t)
+
+
+sub usage {
+
+print <<EOM;
+
+Usage: fa_count2prob [OPTIONS] < input.utf8 > output.utf8
+
+This program substitutes counts with corresponding relative probabilities.
+The input is  a tab separated fields  followed by  the integer count. The
+probability is calculated as follows:
+
+ P(f_n|f_1,f_2,...,f_{n-1}) == N(f_1,f_2,...,f_n) / N(f_1,f_2,...,f_{n-1})
+
+  --cutoff=N - does not print P(*|f_1,f_2,...,f_{n-1}) probabilities if 
+    the context f_1,f_2,...,f_{n-1} occurs N or less times (0 by default)
+
+  --log-scale - returns natural logarithms of the probabilities
+
+EOM
+
+}
+
+
+$cutoff = 0;
+$log_scale = 0;
+
+while (0 < 1 + $#ARGV) {
+
+    if("--help" eq $ARGV [0]) {
+
+        usage ();
+        exit (0);
+
+    } elsif ($ARGV [0] =~ /^--cutoff=(.+)/) {
+
+        $cutoff = 0 + $1;
+
+    } elsif ($ARGV [0] eq "--log-scale") {
+
+        $log_scale = 1;
+
+    } elsif ($ARGV [0] =~ /^-.*/) {
+
+        print STDERR "ERROR: Unknown parameter $$ARGV[0], see fa_count2prob --help";
+        exit (1);
+
+    } else {
+
+        last;
+    }
+    shift @ARGV;
+}
+
+
+# Step1
+#
+# Input:
+#   f1\tf2\t...f{n-1}\tfn\tc
+#
+# Output:
+#   f1\tf2\t...f{n-1}\t\tc1
+#   f1\tf2\t...f{n-1}\tfn\tc2
+#
+
+$proc1 = <<'EOF';
+
+$prev_cx = "";
+$prev_c = 0;
+
+while(<>) {
+
+    s/[\r\n]+$//;
+    s/^\xEF\xBB\xBF//;
+
+    # [(context)\t](target)\t(count)
+    m/^(.+\t)?([^\t]+)\t([0-9]+)$/;
+
+    if (0 >= $3 || "" eq $2) {
+      print STDERR "ERROR: Invalid input line: \"$_\"";
+      exit (1);
+    }
+
+    print "$1$2\t$3\n";
+
+    if($1 ne $prev_cx) {
+
+      if(0 != $prev_c) {
+          print "$prev_cx\t$prev_c\n";
+      }
+
+      $prev_cx = $1;
+      $prev_c = $3;
+
+    } else {
+
+      $prev_c += $3;
+
+    }
+}
+
+if(0 != $prev_c) {
+    print "$prev_cx\t$prev_c\n";
+}
+
+EOF
+
+($fh, $tmp1) = mkstemp ("fa_count2prob_XXXXXXXX");
+print $fh $proc1;
+close $fh;
+
+
+# Step2
+#
+# Input:
+#   f1\tf2\t...f{n-1}\t\tc1
+#   f1\tf2\t...f{n-1}\tfn\tc2
+#
+# Output:
+#   f1\tf2\t...f{n-1}\tfn\tp2
+#
+
+$proc2 = <<'EOF';
+
+$cutoff = $ARGV [0];
+shift @ARGV;
+
+$log_scale = 0 + $ARGV [0];
+shift @ARGV;
+
+$count = 0;
+
+while(<>) {
+
+    s/[\r\n]+$//;
+
+    m/^(.+\t)?([^\t]*)\t([0-9]+)$/;
+
+    if("" eq $2) {
+
+        $count = $3;
+
+    } else {
+
+        if(0 == $count) {
+            print STDERR "ERROR: Internal error, the sequence is not sorted.";
+            exit (1);
+        }
+
+        if($cutoff < $count) {
+
+            $f = (0.0 + $3) / (0.0 + $count) ;
+
+            if (1 == $log_scale) {
+              $f = log(0.000000001 + $f) ;
+            }
+
+            print "$1$2\t" . sprintf("%.12e", $f) . "\n";
+        }
+    }
+}
+
+EOF
+
+($fh, $tmp2) = mkstemp ("fa_count2prob_XXXXXXXX");
+print $fh $proc2;
+close $fh;
+
+
+
+$ENV{"LC_ALL"} = "C";
+
+$command = "fa_sortbytes -m | perl $tmp1 | fa_sortbytes -m | perl $tmp2 $cutoff $log_scale |";
+
+open INPUT, $command ;
+
+while(<INPUT>) {
+    print $_ ;
+}
+close INPUT ;
+
+
+#
+# delete temporary files
+#
+
+END {
+    if ($tmp1 && -e $tmp1) {
+        unlink ($tmp1);
+    }
+    if ($tmp2 && -e $tmp2) {
+        unlink ($tmp2);
+    }
+}

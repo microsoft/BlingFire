@@ -4,6 +4,12 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # User-specific files
+[Bb]in
+objd
+/target/
+App_Data
+*.user
+*.sln.cache
 *.suo
 *.user
 *.userosscache
@@ -13,10 +19,15 @@
 *.userprefs
 
 # Build results
+out/
+tmp/
+/out/
+/tmp/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
+x32/
 x64/
 x86/
 bld/

@@ -1,0 +1,6 @@
+!INCLUDE ..\sources.common
+
+TARGETNAME=fa_encode
+
+SOURCES = fa_encode.cpp
+

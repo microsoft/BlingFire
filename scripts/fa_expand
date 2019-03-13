@@ -1,0 +1,155 @@
+#!/usr/bin/perl
+
+
+sub usage {
+
+print <<EOM;
+
+Usage: fa_expand [OPTIONS] < CFG.utf8 > output.utf8
+
+Expands CFG into a list of strings which belong to the language. CFG should
+be acyclic.
+
+  --in=<input> - input file name, stdin is used by default
+
+  --out=<output-file> - output file, stdoiut is used by default
+
+
+
+Sample grammar:
+
+#
+# Disjunction of rewrites should be separated with: " <or> "
+#
+
+<TAG> ::= NN <or> VB <or> JJ
+<WORD> ::= "open" <or> "close"
+
+<TOKEN> ::= <WORD>/<TAG>
+
+#
+# final productions should not have left part
+#
+
+<TOKEN>
+<TOKEN> <TOKEN>
+
+EOM
+
+}
+
+
+$input = "" ;
+$output = "" ;
+
+while (0 < 1 + $#ARGV) {
+
+    if("--help" eq $ARGV [0]) {
+
+        usage ();
+        exit (0);
+
+    } elsif ($ARGV [0] =~ /^--in=(.+)/) {
+
+        $input = $1;
+
+    } elsif ($ARGV [0] =~ /^--out=(.+)/) {
+
+        $output = $1;
+
+    } elsif ($ARGV [0] =~ /^-.*/) {
+
+        print STDERR "ERROR: Unknown parameter $$ARGV[0], see fa_subst --help";
+        exit (1);
+
+    } else {
+
+        last;
+    }
+    shift @ARGV;
+}
+
+#
+# Read the grammar file
+#
+
+open INPUT, "cat $input | " ;
+
+while(<INPUT>) {
+
+    s/[\r\n]+$//;
+    s/^\xEF\xBB\xBF//;
+
+    # skip comments and empty lines
+    if (/^[ ]*[#]/ || /^[ ]*$/) {
+      next;
+    }
+
+    # parse the production rule
+    if(/^(.+)[ ][:][:][=][ ](.+)$/) {
+
+      $left = $1;
+      $right = $2;
+
+      if(!(defined $grammar{$left})) {
+        $grammar{$left} = $right;
+      } else {
+        $grammar{$left} .= (" <or> " . $right);
+      }
+
+    # process the top most production
+    } else {
+
+        expand($_);
+    }
+}
+
+close INPUT ;
+
+
+### # print grammar
+### foreach $left (sort keys %grammar) {
+###   print $left . "\t\t\t\t" . $grammar{$left} . "\n" ;
+### }
+
+sub expand {
+
+    my $top = shift;
+    my $changed = 0;
+
+    ### print "Input: " . $top . "\n";
+
+    foreach $left (keys %grammar) {
+
+      # see if the rewrite is applicable
+      my $offset = index($top, $left);
+      if(-1 == $offset) {
+        next;
+      }
+
+      # get all possible rewrites
+      my @rights = split(" <or> ", $grammar{$left}, 9999);
+      my $left_len = length($left);
+      my $i;
+
+      while (0 <= $offset) {
+
+        for($i = 0; $i <= $#rights; ++$i) {
+
+          my $new_top = "" . substr($top, 0, $offset) . $rights[$i] . substr($top, $offset + $left_len) . "";
+          $changed = 1;
+
+          if(!(defined $result{$new_top})) {
+            $result{$new_top} = $new_top;
+            expand($new_top);
+          }
+        }
+
+        $offset = index($top, $left, $offset + 1);
+      }
+    }
+
+    if(0 == $changed) {
+      print $top . "\n";
+    }
+}

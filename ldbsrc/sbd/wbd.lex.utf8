@@ -1,0 +1,238 @@
+#
+# Sentence breaking rules
+#
+
+_include ../common/chu.def.txt
+
+
+ # big dot, big ?, big !, Unicode line separator, Unicode paragprah separator
+_define AlwaysEndPunctuation [\x3002\xFF1F\xFF01\x2028\x2029]
+
+ # [?.!...]
+_define ENDPUNCTUATION [\x0021\x002E\x003F\x01C3\x06D4\x061F\x2024\x2026\x203C\x203D\x2048\x2049\x2404\xFE52\xFF0E\xFF61]
+
+ # up side down "?" and "!"
+_define AlwaysStartPunctuation [\xBF\xA1]
+
+ # all white space characters
+### _define WHITESPACE [\x0004-\x0020\x007F-\x009F\x00A0\x2000-\x200B\x200E\x200F\x202F\x205F\x2060\x2420\x2422\x2423\x2424\x3000\xFEFF\xFF02]
+### _define NOT_WHITESPACE [^\x0004-\x0020\x007F-\x009F\x00A0\x2000-\x200B\x200E\x200F\x202F\x205F\x2060\x2420\x2422\x2423\x2424\x3000\xFEFF\xFF02]
+_define WHITESPACE [\x0004-\x0020\x007F-\x009F\x00A0\x2000-\x200B\x200E\x200F\x202F\x205F\x2060\x2420\x2424\x3000\xFEFF]
+_define NOT_WHITESPACE [^\x0004-\x0020\x007F-\x009F\x00A0\x2000-\x200B\x200E\x200F\x202F\x205F\x2060\x2420\x2424\x3000\xFEFF]
+
+ # non-breaking space, it is also used to glue chunks together
+_define NBSP [\x00A0]
+
+ # regular space or non-breaking sapce
+_define NBSPORSP [\x20\x00A0]
+
+ # any letter
+_define LETTER (ChuLX|ChuMc|ChuMn|ChuMe)
+
+ # any number
+_define NUMBER (ChuNX)
+
+ # all letters which can be capital (e.g. the first letter of a sentence)
+_define CAPITAL (ChuOnlyCapital|ChuCaseAgnostic)
+
+
+ # multi-word abbreviation
+
+_define UpToFourLetterWord (LETTER)(LETTER)?(LETTER)?(LETTER)?
+
+_define ABBREVIATION_SEQUENCE
+(
+ # A.B.Jr., e.g., ...
+ (UpToFourLetterWord [.] WHITESPACE?)+ UpToFourLetterWord [.]
+)
+_end
+
+
+ #
+ # Language specific definitions
+ #
+
+ # Mrs. Dr. ...
+_define EngTitles ((Adm)|(Atty)|(Bn)|(Bt)|(Btss)|(C[.]G)|(Capt)|(Cdr)|(Cf)|(Chi)|(Col)|(Com)|(Comdr)|(Cpl)|(Cpt)|(Ct)|(D[.]F)|(Dr)|(Drs)|(Du)|(E[.]g)|(Esq)|(Exc)|(Fr)|(Frl)|(Gen)|(Gov)|(H[.]E)|(H[.]H)|(H[.]I[.]H)|(H[.]I[.]M)|(H[.]M)|(H[.]R[.]H)|(H[.]S[.]H)|(Hon)|(Hr)|(Km)|(L[.]Cpl)|(Ld)|(Lt)|(M[.]M)|(M[.]Sgt)|(Maj)|(Mdm)|(Messrs)|(Mgr)|(Mgrs)|(Mlle)|(Mlles)|(Mme)|(Mmes)|(Mr)|(Mrs)|(Ms)|(Msgr)|(PFC)|(Pfc)|(Pr)|(Pres)|(Prof)|(R[.]A)|(R[.]R)|(R[.]W)|(Rep)|(Reps)|(Rev)|(S[.]M[.]Sgt)|(S[.]Sgt)|(Sen)|(Sens)|(Sgt)|(Sgt[.]Maj)|(Smt)|(Sow)|(Sr)|(Sra)|(Srta)|(St)|(Supt)|(T[.]Sgt)|(V[.]A)|(V[.]Adm)|(Ven)|(Vis)|(Visct))
+
+ #  Abbreviations, from abbrev.txt & numintro.txt
+ #     - allow uppercase versions of lowercase abbrevs
+_define EngAbbreviations
+(
+   (A)((fg)|(fr)|(la)|(las)|(lb)|(ld)|(lta)|(mer)|(ng)|(ngl)|(nt)|(poc)|(pr)|(rch)|(rchbp)|(riz)|(rk)|(rm)|(tl)|(us)|(ust)|(ustl)|[ms])|[aA]((bb)|(bbr)|(bbrs)|(bl)|(bp)|(br)|(bs)|(bt)|(cad)|(cc)|(cct)|(ccts)|(cet)|(ck)|(cpt)|(ctg)|(d loc)|(ddl)|(ddn)|(ddnl)|(dj)|(djs)|(djt)|(dm)|(dv)|(dvs)|(dvt)|(gcy)|(gri)|(gric)|(gt)|(lc)|(lg)|(lky)|(lt)|(mt)|(mts)|(nat)|(nc)|(nd)|(nhydr)|(nim)|(nn)|(non)|(ns)|(nthrop)|(ntiq)|(or)|(pp)|(ppl)|(pprox)|(ppt)|(pptd)|(pt)|(pts)|(rchit)|(rcht)|(rg)|(rr)|(rty)|(sg)|(sgd)|(sgmt)|(ssn)|(ssns)|(ssoc)|(ssocs)|(sst)|(sstd)|(ssts)|(ssy)|(strol)|(stron)|(thl)|(tm)|(tmos)|(tt)|(ttn)|(ttrib)|(tty)|(ttys)|(ud)|(ug)|(uth)|(ux)|(vdp)|(ve)|(vg)|(vn)|[rv])|(a)[bclnpqz]
+ | (B)(([.]A[.]Ed)|([.]A[.]Sc)|([.]Ae[.]E)|([.]Arch)|([.]Ch[.]E)|([.]Ed)|([.]Eng)|([.]Eng[.]Sci)|([.]Engr)|([.]Lit)|([.]Litt)|([.]Mus)|([.]Pd)|([.]Ph)|([.]Phil)|([.]R[.]E)|([.]S[.]Arch)|([.]S[.]Ch)|([.]S[.]Ec)|([.]S[.]Ed)|([.]S[.]For)|([.]Sc)|([.]Th)|(ab)|(ancorp)|(ap)|(apt)|(elg)|(enj)|(hn)|(hu)|(ib)|(ol)|(raz)|(rig)|(rit)|(ulg))|[bB]((act)|(al)|(bl)|(dle)|(drm)|(ds)|(ef)|(hd)|(ibl)|(ibliog)|(iog)|(iol)|(kg)|(kgd)|(klr)|(kpg)|(kpt)|(ks)|(ld)|(ldg)|(ldr)|(lk)|(lvd)|(or)|(ot)|(oul)|(rev)|(ro)|(ros)|(sh)|(sk)|(try)|(ul)|(ur)|(vt)|[r])|(b)[dgklmnprux]
+ | (C)((alif)|(an)|(ant)|(ard)|(h[.]E)|(has)|(hmn)|(hr)|(ia)|(mdr)|(olo)|(omdt)|(omr)|(on)|(onn)|(opt))|[cC]((al)|(alc)|(anc)|(ath)|(aus)|(av)|(ckw)|(cw)|(en)|(ert)|(ertif)|(ertifs)|(et)|(han)|(hap)|(har)|(hars)|(hem)|(hg)|(hl)|(hm)|(hron)|(hronol)|(ie)|(ir)|(irc)|(ircum)|(it)|(iv)|(ld)|(lk)|(lm)|(m)|(md)|(mdg)|(ml)|(ol)|(oll)|(ollat)|(olloq)|(ols)|(om)|(omd)|(omdg)|(oml)|(omm)|(omp)|(ompar)|(ompd)|(ompt)|(onc)|(ond)|(onf)|(onfed)|(ong)|(onj)|(onjs)|(ons)|(onsol)|(onst)|(onstr)|(ont)|(ontd)|(ontemp)|(ontr)|(ontrib)|(onv)|(oop)|(op)|(or)|(orol)|(orp)|(orr)|(orrel)|(os)|(pd)|(rim)|(rit)|(sk)|(tf)|(tg)|(tge)|(tn)|(tr)|(um)|(vt)|(wt)|[ho])|(c)[acfklmprstuvw]?
+ | (D)(([.]Bib)|([.]Ed)|([.]Lit)|([.]Litt)|([.]Ph)|([.]Phil)|([.]Sc)|(anl)|(en)|(eut)|(ivs)|(or)|[at])|[dD]((at)|(bl)|(ble)|(eb)|(ec)|(ecd)|(ecl)|(ef)|(eg)|(el)|(ely)|(em)|(enom)|(ep)|(ept)|(epts)|(er)|(eriv)|(et)|(ev)|(ft)|(ia)|(iag)|(iam)|(ict)|(if)|(iff)|(il)|(imin)|(ipl)|(ir)|(irs)|(is)|(isp)|(iss)|(issd)|(ist)|(istr)|(iv)|(lr)|(oc)|(ol)|(om)|(oz)|(pt)|(up)|(upl)|(upls)|(ups)|(wt))|(d)[dkmnryz]
+ | (E)((cua)|(d[.]M)|(dw)|(ngl)|(ns)|(ph)|(pis)|(pisc)|(pist)|(sk)|(sth)|(th)|(ur)|(xod)|(zek)|[cp])|[eE]((ccl)|(ccles)|(col)|(ds)|(duc)|(ff)|(lec)|(lem)|(lev)|(mer)|(mp)|(nc)|(ncl)|(ncy)|(ncyc)|(ncycl)|(ng)|(ngr)|(nl)|(ntom)|(qn)|(qns)|(quip)|(quiv)|(sp)|(sq)|(st)|(tc)|(tym)|(van)|(vang)|(vap)|(vg)|(xc)|(xch)|(xcl)|(xp)|(xpt)|(xptl)|(xr)|(xrx)|(xt)|([.]g)|([.] g)|[x])|(e)[adlq]
+ | (F)((ar)|(eb)|(in)|(la)|(lem)|(ri)|(ris)|(rs))|[fF]((ac)|(am)|(asc)|(cap)|(cp)|(cy)|(ec)|(em)|(gt)|(ict)|(ig)|(igs)|(ld)|(ol)|(req)|(rt)|(th)|(urn)|(ut)|(wd)|[t])|(f)[flmnpr]
+ | (G)((al)|(eo)|(ib)|(oth)|(uat)|(uin)|[kn])|[gG]((alv)|(az)|(ds)|(en)|(enit)|(enl)|(eog)|(eol)|(eom)|(er)|(ld)|(nd)|(ov)|(ovt)|(ro)|(td)|(tt)|(uar)|(yn)|(ynecol)|[art])|(g)[dlm]
+ | (H)((H[.]D)|(ag)|(eb)|(ebr)|(ind)|(itt)|(ond)|(os)|(ts)|(ung))|[hH]((ab)|(dbk)|(dkf)|(dlg)|(dqrs)|(dwe)|(gb)|(gt)|(gwy)|(ist)|(ld)|(or)|(orol)|(ort)|(osp)|(wy)|(yd)|(ypoth))|(h)[dfmoprt]
+ | (I)((ce)|(cel)|(ll)|(on)|(re)|(sr)|[adrst])|[iI]((bid)|(chth)|(gn)|(llus)|(mit)|(mmun)|(nbd)|(nc)|(ncl)|(ncog)|(ncr)|(nd)|(ndef)|(ndic)|(ndn)|(ndus)|(nf)|(nfin)|(nfl)|(nfs)|(nj)|(nq)|(ns)|(nsol)|(nsp)|(nst)|(nstr)|(nt)|(nter)|(nterj)|(nterp)|(nterrog)|(ntl)|(ntr)|(nv)|(rid)|(rreg)|(sl)|(sth)|(tal)|([.]e)|([.] e))|(i)[bn]
+ | (J)((am)|(an)|(as)|(av)|(dt)|(er)|(os)|(udg)|(ul)|[bglmn])|[jJ]((ct)|(nr)|(nt)|(our)|(un)|(unc)|(uv)|(wlr)|[r])|(j)[t]
+ | (K)((an)|(ans)|(nt)|(or)|[y])|[kK](mh)|(k)[cmnrt]
+ | (L)((L[.]B)|(L[.]D)|(L[.]M)|(ab)|(am)|(eb)|(ev)|(evit)|(ib)|(iech)|(it[.]B)|(it[.]D)|(itt[.]B)|(itt[.]D)|(ux)|[a])|[lL]((ang)|(angs)|(at)|(av)|(bs)|(dg)|(ea)|(ect)|(ectr)|(egis)|(ge)|(ieut)|(im)|(in)|(ing)|(iq)|(ith)|(itho)|(ithog)|(oc)|(oq)|(td)|(tda)|(yr))|(l)[bdgiltv]
+ | (M)(([.]A[.]Ed)|([.]Agr)|([.]Div)|([.]Ed)|([.]Sc)|(SS)|(acc)|(aced)|(ad)|(adag)|(al)|(an)|(ar)|(art)|(ass)|(edit)|(ex)|(ich)|(idn)|(inn)|(iss)|(ont)|(or)|(oz)|(ses)|(ss)|(us[.]B)|(us[.]D)|(us[.]Dr)|(us[.]M)|[MSde])|[mM]((ach)|(ag)|(anuf)|(anufac)|(arg)|(asc)|(dse)|(eas)|(ech)|(ed)|(er)|(etall)|(etaph)|(fd)|(fg)|(fr)|(frs)|(gmt)|(gr)|(grs)|(gt)|(hz)|(id)|(in)|(isc)|(kt)|(ktg)|(ngr)|(ol)|(on)|(orph)|(os)|(ph)|(sec)|(sg)|(tg)|(tge)|(tgs)|(tn)|(ts)|(us)|(xd)|(yc)|(ycol)|(ythol)|[ot])|(m)[cgiklm]
+ | (N)(([.]Dak)|([.]Ire)|([.]Mex)|(eb)|(ebr)|(eh)|(ep)|(eth)|(ev)|(ewf)|(fld)|(ic)|(ig)|(o)|(or)|(orw)|(ov)|[ab])|[nN](([.]wt)|(at)|(atl)|(aut)|(av)|(eg)|(eur)|(eurol)|(eut)|(ol)|(om)|(os)|(t[.]wt)|(um)|(umis)|[eo])|(n)[tw]
+ | (O)((bad)|(kla)|(nt)|(re)|(xon)|[Mbcp])|[oO]((bj)|(bl)|(bs)|(bstet)|(cc)|(ccas)|(ct)|(pp)|(pt)|(rch)|(rd)|(rdn)|(rg)|(rig)|(rnith)|(rth)|(tol))|(o)[bcpz]
+ | (P)((ac)|(acif)|(ak)|(al)|(d[.]B)|(d[.]D)|(d[.]M)|(enn)|(enna)|(et)|(h[.]B)|(h[.]C)|(h[.]D)|(h[.]G)|(h[.]M)|(har[.]B)|(har[.]D)|(har[.]M)|(hilem)|(resb)|(resby)|(rot)|(vt)|[Pa])|[pP]((am)|(ar)|(aren)|(arl)|(atd)|(ayt)|(ct)|(er)|(erp)|(ers)|(etr)|(etrog)|(fd)|(fg)|(har)|(harm)|(hil)|(hilos)|(hon)|(hotog)|(hotom)|(hr)|(hren)|(hys)|(hysiol)|(inx)|(izz)|(kg)|(kgs)|(kt)|(lf)|(ln)|(ls)|(lu)|(mk)|(mt)|(mts)|(neum)|(ol)|(olit)|(or)|(os)|(oss)|(pd)|(ph)|(pt)|(ptn)|(rec)|(red)|(ref)|(rem)|(repd)|(repn)|(reps)|(res)|(ret)|(rev)|(rf)|(rin)|(riv)|(rob)|(robs)|(roc)|(rof)|(ron)|(ropr)|(ros)|(rotec)|(rov)|(rox)|(sec)|(seud)|(sf)|(stg)|(sych)|(sychol)|(ta)|(tg)|(ty)|(ubl)|(wr)|(wt)|(xt)|(yro)|[gl])|(p)[dfhkmprst]
+ | (Q)(ue)|[qQ]((lty)|(q[.]v)|(rs)|(to)|(tr)|(trs)|(ty)|(ual)|(uant)|(uar)|(ues)|(uot))|(q)[lnqrtu]
+ | (R)(([.]C[.]Ch)|(epub)|(us)|[aev])|[rR]((ad)|(cpt)|(ct)|(ec)|(ecd)|(ecip)|(ecs)|(ect)|(ef)|(efl)|(eg)|(egd)|(egt)|(el)|(em)|(ep)|(epl)|(ept)|(eq)|(eqd)|(es)|(esp)|(et)|(ev)|(hbdr)|(heo)|(het)|(homb)|(it)|(iv)|(ms)|(nd)|(om)|(pt)|(te)|(tes)|(ul)|(wy)|[dmt])|(r)[foy]
+ | (S)(([.]Afr)|([.]Dak)|(ab)|(ask)|(at)|(ax)|(c[.]B)|(c[.]D)|(cand)|(cript)|(ept)|(ib)|(ic)|(kr)|(kt)|(lav)|(om)|(pan)|(te)|(un)|(up[.]Ct)|(waz)|(we)|(wed)|(witz)|(yr))|[sS](([.]ap)|(anit)|(atd)|(ch)|(ci)|(cr)|(culp)|(ec)|(ect)|(ects)|(ecy)|(ed)|(el)|(em)|(en)|(ep)|(epd)|(eq)|(eqq)|(er)|(erv)|(ess)|(fz)|(gd)|(hpt)|(hpts)|(hr)|(ht)|(ig)|(ld)|(oc)|(ol)|(oln)|(oph)|(ou)|(pec)|(pecif)|(pp)|(pr)|(pt)|(sp)|(ta)|(tacc)|(tat)|(tbd)|(td)|(ten)|(tenog)|(ter)|(tg)|(tge)|(tip)|(tk)|(tmt)|(tmts)|(tr)|(ubj)|(ubjs)|(ubs)|(ubsp)|(ubst)|(uf)|(uff)|(upp)|(uppl)|(upr)|(upt)|(upvr)|(ur)|(urg)|(urr)|(vgs)|(yl)|(yll)|(ym)|(yn)|(ynd)|(yst)|[cpw])|(s)[bdefhklmqrst]
+ | (T)((anz)|(as)|(enn)|(eut)|(ex)|(h[.]B)|(h[.]D)|(h[.]M)|(heo)|(hos)|(hur)|(hurs)|(it)|(ues)|(un)|(ur)|[hu])|[tT]((ab)|(bs)|(bsp)|(chr)|(ec)|(ech)|(echnol)|(el)|(eleg)|(er)|(err)|(fr)|(gt)|(heat)|(heol)|(herap)|(herm)|(inct)|(kt)|(lr)|(ng)|(npk)|(opog)|(pk)|(rans)|(ransf)|(ransl)|(ransp)|(rav)|(reas)|(rib)|(rigon)|(ripl)|(rop)|(rp)|(sp)|(wp)|(yp))|(t)[knpr]
+ | (U)((ni)|(rug)|[t])|[uU]((lt)|(nan)|(nb)|(nbd)|(niv)|(np)|(ns)|(rol)|(su)|(til))|(u)[x]
+ | (V)((at)|(enez)|(iet)|(ul)|[at])|[vV]((ac)|(al)|(ar)|(ars)|(bs)|(eg)|(el)|(er)|(ert)|(eter)|(ic)|(il)|(is)|(iz)|(oc)|(ocab)|(ol)|(ols)|(ou)|(ss)|(ulg))|(v)[bovs]
+ | (W)(([.]Va)|(ash)|(ed)|(is)|(yo))|[wW]((hf)|(hs)|(hsle)|(id)|(kly)|(mk)|(pn)|(rnt)|[m])|(w)[dhkt]
+ | (x)((-div)|(-int))
+ | (Y)((ug)|(ugo))|[yY]((el)|(eo)|(rs))|(y)[dr]
+ | (zool)
+)
+_end
+
+ # words that usually start a sentence
+_define EngStartWords
+(
+   (A) | (About) | (According) | (Accordingly) | (Actually) | (After) | (Again) | (All) | (Also) | (Although) | (Among) | (An) | (And) | (Another) | (Any) | (Anyway) | (Are) | (As) | (At)
+ | (Back) | (Because) | (Before) | (Besides) | (Between) | (Both) | (But) | (By)
+ | (Can) | (Clearly) | (Consequently) | (Conversely)
+ | (Dear) | (Despite) | (Did) | (Do) | (Does) | (Don't) | (During)
+ | (Each) | (Early) | (Eight) | (Even) | (Every) | (Everybody) | (Everyone) | (Except)
+ | (Fifth) | (Finally) | (First) | (Following) | (For) | (Four) | (Fourth) | (From) | (Further) | (Furthermore)
+ | (Generally) | (Given) | (Go) | (Great) | (Had) | (Have) | (Having) | (He) | (Hence) | (Her) | (Here) | (His) | (How) | (However)
+ | (I) | (If) | (In) | (Indeed) | (Initially) | (Instead) | (Is) | (It) | (Its)
+ | (Just)
+ | (Last) | (Later) | (Let) | (Like)
+ | (Many) | (Maybe) | (Meanwhile) | (More) | (Moreover) | (Most) | (Much) | (My)
+ | (Neither) | (Never) | (Nevertheless) | (New) | (Next) | (Ninth) | (No) | (None) | (Nonetheless) | (Nor) | (Not) | (Nothing) | (Now)
+ | (Of) | (Often) | (On) | (Once) | (One) | (Only) | (Or) | (Other) | (Others) | (Our) | (Over)
+ | (People) | (Perhaps) | (Please) | (Previous)
+ | (Rather) | (Recent) | (Right)
+ | (Second) | (See) | (Seventh) | (Several) | (She) | (Shortly) | (Should) | (Similarly) | (Since) | (Sixth) | (So) | (Some) | (Sometimes) | (Soon) | (Specifically) | (Still) | (Subsequently) | (Such)
+ | (Take) | (Tenth) | (That) | (The) | (Their) | (Then) | (There) | (Thereafter) | (Therefore) | (These) | (They) | (Third) | (This) | (Those) | (Though) | (Three) | (Through) | (Thus) | (To) | (Today) | (Two)
+ | (Under) | (Unfortunately) | (Unlike) | (Until) | (Upon) | (Using)
+ | (We) | (Well) | (What) | (Whatever) | (When) | (Whenever) | (Where) | (Whereas) | (Wherever) | (Whether) | (Which) | (Whichever) | (While) | (Whilst) | (Who) | (Why) | (Will) | (With) | (Within) | (Without)
+ | (Yes) | (Yet) | (You) | (Your)
+)
+_end
+
+_define BulletBody
+(
+   ([0-9][0-9]?)
+ | ([a-z])
+ | (i?i?i)
+ | (iv)
+ | (vi?i?i?)
+ | (ix)
+ | (xi?i?i?)
+ | (I?I?I)
+ | (IV)
+ | (VI?I?I?)
+ | (IX)
+ | (XI?I?I?)
+)
+_end
+
+_define Bullet
+(
+    (BulletBody[ ]?[.)])
+  | (\[[ ]?BulletBody[ ]?\])
+  | ([(][ ]?BulletBody[ ]?[)])
+)
+_end
+
+_define RefNumber
+(
+ # [32]
+ (\[ NBSPORSP? [0-9]?[0-9]?[0-9] NBSPORSP? \])
+ |
+ # [citation needed]
+ # :12
+ # arrived.:162-164 In
+ # .:121,154 The
+ # :43, 301
+ (NBSPORSP? [:] [0-9]?[0-9]?[0-9](NBSPORSP? [-,â€“] NBSPORSP? [0-9]?[0-9]?[0-9])? NBSPORSP?)
+ |
+ (\[ NBSPORSP? [cC][iI][tT][aA][tT][iI][oO][nN] NBSPORSP [nN][eE][eE][dD][eE][dD] NBSPORSP? \])
+ |
+ (\[ NBSPORSP? [nN][eE][eE][dD] NBSPORSP [cC][iI][tT][aA][tT][iI][oO][nN] NBSPORSP? \])
+)
+_end
+
+
+ #
+ # Breaking rules
+ #
+
+< AlwaysEndPunctuation > --> EOS
+
+< ENDPUNCTUATION (ChuPX|WHITESPACE)* > $ --> _call FnMarkTermPunkt
+
+< ENDPUNCTUATION WHITESPACE+ (ChuPX|WHITESPACE)* > CAPITAL --> _call FnMarkTermPunkt
+
+< ENDPUNCTUATION (ChuPX|WHITESPACE)* > WHITESPACE CAPITAL --> _call FnMarkTermPunkt
+
+ # 1. Sentence one." 2. Sentence two.
+< ENDPUNCTUATION WHITESPACE+ (ChuPX|WHITESPACE)* Bullet > WHITESPACE --> _call FnMarkTermPunkt
+
+ # 1. Sentence one". 2. Sentence two.
+< ENDPUNCTUATION (ChuPX|WHITESPACE)* WHITESPACE+ Bullet > WHITESPACE --> _call FnMarkTermPunkt
+
+< ENDPUNCTUATION WHITESPACE+ AlwaysStartPunctuation > --> _call FnMarkTermPunkt
+
+ # always no break if a word is followed by a comma,
+< (^|ChuPX|WHITESPACE) (LETTER|NUMBER|ChuPX)+ WHITESPACE? [,] > (WHITESPACE) --> _call FnNoBreak
+
+ # C. D. Jr., (e.g., t.p.  
+< (^|ChuPX|WHITESPACE) ABBREVIATION_SEQUENCE > (ChuPX|WHITESPACE) --> _call FnNoBreak
+
+
+ #
+ # English specific
+ #
+
+ # typical English abbreviation: fig.
+< (^|ChuPX|WHITESPACE) ((EngAbbreviations)|(EngTitles))[.] > (ChuPX|WHITESPACE) --> _call FnNoBreak
+
+ # one letter abbreviation: A.
+< (^|ChuPX|WHITESPACE) [A-Z][.] > (ChuPX|WHITESPACE) --> _call FnNoBreak
+
+ # ... in Nov. The new ...
+< (^|ChuPX|WHITESPACE) ((EngAbbreviations)|(EngTitles))[.] (ChuPX|WHITESPACE)+ EngStartWords > (ChuPX|WHITESPACE) --> _call FnLastDot
+
+ # C. D. Jr. The new ...
+< (^|ChuPX|WHITESPACE) ABBREVIATION_SEQUENCE (ChuPX|WHITESPACE)+ EngStartWords > (ChuPX|WHITESPACE) --> _call FnLastDot
+
+ # "... A. The ..." one letter abbreviation followed by a typical start word
+< (^|ChuPX|WHITESPACE) [A-Z][.] (ChuPX|WHITESPACE)+ EngStartWords > (ChuPX|WHITESPACE) --> _call FnLastDot
+
+ # Wikipedia sentence with reference at the end. Like this.[1] Or like this[2].
+ # ... our American humor.":64  Instead, Edison offered ...
+< ENDPUNCTUATION ["]? WHITESPACE? RefNumber WHITESPACE (ChuPX|WHITESPACE)* > CAPITAL --> EOS
+
+ # in qoutes:  ... bbb."
+< ENDPUNCTUATION ["] (WHITESPACE* ENDPUNCTUATION)? > (WHITESPACE) --> EOS
+
+ # Classics. p. 320. ... Scribner. pp. 352-366 ... ... Scribner<. pp. 352>-366 ...
+< ENDPUNCTUATION WHITESPACE+ [pP][pP]?[.] (WHITESPACE)? ([0-9][0-9]?[0-9]?) > (ChuPX|WHITESPACE) --> _call FnNoBreak
+
+
+ #
+ # Functions
+ #
+
+ # matches just last dot in a span
+_function FnLastDot
+< [.] [^.]+ $ > --> _call FnMarkTermPunkt
+_end
+
+ # matches the sequence of terminating punctuation marks
+ # followed by other punctuation attached without a space
+ # e.g. /." ... /
+_function FnMarkTermPunkt
+< (WHITESPACE* ENDPUNCTUATION+ ChuPX*)+ > --> EOS
+_end
+
+ # does not match anything
+_function FnNoBreak
+< $ $ $ > --> WORD
+_end
+

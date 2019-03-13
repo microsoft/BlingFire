@@ -1,0 +1,7 @@
+WORD 1
+XWORD 2
+SEG 3
+IGNORE 4
+EOS 5
+FnMarkTermPunkt 100
+FnNoBreak 110

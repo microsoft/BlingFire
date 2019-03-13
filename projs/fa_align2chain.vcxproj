@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7E5B748C-4E60-425F-8D33-13F89B9A000A}</ProjectGuid>
+    <RootNamespace>fa_align2chain</RootNamespace>
+    <OutputType>winexe</OutputType>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <PropertyGroup>
+    <IntDir>$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>%(ClCompile.PreprocessorDefinitions);BLING_FIRE_NOAP</PreprocessorDefinitions>
+      <AdditionalOptions>%(ClCompile.AdditionalOptions) /wd4127 /wd4512 /wd4099 /wd4505</AdditionalOptions>
+      <AdditionalIncludeDirectories>%(ClCompile.AdditionalIncludeDirectories); ..\blingfirecompile.library\inc; ..\blingfireclient.library\inc</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>%(Link.AdditionalDependencies);$(OutDir)blingfirecompile.lib</AdditionalDependencies>
+      <Subsystem>Console</Subsystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\blingfiretools\fa_align2chain\fa_align2chain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="blingfireclient.vcxproj">
+      <Project>{e5c5832a-46cb-4dcb-ab99-2329e7029129}</Project>
+    </ProjectReference>
+    <ProjectReference Include="blingfirecompile.vcxproj">
+      <Project>{a94f93ab-4852-4628-8de9-19c3e694297a}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
