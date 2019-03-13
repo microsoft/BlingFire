@@ -1,0 +1,46 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+
+  vmImage: Hosted Ubuntu 1604
+
+  demands: cmake
+
+
+
+steps:
+
+- task: CMake@1
+
+  displayName: 'CMake-Linux'
+
+  inputs:
+
+    cmakeArgs: ..
+
+
+
+- bash: make
+
+  workingDirectory: build
+
+  displayName: TriggerGNUMake
+
+
+
+- task: PublishBuildArtifacts@1
+
+  displayName: 'Publish Artifact: drop'
+
+  inputs:
+
+    PathtoPublish: /home/vsts/work/1/s/build
+
+
+
