@@ -1,10 +1,6 @@
 
 # Bling Fire Tokenizer - Open Source
 
-[![Build Status](https://dev.azure.com/vscode/VSCode/_apis/build/status/VS%20Code?branchName=master)](https://aka.ms/blingfire-builds)
-[![Feature Requests](https://img.shields.io/github/issues/Microsoft/vscode/feature-request.svg)](https://github.com/Microsoft/blingfire/issues)
-[![Bugs](https://img.shields.io/github/issues/Microsoft/vscode/bug.svg)](https://github.com/Microsoft/blingfire/issues)
-
 Bling Fire Tokenizer is am English tokenizer designed for fast-speed tokenization for text processing in NLP.
 It provides lightening fast tokenization with simple APIs based on Finite State Machines.
 
