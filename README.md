@@ -9,6 +9,14 @@ It provides lightening fast tokenization with simple APIs based on Finite State 
 To start using Bling Fire, you can build the project on Windows/Linux with [CMake](https://cmake.org/). For Python users, you can install the latest release using [pip](https://pypi.org/project/pip/).
 `pip install blingfire`
 
+## Tokenization examples
+### Python
+```python
+from blingfire import *
+text = 'This is the Bling-Fire tokenizer'
+output = text_to_words(text)
+```
+
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
