@@ -9,6 +9,18 @@ It provides lightening fast tokenization with simple APIs based on Finite State 
 To start using Bling Fire, you can build the project on Windows/Linux with [CMake](https://cmake.org/). For Python users, you can install the latest release using [pip](https://pypi.org/project/pip/).
 `pip install blingfire`
 
+## Benchmarking
+
+Comparing Bling Fire with other popular NLP libraries, Bling Fire shows **10X faster** speed in tokenization task
+
+| System   | Avg Run Time (Second Per 10,000 Passages) |
+|------------|---------------------------------------|
+| Bling Fire | 0.823                                 |
+| SpaCy      | 8.653                                 |
+| NLTK       | 17.821                                |
+
+See more at [benchmark wiki](https://github.com/Microsoft/BlingFire/wiki/Benchmark-Guide)
+
 ## Tokenization examples
 ### Python
 ```python
@@ -16,7 +28,6 @@ from blingfire import *
 text = 'This is the Bling-Fire tokenizer'
 output = text_to_words(text)
 ```
-
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
