@@ -21,7 +21,7 @@ Comparing Bling Fire with other popular NLP libraries, Bling Fire shows **10X fa
 
 See more at [benchmark wiki](https://github.com/Microsoft/BlingFire/wiki/Benchmark-Guide)
 
-## Tokenization examples
+## Example code
 ### Python
 ```python
 from blingfire import *
