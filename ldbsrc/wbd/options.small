@@ -2,7 +2,7 @@
 # Compilation options
 #
 
-OUTPUT = tp3.wbd.v4.bin
+OUTPUT = wbd.bin
 
 opt_build_wbd = --dict-root=. --full-unicode
 
