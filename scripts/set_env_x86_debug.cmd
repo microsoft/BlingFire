@@ -1,1 +1,0 @@
-SET PATH=%INETROOT%\public\ext\TranslationModel;%INETROOT%\private\packages\blingfirecompile.library\scripts;%INETROOT%\private\packages\blingfirecompile.library\bin\debug\i386;%INETROOT%\target\debug\i386;%INETROOT%\public\ext\sdk\vs10rtm\VC\bin;%PATH%
