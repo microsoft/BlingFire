@@ -28,6 +28,10 @@ from blingfire import *
 text = 'This is the Bling-Fire tokenizer'
 output = text_to_words(text)
 ```
+### Jupyter Notebook
+
+[Bling Fire Tokenizer Demo.ipynb](/doc/Bling%20Fire%20Tokenizer%20Demo.ipynb)
+
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
