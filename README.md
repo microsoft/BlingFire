@@ -26,6 +26,7 @@ See more at [benchmark wiki](https://github.com/Microsoft/BlingFire/wiki/Benchma
 To start using Bling Fire Library and Finite State Machine manipulation tools, you can build the project on Windows/Linux with [CMake](https://cmake.org/). You need this if you want to create your own tokenization / segmentation, stemming etc. logic or need finite state machines for any other need. [Read more here.](https://github.com/Microsoft/BlingFire/wiki/How-to-change-linguistic-resources). 
 
 If you simply want to use it in Python, you can install the latest release using [pip](https://pypi.org/project/pip/).
+
 `pip install blingfire`
 
 ## Example code
