@@ -3,7 +3,7 @@
 # tokenization rules are included
 #
 
-_include ../common/chu.fullunicode.def.txt
+_include common/chu.fullunicode.def.txt
 
 # previous contsin some errors --> _define WHITESPACE [\x0004-\x0020\x007F-\x009F\x00A0\x2000-\x200B\x200E\x200F\x202F\x205F\x2060\x2420\x2422\x2423\x2424\x3000\xFEFF\xFF02]
 _define WHITESPACE [\x0004-\x0020\x007F-\x009F\x00A0\x2000-\x200B\x200E\x200F\x202F\x205F\x2060\x2420\x2424\x3000\xFEFF]
