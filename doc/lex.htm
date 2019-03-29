@@ -1,0 +1,1206 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 11 (filtered)">
+<title>fa_lex</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Courier;
+	panose-1:2 7 4 9 2 2 5 2 4 4;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+@font-face
+	{font-family:"\@MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{font-family:"Times New Roman";
+	color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:56.7pt 42.5pt 56.7pt 85.05pt;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+
+</head>
+
+<body lang=RU link=blue vlink=purple>
+
+<div class=Section1>
+
+<p class=MsoNormal align=right style='text-align:right'><span lang=EN-US>25 July,
+2007</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><b><span lang=EN-US
+style='font-size:24.0pt'>Lexical analyzer (fa_lex)</span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US style='font-size:18.0pt'>Introduction</span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>The lexical analyzer (the lexer) takes a sequence of characters and
+returns a sequence of tokens; where every token is a meaningful unit identified
+by its type and its boundaries.</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>Everything that is not meaningful is normally discarded, like spaces
+or new-line symbols for C++. The tokens cannot overlap and include each other,
+in other words each character belongs to not more than one token. Depending on
+the language, the definition of the tokens can be different, see examples
+below:</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US>For C++:</span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Input: </span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>if(++i==0) { j = 0; }</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Output: </span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>if/OP (/LRB ++/OP i/VAR ==/OP
+0/NUM )/RBR {/LCBR j/VAR =/OP 0/NUM ;/OP }/RCBR</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Where {</span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>OP, LBR, RBR, VAR, NUM, LCBR, RCBR}
+</span><span lang=EN-US>is a possible set of token types for C++.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US>For English:</span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Input: </span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>Pierre Vinken, 61 years old, will
+join the board as a nonexecutive director Nov.29.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Output: </span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>Pierre/WORD Vinken/WORD ,/PUNKT
+61/CD years/WORD old/WORD ,/PUNKT will/WORD join/WORD the/WORD board/WORD
+as/WORD a/WORD nonexecutive/WORD director/WORD Nov./WORD 29/CD ./EOS</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Where: {</span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>WORD, PUNKT, CD, EOS}</span><span
+lang=EN-US> is a possible set of token types for English.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US style='font-size:18.0pt'>Grammar of
+fa_lex rules</span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>The lexer uses rules in order to identify the boundaries and types
+of the tokens. Each rule describes one token in a context. The rules are based
+on the character regular expressions.</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>Each rule consists of optional left context description, the token
+description, optional right context description and the token type. A token description
+is enclosed into triangular brackets. A left, right context and token descriptions
+are character regular expressions. However, context descriptions should not be cyclic
+(e.g. accept a string of an infinite length) and the token description should
+not be empty (e.g. accept a string of a zero length). All rules are combined
+together by an &quot;or&quot; operator. The following grammar in Backus-Naur
+form formally describes the syntax of the lexer rules.</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+<b>GRAMMAR</b> ::= <b>RULES</b></span></p>
+
+<p class=MsoNormal><b><span lang=EN-US style='font-size:10.0pt;font-family:
+Courier'>    GRAMMAR</span></b><span lang=EN-US style='font-size:10.0pt;
+font-family:Courier'> ::= <b>FUNCTIONS</b></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+<b>RULES</b> ::= <b>RULE</b></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+<b>RULES</b> ::= <b>RULE</b>\n <b>RULES</b></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+<b>RULE</b> ::= <b>CONDITION</b> --&gt; <b>ACTION</b></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+<b>CONDITION</b> ::= Regexp* &lt; Regexp &gt; Regexp*</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+<b>CONDITION</b> ::= &lt; Regexp &gt; Regexp*</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+<b>CONDITION</b> ::= Regexp* &lt; Regexp &gt;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+<b>CONDITION</b> ::= &lt; Regexp &gt;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+<b>ACTION</b> ::= Tag</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+<b>ACTION</b> ::= _call <b>FUNCTION_NAMES</b></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+<b>ACTION</b> ::= Tag _call <b>FUNCTION_NAMES</b></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+<b>FUNCTION_NAMES</b> ::= _main</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+<b>FUNCTION_NAMES</b> ::= FnName</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+<b>FUNCTION_NAMES</b> ::= FnName <b>FUNCTION_NAMES</b></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US style='font-size:10.0pt;font-family:
+Courier'>    FUNCTIONS </span></b><span lang=EN-US style='font-size:10.0pt;
+font-family:Courier'>::=<b> FUNCTION</b></span></p>
+
+<p class=MsoNormal><b><span lang=EN-US style='font-size:10.0pt;font-family:
+Courier'>    FUNCTIONS </span></b><span lang=EN-US style='font-size:10.0pt;
+font-family:Courier'>::=<b> FUNCTION</b>\n<b> FUNCTIONS</b></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+<b>FUNCTION</b> ::= _function FnName\n <b>RULES</b>\n _end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>    </span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>Regexp</span><span lang=EN-US>  --
+non-empty character-based regular expression</span></p>
+
+<p class=MsoNormal><span lang=EN-US>    </span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>Regexp*</span><span lang=EN-US> --
+acyclic character-based regular expression</span></p>
+
+<p class=MsoNormal><span lang=EN-US>    </span><span lang=DE style='font-size:
+10.0pt;font-family:Courier'>Tag </span><span lang=DE>– Tag name (token type
+name)</span></p>
+
+<p class=MsoNormal><span lang=DE>    </span><span lang=EN-US style='font-size:
+10.0pt;font-family:Courier'>FnName</span><span lang=EN-US> – function name, can
+be one of the tags or a new name</span></p>
+
+<p class=MsoNormal><span lang=EN-US>    _function – a keyword indicating
+beginning of the function</span></p>
+
+<p class=MsoNormal><span lang=EN-US>    _end – a keyword indicating the end of
+the function</span></p>
+
+<p class=MsoNormal><span lang=EN-US>    _call – a keyword indicating function
+call</span></p>
+
+<p class=MsoNormal><span lang=EN-US>    _main – a special function name
+referring to the main rule set</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US>Example 1:</span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'> 
+&lt; [0-9]+ &gt; --&gt; NUM</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'> 
+[0-9] &lt; [-+*/] &gt; [-]?[0-9] --&gt; OP</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'> 
+&lt; [[:alpha:]]+ &gt; --&gt; VAR</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US>Example 2:</span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:8.0pt;font-family:Courier'> 
+&lt; ([A-Za-z\x00C0-\x00D6\x00D8-\x00F6\x00F8-\x00FF\x0152\x0153])+[+-] &gt;
+[0-9] --&gt; WORD</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:8.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:8.0pt;font-family:Courier'> 
+</span><span lang=IT style='font-size:8.0pt;font-family:Courier'>&lt;
+([0]?[0-9]|(1)[0-9]|(2)[0-4])[:]([0-5][0-9])([:]([0-5][0-9]))? &gt; [^0-9]
+--&gt; HHMM</span></p>
+
+<p class=MsoNormal><span lang=IT style='font-size:8.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=IT style='font-size:8.0pt;font-family:Courier'> 
+&lt; ([\x0024\x00A2-\x00A5\x09F2\x09F3\x0E3F\x20A0\x20A2\x20A3\x20A4\x20A6-\x20AF])[\x0020\t]*</span></p>
+
+<p class=MsoNormal><span lang=IT style='font-size:8.0pt;font-family:Courier'>   
+((0)|[1-9][0-9]*)[\x0020\t]*((</span></p>
+
+<p class=MsoNormal><span lang=IT style='font-size:8.0pt;font-family:Courier'>    
+(AED)|(ARP)|(ATS)|(AUD)|(BBD)|(BEF)|(BGL)|(BHD)|(BMD)|(BRR)|(BRL)|(BSD)</span></p>
+
+<p class=MsoNormal><span lang=IT style='font-size:8.0pt;font-family:Courier'>  
+| (CAD)|(CHF)|(CLP)|(CNY)|(CSK)|(CYP)|(DEM)|(DKK)|(DJF)|(DZD)|(EGP)|(ESP)</span></p>
+
+<p class=MsoNormal><span lang=IT style='font-size:8.0pt;font-family:Courier'>  
+| (EUR)|(FIM)|(FJD)|(FRF)|(GBP)|(GRD)|(HKD)|(HUF)|(IDR)|(IEP)|(ILS)|(INR)</span></p>
+
+<p class=MsoNormal><span lang=IT style='font-size:8.0pt;font-family:Courier'>  
+| (IQD)|(ISK)|(ITL)|(JMD)|(JOD)|(JPY)|(KRW)|(KWD)|(LBP)|(LUF)|(LYD)|(MAD)</span></p>
+
+<p class=MsoNormal><span lang=IT style='font-size:8.0pt;font-family:Courier'>  
+| (MRO)|(MXP)|(MYR)|(NLG)|(NOK)|(NZD)|(OMR)|(PHP)|(PKR)|(PLN)|(PTE)|(QAR)</span></p>
+
+<p class=MsoNormal><span lang=IT style='font-size:8.0pt;font-family:Courier'>  
+| (ROL)|(RUR)|(SAR)|(SDD)|(SEK)|(SGD)|(SKK)|(SOS)|(SYP)|(SUR)|(THB)|(TND)</span></p>
+
+<p class=MsoNormal><span lang=IT style='font-size:8.0pt;font-family:Courier'>  
+| (TRL)|(TRY)|(TTD)|(TWD)|(USD)|(VEB)|(XEC)|(YER)|(ZAR)|(ZMK)|(DM)|(FF)</span></p>
+
+<p class=MsoNormal><span lang=IT style='font-size:8.0pt;font-family:Courier'>  
+</span><span lang=EN-US style='font-size:8.0pt;font-family:Courier'>|
+(\x20AC((uro)|(URO))[s]?)</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:8.0pt;font-family:Courier'> 
+)) &gt; ([^.,0-9A-Za-z\x00C0-\x00D6\x00D8-\x00F6\x00F8-\x00FF\x0152\x0153])
+--&gt; CURR</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:8.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US>The following rules are incorrect:</span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:8.0pt;font-family:Courier'> 
+&lt; [-+*/] &gt; <span style='color:red'>[-]?[0-9]+ </span>--&gt; OP</span><span
+lang=EN-US>   ; the context should be acyclic</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'> 
+&lt; <span style='color:red'>[-+*/]*</span> &gt; [-]?[0-9] --&gt; OP</span><span
+lang=EN-US>   ; the token description must not allow empty tokens</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'> 
+<span style='color:red'>[-]?[0-9]+ --&gt; CD</span></span><span lang=EN-US>      
+; the token definition should be enclosed in the triangular brackets</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US>The following are equivalent rule-sets:</span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>  1. The</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+&lt; [-+*/] &gt; [-]?[0-9] --&gt; OP</span></p>
+
+<p class=MsoNormal><span lang=EN-US>  and</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+&lt; [-+*/] &gt; [-][0-9] --&gt; OP</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+&lt; [-+*/] &gt; [0-9] --&gt; OP</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>  2. The</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+&lt; [-+*/] &gt; [[:alpha:]]|[[:digit:]] --&gt; OP</span></p>
+
+<p class=MsoNormal><span lang=EN-US>  and</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+&lt; [-+*/] &gt; [[:alpha:]] --&gt; OP</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+&lt; [-+*/] &gt; [[:digit:]] --&gt; OP</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>  3. The</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+&lt; [-+*/] &gt; [-]? --&gt; OP</span></p>
+
+<p class=MsoNormal><span lang=EN-US>  and</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+&lt; [-+*/] &gt; --&gt; OP</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-indent:6.0pt'><span lang=EN-US>4. The</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+&lt; [-+*/] &gt; [^a] --&gt; OP</span></p>
+
+<p class=MsoNormal style='text-indent:6.0pt'><span lang=EN-US>and</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+&lt; [-+*/] &gt; [-] --&gt; OP</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+&lt; [-+*/] &gt; [^a] --&gt; OP</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-indent:6.0pt'><span lang=EN-US>5. The</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+&lt; [-+*/] &gt; . --&gt; OP</span></p>
+
+<p class=MsoNormal><span lang=EN-US>  and</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+&lt; [-+*/] &gt; [^a] --&gt; OP</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+&lt; [-+*/] &gt; [^b] --&gt; OP</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US>Description of Functions:</span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>Functions are isolated named sets of rules in fa_lex syntax. </span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>If the action of the rule </span><span lang=EN-US style='font-family:
+Courier'>R </span><span lang=EN-US>contains </span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>_call</span><span lang=EN-US>
+keyword followed by a function name </span><span lang=EN-US style='font-size:
+10.0pt;font-family:Courier'>FnName</span><span lang=EN-US> or by a </span><span
+lang=EN-US style='font-size:10.0pt;font-family:Courier'>_main</span><span
+lang=EN-US> keyword then each time </span><span lang=EN-US style='font-family:
+Courier'>R</span><span lang=EN-US> extracts a token, the rule set </span><span
+lang=EN-US style='font-size:10.0pt;font-family:Courier'>FnName</span><span
+lang=EN-US> or </span><span lang=EN-US style='font-size:10.0pt;font-family:
+Courier'>_main</span><span lang=EN-US> is applied to the token span. If </span><span
+lang=EN-US style='font-size:10.0pt;font-family:Courier'>_call</span><span
+lang=EN-US> is followed by one function name then the function’s rule set
+extracts all possible non-overlapping tokens out of the span. If </span><span
+lang=EN-US style='font-size:10.0pt;font-family:Courier'>_call</span><span
+lang=EN-US> is followed by more than one function name then each corresponding
+rule set extracts just one token, one after another in a sequence with
+exception to the main rule set </span><span lang=EN-US style='font-size:10.0pt;
+font-family:Courier'>_main </span><span lang=EN-US>(it always extracts all
+possible tokens.)</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>As formal grammar defines, there may be three types of actions: a)
+tag assignment b) function call c) tag assignment and function call. If the
+action is a function call without tag assignment then no token corresponding to
+the span is extracted. In this case &quot;fa_lex&quot; returns whatever is the
+output of the calling function. It is possible that the calling function will
+return nothing.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>Functions are optional, they may be used for hierarchical tokens
+extractions (such as date as a whole and day, month and year as its parts,)
+they also may be used for wide context description and conflict resolution.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US>Examples of Functions:</span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>The following function </span><span lang=EN-US style='font-size:
+10.0pt;font-family:Courier'>HY_WORD</span><span lang=EN-US> is called to split
+the hyphenated word into segments. Input: “out-of-date”, output: “</span><span
+lang=EN-US style='font-size:10.0pt;font-family:Courier'>out/WORD -/WORD of/WORD
+-/WORD date/WORD” </span><span lang=EN-US>No nested tokens are created.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>_function
+HY_WORD</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&lt;
+[A-Za-z]+ &gt; --&gt; WORD</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&lt;
+[-] &gt; --&gt; WORD</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>_end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&lt;
+[A-Za-z]+([-][A-Za-z]+)+ &gt; --&gt; _call HY_WORD</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>In the following example the tag </span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>ACR</span><span lang=EN-US>
+assigned and the function </span><span lang=EN-US style='font-size:10.0pt;
+font-family:Courier'>ACR</span><span lang=EN-US> is called (it is fine to have
+functions and tags of the same names.) Input: “</span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>A.B.C.</span><span lang=EN-US>”,
+output: “</span><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>A.B.C./ACR
+A./WORD B./WORD C./WORD</span><span lang=EN-US>”. </span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>_function
+ACR</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&lt;
+[A-Z][.] &gt; --&gt; WORD</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>_end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&lt;
+([A-Z][.])+ &gt; --&gt; ACR _call ACR</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>The following functions </span><span lang=EN-US style='font-size:
+10.0pt;font-family:Courier'>DAY, MONTH, YEAR </span><span lang=EN-US>are called
+in a sequence one after another, each of them extracts just one token in the
+selected by the caller rule span. Input: “</span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>12/13/2006 13/12/2006</span><span
+lang=EN-US>”, output: “</span><span lang=EN-US style='font-size:10.0pt;
+font-family:Courier'>12/13/2006/DATE_US 12/MONTH 13/DAY 2006/YEAR 13/12/2006/DATE_EU
+13/DAY 12/MONTH 2006/YEAR”. </span><span lang=EN-US>For the cases when the
+input token matches both </span><span lang=EN-US style='font-size:10.0pt;
+font-family:Courier'>DATE_US</span><span lang=EN-US> and </span><span
+lang=EN-US style='font-size:10.0pt;font-family:Courier'>DATE_EU</span><span
+lang=EN-US> rules the fa_lex prefers tag name which has smaller value, so
+depending on the tagset definition </span><span lang=EN-US style='font-size:
+10.0pt;font-family:Courier'>DATE_US</span><span lang=EN-US> may be preferred to
+the </span><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>DATE_EU</span><span
+lang=EN-US> and vice versa (see “Conflict resolution rules.”)</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>_function
+MONTH</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&lt;
+[0-9][0-9] &gt; --&gt; MONTH</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>_end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>_function
+DAY</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&lt;
+[0-9][0-9] &gt; --&gt; DAY</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>_end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>_function
+YEAR</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&lt;
+[0-9][0-9][0-9]?[0-9]? &gt; --&gt; YEAR</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>_end</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&lt;
+[01][0-9][/][0123][0-9][/][0-9][0-9][0-9]?[0-9]? &gt; --&gt; DATE_US _call
+MONTH DAY YEAR</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&lt;
+[0123][0-9][/][01][0-9][/][0-9][0-9][0-9]?[0-9]? &gt; --&gt; DATE_EU _call DAY
+MONTH YEAR</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US>Extra syntax notes:</span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>1. The blank characters does not mean anything for fa_lex and they
+are simply ignored. In order to match with any of those characters, the
+following constructions can be used: </span><span lang=EN-US style='font-size:
+10.0pt;font-family:Courier'>\t, \n, \r, \f, \v, [ ], [\t], [\n], [\r], [\f],
+[\v], \x20, \x09, \x0D, \x0A, [\x20], [\x09], [\x0D], [\x0A], [[:blank:]],
+[[:space:]] </span><span lang=EN-US>and so on</span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>.</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>2. Left (</span><span lang=EN-US style='font-size:10.0pt;font-family:
+Courier'>^</span><span lang=EN-US>) and right (</span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>$</span><span lang=EN-US>) anchors
+are ordinary symbols for the lexer, they can be included into both contexts as
+well as the token definition. If possible, including them into the token
+definition is more preferable. The “any” symbol (e.g. </span><span lang=EN-US
+style='font-family:Courier'>.</span><span lang=EN-US> ) matches both of the
+anchors, the negation of a character (e.g. </span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>[^a]</span><span lang=EN-US>) also
+matches any of the anchors.</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>3. Chracter classes:</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US style='font-size:10.0pt;font-family:Courier'>        [:alnum:]
+[:alpha:] [:lower:] [:xdigit:]</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US style='font-size:10.0pt;font-family:Courier'>        [:digit:]
+[:space:] [:upper:] [:print:]</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US style='font-size:10.0pt;font-family:Courier'>        [:punct:]
+[:blank:] [:cntrl:] [:graph:]</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>are defined as in POSIX &quot;C&quot; locale and have to be extended
+for Unicode range, if necessary.</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>4. See POSIX 1003.2 standard for regular expressions for more
+details on the regular expression syntax (<a
+href="http://www.unusualresearch.com/regex/regexmanpage.htm">http://www.unusualresearch.com/regex/regexmanpage.htm</a>
+).</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US>Compilation:</span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>The lexer compiler fa_build_lex takes two input files: one a rule-set
+and the other a tagset. The tagset is a list of symbolic names of token types
+each of which has a numerical value associated with it. The tagset can be
+shared with some other modules like POS tagging, in case of NL analysis.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>Suppose the file </span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>lex_rules.utf8</span><span
+lang=EN-US> contains the following rule-set:</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+[0-9] &lt; [-+*/] &gt; [-]?[0-9] --&gt; PUNKT</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+&lt; [-]?[0-9]+ &gt; --&gt; CD</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+&lt; [-+*/]+ &gt; --&gt; WORD</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>The </span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>tagset.txt</span><span lang=EN-US>
+contains the following tagset:</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+CD 1</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>  
+ PUNKT 2</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+WORD 3</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>The following command will compile the rule-set:</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>   
+fa_build_lex --in=lex_rules.utf8 --out=lex_rules.dump \</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>     
+--build-dump --tagset=tagset.txt</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>The </span><span lang=EN-US style='font-size:10.0pt;font-family:
+Courier'>--build-dump</span><span lang=EN-US> parameter makes a memory-dump
+representation of the compiled rule-set, without this parameter the compiled rule-set
+will be stored in the textual representation. See the description of all
+switches by typing: </span><span lang=EN-US style='font-size:10.0pt;font-family:
+Courier'>fa_build_lex --help</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>If there were no compilation errors the
+output file </span><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>lex_rules.dump</span><span
+lang=EN-US> will be created.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US style='font-size:18.0pt'>Lexical
+analysis</span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>As it has been said, the lexical analysis is a process of conversion
+of a sequence of characters into a sequence of tokens; where each token is a
+meaningful unit identified by its type and its boundaries. Everything that is
+not the token is ignored. The output tokens cannot overlap and include each
+other, in other words each character of the input text belongs to not more than
+one token. In order to guarantee this condition, it is necessary to be able to
+prefer one match over the other if more than one rule matches the given character
+of the input text. This is addressed by the conflict resolution rules (see
+below).</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US>Conflict resolution for matching rules:</span></b></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>The following is the order in which fa_lex selects which rule to
+execute if more than one matched the text:</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:44.75pt;margin-bottom:
+0in;margin-left:27.0pt;margin-bottom:.0001pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>1. The leftmost rule,</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:44.75pt;margin-bottom:
+0in;margin-left:27.0pt;margin-bottom:.0001pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>2. The rule with the longest span,</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:44.75pt;margin-bottom:
+0in;margin-left:27.0pt;margin-bottom:.0001pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>3. The rule with the smallest left context,</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:44.75pt;margin-bottom:
+0in;margin-left:27.0pt;margin-bottom:.0001pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>4. The rule with the smallest right context,</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:44.75pt;margin-bottom:
+0in;margin-left:27.0pt;margin-bottom:.0001pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>5. The rule with no tag assignment (just
+function call)</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:44.75pt;margin-bottom:
+0in;margin-left:27.0pt;margin-bottom:.0001pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>6. The rule with the smaller tag value</span></p>
+
+<p class=MsoNormal style='margin-top:0in;margin-right:44.75pt;margin-bottom:
+0in;margin-left:27.0pt;margin-bottom:.0001pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>7. The rule with lexicographically smaller
+list of function names (based their values)</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>Conflict resolution rules #1 and #2 are common for many lexical
+analyzer implementations (including lex and flex). The rules #3 -- #7 are
+specific for fa_lex. Unlike in lex/flex in fa_lex the rule order does not play
+any role in conflict resolution, thus it absolutely does not matter in which
+order the rules are specified.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US>Runtime Execution:</span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>The lexical analysis of the text can be performed by a stand-alone
+program </span><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>fa_lex</span><span
+lang=EN-US>. It takes two obligatory parameters: a compiled rule-set and a
+tagset and reads from stdin or from an input file the raw text and prints out
+the extracted tokens to stdout or an output file in the tagged-text format. The
+output can be redirected to programs like </span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>fa_ts2ps, fa_gcd, fa_ts2stat</span><span
+lang=EN-US> or any other understanding this format.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>The following command will make a lexical analysis of the input text
+with respect to the grammar defined and compiled in the pervious section:</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>  
+$ echo 23452345+34534 | fa_lex --tagset=tagset.txt --stage=lex_rules.dump</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>  
+&gt; 23452345/CD +/PUNKT 34534/CD</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>  
+$ echo 23452345+34534+ | fa_lex --tagset=tagset.txt --stage=lex_rules.dump</span></p>
+
+<p class=MsoNormal><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>  
+&gt; 23452345/CD +/PUNKT 34534/CD +/WORD</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US style='font-size:18.0pt'>FAQ</span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US style='font-size:14.0pt'>1. Why use
+fa_lex?</span></b></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>The fa_lex lexical analyzer does not require rule-authors to write a
+C/C++ code or even have a C/C++ compiler installed. In fa_lex, the rule-sets
+are purely declarative. This allows authors (usually linguists) to focus on the
+linguistic aspects of the problem and be isolated from the actual
+implementation. The rules “by-design” cannot contain a hard to understand logic,
+they are more independent from each other, and, thus, easier to maintain than
+in other lexer programs.</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US style='font-size:14.0pt'>2. How is fa_lex
+different from flex?</span></b></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>Efficiency aspects:</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+     lang=EN-US>In fa_lex, the compiled automata (e.g. the tokenization logic) are
+     separated from the client code. A C++/C or even C#, Ruby or Perl program may
+     use the exact same tokenization automata.</span></li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+     lang=EN-US>Depending on how the automaton structure is represented in
+     memory, the fa_lex’s approach allows balancing between speed and size for
+     the same tokenization.</span></li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+     lang=EN-US>Unlike in flex, the result does not depend on rule order, there
+     is no such thing as rule priority. Conflicts are solved based on the span,
+     the token size, and the token type only, see “<b>Conflict resolution for
+     matching rules</b>” section.</span></li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+     lang=EN-US>Due to the previous points, the fa_lex lexical analyzer is
+     smaller and faster than one based on flex. And yet, there is a possibility
+     to get even more speed by using more space or to take even less space by
+     having a lower speed, e.g. speed/size balancing.</span></li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+     lang=EN-US>The fa_lex compiles faster than flex (the automata creation
+     stage only). This is mainly due to two reasons: the different semantics of
+     rule actions, and a better optimization for big grammars. The difference
+     can be significant 2 minutes vs. 2 hours on the same machine for the same
+     grammar.</span></li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>Authoring aspects:</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+     lang=EN-US>fa_lex has optional functions which may serve for complex
+     context description or for the nested tokens extraction.</span></li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+     lang=EN-US>Rule-authors don't write any code at all (even for the
+     actions), they can only specify the token type and the context. On later
+     stages of processing, if needed, the token normalization code can be
+     called with respect the token type.</span></li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+     lang=EN-US>Unlike in flex, it is possible to specify the left context.
+     However, for efficiency reasons it is better not to, if possible. </span></li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+     lang=EN-US>There are some slight syntactic differences, see “<b>Extra
+     syntax notes</b>” section.</span></li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>Other aspects:</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<ul style='margin-top:0in' type=disc>
+ <li class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+     lang=EN-US>The fa_lex does not have any legal restrictions on its use.</span></li>
+</ul>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><b><span
+lang=EN-US style='font-size:14.0pt'>3. How would you use a function for context
+description and conflict resolution?</span></b></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>As for the context you can detect that span contains something (for
+example, the quotes at the beginning and the end of the span) then you can
+apply a specific rule-set to this span (for example, a separate rule to the
+left quote, the right quote and the same rule-set for the rest of the span.)
+Needless to say this is impossible to do without functions.</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>As for the conflict resolution, the key here is that a function call
+is always preferred to the tag assignment. So if we need some special/exceptional
+treatment for this particular span(s) and tag priorities does not work then we
+just call a function for this span(s) and override the behavior.</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>For example, the ruleset 1:</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&lt;
+[^\s\t\r\n]+ &gt; --&gt; WORD</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=IT style='font-size:10.0pt;font-family:Courier'>&lt;
+[A-Za-z][.]([A-Za-z][.])+ &gt; --&gt; ACR</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&lt;
+e[.]g[.] &gt; --&gt; WORD</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>And the tagset:</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>ACR
+1</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>WORD
+2</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>The intension of the author is to mark
+sequences of non spaces with the tag </span><span lang=EN-US style='font-size:
+10.0pt;font-family:Courier'>WORD</span><span lang=EN-US>, but sequences of more
+than one letter followed by a dot with the tag </span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>ACR</span><span lang=EN-US>, but
+the &quot;e.g.&quot; as a </span><span lang=EN-US style='font-size:10.0pt;
+font-family:Courier'>WORD</span><span lang=EN-US>. Author wants to choose </span><span
+lang=EN-US style='font-size:10.0pt;font-family:Courier'>ACR</span><span
+lang=EN-US> every time possible and only for the rest of the cases use </span><span
+lang=EN-US style='font-size:10.0pt;font-family:Courier'>WORD</span><span
+lang=EN-US> tag, that is why the </span><span lang=EN-US style='font-size:10.0pt;
+font-family:Courier'>WORD</span><span lang=EN-US> tag has the biggest value in
+the tagset. The </span><span lang=EN-US style='font-size:10.0pt;font-family:
+Courier'>&quot;e.g.&quot;</span><span lang=EN-US> word however belongs to both
+the </span><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>/[A-Za-z][.]([A-Za-z][.])+/</span><span
+lang=EN-US> language and the </span><span lang=EN-US style='font-size:10.0pt;
+font-family:Courier'>/e[.]g[.]/</span><span lang=EN-US> language so  there is a
+conflict. This conflict cannot be resolved by changing the tag value, it either
+should be resolved by adding more context to the </span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>/e[.]g[.]/</span><span lang=EN-US>
+rule or by using a function call as follows (see the rulset2)</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>The ruleset 2:</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&lt;
+[^\s\t\r\n]+ &gt; --&gt; WORD</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=IT style='font-size:10.0pt;font-family:Courier'>&lt;
+[A-Za-z][.]([A-Za-z][.])+ &gt; --&gt; ACR</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&lt;
+e[.]g[.] &gt; --&gt; _call WORD</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>_function
+WORD</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>&lt;
+^ .+ $ &gt; --&gt; WORD</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US style='font-size:10.0pt;font-family:Courier'>_end</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:35.4pt;text-align:justify;text-justify:
+inter-ideograph'><span lang=EN-US>The function </span><span lang=EN-US
+style='font-size:10.0pt;font-family:Courier'>WORD</span><span lang=EN-US>
+assigns the tag </span><span lang=EN-US style='font-size:10.0pt;font-family:
+Courier'>WORD</span><span lang=EN-US> to the entire span. According to the
+priority rules the &quot;e.g.&quot; rule will have the highest priority. See “<b>Conflict
+resolution for matching rules</b>” section.</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=EN-US style='font-size:14.0pt'>4. How to
+obtain fa_lex?</span></b></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>The fa_lex lexical analyzer is available in the NLG-MAIN enlistment.
+The program fa_build_lex builds rule-sets and the fa_lex program is a stand
+alone program that does a lexical analysis, see ”<b>Compilation</b>” and “<b>Runtime
+Execution</b>” sections.</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+<p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph'><span
+lang=EN-US>&nbsp;</span></p>
+
+</div>
+
+</body>
+
+</html>
