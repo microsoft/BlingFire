@@ -9,15 +9,6 @@ Hi, we are a small team at Microsoft called Bling (Beyond Language Understanding
 
 Bling Fire Tokenizer is a tokenizer designed for fast-speed and quality tokenization of Natural Language text. It mostly follows the tokenization logic of NLTK, except hyphenated words are split and a few errors are fixed. Currently released model supports most of the languages except East Asian (Chinese Simplified, Traditional, Japanese, Korean, Thai). You should expect good results if a language uses space as a main token delimitter. The tokenizer high level API designed in a way that it requires 0 configuration, or initialization, or additional files and is friendly for use from languages like Python, Perl, C#, Java, etc. It is fast as uses deterministic finite state machines underneath.
 
-## Getting Started
-
-To start using Bling Fire Library and Finite State Machine manipulation tools, you can build the project on Windows/Linux with [CMake](https://cmake.org/). You need this if you want to create your own tokenization / segmentation, stemming etc. logic or need finite state machines for any other need. If you simply want to use the existing Python library you don't need this step.
-
-For Python users, you can install the latest release using [pip](https://pypi.org/project/pip/).
-`pip install blingfire`
-
-
-
 ## Benchmarking
 
 Comparing Bling Fire with other popular NLP libraries, Bling Fire shows **10X faster** speed in tokenization task
@@ -29,6 +20,13 @@ Comparing Bling Fire with other popular NLP libraries, Bling Fire shows **10X fa
 | NLTK       | 17.821                                |
 
 See more at [benchmark wiki](https://github.com/Microsoft/BlingFire/wiki/Benchmark-Guide)
+
+## Getting Started
+
+To start using Bling Fire Library and Finite State Machine manipulation tools, you can build the project on Windows/Linux with [CMake](https://cmake.org/). You need this if you want to create your own tokenization / segmentation, stemming etc. logic or need finite state machines for any other need. If you simply want to use the existing Python library you don't need this step.
+
+For Python users, you can install the latest release using [pip](https://pypi.org/project/pip/).
+`pip install blingfire`
 
 ## Example code
 ### Python
