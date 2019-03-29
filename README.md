@@ -1,5 +1,9 @@
 
-# Bling Fire Tokenizer - Open Source
+# Bling Fire
+
+## Introduction
+
+Hi, we are a small team at Microsoft called Bling (Beyond Language Understanding), we help Bing be smarter. Here we wanted to share with all of you our Finite State machine and REgular expression manipulation library (FIRE). We use FIRE for many several linguestic operations inside Bing such as Tokenization, Unknown word-guessing, Stemming / Lemmatization just to mention a few.
 
 Bling Fire Tokenizer is am English tokenizer designed for fast-speed tokenization for text processing in NLP.
 It provides lightening fast tokenization with simple APIs based on Finite State Machines.
