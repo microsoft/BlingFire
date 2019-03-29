@@ -7,7 +7,7 @@ Hi, we are a small team at Microsoft called Bling (Beyond Language Understanding
 
 ## Bling Fire Tokenizer
 
-Bling Fire Tokenizer is a tokenizer designed for fast-speed and quality tokenization of Natural Language text. It mostly follows the tokenization logic of NLTK, except hyphenated words are split and a few errors are fixed. Currently released model supports most of the languages except East Asian (Chinese Simplified, Traditional, Japanese, Korean, Thai). You should expect good results if a language uses space as a main token delimitter. The tokenizer high level API designed in a way that it requires 0 configuration, or initialization, or additional files and is friendly for non-native languages like Python, Perl, C#, Java, etc. It is fast as uses deterministic finite state machines underneath.
+Bling Fire Tokenizer is a tokenizer designed for fast-speed and quality tokenization of Natural Language text. It mostly follows the tokenization logic of NLTK, except hyphenated words are split and a few errors are fixed. Currently released model supports most of the languages except East Asian (Chinese Simplified, Traditional, Japanese, Korean, Thai). You should expect good results if a language uses space as a main token delimitter. The tokenizer high level API designed in a way that it requires 0 configuration, or initialization, or additional files and is friendly for use from languages like Python, Perl, C#, Java, etc. It is fast as uses deterministic finite state machines underneath.
 
 ## Getting Started
 
