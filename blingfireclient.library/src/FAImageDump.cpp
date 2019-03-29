@@ -53,8 +53,6 @@ void FAImageDump::FAFreeMm ()
 
 #else
 
-    LogAssert(false);
-
 #endif
 }
 
@@ -67,6 +65,8 @@ void FAImageDump::Load (const char * pFileName, const bool fUseMemMapping)
     FAImageDump::FAFreeHeap ();
     FAImageDump::FAFreeMm ();
 
+#ifndef BLING_FIRE_NOWINDOWS
+
     if (false == fUseMemMapping) {
 
         // load the file using fopen_s into the heap
@@ -77,6 +77,13 @@ void FAImageDump::Load (const char * pFileName, const bool fUseMemMapping)
         // load the file using memory mapping
         FALoadMm (pFileName);
     }
+
+#else
+
+    // load the file using fopen_s into the heap
+    FALoadHeap (pFileName);
+
+#endif
 }
 
 
@@ -135,8 +142,6 @@ void FAImageDump::FALoadMm (const char * pFileName)
     m_MustUnmap = true;
 
 #else
-
-    LogAssert(false);
 
 #endif
 }
