@@ -14,6 +14,7 @@ set (OPTIMIZE "-O4 -fexpensive-optimizations")
 set (CMAKE_CXX_FLAGS " -std=c++11 -fpic ${OPTIMIZE} -DNDEBUG")
 set (CMAKE_CXX_FLAGS_RELEASE " -std=c++11 -fpic ${OPTIMIZE} -DNDEBUG")
 set (CMAKE_CXX_FLAGS_DEBUG " -std=c++11 -fpic -O0 -g")
+set (default_build_type "Release")
 
 IF (UNIX OR LINUX)
   add_definitions ("-Wall -Wno-unknown-pragmas -DHAVE_ICONV_LIB -DHAVE_NO_SPECSTRINGS -D_VERBOSE -DBLING_FIRE_NOAP -DBLING_FIRE_NOWINDOWS")
