@@ -30,8 +30,7 @@ output = text_to_words(text)
 ```
 ### Jupyter Notebook
 
-This notebook demostrate how to leverage BlingFire tokenizer in classification problem:
-[Bling Fire Tokenizer Demo.ipynb](/doc/Bling%20Fire%20Tokenizer%20Demo.ipynb)
+[This notebook](/doc/Bling%20Fire%20Tokenizer%20Demo.ipynb) demostrates how Bling Fire tokenizer helps in Stack Overflow posts classification problem.
 
 ## Contributing
 
