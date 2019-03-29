@@ -3,10 +3,11 @@
 
 ## Introduction
 
-Hi, we are a small team at Microsoft called Bling (Beyond Language Understanding), we help Bing be smarter. Here we wanted to share with all of you our Finite State machine and REgular expression manipulation library (FIRE). We use FIRE for many several linguestic operations inside Bing such as Tokenization, Unknown word-guessing, Stemming / Lemmatization just to mention a few.
+Hi, we are a small team at Microsoft called Bling (Beyond Language Understanding), we help Bing be smarter. Here we wanted to share with all of you our Finite State machine and REgular expression manipulation library (FIRE). We use Fire for many several linguistic operations inside Bing such as Tokenization, Unknown word-guessing, Stemming / Lemmatization just to mention a few.
 
-Bling Fire Tokenizer is am English tokenizer designed for fast-speed tokenization for text processing in NLP.
-It provides lightening fast tokenization with simple APIs based on Finite State Machines.
+## Bling Fire Tokenizer
+
+Bling Fire Tokenizer is a tokenizer designed for fast-speed and quality tokenization of text processing in NLP. It follows the tokenization logic of NLTK, except hyphenated words are split and a few errors are fixed. Currently released model supports most of the languages except for East Asian (Chinese Simplified, Traditional, Japanese, Korean, Thai). You should expect good results if the language uses space as a main token delimitter. The tokenizer API designed in a way that requires 0 configuration, or initialization, or additional files and is friendly for non-native languages like Python, Perl, C#, Java, etc. It is lightening fast as uses deterministic finite state machines underneath.
 
 ## Getting Started
 
