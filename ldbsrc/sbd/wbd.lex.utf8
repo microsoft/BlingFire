@@ -2,7 +2,7 @@
 # Sentence breaking rules
 #
 
-_include ../common/chu.def.txt
+_include common/chu.def.txt
 
 
  # big dot, big ?, big !, Unicode line separator, Unicode paragprah separator

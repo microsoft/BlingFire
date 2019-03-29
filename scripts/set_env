@@ -2,11 +2,11 @@
 
 export FIRE_ROOT=`pwd`
 # the default place for dictionaries
-export DICTS_ROOT="$FIRE_ROOT/data"
+export DICTS_ROOT="."
 # debuging with efence
 export EF_ALIGNMENT=32
 
 TST=`echo "$PATH" | grep "$FIRE_ROOT"`
 if [ -z "$TST" ]; then
-  export PATH="$FIRE_ROOT/.:$FIRE_ROOT/scripts:$PATH"
+  export PATH="$FIRE_ROOT/Release:$FIRE_ROOT/scripts:$PATH"
 fi;
