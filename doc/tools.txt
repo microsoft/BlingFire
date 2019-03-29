@@ -1,0 +1,615 @@
+
+ Fire tools description                                          10 July, 2006
+
+
+i Brief Description of Tools
+
+General Notes:
+
+  1. Make sure Fire library and tools are up-to-date and recompiled
+
+  2. All utility support --help parameter, use fa_* --help for more consistent
+  usage description.
+
+  3. If some of programs or scripts do not work then error message is printed
+  out. Look for the first error  message. Try to run debug version of the 
+  program. "Unknown error" often occures when input path specified incorrectly.
+
+
+*** Quick Summary of Automata Manipulation Tools ***
+
+  fa_line2chain_unicode - Converts plain-text line into a chain of digitis.
+
+  fa_chains2mindfa - Calculates minimal DFA for the given sorted list of chains 
+    of digits.
+
+  fa_re2re_simplify - Does a regular expression simplification.
+
+  fa_re2nfa - Builds epsilon free NFA(s) from the regular expression(s).
+
+  fa_enfa2nfa - Removes epsilon transitions from NFA.
+
+  fa_nfa2nfa_any - Expands selected AnyIw symbol.
+
+  fa_nfa2revnfa - Calculates the reverse automaton for the given NFA.
+
+  fa_nfalist2nfa - Converts empty-line-separated list of NFAs into 
+    a single NFA.
+
+  fa_nfa2dfa - Calculates DFA for the given NFA (works for Rabin-Scott and Mealy
+    automata).
+
+  fa_nfa2mindfa - Calculates minimal DFA for the given NFA.
+
+  fa_dfa2mindfa - Calculates minimal DFA for the given DFA.
+
+  fa_dfa2iwclasses - Calculates equivalence classes over input weights of 
+    the DFA.
+
+  fa_dfa2mph - Builds Minimal Perfect Hash from the given acyclic DFA.
+
+  fa_fsmfsm2minfsmfsm - Calculates equivalence classes over input weights of 
+    the second automaton and modifes output weights of the first automaton by
+    them.
+
+  fa_fsm_renum - Makes different kinds of state renumerations.
+
+  fa_fsm2fsm - Converts one automaton type into another.
+
+  fa_fsm2fsm_pack - Builds a memory-dump representaiton for different types of 
+    automata and maps.
+
+  test_fsm - a tools for automata execution.
+
+
+*** Additional Automata Utility ***
+
+  fa_fsa2dot - Builds AT&T's dotty graph for the input automaton.
+
+  fa_fsm2stamp - Calculates key from the automata graph, if the automata 
+    transition graphs isomorphic then their stamps are equal.
+
+  fa_fsm_info - Calculates statistical information from automata.
+
+  fa_genfsm_rand - Generates random automaton with specified features.
+
+
+*** Tools Related To Linguistics ***
+
+  fa_build_dict - builds Tag, Tag/Prob or Raw dictionary.
+
+  fa_build_suff - A suffix rules compiler
+
+  fa_build_word_guesser - A word-guesser compiler
+
+  test_ldb - A console interface to the compiled PRM LDB, see prm.txt 
+    for details.
+
+  fa_preproc - a preprocessor (mainly for WRE rules).
+
+  fa_wrec - WRE compiler (does not include preprocessor)
+
+  fa_build_wre - Compiles WRE rules (includes preprocessor)
+
+  test_wre - Processes text by compiled WRE rules.
+
+  fa_build_parser - Compiles shallow parser rules (single stage only).
+
+  fa_ts2ps - Exceutes compiled stage of the shallow parser.
+
+  fa_build_gc - Compiles a stage of GC-style rules.
+
+  fa_gcd - Executes a single stage of compiled GC rules
+
+
+
+
+ii Textual Formats Description.
+
+1. Rabin-Scott automata
+
+  MaxState: N
+  MaxIw: M
+  initial: i_1
+  [ initial: i_2 ]
+  [ ... ]
+  final:  f_1
+  [ final:  f_2 ]
+  [ ... ]
+  s_1 d_1 iw_1
+  s_2 d_2 iw_2
+  s_3 d_3 iw_3
+  ...
+
+2. Moore automata
+
+  MaxState: N
+  MaxIw: M
+  initial: i_1
+  [ initial: i_2 ]
+  [ ... ]
+  final:  f_1
+  [ final:  f_2 ]
+  [ ... ]
+  s_1 d_1 iw_1
+  s_2 d_2 iw_2
+  s_3 d_3 iw_3
+  ...
+  \n
+  s_1 -> ow_1
+  s_2 -> ow_2
+  ...
+
+  or for Multi Moore that is:
+  \n
+  s_1 -> n ow1_1 ow1_2 ... ow1_n
+  s_2 -> m ow2_1 ow2_2 ... ow2_m
+  ...
+
+3. Mealy automata
+
+  MaxState: N
+  MaxIw: M
+  initial: i_1
+  [ initial: i_2 ]
+  [ ... ]
+  final:  f_1
+  [ final:  f_2 ]
+  [ ... ]
+  s_1 d_1 iw_1 ow_1
+  s_2 d_2 iw_2 ow_2
+  s_3 d_3 iw_3 ow_3
+  ...
+
+Where:
+  \all i; f_i, s_i, d_i, i_i <= N
+  \all i; iw_i <= M
+  \all i; Delta (s_i, iw_i) = d_i, for DFA
+  \all i; Delta (s_i, iw_i) = { d }_i, for NFA
+  \all i; Gamma (s_i) = ow_i, for Moore DFA
+  \all i; Gamma (s_i) = { ow }_i, for Moore Multi DFA
+  \all i; Gamma (s_i, iw_i, d_i) = ow_i, for Mealy NFA
+  \all i; Gamma (s_i, iw_i) = ow_i, for Mealy DFA
+
+  { d }_i - i-th set of destination states
+  { ow }_i - i-th set of output weights
+  Delta(s, iw) - a transition function
+  Gamma(s[,iw[,d]]) - a reaction function
+
+
+
+iii Samples of usage.
+
+
+Sample 1. Builds chains of unicode digitis from the input lines.
+
+  bin> printf "apple\napples\npeach\npeaches\n" | fa_line2chain_unicode 
+  00097 00112 00112 00108 00101
+  00097 00112 00112 00108 00101 00115
+  00112 00101 00097 00099 00104
+  00112 00101 00097 00099 00104 00101 00115
+
+
+Sample 2. Builds epsilon-free NFA from regular expression.
+
+  bin> printf ".* ((10 20 30 40) | (20 10 30 40))\n" | fa_re2nfa 
+
+    MaxState: 9
+    MaxIw: 40
+    initial: 0
+    initial: 1
+    initial: 5
+    final: 9
+    0 0 0
+    0 1 0
+    0 5 0
+    1 2 10
+    2 3 20
+    3 4 30
+    4 9 40
+    5 6 20
+    6 7 10
+    7 8 30
+    8 9 40
+
+
+Sample 3. Regular expression simplification.
+
+  bin> printf ".* ((10 20 30 40) | (20 10 30 40))\n" | fa_re2re_simplify
+  ((.)*)(((20)(10))|((10)(20)))(30)(40)
+
+
+Sample 4. Generates NFA list from the empty-line-separated regexps
+
+  bin, 0> printf "(10|20)*\n\n(10|20) (10|20)\n" | fa_re2nfa
+  initial: 0
+  initial: 1
+  initial: 2
+  final: 2
+  0 0 10
+  0 1 10
+  0 2 10
+  1 0 20
+  1 1 20
+  1 2 20
+  MaxState: 2
+  MaxIw: 20
+
+  initial: 0
+  initial: 1
+  final: 4
+  0 2 10
+  0 3 10
+  1 2 20
+  1 3 20
+  2 4 10
+  3 4 20
+  MaxState: 4
+  MaxIw: 20
+
+
+Sample 5. Expands '.' symbol into the whole alphabet plus any-other.
+
+  bin> printf ".* ((10 20 30 40) | (20 10 30 40))\n" | fa_re2re_simplify | fa_re2nfa
+   | fa_nfa2nfa_any --spec-any=0 --global
+
+  MaxState: 7
+  MaxIw: 40
+  initial: 0
+  initial: 1
+  initial: 3
+  final: 7
+  0 0 0
+  0 1 0
+  0 3 0
+  0 0 10
+  0 1 10
+  0 3 10
+  0 0 20
+  0 1 20
+  0 3 20
+  0 0 30
+  0 1 30
+  0 3 30
+  0 0 40
+  0 1 40
+  0 3 40
+  1 2 20
+  2 5 10
+  3 4 10
+  4 5 20
+  5 6 30
+  6 7 40
+
+
+Sample 6. Treats symbol 3 as epsilon and makes removal.
+
+  bin> printf "(10|20|30|40)* 3 ((10 20 30)|(30* 10 20))\n" | fa_re2nfa | fa_enfa2nf
+    a --epsilon=3
+
+  MaxState: 11
+  MaxIw: 40
+  initial: 0
+  initial: 4
+  final: 11
+  0 0 10
+  0 4 10
+  0 0 20
+  0 4 20
+  0 0 30
+  0 4 30
+  0 0 40
+  0 4 40
+  4 7 10
+  4 9 10
+  4 5 30
+  4 6 30
+  5 5 30
+  5 6 30
+  6 7 10
+  7 11 20
+  9 10 20
+  10 11 30
+
+
+Sample 7. Calculates reversal NFA for the given NFA.
+
+  bin> printf "10 20 30\n" | fa_re2nfa | fa_nfa2revnfa
+
+  MaxState: 3
+  MaxIw: 30
+  initial: 3
+  final: 0
+  1 0 10
+  2 1 20
+  3 2 30
+
+
+Sample 8. Calculates DFA from NFA.
+
+  bin> printf "(0|10|20)* ((10 20)|(20 10))" | fa_re2nfa | fa_nfa2dfa
+
+  MaxState: 4
+  MaxIw: 20
+  initial: 0
+  final: 3
+  final: 4
+  0 0 0
+  0 1 10
+  0 2 20
+  1 0 0
+  1 1 10
+  1 4 20
+  2 0 0
+  2 3 10
+  2 2 20
+  3 0 0
+  3 1 10
+  3 4 20
+  4 0 0
+  4 3 10
+  4 2 20
+
+
+Sample 9. Calculates Min DFA from NFA.
+
+  bin> printf "(0|10|20)* ((10 20)|(20 10)|(10 20? 20)|(20 10? 10)|(10 10 20))" | \
+          fa_re2nfa | fa_nfa2mindfa
+
+  MaxState: 7
+  MaxIw: 20
+  initial: 0
+  final: 3
+  final: 4
+  final: 5
+  final: 6
+  0 0 0
+  0 1 10
+  0 2 20
+  1 0 0
+  1 1 10
+  1 5 20
+  2 0 0
+  2 3 10
+  2 2 20
+  3 0 0
+  3 4 10
+  3 5 20
+  4 0 0
+  4 1 10
+  4 5 20
+  5 0 0
+  5 3 10
+  5 6 20
+  6 0 0
+  6 3 10
+  6 2 20
+
+
+Sample 10. Constructs minimal deterministic automaton from sorted chains.
+
+  bin, 0> printf "101\n100 100 102 13212\n100 100 102 13212 10\n101\n" | sort | \
+          fa_chains2mindfa
+
+  MaxState: 6
+  MaxIw: 13212
+  initial: 0
+  final: 4
+  final: 5
+  0 1 100
+  0 5 101
+  1 2 100
+  2 3 102
+  3 4 13212
+  4 5 10
+
+
+Sample 11. Calculates equivalence classes over input weights of DFA.
+
+  bin, 0> printf "(10|20|30|40)* (10|20|30|40) (20|30|40) (10|20)\n" | fa_re2nfa | \
+          fa_nfa2dfa | fa_dfa2iwclasses
+  40 -> 2
+  30 -> 2
+  20 -> 1
+  10 -> 0
+
+
+Sample 12. Prints to stdout transition graph in dotty format. Use dotty to view it.
+
+  bin> printf "(10|20)* (10|20) 20 10 20\n" | fa_re2nfa | fa_nfa2dfa | fa_fsa2dot
+
+  digraph fsm {
+   	node [shape = circle];
+  2 -> 3 [label="10:10"];
+  0 -> 1 [label="20:20"];
+  3 -> 1 [label="10:10"];
+  1 -> 2 [label="20:20"];
+  2 -> 2 [label="20:20"];
+  4 -> 3 [label="10:10"];
+  1 -> 1 [label="10:10"];
+  3 -> 4 [label="20:20"];
+  4 -> 2 [label="20:20"];
+  0 -> 1 [label="10:10"];
+  0 [label="0", style = filled, color = green];
+  1 [label="1"];
+  2 [label="2"];
+  3 [label="3"];
+  4 [label="4", shape = doublecircle];
+  }
+
+
+Sample 13. Generates automata graph stamp. If graphs are isomorphic the stams 
+  are equal.
+
+  bin> printf "((10 20* 20)|(10 30 10)|(10 30? 10))\n" | fa_re2nfa | fa_nfa2dfa | \
+          fa_dfa2mindfa | fa_fsm2stamp
+  c357a507a44e2df2fb09f6c70ee4caa7
+
+  bin> printf "((10 20+)|(10 30? 10))\n" | fa_re2nfa | fa_nfa2dfa | \
+          fa_dfa2mindfa | fa_fsm2stamp 
+  c357a507a44e2df2fb09f6c70ee4caa7
+
+
+Sample 14. Returns human readable statistical information of automata.
+
+  bin> echo "(10|20)* 10 (10|20) (10|20) (10|20)" | fa_re2nfa | fa_nfa2dfa | \
+       fa_fsm_info --st-hist=/dev/stdout
+
+  Trs Count = 32
+  Min State = 0
+  Max State = 15
+  Min Initial = 0
+  Max Initial = 0
+  Min Final = 6
+  Max Final = 15
+  Min Iw = 10
+  Max Iw = 20
+       2      2     15 f
+       2      2     14 f
+       2      2     13 f
+       2      2     12 f
+       2      2     11
+       2      2     10
+       2      2      9 f
+       2      2      8 f
+       2      2      7 f
+       2      2      6 f
+       2      2      5
+       2      2      4
+       2      2      3
+       2      2      2
+       2      2      1
+       2      2      0 i
+
+  bin> echo "(10|20)* 10 (10|20) (10|20) (10|20) (10|20) (10|20) (10|20) (10|20) (10|20) (10|20) (10|20) (10|20) (10|20) (10|20) (10|20) (10|20) (10|20) (10|20) (10|20) (10|20)" | \
+          fa_re2nfa | fa_nfa2dfa | fa_fsm_info 
+
+  Trs Count = 2097152
+  Min State = 0
+  Max State = 1048575
+  Min Initial = 0
+  Max Initial = 0
+  Min Final = 38
+  Max Final = 1048575
+  Min Iw = 10
+  Max Iw = 20
+
+
+Sample 15. Generates random FSA with some properties specified.
+
+  bin> fa_genfsm_rand --dst-type=par --fsm-type=rs-dfa-acyc --state-count=1000 --iw-max=1000  --tr-dst-b=10 | \
+          fa_fsm_renum | fa_dfa2mindfa | fa_fsm_info
+
+  Trs Count = 224682
+  Min State = 0
+  Max State = 999
+  Min Initial = 0
+  Max Initial = 0
+  Min Final = 998
+  Max Final = 999
+  Min Iw = 0
+  Max Iw = 1000
+
+
+Sample 16. Builds WRE from command line and passes text thru it. See wre-tutorial.rtf/htm 
+  for WRE syntax reference and more examples.
+
+  1. Compile WRE:
+
+  bin> printf '. "like"|"likes" "fruits"' | fa_build_wre --dict-root=. --out=wre.out
+
+  2. Execute WRE:
+
+  bin> printf 'he/NP likes/NP fruits/NP\n' | test_wre --tagset=tagset.txt --wre=wre.out
+  accepted
+  bin> printf 'I/NP like/NP fruits/NP\n' | test_wre --tagset=tagset.txt --wre=wre.out
+  accepted
+  bin> printf 'I/NP like/NP apples/NP\n' | test_wre --tagset=tagset2.txt --wre=wre.out
+  rejected
+
+
+Sample 17. Working with local-parser.
+
+
+  1. Copy source files into your working directory
+
+  2. Compile separately each stage:
+
+  fa_build_parser --in=nes.prsrc --out=nes.prsrc.dump --tagset=tagset2.txt --dict-root=.
+  fa_build_parser --in=sphr.prsrc --out=sphr.prsrc.dump --tagset=tagset2.txt --dict-root=.
+  fa_build_parser --in=nps.prsrc --out=nps.prsrc.dump --tagset=tagset2.txt --dict-root=.
+
+
+  3. Run all three stages as a pipe.
+
+  printf "apple/NN pie/NN" | \
+  fa_ts2ps --alg=nest --stage=nes.prsrc.dump --tagset=tagset2.txt --ignore-case | \
+  fa_ts2ps --stage=sphr.prsrc.dump --tagset=tagset2.txt --ignore-case --resume | \
+  fa_ts2ps --stage=nps.prsrc.dump --tagset=tagset2.txt --ignore-case --resume
+
+
+Sample 18. Making hyphenation patterns.
+
+  1. Generate all hyphenation patterns
+
+  bin> printf "ap[=0]p[=0]le\nap[=0]pli[=0]ca[=0]tion" | fa_hyph2chains --min-length=2 | \
+       sort | uniq -c | fa_iwowsuff2pats --min-length=2 > all.dict.utf8
+
+  bin> cat all.dict.utf8
+  a      2       0       0
+  ap      2       0       1
+  at      1       1       0
+  ca      1       0       1
+  e      1       0       0
+  ic      1       1       0
+  io      1       0       0
+  le      1       0       0
+  li      1       0       1
+  n      1       0       0
+  on      1       0       0
+  pli     1       0       0       1
+  ple     1       1       0       0
+  ppli    1       1       0       0       1
+  pple    1       1       1       0       0
+  ti      1       0       0
+
+  2. Store all patterns into a temporary dictionary
+
+  bin> fa_build_dict --input-enc=UTF-8 --hyph --type=mph --in=all.dict.utf8 \
+       --out-fsm=fsm.txt --out-k2i=k2i.txt --out-i2info=i2info.txt
+
+  3. Extract a subset which performs the same function
+
+  bin> printf "ap[=0]p[=0]le\nap[=0]pli[=0]ca[=0]tion" | \
+       fa_pats_select --format=txt --fsm=fsm.txt --k2i=k2i.txt \
+       --i2info=i2info.txt --out-unsolved=unsolved.utf8
+
+  a      0       0
+  ap      0       1
+  at      1       0
+  ca      0       1
+  e      0       0
+  io      0       0
+  n      0       0
+  ple     1       0       0
+  pli     0       0       1
+
+
+Sample 19. fa_lex tokenization
+
+  1. Compile the grammar.
+
+  D:\src\indexgen\scratch\sergeio\fire> fa_build_lex \
+    --in=data\sample.wbd.lex.utf8 --tagset=data\sample.wbd.tagset.txt \
+    --out=sample.wbd.dump --build-dump --dict-root=.
+
+  2. Execute the grammar.
+
+  D:\src\indexgen\scratch\sergeio\fire>echo 2+2=3| \
+    fa_lex --stage=sample.wbd.dump --tagset=data\sample.wbd.tagset.txt
+  2/NUM +/OP 2/NUM =/OP 3/NUM
+
+  D:\src\indexgen\scratch\sergeio\fire>echo 2+2+3| \
+    fa_lex --stage=sample.wbd.dump --tagset=data\sample.wbd.tagset.txt
+  <NO OUTPUT>
+
