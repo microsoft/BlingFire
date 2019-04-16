@@ -9,19 +9,20 @@ Hi, we are a team at Microsoft called Bling (Beyond Language Understanding), we 
 
 Bling Fire Tokenizer is a tokenizer designed for fast-speed and quality tokenization of Natural Language text. It mostly follows the tokenization logic of NLTK, except hyphenated words are split and a few errors are fixed. 
 
-**NLTK:** <pre>The South Florida/Miami area has previously hosted the event 10 times .
-Names such as French , ( De ) Roche , Devereux , D'Arcy , Treacy and Lacy are particularly common in the southeast of Ireland .
-Marconi 's European experiments in July 1899—Marconi may have transmitted the letter S ( dot/dot/dot ) in a naval demonstration
-In the confirmation window , click OK. Review the FMT Real - time Report ES .
-Go to C : \Users\Public\Documents\hyper - v\Virtual hard disks\ and delete MSIT_Win10.VHDX .
-… and an agency / vendor company are regulated by the country ' s civil code ; labor relationships between a …
+**NLTK:** <pre>The South <b>Florida/Miami</b> area has previously hosted the event 10 times .
+Names such as French , ( De ) Roche , Devereux , <b>D'Arcy</b> , Treacy and Lacy are particularly common in the southeast of Ireland .
+Marconi 's European experiments in July <b>1899—Marconi</b> may have transmitted the letter S ( <b>dot/dot/dot</b> ) in a naval demonstration
+In the confirmation window , click <b>OK.</b> Review the FMT Real - time Report ES .
+Go to C : <b>\Users\Public\Documents\hyper - v\Virtual hard disks\ </b> and delete <b>MSIT_Win10.VHDX</b> .
+… and an agency / vendor company are regulated by the country <b>' s</b> civil code ; labor relationships between a …
 </pre>
-**FIRE:** <pre>The South Florida / Miami area has previously hosted the event 10 times .
-Names such as French , ( De ) Roche , Devereux , D' Arcy , Treacy and Lacy are particularly common in the southeast of Ireland .
-Marconi 's European experiments in July 1899 — Marconi may have transmitted the letter S ( dot / dot / dot ) in a naval demonstration
-In the confirmation window , click OK . Review the FMT Real - time Report ES .
-Go to C : \ Users \ Public \ Documents \ hyper - v \ Virtual hard disks \ and delete MSIT_Win10 . VHDX .
-… and an agency / vendor company are regulated by the country 's civil code ; labor relationships between a …
+
+**FIRE:** <pre>The South <b>Florida / Miami</b> area has previously hosted the event 10 times .
+Names such as French , ( De ) Roche , Devereux , <b>D' Arcy</b> , Treacy and Lacy are particularly common in the southeast of Ireland .
+Marconi 's European experiments in July <b>1899 — Marconi</b> may have transmitted the letter S ( <b>dot / dot / dot</b> ) in a naval demonstration
+In the confirmation window , click <b>OK .</b> Review the FMT Real - time Report ES .
+Go to C : <b>\ Users \ Public \ Documents \ hyper - v \ Virtual hard disks \ </b> and delete <b>MSIT_Win10 . VHDX</b> .
+… and an agency / vendor company are regulated by the country <b>'s</b> civil code ; labor relationships between a …
 </pre>
 
 Currently released model supports most of the languages except East Asian (Chinese Simplified, Traditional, Japanese, Korean, Thai). You should expect good results if a language uses space as a main token delimitter. The tokenizer high level API designed in a way that it requires 0 configuration, or initialization, or additional files and is friendly for use from languages like Python, Perl, C#, Java, etc. It is fast as uses deterministic finite state machines underneath.
