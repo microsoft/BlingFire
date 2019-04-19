@@ -56,7 +56,7 @@ output = text_to_words(text)
 ```
 ### Jupyter Notebook
 
-[This notebook](/doc/Bling%20Fire%20Tokenizer%20Demo.ipynb) demostrates how Bling Fire tokenizer helps in Stack Overflow posts classification problem.
+[This notebook](/doc/Bling%20Fire%20Tokenizer%20Demo.ipynb) demonstrates how Bling Fire tokenizer helps in Stack Overflow posts classification problem.
 
 ## Contributing
 
