@@ -3,7 +3,7 @@ from ctypes import *
 import inspect
 import os.path
 import numpy as np
-from sys import platform
+import platform
 
 filename = inspect.getframeinfo(inspect.currentframe()).filename
 path = os.path.dirname(os.path.abspath(filename))
@@ -11,11 +11,18 @@ path = os.path.dirname(os.path.abspath(filename))
 # load the DLL
 blingfire = None
 
-if platform == "linux" or platform == "linux2":
-    # linux
-    blingfire = cdll.LoadLibrary(os.path.join(path, "libblingfiretokdll.so"))
-elif platform == "win32":
+# detect windows
+if platform.system() == "Windows":
     blingfire = cdll.LoadLibrary(os.path.join(path, "blingfiretokdll.dll"))
+# detect Mac OSX
+elif platform.system() == "Darwin":
+    pass
+else:
+# detect linux
+    if platform.libc_ver()[0] == 'glibc' and platform.libc_ver()[1][0] == '2':
+        blingfire = cdll.LoadLibrary(os.path.join(path, "libblingfiretokdll_1404.so"))
+    else:
+        blingfire = cdll.LoadLibrary(os.path.join(path, "libblingfiretokdll.so"))
 
 
 def text_to_sentences(s):
