@@ -89,3 +89,57 @@ def text_to_hashes(s, word_n_grams, bucketSize):
     # return numpy array without copying
     return np.frombuffer(o_bytes, dtype=c_uint32, count = o_len)
 
+def text_to_token_with_offsets(s, text_to_token_f, split_byte):    
+    # get the UTF-8 bytes
+    s_bytes = s.encode("utf-8")
+ 
+    # allocate the output buffer
+    o_bytes = create_string_buffer(len(s_bytes) * 2)
+    o_bytes_count = len(o_bytes)
+    
+    # buffers for word beging and end
+    o_start_offsets = (ctypes.c_int32 * o_bytes_count)()
+    o_end_offsets = (ctypes.c_int32 * o_bytes_count)()
+ 
+    # identify paragraphs
+    o_len = text_to_token_f(
+        c_char_p(s_bytes), c_int(len(s_bytes)), 
+        byref(o_bytes), byref(o_start_offsets), byref(o_end_offsets), 
+        c_int(o_bytes_count))
+    
+    num_tokens = o_bytes.value.count(split_byte) + 1
+          
+    utf8_offsets = [ o for start_end in zip(o_start_offsets[:num_tokens], o_end_offsets[:num_tokens]) for o in start_end]
+    
+    string_offsets = []    
+    
+    # Map the utf8 offsets to offsets in the original string - will break for "extended grapheme" 
+    # This seems to be undoing the FAUtf8Size based mapping being done inside TextToWordsWithOffsets and 
+    # TextToSentencesWithOffsets.     
+    string_offset = 0
+    is_end_offset = False
+    for utf8_offset, b in enumerate(s_bytes):
+        if b & 0xC0 != 0x80:
+            while len(string_offsets) < len(utf8_offsets) and utf8_offsets[len(string_offsets)] + is_end_offset == utf8_offset:
+                string_offsets.append(string_offset)
+                is_end_offset = not is_end_offset
+            string_offset += 1
+ 
+    if len(string_offsets) < num_tokens * 2:
+        string_offsets.append(len(s))
+            
+    assert len(string_offsets) == num_tokens * 2, f'{len(string_offsets)} != {num_tokens * 2}'
+ 
+    token_begin_end = [ (b, e) for b, e in zip(string_offsets[::2], string_offsets[1::2])]
+        
+    # compute the unicode string from the UTF-8 bytes
+    out_string = o_bytes.value.decode('utf8') 
+    
+    return out_string, token_begin_end
+ 
+def text_to_words_with_offsets(s):
+    return text_to_token_with_offsets(s, blingfire.TextToWordsWithOffsets, ord(' '))
+ 
+def text_to_sentences_and_offsets(s):
+    return text_to_token_with_offsets(s, blingfire.TextToSentencesWithOffsets, ord('\n'))
+
