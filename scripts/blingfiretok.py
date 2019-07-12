@@ -19,10 +19,7 @@ elif platform.system() == "Darwin":
     pass
 else:
 # detect linux
-    if platform.libc_ver()[0] == 'glibc' and platform.libc_ver()[1][0] == '2':
-        blingfire = cdll.LoadLibrary(os.path.join(path, "libblingfiretokdll_1404.so"))
-    else:
-        blingfire = cdll.LoadLibrary(os.path.join(path, "libblingfiretokdll.so"))
+    blingfire = cdll.LoadLibrary(os.path.join(path, "libblingfiretokdll.so"))
 
 
 def text_to_sentences(s):
@@ -143,3 +140,28 @@ def text_to_words_with_offsets(s):
 def text_to_sentences_and_offsets(s):
     return text_to_token_with_offsets(s, blingfire.TextToSentencesWithOffsets, ord('\n'))
 
+
+def load_model(file_name):
+    s_bytes = file_name.encode("utf-8")
+    load_model_fn = blingfire.LoadModel
+    load_model_fn.restype = c_void_p
+    h = load_model_fn(c_char_p(s_bytes))
+    return h
+
+
+def free_model(h):
+    free_model_fn = blingfire.FreeModel
+    free_model_fn.argtypes = [c_void_p]
+    free_model_fn(c_void_p(h))
+
+
+def text_to_ids(h, s, max_len, unk = 0):
+    # get the UTF-8 bytes
+    s_bytes = s.encode("utf-8")
+    # allocate the output buffer
+    o_bytes = (c_int32 * max_len)()
+    o_bytes_count = len(o_bytes)
+    # fill in the ids
+    blingfire.TextToIds(c_void_p(h), c_char_p(s_bytes), c_int(len(s_bytes)), byref(o_bytes), c_int(o_bytes_count), c_int(unk))
+    # return numpy array without copying
+    return np.frombuffer(o_bytes, dtype=c_uint32, count = o_bytes_count)

@@ -10,6 +10,7 @@
 #include "FAAllocator.h"
 #include "FAUtils.h"
 #include "FAUtf8Utils.h"
+#include "FAUtils_cl.h"
 #include "FAException.h"
 #include "FAImageDump.h"
 #include "FAWbdConfKeeper.h"
@@ -51,9 +52,11 @@ int g_max_depth = 2;
 bool g_no_postags = false;
 bool g_print_input = false;
 bool g_p2s_mode = false;
+bool g_normalize_input = false;
 
 const int MaxBuffSize = FALimits::MaxWordLen * FALimits::MaxWordCount;
-int g_Buff [MaxBuffSize];
+int g_RawBuff [MaxBuffSize];
+int g_NormBuff [MaxBuffSize];
 int g_Offsets [MaxBuffSize];
 
 const int MaxOutputSize = 30 * FALimits::MaxWordCount;
@@ -109,6 +112,10 @@ This program makes a lexical analysis.\n\
     Note: output tuples are used to separate an input paragraph into\n\
     sentences, each sentence starts from the first character past \n\
     previous sentence end and ends at the to position of the tuple\n\
+\n\
+  --normalize-input - normalizes entire input with internal charmap\n\
+    before doing tokenization. Note this may result into incorrect offset\n\
+    if the normalized string has different length\n\
 \n\
 ";
 }
@@ -172,6 +179,10 @@ void process_args (int& argc, char**& argv)
         }
         if (0 == strncmp ("--p2s-mode", *argv, 10)) {
             g_p2s_mode = true;
+            continue;
+        }
+        if (0 == strncmp ("--normalize-input", *argv, 17)) {
+            g_normalize_input = true;
             continue;
         }
     }
@@ -316,12 +327,18 @@ int __cdecl main (int argc, char ** argv)
             if (0 < LineLen) {
 
                 // UTF-8 --> UTF-32
-                const int BuffSize = ::FAStrUtf8ToArray \
-                    (pLine, LineLen, g_Buff, g_Offsets, MaxBuffSize);
-                FAAssert (0 < BuffSize && MaxBuffSize >= BuffSize, \
-                    FAMsg::IOError);
+                int BuffSize = ::FAStrUtf8ToArray (pLine, LineLen, g_RawBuff, g_Offsets, MaxBuffSize);
+                FAAssert (0 < BuffSize && MaxBuffSize >= BuffSize, FAMsg::IOError);
+                int * g_Buff = g_RawBuff;
 
                 if (false == g_no_process) {
+
+                    // see if we want to normalize the buffer first
+                    if (g_normalize_input && 0 < BuffSize) {
+                        BuffSize = ::FANormalize(g_Buff, BuffSize, g_NormBuff, MaxBuffSize, Conf.GetCharMap ());
+                        FAAssert (0 < BuffSize && MaxBuffSize >= BuffSize, FAMsg::IOError);
+                        g_Buff = g_NormBuff;
+                    }
 
                     const int OutSize = \
                         lex.Process (g_Buff, BuffSize, g_Out, MaxOutputSize);

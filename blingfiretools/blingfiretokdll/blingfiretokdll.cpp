@@ -11,7 +11,10 @@
 #include <string>
 #include <sstream>
 #include <mutex>
+#include <thread>
+#include <unordered_map>
 #include <assert.h>
+#include <bits/unordered_map.h>
 
 /*
 This library provides easy interface to sentence and word-breaking functionality
@@ -45,12 +48,21 @@ FAWbdConfKeeper g_SbdConf;
 FALexTools_t < int > g_Wbd;
 FALexTools_t < int > g_Sbd;
 
+const int WBD_WORD_TAG = 1;
 const int WBD_IGNORE_TAG = 4;
 
 // flag indicating the one-time initialization is done
 volatile bool g_fInitialized = false;
-std::mutex g_InitializationMutex;
+std::mutex g_InitializationMutex; // this mutex is used once for default models only
 
+// keep model data together
+struct FAModelData
+{
+    FAImageDump m_Img;
+    FALDB m_Ldb;
+    FAWbdConfKeeper m_Conf;
+    FALexTools_t < int > m_Engine; // initialized engine can be shared accross threads
+};
 
 
 //
@@ -625,4 +637,198 @@ const int TextToHashes(const char * pInUtf8Str, int InUtf8StrByteCount, int32_t 
 
     return hashArrSize;
 
+}
+
+
+//
+// Loads a model and return a handle.
+// Returns 0 in case of an error.
+//
+extern "C"
+void* LoadModel(const char * pszLdbFileName)
+{
+    FAModelData * pNewModelData = new FAModelData();
+    if (NULL == pNewModelData) {
+        return 0;
+    }
+
+    // load the bin file
+    pNewModelData->m_Img.Load (pszLdbFileName);
+    const unsigned char * pImgBytes = pNewModelData->m_Img.GetImageDump ();
+    if (NULL == pImgBytes) {
+        return 0;
+    }
+
+    // create a generic LDB object from bytes
+    pNewModelData->m_Ldb.SetImage (pImgBytes);
+
+    // get the configuration paramenters for [WBD]
+    const int * pValues = NULL;
+    const int iSize = pNewModelData->m_Ldb.GetHeader ()->Get (FAFsmConst::FUNC_WBD, &pValues);
+
+    // initialize WBD configuration
+    pNewModelData->m_Conf.Initialize (&(pNewModelData->m_Ldb), pValues, iSize);
+
+    // now initialize the engine
+    pNewModelData->m_Engine.SetConf(&(pNewModelData->m_Conf));
+
+    return (void*) pNewModelData;
+}
+
+
+//
+// Gets fa_lex predictions and returns ids of words or sub-words, returns upto MaxIdsArrLength ids, the rest of the array
+// is unchanged, so the array can be set to initial length and fill with 0's for padding.
+// Returns number of ids copied into the array.
+//
+// Example:
+//  input: Эpple pie.
+//  fa_lex output: эpple/WORD э/WORD_ID_1208 pp/WORD_ID_9397 le/WORD_ID_2571 pie/WORD pie/WORD_ID_11345 ./WORD ./WORD_ID_1012
+//  TextToIds output: [1208, 9397, 2571, 11345, 1012, ... <unchanged>]
+//
+extern "C"
+const int TextToIds(
+        void* ModelPtr,
+        const char * pInUtf8Str,
+        int InUtf8StrByteCount,
+        int32_t * pIdsArr,
+        const int MaxIdsArrLength,
+        const int UnkId = 0
+)
+{
+    // validate the parameters
+    if (0 >= InUtf8StrByteCount || InUtf8StrByteCount > FALimits::MaxArrSize || NULL == pInUtf8Str || 0 == ModelPtr) {
+        return 0;
+    }
+
+    // allocate buffer for UTF-32, sentence breaking results, word-breaking results
+    std::vector< int > utf32input(InUtf8StrByteCount);
+    int * pBuff = utf32input.data();
+    if (NULL == pBuff) {
+        return 0;
+    }
+
+    // allocate buffer for UTF-32, sentence breaking results, word-breaking results
+    std::vector< int > utf32input_norm(InUtf8StrByteCount);
+    int * pNormBuff = utf32input_norm.data();
+    if (NULL == pNormBuff) {
+        return 0;
+    }
+
+    // convert input to UTF-32
+    int BuffSize = ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff, InUtf8StrByteCount);
+    if (BuffSize <= 0 || BuffSize > InUtf8StrByteCount) {
+        return 0;
+    }
+
+    const FAModelData * pModelData = (const FAModelData *)ModelPtr;
+    const FAWbdConfKeeper * pConf = &(pModelData->m_Conf);
+    const FAMultiMapCA * pCharMap = pConf->GetCharMap ();
+
+    // do the normalization for the entire input
+    if (pCharMap) {
+        BuffSize = ::FANormalize(pBuff, BuffSize, pNormBuff, InUtf8StrByteCount, pCharMap);
+        if (BuffSize <= 0 || BuffSize > InUtf8StrByteCount) {
+            return 0;
+        }
+        pBuff = pNormBuff;
+    }
+
+    // keep sentence boundary information here
+    std::vector< int > WbdRes(BuffSize * 3);
+    int * pWbdRes = WbdRes.data();
+    if (NULL == pWbdRes) {
+        return 0;
+    }
+
+    // compute token and sub-token boundaries
+    const int WbdOutSize = pModelData->m_Engine.Process(pBuff, BuffSize, pWbdRes, BuffSize * 3);
+    if (WbdOutSize > BuffSize * 3 || 0 != WbdOutSize % 3) {
+        return 0;
+    }
+
+    int OutCount = 0;
+
+    // iterate over the results
+    for(int i = 0; i < WbdOutSize; i += 3) {
+
+        // ignore tokens with IGNORE tag
+        const int Tag = pWbdRes[i];
+        if (WBD_IGNORE_TAG == Tag) {
+            continue;
+        }
+
+        // For each token with WORD tag copy all subword tags into the output if
+        //  this word is covered completely by the subwords without gaps,
+        //  otherwise copy the UnkId tag (this is how it's done in the original BERT TokenizerFull).
+        if (WBD_WORD_TAG == Tag) {
+
+            const int TokenFrom = pWbdRes[i + 1];
+            const int TokenTo = pWbdRes[i + 2];
+
+            // see if we have subtokens for this token and they cover the token completely
+            int j = i + 3;
+            int numSubTokens = 0;
+            if (j < WbdOutSize) {
+
+                int ExpectedFrom = TokenFrom;
+                int SubTokenTag = pWbdRes[j];
+                int SubTokenFrom = pWbdRes[j + 1];
+                int SubTokenTo = pWbdRes[j + 2];
+
+                while (j < WbdOutSize && SubTokenTag > WBD_IGNORE_TAG && ExpectedFrom == SubTokenFrom) {
+
+                    ExpectedFrom = SubTokenTo + 1;
+                    numSubTokens++;
+                    j += 3;
+                    if (j < WbdOutSize) {
+                        SubTokenTag = pWbdRes[j];
+                        SubTokenFrom = pWbdRes[j + 1];
+                        SubTokenTo = pWbdRes[j + 2];
+                    } // else it will break at the while check
+                }
+                // if subtoken To is the same as token To then we split the token all the way
+                if (0 < numSubTokens && ExpectedFrom - 1 == TokenTo) {
+                    // output all subtokens tags
+                    for(int k = 0; k < numSubTokens && OutCount < MaxIdsArrLength; ++k) {
+                        const int SubTokenTag = pWbdRes[((k + 1) * 3) + i];
+                        if (OutCount < MaxIdsArrLength) {
+                            pIdsArr[OutCount++] = SubTokenTag;
+                        }
+                    }
+                } else {
+                    // output an unk tag
+                    if (OutCount < MaxIdsArrLength) {
+                        pIdsArr[OutCount++] = UnkId;
+                    }
+                }
+            }
+
+            // skip i forward if we looped over any subtokens
+            i = (j - 3);
+
+        } // of if (WBD_WORD_TAG == Tag) ...
+
+        if (OutCount >= MaxIdsArrLength) {
+            break;
+        }
+    }
+
+    return OutCount;
+}
+
+
+//
+// Frees memory from the model, after this call ModelPtr is no longer valid
+//  Double calls to this function with the same argument will case access violation
+//
+extern "C"
+int FreeModel(void* ModelPtr)
+{
+    if (NULL == ModelPtr) {
+        return 0;
+    }
+
+    delete (FAModelData*) ModelPtr;
+    return 1;
 }

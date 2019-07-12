@@ -162,6 +162,10 @@ $(tmpdir)/wbd.fsa.$(mode).dump: $(tmpdir)/wbd.rules.fsa.txt $(tmpdir)/wbd.rules.
 $(tmpdir)/wbd.mmap.$(mode).dump: $(tmpdir)/wbd.rules.map.txt
 	fa_fsm2fsm_pack $(opt_pack_wbd_mmap) --in=$(tmpdir)/wbd.rules.map.txt --out=$(tmpdir)/wbd.mmap.$(mode).dump --auto-test
 
+$(tmpdir)/charmap.mmap.$(mode).dump: $(tmpdir)/charmap.mmap.txt
+	fa_fsm2fsm_pack $(opt_pack_charmap) --in=$(tmpdir)/charmap.mmap.txt --out=$(tmpdir)/charmap.mmap.$(mode).dump --auto-test
+
+
 #
 # Configuration compilation
 #
@@ -386,6 +390,9 @@ $(tmpdir)/wbd.rules.map.txt: $(srcdir)/wbd.lex.utf8 $(srcdir)/wbd.tagset.txt
 	  --tagset=$(srcdir)/wbd.tagset.txt --out-fsa=$(tmpdir)/wbd.rules.fsa.txt \
 	  --out-fsa-iwmap=$(tmpdir)/wbd.rules.fsa.iwmap.txt \
 	  --out-map=$(tmpdir)/wbd.rules.map.txt
+
+$(tmpdir)/charmap.mmap.txt: $(srcdir)/charmap.utf8
+	fa_charmap2mmap < $(srcdir)/charmap.utf8 > $(tmpdir)/charmap.mmap.txt
 
 
 #
