@@ -8,3 +8,6 @@ EXPORTS
 	TextToWordsWithOffsets
 	GetBlingFireTokVersion
     TextToHashes
+    LoadModel
+    TextToIds
+    FreeModel

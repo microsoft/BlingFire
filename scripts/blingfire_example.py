@@ -26,3 +26,23 @@ print("Unigram hashes", str(o_hash_arr[0][:]))
 print("Bigram hashes", str(o_hash_arr[1][:]))
 print("Trigram hashes", str(o_hash_arr[2][:]))
 
+
+# load bert base tokenizer model, note one model can be used by multiple threads within the same process
+h = load_model("./bert_base_tok.bin")
+print("Model Handle: %s" % h)
+
+ids = text_to_ids(h, "Apple pie.", 64, 1)
+print(ids)
+ids = text_to_ids(h, "Эpple pie.", 64, 1)
+print(ids)
+
+print(s)
+ids = text_to_ids(h, s, 64, 1)
+print(ids)
+
+print(s+s)
+ids = text_to_ids(h, s+s, 64, 1)
+print(ids)
+
+free_model(h)
+print("Model Freed")
