@@ -11,10 +11,7 @@
 #include <string>
 #include <sstream>
 #include <mutex>
-#include <thread>
-#include <unordered_map>
 #include <assert.h>
-#include <bits/unordered_map.h>
 
 /*
 This library provides easy interface to sentence and word-breaking functionality
@@ -735,15 +732,16 @@ const int TextToIds(
     }
 
     // keep sentence boundary information here
-    std::vector< int > WbdRes(BuffSize * 3);
+    const int WbdResMaxSize = BuffSize * 6;
+    std::vector< int > WbdRes(WbdResMaxSize);
     int * pWbdRes = WbdRes.data();
     if (NULL == pWbdRes) {
         return 0;
     }
 
     // compute token and sub-token boundaries
-    const int WbdOutSize = pModelData->m_Engine.Process(pBuff, BuffSize, pWbdRes, BuffSize * 3);
-    if (WbdOutSize > BuffSize * 3 || 0 != WbdOutSize % 3) {
+    const int WbdOutSize = pModelData->m_Engine.Process(pBuff, BuffSize, pWbdRes, WbdResMaxSize);
+    if (WbdOutSize > WbdResMaxSize || 0 != WbdOutSize % 3) {
         return 0;
     }
 
@@ -776,7 +774,8 @@ const int TextToIds(
                 int SubTokenFrom = pWbdRes[j + 1];
                 int SubTokenTo = pWbdRes[j + 2];
 
-                while (j < WbdOutSize && SubTokenTag > WBD_IGNORE_TAG && ExpectedFrom == SubTokenFrom) {
+                // '<=' because last subtoken should be included
+                while (j <= WbdOutSize && SubTokenTag > WBD_IGNORE_TAG && ExpectedFrom == SubTokenFrom) {
 
                     ExpectedFrom = SubTokenTo + 1;
                     numSubTokens++;
@@ -787,6 +786,7 @@ const int TextToIds(
                         SubTokenTo = pWbdRes[j + 2];
                     } // else it will break at the while check
                 }
+
                 // if subtoken To is the same as token To then we split the token all the way
                 if (0 < numSubTokens && ExpectedFrom - 1 == TokenTo) {
                     // output all subtokens tags
