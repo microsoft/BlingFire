@@ -15,9 +15,12 @@ class TokenizationTest(tf.test.TestCase):
     tokenizer = tokenization.FullTokenizer(vocab_file="./vocab.txt", do_lower_case=True)
 
     for line in sys.stdin:
+
         line = line.strip()
 
         tokens = tokenizer.tokenize(text_to_words(line))
+        # print(tokens)
+
         ids = tokenizer.convert_tokens_to_ids(tokens)
 
         padded_ids = [0]*128

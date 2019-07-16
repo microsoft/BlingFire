@@ -39,5 +39,5 @@ with open("vocab.txt", "r", encoding='utf-8') as i:
                 if reg is "":
                     continue
 
-                print("< " + anchor + reg + " > --> WORD_ID_" + str(id), file=f)
+                print(" < " + anchor + reg + " > --> WORD_ID_" + str(id), file=f)
                 print("WORD_ID_" + str(id) + " " + str(id), file=t)

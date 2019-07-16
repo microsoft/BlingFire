@@ -5,31 +5,26 @@
 #
 
 # 'A' with umlaute
-\x00e4 ae
-\x00c4 ae
+\x00e4 a
+\x00c4 a
 
-# 'AE'
-\x00e6 ae
-\x00c6 ae
+# AE --> æ
+\x00c6 \x00e6
 
 # 'O' with umlaute
-\x00f6 oe
-\x00d6 oe
+\x00f6 o
+\x00d6 o
 
 # 'O' with slash
-\x00f8 oe
-\x00d8 oe
+\x00d8 \x00f8
 
 # 'OE'
-\x0153 oe
-\x0152 oe
+\x0152 \x0153
 
 # 'U' with umlaute
-\x00fc ue
-\x00dc ue
+\x00fc u
+\x00dc u
 
-# German hard 'S'
-\x00df ss
 
 
 #
@@ -77,15 +72,15 @@
 \x00ce \x0069
 \x00cf \x0069
 \x00d0 \x00f0
-\x00d1 \x00f1
+\x00d1 n
 \x00d2 \x006f
 \x00d3 \x006f
 \x00d4 \x006f
 \x00d5 \x006f
 \x00d9 \x0075
 \x00da \x0075
-\x00db \x00fb
-\x00dd \x00fd
+\x00db u
+\x00dd y
 \x00de \x00fe
 \x00e0 \x0061
 \x00e1 \x0061
@@ -101,14 +96,15 @@
 \x00ed \x0069
 \x00ee \x0069
 \x00ef \x0069
-\x00f1 \x00f1
+\x00f1 n
 \x00f2 \x006f
 \x00f3 \x006f
 \x00f4 \x006f
 \x00f5 \x006f
 \x00f9 \x0075
 \x00fa \x0075
-\x00fb \x00fb
+\x00fb u
+\x00fd y
 \x0100 \x0101
 \x0102 \x0103
 \x0104 \x0105
