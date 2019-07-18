@@ -13,7 +13,7 @@ for line in sys.stdin:
     line = text_to_words(line)
     # print(line)
 
-    ids = text_to_ids(h, line, 128, 1)
+    ids = text_to_ids(h, line, 128, 100)
     print(ids)
 
 free_model(h)
