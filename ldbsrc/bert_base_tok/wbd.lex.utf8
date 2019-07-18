@@ -25,7 +25,7 @@ _define APOSTROPHE [\x0027\x0060\x00B4\x2018\x2019]
  #
  # Define a regular letter
  #
-_define LETTER (ChuLX|ChuMc|ChuMn|ChuMe|[&_])
+_define LETTER (ChuLX|ChuMc|ChuMn|ChuMe)
 
  #
  # Regular Words (numbers and letters go together)
