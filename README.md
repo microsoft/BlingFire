@@ -48,12 +48,78 @@ If you simply want to use it in Python, you can install the latest release using
 `pip install blingfire`
 
 ## Example code
-### Python
+### Python example, simple tokenizer replacing NLTK:
 ```python
 from blingfire import *
 text = 'This is the Bling-Fire tokenizer'
 output = text_to_words(text)
+print(output)
 ```
+
+### Expected output:
+```
+This is the Bling - Fire tokenizer
+```
+
+
+### Python example, calling BERT BASE tokenizer compiled as one finite-state machine
+On one thread, it works 14x faster than orignal BERT tokenizer written in Python. Given this code is written in C++ it can be called from multiple threads without blocking on global interpreter lock thus achiving higher speed-ups for batch mode.
+
+```python
+import os
+import blingfire
+
+s = "Эpple pie. How do I renew my virtual smart card?: /Microsoft IT/ 'virtual' smart card certificates for DirectAccess are valid for one year. In order to get to microsoft.com we need to type pi@1.2.1.2."
+
+# one time load the model (we are using the one that comes with the package)
+h = blingfire.load_model(os.path.join(os.path.dirname(blingfire.__file__), "bert_base_tok.bin"))
+print("Model Handle: %s" % h)
+
+# use the model from one or more threads
+print(s)
+ids = blingfire.text_to_ids(h, s, 128, 100)  # sequence length: 128, oov id: 100
+print(ids)                                   # returns a numpy array of length 128 (padded or trimmed)
+
+print(s+s)
+ids = blingfire.text_to_ids(h, s+s, 128, 100)
+print(ids)
+
+# free the model at the end
+blingfire.free_model(h)
+print("Model Freed")
+```
+
+### Expected output:
+```
+Model Handle: 2854016629088
+Эpple pie. How do I renew my virtual smart card?: /Microsoft IT/ 'virtual' smart card certificates for DirectAccess are valid for one year. In order to get to microsoft.com we need to type pi@1.2.1.2.
+[ 1208  9397  2571 11345  1012  2129  2079  1045 20687  2026  7484  6047
+  4003  1029  1024  1013  7513  2009  1013  1005  7484  1005  6047  4003
+ 17987  2005  3622  6305  9623  2015  2024  9398  2005  2028  2095  1012
+  1999  2344  2000  2131  2000  7513  1012  4012  2057  2342  2000  2828
+ 14255  1030  1015  1012  1016  1012  1015  1012  1016  1012     0     0
+     0     0     0     0     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0     0     0     0     0
+     0     0     0     0     0     0     0     0]
+Эpple pie. How do I renew my virtual smart card?: /Microsoft IT/ 'virtual' smart card certificates for DirectAccess are valid for one year. In order to get to microsoft.com we need to type pi@1.2.1.2.Эpple pie. How do I renew my virtual smart card?: /Microsoft IT/ 'virtual' smart card certificates for DirectAccess are valid for one year. In order to get to microsoft.com we need to type pi@1.2.1.2.
+[ 1208  9397  2571 11345  1012  2129  2079  1045 20687  2026  7484  6047
+  4003  1029  1024  1013  7513  2009  1013  1005  7484  1005  6047  4003
+ 17987  2005  3622  6305  9623  2015  2024  9398  2005  2028  2095  1012
+  1999  2344  2000  2131  2000  7513  1012  4012  2057  2342  2000  2828
+ 14255  1030  1015  1012  1016  1012  1015  1012  1016  1012  1208  9397
+  2571 11345  1012  2129  2079  1045 20687  2026  7484  6047  4003  1029
+  1024  1013  7513  2009  1013  1005  7484  1005  6047  4003 17987  2005
+  3622  6305  9623  2015  2024  9398  2005  2028  2095  1012  1999  2344
+  2000  2131  2000  7513  1012  4012  2057  2342  2000  2828 14255  1030
+  1015  1012  1016  1012  1015  1012  1016  1012     0     0     0     0
+     0     0     0     0     0     0     0     0]
+Model Freed
+```
+
+
 ### Jupyter Notebook
 
 [This notebook](/doc/Bling%20Fire%20Tokenizer%20Demo.ipynb) demonstrates how Bling Fire tokenizer helps in Stack Overflow posts classification problem.
