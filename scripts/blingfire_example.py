@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 from blingfiretok import *
 
-s = "Hello, World! Hello, Café! How do I renew my virtual smart card?: /Microsoft IT/ 'virtual' smart card certificates for DirectAccess are valid for one year. In order to get to microsoft.com we need to type pi@1.2.1.2."
+s = u"Hello, World! Hello, Café! How do I renew my virtual smart card?: /Microsoft IT/ 'virtual' smart card certificates for DirectAccess are valid for one year. In order to get to microsoft.com we need to type pi@1.2.1.2."
 print("Input: " + s)
 
 print("Tokenizer Version: " + str(get_blingfiretok_version()))
@@ -33,7 +34,7 @@ print("Model Handle: %s" % h)
 
 ids = text_to_ids(h, "Apple pie.", 64, 1)
 print(ids)
-ids = text_to_ids(h, "Эpple pie.", 64, 1)
+ids = text_to_ids(h, u"Эpple pie.", 64, 1)
 print(ids)
 
 print(s)
