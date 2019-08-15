@@ -95,8 +95,8 @@ def text_to_token_with_offsets(s, text_to_token_f, split_byte):
     o_bytes_count = len(o_bytes)
     
     # buffers for word beging and end
-    o_start_offsets = (ctypes.c_int32 * o_bytes_count)()
-    o_end_offsets = (ctypes.c_int32 * o_bytes_count)()
+    o_start_offsets = (c_int32 * o_bytes_count)()
+    o_end_offsets = (c_int32 * o_bytes_count)()
  
     # identify paragraphs
     o_len = text_to_token_f(
