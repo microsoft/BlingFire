@@ -1,7 +1,7 @@
 import unicodedata
 
 # iterate over all unicode character code points
-for i in range(0x20, 0x1FFFF):
+for i in range(0x20, 0x10FFFF):
     try:
         # get the text with one character
         text = "".join([chr(i)])

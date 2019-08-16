@@ -6,7 +6,7 @@ import sys
 import tensorflow as tf
 import tokenization
 import numpy as np
-from blingfiretok import *
+#from blingfiretok import *
 
 class TokenizationTest(tf.test.TestCase):
 
@@ -18,8 +18,8 @@ class TokenizationTest(tf.test.TestCase):
 
         line = line.strip()
 
-        tokens = tokenizer.tokenize(text_to_words(line))
-        # print(tokens)
+        tokens = tokenizer.tokenize(line)
+        #print(tokens)
 
         ids = tokenizer.convert_tokens_to_ids(tokens)
 

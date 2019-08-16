@@ -1,0 +1,12 @@
+#
+# Runtime options
+#
+
+[wbd]
+max-depth 4
+xword 2
+seg 3
+ignore 4
+fsm 1
+multi-map-mode triv-dump
+multi-map 2
