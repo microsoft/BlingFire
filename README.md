@@ -133,14 +133,16 @@ Model Handle: 2854016629088
 Model Freed
 ```
 
-### Example of using basic tokenization model instead of available tokenizers
+### Example of using Bling Fire in your text classification task
 
 [This notebook](/doc/Bling%20Fire%20Tokenizer%20Demo.ipynb) demonstrates how Bling Fire tokenizer helps in Stack Overflow posts classification problem.
 
 
 ## To create your own finite-state models
 
-To start using Bling Fire Finite State Machine manipulation tools, you need to build the project on Windows/Linux with [CMake](https://cmake.org/). You need this if you want to create your own tokenization / segmentation, stemming, etc finite-state models. [Read more here.](https://github.com/Microsoft/BlingFire/wiki/How-to-change-linguistic-resources)
+If you want to create your own tokenization or any other finite-state model, you need to compile the tools first. 
+
+[This Document](https://github.com/Microsoft/BlingFire/wiki/How-to-change-linguistic-resources) is an introduction into compilation of the C++ code and linguistic resources.
 
 
 
