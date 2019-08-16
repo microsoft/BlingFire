@@ -9,7 +9,22 @@ Hi, we are a team at Microsoft called Bling (Beyond Language Understanding), we 
 
 Bling Fire Tokenizer is a tokenizer designed for fast-speed and quality tokenization of Natural Language text. 
 
-The default model mostly follows the tokenization logic of NLTK, except hyphenated words are split and a few errors are fixed. 
+The default model follows the tokenization logic of NLTK, except hyphenated words are split and a few errors are fixed. We also support arbitrary models with normalization and sub-token extraction like in BERT tokenizer. The tokenizer high level API designed in a way that it requires minimal or no configuration, or initialization, or additional files and is friendly for use from languages like Python, Perl, C#, Java, etc.
+
+The default model is built in and does not need a file to load.
+
+We provide 4 compiled models for BERT base/large, BERT base/large cased, BERT Chinese and BERT Multilinugual Cased.  
+
+| File Name   | Models it should be used for |
+|------------|---------------------------------------|
+| bert_base_tok.bin | BERT Base/Large                                 |
+| bert_base_cased_tok.bin      | BERT Base/Large Cased                                 |
+| bert_chinese.bin       | BERT Chinese                                |
+| bert_multi_cased.bin       | BERT Multi Lingual Cased                                |
+
+Oh yes, it is also fast, as uses minimal deterministic finite state machines underneath. So if real-time inference is what you are doing and latency is an issue you have to try Bling Fire!
+
+## Bling Fire vs NLTK Output
 
 **NLTK:** <pre>The South <b>Florida/Miami</b> area has previously hosted the event 10 times .
 Names such as French , ( De ) Roche , Devereux , <b>D'Arcy</b> , Treacy and Lacy are particularly common in the southeast of Ireland .
@@ -26,10 +41,6 @@ In the confirmation window , click <b>OK .</b> Review the FMT Real - time Report
 Go to C : <b>\ Users \ Public \ Documents \ hyper - v \ Virtual hard disks \ </b> and delete <b>MSIT_Win10 . VHDX</b> .
 … and an agency / vendor company are regulated by the country <b>'s</b> civil code ; labor relationships between a …
 </pre>
-
-The tokenization model also supports normalization and sub-token extraction like in BERT tokenizer. In fact we provide 4 compiled models for BERT base/large, BERT base/large cased, BERT Chinese and BERT Multilinugual Cased. See examples below. The tokenizer high level API designed in a way that it requires minimal configuration, or initialization, or additional files and is friendly for use from languages like Python, Perl, C#, Java, etc. 
-
-Oh yes, it is also fast, as uses minimal deterministic finite state machines underneath!
 
 ## Benchmarking of a default model
 
@@ -48,8 +59,6 @@ See more at [benchmark wiki](https://github.com/Microsoft/BlingFire/wiki/Benchma
 If you simply want to use it in Python, you can install the latest release using [pip](https://pypi.org/project/pip/):
 
 `pip install blingfire`
-
-To start using Bling Fire Finite State Machine manipulation tools, you need to build the project on Windows/Linux with [CMake](https://cmake.org/). You need this if you want to create your own tokenization / segmentation, stemming, etc finite-state models. [Read more here.](https://github.com/Microsoft/BlingFire/wiki/How-to-change-linguistic-resources)
 
 
 ## Examples
@@ -127,6 +136,12 @@ Model Freed
 ### Example of using basic tokenization model instead of available tokenizers
 
 [This notebook](/doc/Bling%20Fire%20Tokenizer%20Demo.ipynb) demonstrates how Bling Fire tokenizer helps in Stack Overflow posts classification problem.
+
+
+## To create your own finite-state models
+
+To start using Bling Fire Finite State Machine manipulation tools, you need to build the project on Windows/Linux with [CMake](https://cmake.org/). You need this if you want to create your own tokenization / segmentation, stemming, etc finite-state models. [Read more here.](https://github.com/Microsoft/BlingFire/wiki/How-to-change-linguistic-resources)
+
 
 
 ## Contributing
