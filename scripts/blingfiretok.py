@@ -125,7 +125,7 @@ def text_to_token_with_offsets(s, text_to_token_f, split_byte):
     if len(string_offsets) < num_tokens * 2:
         string_offsets.append(len(s))
             
-    assert len(string_offsets) == num_tokens * 2, f'{len(string_offsets)} != {num_tokens * 2}'
+    assert len(string_offsets) == num_tokens * 2, '%s != %s' % (len(string_offsets), num_tokens * 2)
  
     token_begin_end = [ (b, e) for b, e in zip(string_offsets[::2], string_offsets[1::2])]
         
