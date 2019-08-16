@@ -58,7 +58,7 @@ See more at [benchmark wiki](https://github.com/Microsoft/BlingFire/wiki/Benchma
 
 If you simply want to use it in Python, you can install the latest release using [pip](https://pypi.org/project/pip/):
 
-`pip install blingfire`
+`pip install -U blingfire`
 
 
 ## Examples
