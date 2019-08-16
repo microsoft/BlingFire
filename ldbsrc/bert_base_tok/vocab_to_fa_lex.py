@@ -14,7 +14,7 @@ def token2regexp(token):
         elif c == '[':
             reg.append("[\\[]")
         elif c == '^':
-            reg.append("[\\^]")
+            reg.append("[\\x5E]")
         elif c == '-':
             reg.append("[\\-]")
         else:
@@ -27,7 +27,14 @@ def token2regexp(token):
 
 with open("vocab.txt", "r", encoding='utf-8') as i:
     with open("vocab.falex", "w", encoding='utf-8') as f:
-        with open("tagset.txt", "w", encoding='utf-8') as t:
+        with open("wbd.tagset.txt", "w", encoding='utf-8') as t:
+
+            print("WORD 1", file=t)
+            print("XWORD 2", file=t)
+            print("SEG 3", file=t)
+            print("IGNORE 4", file=t)
+            print("FnTokWord 99", file=t)
+
             for (id, line) in enumerate(i):
 
                 if id < 100:
@@ -36,7 +43,7 @@ with open("vocab.txt", "r", encoding='utf-8') as i:
                 line = line.strip()
                 anchor, reg = token2regexp(line)
 
-                if reg is "":
+                if reg == "":
                     continue
 
                 print(" < " + anchor + reg + " > --> WORD_ID_" + str(id), file=f)
