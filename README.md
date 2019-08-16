@@ -7,7 +7,9 @@ Hi, we are a team at Microsoft called Bling (Beyond Language Understanding), we 
 
 ## Bling Fire Tokenizer
 
-Bling Fire Tokenizer is a tokenizer designed for fast-speed and quality tokenization of Natural Language text. It mostly follows the tokenization logic of NLTK, except hyphenated words are split and a few errors are fixed. 
+Bling Fire Tokenizer is a tokenizer designed for fast-speed and quality tokenization of Natural Language text. 
+
+The default model mostly follows the tokenization logic of NLTK, except hyphenated words are split and a few errors are fixed. 
 
 **NLTK:** <pre>The South <b>Florida/Miami</b> area has previously hosted the event 10 times .
 Names such as French , ( De ) Roche , Devereux , <b>D'Arcy</b> , Treacy and Lacy are particularly common in the southeast of Ireland .
@@ -25,9 +27,11 @@ Go to C : <b>\ Users \ Public \ Documents \ hyper - v \ Virtual hard disks \ </b
 … and an agency / vendor company are regulated by the country <b>'s</b> civil code ; labor relationships between a …
 </pre>
 
-Currently released model supports most of the languages except East Asian (Chinese Simplified, Traditional, Japanese, Korean, Thai). You should expect good results if a language uses space as a main token delimitter. The tokenizer high level API designed in a way that it requires 0 configuration, or initialization, or additional files and is friendly for use from languages like Python, Perl, C#, Java, etc. It is fast as uses deterministic finite state machines underneath.
+The tokenization model also supports normalization and sub-token extraction like in BERT tokenizer. In fact we provide 4 compiled models for BERT base/large, BERT base/large cased, BERT Chinese and BERT Multilinugual Cased. See examples below. The tokenizer high level API designed in a way that it requires minimal configuration, or initialization, or additional files and is friendly for use from languages like Python, Perl, C#, Java, etc. 
 
-## Benchmarking
+Oh yes, it is also fast, as uses minimal deterministic finite state machines underneath!
+
+## Benchmarking of a default model
 
 Comparing Bling Fire with other popular NLP libraries, Bling Fire shows **10X faster** speed in tokenization task
 
@@ -41,13 +45,14 @@ See more at [benchmark wiki](https://github.com/Microsoft/BlingFire/wiki/Benchma
 
 ## Getting Started
 
-To start using Bling Fire Library and Finite State Machine manipulation tools, you can build the project on Windows/Linux with [CMake](https://cmake.org/). You need this if you want to create your own tokenization / segmentation, stemming etc. logic or need finite state machines for any other need. [Read more here.](https://github.com/Microsoft/BlingFire/wiki/How-to-change-linguistic-resources)
-
 If you simply want to use it in Python, you can install the latest release using [pip](https://pypi.org/project/pip/):
 
 `pip install blingfire`
 
-## Example code
+To start using Bling Fire Finite State Machine manipulation tools, you need to build the project on Windows/Linux with [CMake](https://cmake.org/). You need this if you want to create your own tokenization / segmentation, stemming, etc finite-state models. [Read more here.](https://github.com/Microsoft/BlingFire/wiki/How-to-change-linguistic-resources)
+
+
+## Examples
 ### Python example, simple tokenizer replacing NLTK:
 ```python
 from blingfire import *
@@ -119,10 +124,10 @@ Model Handle: 2854016629088
 Model Freed
 ```
 
-
-### Jupyter Notebook
+### Example of using basic tokenization model instead of available tokenizers
 
 [This notebook](/doc/Bling%20Fire%20Tokenizer%20Demo.ipynb) demonstrates how Bling Fire tokenizer helps in Stack Overflow posts classification problem.
+
 
 ## Contributing
 
