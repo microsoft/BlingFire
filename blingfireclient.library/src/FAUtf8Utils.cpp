@@ -313,15 +313,14 @@ wchar_t * FAIntToUtf16LE (
 {
     DebugLogAssert (ptr);
 
-    if (0xFFFF >= (unsigned int) Symbol && 0 < MaxSize)
-    {
+    if (0xFFFF >= (unsigned int) Symbol && 0 < MaxSize) {
         *ptr = (wchar_t) Symbol;
         ptr++;
 
         return ptr;
-    }
-    else if (1 < MaxSize)
-    {
+
+    } else if (1 < MaxSize) {
+
         Symbol -= 0x10000;
 
         // initialize first word with lower bracket
@@ -363,7 +362,7 @@ const int FAStrUtf8ToUtf16LE (
 
     // process symbol sequence
     int codepoint = 0;
-    int i=0;
+    int i = 0;
     while (pStr < pEnd && pArray < pArrayEnd) {
 
         const int Offset = (int) (pStr - pBegin);
@@ -374,18 +373,16 @@ const int FAStrUtf8ToUtf16LE (
             return -1;
         }
 
-        wchar_t * out = ::FAIntToUtf16LE(codepoint, pArray, MaxSize-i);
+        wchar_t * out = ::FAIntToUtf16LE(codepoint, pArray, MaxSize - i);
 
-        if (NULL == out)
-        {
+        if (NULL == out) {
             //not enough memory
             break;
         }
 
         DebugLogAssert (out != pArray);
 
-        for (int j=0; j<out-pArray; j++)
-        {
+        for (auto j = 0; i < MaxSize && j < out - pArray; j++) {
             pOffsets[i++] = Offset;
         }
 
