@@ -382,7 +382,7 @@ const int FAStrUtf8ToUtf16LE (
 
         DebugLogAssert (out != pArray);
 
-        for (auto j = 0; i < MaxSize && j < out - pArray; j++) {
+        for (std::ptrdiff_t j = 0; i < MaxSize && j < out - pArray; j++) {
             pOffsets[i++] = Offset;
         }
 
