@@ -45,7 +45,7 @@ _define ChuMnNoChs [\x0300-\x0357\x035d-\x036f\x0483-\x0486\x0591-\x05a1\x05a3-\
  #
  # Define a regular letter
  #
-_define LETTER (ChuLXNoChs|ChuMcNoChs|ChuMnNoChs|ChuMe)
+_define LETTER (ChuLXNoChs|ChuMcNoChs|ChuMnNoChs|ChuMe|ChuSc|ChuSm|ChuSk|ChuSo)
 
  #
  # Regular Words (numbers and letters go together)
@@ -57,7 +57,7 @@ _define LETTER (ChuLXNoChs|ChuMcNoChs|ChuMnNoChs|ChuMe)
  #
  # Preserve punctuation
  #
-< ChuPX | ChuSc | ChuSm | ChuSo > --> WORD _call FnTokWord
+< ChuPX > --> WORD _call FnTokWord
 < CURRENCY > --> WORD _call FnTokWord
 < [%] > --> WORD _call FnTokWord
 < HYPHEN > --> WORD _call FnTokWord
