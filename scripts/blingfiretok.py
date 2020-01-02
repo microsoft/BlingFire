@@ -31,8 +31,28 @@ def text_to_sentences(s):
     o_bytes = create_string_buffer(len(s_bytes) * 2)
     o_bytes_count = len(o_bytes)
 
-    # identify paragraphs
+    # identify sentences
     o_len = blingfire.TextToSentences(c_char_p(s_bytes), c_int(len(s_bytes)), byref(o_bytes), c_int(o_bytes_count))
+
+    # check if no error has happened
+    if -1 == o_len or o_len > o_bytes_count:
+        return ''
+
+    # compute the unicode string from the UTF-8 bytes
+    return o_bytes.value.decode('utf-8')
+
+
+def text_to_sentences_with_model(h, s):
+
+    # get the UTF-8 bytes
+    s_bytes = s.encode("utf-8")
+
+    # allocate the output buffer
+    o_bytes = create_string_buffer(len(s_bytes) * 2)
+    o_bytes_count = len(o_bytes)
+
+    # identify sentences
+    o_len = blingfire.TextToSentencesWithModel(c_char_p(s_bytes), c_int(len(s_bytes)), byref(o_bytes), c_int(o_bytes_count), c_void_p(h))
 
     # check if no error has happened
     if -1 == o_len or o_len > o_bytes_count:
@@ -48,11 +68,31 @@ def text_to_words(s):
     s_bytes = s.encode("utf-8")
 
     # allocate the output buffer
-    o_bytes = create_string_buffer(len(s_bytes) * 2)
+    o_bytes = create_string_buffer(len(s_bytes) * 3)
     o_bytes_count = len(o_bytes)
 
-    # identify paragraphs
+    # identify words
     o_len = blingfire.TextToWords(c_char_p(s_bytes), c_int(len(s_bytes)), byref(o_bytes), c_int(o_bytes_count))
+
+    # check if no error has happened
+    if -1 == o_len or o_len > o_bytes_count:
+        return ''
+
+    # compute the unicode string from the UTF-8 bytes
+    return o_bytes.value.decode('utf-8')
+
+
+def text_to_words_with_model(h, s):
+
+    # get the UTF-8 bytes
+    s_bytes = s.encode("utf-8")
+
+    # allocate the output buffer
+    o_bytes = create_string_buffer(len(s_bytes) * 3)
+    o_bytes_count = len(o_bytes)
+
+    # identify words
+    o_len = blingfire.TextToWordsWithModel(c_char_p(s_bytes), c_int(len(s_bytes)), byref(o_bytes), c_int(o_bytes_count), c_void_p(h))
 
     # check if no error has happened
     if -1 == o_len or o_len > o_bytes_count:
@@ -84,14 +124,15 @@ def text_to_hashes(s, word_n_grams, bucketSize):
         return ''
 
     # return numpy array without copying
-    return np.frombuffer(o_bytes, dtype=c_uint32, count = o_len)
+    return np.frombuffer(o_bytes, dtype=c_uint32, count=o_len)
+
 
 def text_to_token_with_offsets(s, text_to_token_f, split_byte):    
     # get the UTF-8 bytes
     s_bytes = s.encode("utf-8")
  
     # allocate the output buffer
-    o_bytes = create_string_buffer(len(s_bytes) * 2)
+    o_bytes = create_string_buffer(len(s_bytes) * 3)
     o_bytes_count = len(o_bytes)
     
     # buffers for word beging and end
@@ -104,6 +145,10 @@ def text_to_token_with_offsets(s, text_to_token_f, split_byte):
         byref(o_bytes), byref(o_start_offsets), byref(o_end_offsets), 
         c_int(o_bytes_count))
     
+    # check if no error has happened
+    if -1 == o_len or o_len > o_bytes_count:
+        return '', []
+
     num_tokens = o_bytes.value.count(split_byte) + 1
           
     utf8_offsets = [ o for start_end in zip(o_start_offsets[:num_tokens], o_end_offsets[:num_tokens]) for o in start_end]
@@ -125,7 +170,7 @@ def text_to_token_with_offsets(s, text_to_token_f, split_byte):
     if len(string_offsets) < num_tokens * 2:
         string_offsets.append(len(s))
             
-    assert len(string_offsets) == num_tokens * 2, '%s != %s' % (len(string_offsets), num_tokens * 2)
+    assert len(string_offsets) == num_tokens * 2, f'{len(string_offsets)} != {num_tokens * 2}'
  
     token_begin_end = [ (b, e) for b, e in zip(string_offsets[::2], string_offsets[1::2])]
         
