@@ -2,12 +2,16 @@
 LIBRARY     blingfiretokdll.dll
 
 EXPORTS 
-	TextToSentences
-	TextToWords
-	TextToSentencesWithOffsets
-	TextToWordsWithOffsets
-	GetBlingFireTokVersion
+    TextToSentences
+    TextToWords
+    TextToSentencesWithOffsets
+    TextToWordsWithOffsets
+    GetBlingFireTokVersion
     TextToHashes
     LoadModel
     TextToIds
     FreeModel
+    TextToSentencesWithOffsetsWithModel
+    TextToSentencesWithModel
+    TextToWordsWithOffsetsWithModel
+    TextToWordsWithModel

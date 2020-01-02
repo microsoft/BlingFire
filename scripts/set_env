@@ -8,5 +8,5 @@ export EF_ALIGNMENT=32
 
 TST=`echo "$PATH" | grep "$FIRE_ROOT"`
 if [ -z "$TST" ]; then
-  export PATH="$FIRE_ROOT/Release:$FIRE_ROOT/scripts:$PATH"
+  export PATH="$FIRE_ROOT/build:$FIRE_ROOT/Release:$FIRE_ROOT/scripts:$PATH"
 fi;

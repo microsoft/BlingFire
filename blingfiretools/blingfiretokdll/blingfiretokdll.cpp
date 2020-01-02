@@ -28,22 +28,9 @@ on Windows, Linux, etc.
 // defines g_dumpBlingFireTokLibSbdData, the sources of this data is SearchGold\deploy\builds\data\IndexGenData\ldbsrc\ldb\tp3\sbd
 #include "BlingFireTokLibSbdData.cxx"
 
-
 // version of this binary and the algo logic
 #define BLINGFIRETOK_MAJOR_VERSION_NUM 5
-#define BLINGFIRETOK_MINOR_VERSION_NUM 4
-
-
-// constant data objects
-FALDB g_WbdLdb;
-FALDB g_SbdLdb;
-
-FAWbdConfKeeper g_WbdConf;
-FAWbdConfKeeper g_SbdConf;
-
-// constant processors
-FALexTools_t < int > g_Wbd;
-FALexTools_t < int > g_Sbd;
+#define BLINGFIRETOK_MINOR_VERSION_NUM 5
 
 const int WBD_WORD_TAG = 1;
 const int WBD_IGNORE_TAG = 4;
@@ -61,6 +48,9 @@ struct FAModelData
     FALexTools_t < int > m_Engine; // initialized engine can be shared accross threads
 };
 
+// keep two built-in models one for default WBD and one for default SBD 
+FAModelData g_DefaultWbd;
+FAModelData g_DefaultSbd;
 
 //
 // returns the current version of the algo
@@ -79,18 +69,18 @@ void InitializeWbdSbd()
     int iSize = 0;
 
     // initialize WBD
-    g_WbdLdb.SetImage(g_dumpBlingFireTokLibWbdData);
+    g_DefaultWbd.m_Ldb.SetImage(g_dumpBlingFireTokLibWbdData);
     pValues = NULL;
-    iSize = g_WbdLdb.GetHeader()->Get(FAFsmConst::FUNC_WBD, &pValues);
-    g_WbdConf.Initialize(&g_WbdLdb, pValues, iSize);
-    g_Wbd.SetConf(&g_WbdConf);
+    iSize = g_DefaultWbd.m_Ldb.GetHeader()->Get(FAFsmConst::FUNC_WBD, &pValues);
+    g_DefaultWbd.m_Conf.Initialize(&g_DefaultWbd.m_Ldb, pValues, iSize);
+    g_DefaultWbd.m_Engine.SetConf(&g_DefaultWbd.m_Conf);
 
     // initialize SBD
-    g_SbdLdb.SetImage(g_dumpBlingFireTokLibSbdData);
+    g_DefaultSbd.m_Ldb.SetImage(g_dumpBlingFireTokLibSbdData);
     pValues = NULL;
-    iSize = g_SbdLdb.GetHeader()->Get(FAFsmConst::FUNC_WBD, &pValues);
-    g_SbdConf.Initialize(&g_SbdLdb, pValues, iSize);
-    g_Sbd.SetConf(&g_SbdConf);
+    iSize = g_DefaultSbd.m_Ldb.GetHeader()->Get(FAFsmConst::FUNC_WBD, &pValues);
+    g_DefaultSbd.m_Conf.Initialize(&g_DefaultSbd.m_Ldb, pValues, iSize);
+    g_DefaultSbd.m_Engine.SetConf(&g_DefaultSbd.m_Conf);
 }
 
 
@@ -115,14 +105,19 @@ inline int FAGetFirstNonWhiteSpace(int * pStr, const int StrLen)
 
 
 //
-// See TextToSentences description below, this one also returns original offsets from the input buffer for each sentence.
-//
+// The same as TextToSentences, but it allows to use a custom model and returns offsets
+// 
 // pStartOffsets is an array of integers (first character of each sentence) with upto MaxOutUtf8StrByteCount elements
 // pEndOffsets is an array of integers (last character of each sentence) with upto MaxOutUtf8StrByteCount elements
 //
+// The hModel parameter allows to use a custom model loaded with LoadModel API, if NULL then
+//  the built in is used.
+//
+
 extern "C"
-const int TextToSentencesWithOffsets(const char * pInUtf8Str, int InUtf8StrByteCount,
-    char * pOutUtf8Str, int * pStartOffsets, int * pEndOffsets, const int MaxOutUtf8StrByteCount)
+const int TextToSentencesWithOffsetsWithModel(const char * pInUtf8Str, int InUtf8StrByteCount,
+    char * pOutUtf8Str, int * pStartOffsets, int * pEndOffsets, const int MaxOutUtf8StrByteCount,
+    void * hModel)
 {
     // check if the initilization is needed
     if (false == g_fInitialized) {
@@ -134,6 +129,14 @@ const int TextToSentencesWithOffsets(const char * pInUtf8Str, int InUtf8StrByteC
             g_fInitialized = true;
         }
     }
+
+    // use the default model if it was not provided
+    if (NULL == hModel) {
+        hModel = &g_DefaultSbd;
+    }
+
+    // get the types right, hModel is always defined 
+    const FAModelData * pModel = (const FAModelData *) hModel;
 
     // validate the parameters
     if (0 == InUtf8StrByteCount) {
@@ -188,7 +191,7 @@ const int TextToSentencesWithOffsets(const char * pInUtf8Str, int InUtf8StrByteC
     }
 
     // get the sentence breaking results
-    const int SbdOutSize = g_Sbd.Process(pBuff, MaxBuffSize, pSbdRes, MaxBuffSize * 3);
+    const int SbdOutSize = pModel->m_Engine.Process(pBuff, MaxBuffSize, pSbdRes, MaxBuffSize * 3);
     if (SbdOutSize > MaxBuffSize * 3 || 0 != SbdOutSize % 3) {
         return -1;
     }
@@ -298,6 +301,34 @@ const int TextToSentencesWithOffsets(const char * pInUtf8Str, int InUtf8StrByteC
     return StrLen;
 }
 
+
+//
+// The same as TextToSentences, but this one also returns original offsets from the input buffer for each sentence.
+//
+// pStartOffsets is an array of integers (first character of each sentence) with upto MaxOutUtf8StrByteCount elements
+// pEndOffsets is an array of integers (last character of each sentence) with upto MaxOutUtf8StrByteCount elements
+//
+extern "C"
+const int TextToSentencesWithOffsets(const char * pInUtf8Str, int InUtf8StrByteCount,
+    char * pOutUtf8Str, int * pStartOffsets, int * pEndOffsets, const int MaxOutUtf8StrByteCount)
+{
+    return TextToSentencesWithOffsetsWithModel(pInUtf8Str, InUtf8StrByteCount, pOutUtf8Str,  pStartOffsets, pEndOffsets, MaxOutUtf8StrByteCount, NULL);
+}
+
+
+//
+// The same as TextToSentences, but allows to load a custom model
+// 
+// The hModel parameter allows to use a custom model loaded with LoadModel API, if NULL then
+//  the built in is used.
+//
+extern "C"
+const int TextToSentencesWithModel(const char * pInUtf8Str, int InUtf8StrByteCount, char * pOutUtf8Str, const int MaxOutUtf8StrByteCount, void * hModel)
+{
+    return TextToSentencesWithOffsetsWithModel(pInUtf8Str, InUtf8StrByteCount, pOutUtf8Str,  NULL, NULL, MaxOutUtf8StrByteCount, hModel);
+}
+
+
 //
 // Splits plain-text in UTF-8 encoding into sentences.
 //
@@ -314,19 +345,24 @@ const int TextToSentencesWithOffsets(const char * pInUtf8Str, int InUtf8StrByteC
 extern "C"
 const int TextToSentences(const char * pInUtf8Str, int InUtf8StrByteCount, char * pOutUtf8Str, const int MaxOutUtf8StrByteCount)
 {
-    return TextToSentencesWithOffsets(pInUtf8Str, InUtf8StrByteCount, pOutUtf8Str, NULL, NULL, MaxOutUtf8StrByteCount);
+    return TextToSentencesWithOffsetsWithModel(pInUtf8Str, InUtf8StrByteCount, pOutUtf8Str,  NULL, NULL, MaxOutUtf8StrByteCount, NULL);
 }
 
 
 //
-// Same as TextToWords, but also returns original offsets from the input buffer for each word.
+// Same as TextToWords, but also returns original offsets from the input buffer for each word and allows to use a 
+//  custom model
 //
 // pStartOffsets is an array of integers (first character of each word) with upto MaxOutUtf8StrByteCount elements
 // pEndOffsets is an array of integers (last character of each word) with upto MaxOutUtf8StrByteCount elements
 //
+// The hModel parameter allows to use a custom model loaded with LoadModel API, if NULL then
+//  the built in is used.
+//
 extern "C"
-const int TextToWordsWithOffsets(const char * pInUtf8Str, int InUtf8StrByteCount,
-    char * pOutUtf8Str, int * pStartOffsets, int * pEndOffsets, const int MaxOutUtf8StrByteCount)
+const int TextToWordsWithOffsetsWithModel(const char * pInUtf8Str, int InUtf8StrByteCount,
+    char * pOutUtf8Str, int * pStartOffsets, int * pEndOffsets, const int MaxOutUtf8StrByteCount,
+    void * hModel)
 {
     // check if the initilization is needed
     if (false == g_fInitialized) {
@@ -338,6 +374,14 @@ const int TextToWordsWithOffsets(const char * pInUtf8Str, int InUtf8StrByteCount
             g_fInitialized = true;
         }
     }
+
+    // use a default model if none was provided
+    if (NULL == hModel) {
+        hModel = &g_DefaultWbd;
+    }
+
+    // pModel is always initialized here
+    const FAModelData * pModel = (const FAModelData *) hModel; 
 
     // validate the parameters
     if (0 == InUtf8StrByteCount) {
@@ -393,7 +437,7 @@ const int TextToWordsWithOffsets(const char * pInUtf8Str, int InUtf8StrByteCount
     }
 
     // get the sentence breaking results
-    const int WbdOutSize = g_Wbd.Process(pBuff, MaxBuffSize, pWbdRes, MaxBuffSize * 3);
+    const int WbdOutSize = pModel->m_Engine.Process(pBuff, MaxBuffSize, pWbdRes, MaxBuffSize * 3);
     if (WbdOutSize > MaxBuffSize * 3 || 0 != WbdOutSize % 3) {
         return -1;
     }
@@ -462,13 +506,44 @@ const int TextToWordsWithOffsets(const char * pInUtf8Str, int InUtf8StrByteCount
     return StrLen;
 }
 
+
+//
+// Same as TextToWords, but also returns original offsets from the input buffer for each word.
+//
+// pStartOffsets is an array of integers (first character of each word) with upto MaxOutUtf8StrByteCount elements
+// pEndOffsets is an array of integers (last character of each word) with upto MaxOutUtf8StrByteCount elements
+//
+extern "C"
+const int TextToWordsWithOffsets(const char * pInUtf8Str, int InUtf8StrByteCount,
+    char * pOutUtf8Str, int * pStartOffsets, int * pEndOffsets, const int MaxOutUtf8StrByteCount)
+{
+    return TextToWordsWithOffsetsWithModel(pInUtf8Str,InUtf8StrByteCount,
+        pOutUtf8Str, pStartOffsets, pEndOffsets, MaxOutUtf8StrByteCount, NULL);
+}
+
+
+//
+// Same as TextToWords, but allows to load a custom model
+// 
+// The hModel parameter allows to use a custom model loaded with LoadModel API, if NULL then
+//  the built in is used.
+//
+extern "C"
+const int TextToWordsWithModel(const char * pInUtf8Str, int InUtf8StrByteCount,
+    char * pOutUtf8Str, const int MaxOutUtf8StrByteCount, void * hModel)
+{
+    return TextToWordsWithOffsetsWithModel(pInUtf8Str,InUtf8StrByteCount,
+        pOutUtf8Str, NULL, NULL, MaxOutUtf8StrByteCount, hModel);
+}
+
+
 //
 // Splits plain-text in UTF-8 encoding into words.
 //
 // Input:  UTF-8 string of one sentence or paragraph or document
 // Output: Size in bytes of the output string and UTF-8 string of ' ' delimited words, if the return size <= MaxOutUtf8StrByteCount
 //
-//  Notes:  
+//  Notes:
 //
 //  1. The return value is -1 in case of an error (make sure your input is a valid UTF-8, BOM is not required)
 //  2. Words from the word-breaker will not contain spaces
@@ -476,24 +551,27 @@ const int TextToWordsWithOffsets(const char * pInUtf8Str, int InUtf8StrByteCount
 extern "C"
 const int TextToWords(const char * pInUtf8Str, int InUtf8StrByteCount, char * pOutUtf8Str, const int MaxOutUtf8StrByteCount)
 {
-    return TextToWordsWithOffsets(pInUtf8Str, InUtf8StrByteCount, pOutUtf8Str, NULL, NULL, MaxOutUtf8StrByteCount);
+    return TextToWordsWithOffsetsWithModel(pInUtf8Str, InUtf8StrByteCount, pOutUtf8Str, NULL, NULL, MaxOutUtf8StrByteCount, NULL);
 }
 
 
 // This function implements the fasttext hashing function
-inline const uint32_t GetHash(const char * str, size_t strLen) {
+inline const uint32_t GetHash(const char * str, size_t strLen)
+{
     uint32_t h = 2166136261;
     for (size_t i = 0; i < strLen; i++) {
-        h = h ^ uint32_t(str[i]);
+        h = h ^ uint32_t(int8_t(str[i]));
         h = h * 16777619;
     }
     return h;
 }
 
+
 // EOS symbol
 int32_t EOS_HASH = GetHash("</s>", 4);
 
-const void AddWordNgrams(int32_t * hashArray, int& hashCount, int32_t wordNgrams, int32_t bucket) {
+const void AddWordNgrams(int32_t * hashArray, int& hashCount, int32_t wordNgrams, int32_t bucket)
+{
     // hash size
     const int tokenCount = hashCount;
     for (int32_t i = 0; i < tokenCount; i++) {
@@ -506,6 +584,7 @@ const void AddWordNgrams(int32_t * hashArray, int& hashCount, int32_t wordNgrams
         }
     }
 }
+
 
 // Get the tokens count by inspecting the spaces in input buffer
 inline const int GetTokenCount(const char * input, const int bufferSize)
@@ -528,10 +607,10 @@ inline const int GetTokenCount(const char * input, const int bufferSize)
     }
 }
 
+
 // Port the fast text getline function with modifications
 // 1. do not have vocab
 // 2. do not compute subwords info
-
 const int ComputeHashes(const char * input, const int strLen, int32_t * hashArr, int wordNgrams, int bucketSize)
 {
     int hashCount = 0;
@@ -569,71 +648,40 @@ const int MAX_ALLOCA_SIZE = 204800;
 
 
 //
-// This function implements the fasttext-like hashing logics. It first calls the tokenizer and then convert them into ngram hashes
+// This function implements the fasttext-like hashing logics. It assumes the input text is already tokenized and 
+//  tokens are merged by a single space.
 //
-// Example:   input :  "This is ok."
-//            output (bigram):  hash(this), hash(is), hash(ok), hash(.), hash(this is), hash(is ok), hash(ok .), hash(. EOS)
+// Example: input :  "This is ok ."
+//          output (bigram):  hash(this), hash(is), hash(ok), hash(.), hash(this is), hash(is ok), hash(ok .), hash(. EOS)
 //
-//            This is different from fasttext hashing:
-//            1. no EOS padding by default for unigram.
-//            2. do not take vocab as input, all unigrams are hashed too.
-//               and ngram hashes are not shifted.
+//  This is different from fasttext hashing:
+//     1. no EOS padding by default for unigram.
+//     2. do not take vocab as input, all unigrams are hashed too (we assume later caller repalces unigram hashes
+//          with ids from a vocab file).
 //
 extern "C"
 const int TextToHashes(const char * pInUtf8Str, int InUtf8StrByteCount, int32_t * pHashArr, const int MaxHashArrLength, int wordNgrams, int bucketSize = 2000000)
 {
     // must have positive ngram
-    if (wordNgrams <= 0)
+    if (wordNgrams <= 0 && InUtf8StrByteCount < 0)
     {
         return -1;
     }
 
-    //first we call tokenizer to get word arr
-    int maxOutputSize = InUtf8StrByteCount * 2 + 1;
-    int hashArrSize = 0;
-    char * pTokenizedStr = nullptr;
-
-    // cap memory usage
-    if (maxOutputSize < MAX_ALLOCA_SIZE)
-    {
-        pTokenizedStr = (char*)alloca(maxOutputSize);
-    }
-    else
-    {
-        pTokenizedStr = new char[maxOutputSize];
-    }
-
-    // tokenize the string
-    int strLen = TextToWords(pInUtf8Str, InUtf8StrByteCount, pTokenizedStr, maxOutputSize);
-
-    // if tokenizer has errors,
-    if (0 > strLen)
-    {
-        return strLen;
-    }
-
-    // get tokensize
-    int tokenCount = GetTokenCount(pTokenizedStr, strLen);
+    // get token count
+    const int tokenCount = GetTokenCount(pInUtf8Str, InUtf8StrByteCount);
 
     // if memory allocation is not enough for current output, return requested memory amount
     if (tokenCount * wordNgrams >= MaxHashArrLength)
     {
-        return strLen * wordNgrams;
+        return InUtf8StrByteCount * wordNgrams;
     }
 
     // if correctly tokenized and the memory usage is within the limit
-    hashArrSize = ComputeHashes(pTokenizedStr, strLen, pHashArr, wordNgrams, bucketSize);
-
+    const int hashArrSize = ComputeHashes(pInUtf8Str, InUtf8StrByteCount, pHashArr, wordNgrams, bucketSize);
     assert(hashArrSize == wordNgrams * tokenCount);
 
-    // clean up heap memo if allocated
-    if (maxOutputSize >= MAX_ALLOCA_SIZE)
-    {
-        delete[]  pTokenizedStr;
-    }
-
     return hashArrSize;
-
 }
 
 
