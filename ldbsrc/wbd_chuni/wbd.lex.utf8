@@ -1,0 +1,313 @@
+#
+# Default word-breaking rules, the dictionary of special words and tech-search
+# tokenization rules are included
+#
+
+_include common/chu.fullunicode.def.txt
+
+# previous contsin some errors --> _define WHITESPACE [\x0004-\x0020\x007F-\x009F\x00A0\x2000-\x200B\x200E\x200F\x202F\x205F\x2060\x2420\x2422\x2423\x2424\x3000\xFEFF\xFF02]
+_define WHITESPACE [\x0004-\x0020\x007F-\x009F\x00A0\x2000-\x200B\x200E\x200F\x202F\x205F\x2060\x2420\x2424\x3000\xFEFF]
+_define CURRENCY [\x0024\x0080\x00A2-\x00A5\x09F2\x09F3\x0E3F\x20A0\x20A2\x20A3\x20A4\x20A6-\x20AF]
+_define CURRENCY_MINUS_EURO [\x0024\x0080\x00A2-\x00A5\x09F2\x09F3\x0E3F\x20A0\x20A2\x20A3\x20A4\x20A6-\x20AB\x20AD-\x20AF]
+_define EURO_CURRENCY [\x20AC]
+_define HYPHEN [\x002D\x2010\x2011]
+_define MINUS [\x002D\x2012\x207B\x208B\x2212]
+_define NUM [0-9]
+_define NOT0NUM [1-9]
+
+ # APOSTROPHE \x0027
+ # GRAVE ACCENT \x0060
+ # ACUTE ACCENT \x00B4
+ # LEFT SINGLE QUOTATION MARK \x2018
+ # RIGHT SINGLE QUOTATION MARK \x2019
+_define APOSTROPHE [\x0027\x0060\x00B4\x2018\x2019]
+
+#
+# From Bert's definitions:
+#
+#        (cp >= 0x4E00 and cp <= 0x9FFF) or
+#        (cp >= 0x3400 and cp <= 0x4DBF) or
+#        (cp >= 0x20000 and cp <= 0x2A6DF) or
+#        (cp >= 0x2A700 and cp <= 0x2B73F) or
+#        (cp >= 0x2B740 and cp <= 0x2B81F) or
+#        (cp >= 0x2B820 and cp <= 0x2CEAF) or
+#        (cp >= 0xF900 and cp <= 0xFAFF) or
+#        (cp >= 0x2F800 and cp <= 0x2FA1F)
+#
+_define ChineseChars [\x3400-\x4DBF\x4E00-\x9FFF\xF900-\xFAFF\x20000-\x2A6DF\x2A700-\x2B73F\x2B740-\x2B81F\x2B820-\x2CEAF\x2F800-\x2FA1F]
+
+# all letters with tag UCT_L* - ChineseChars
+_define ChuLXNoChs [\x0041-\x005a\x0061-\x007a\x00aa\x00b5\x00ba\x00c0-\x00d6\x00d8-\x00f6\x00f8-\x0236\x0250-\x02c1\x02c6-\x02d1\x02e0-\x02e4\x02ee\x037a\x0386\x0388-\x038a\x038c\x038e-\x03a1\x03a3-\x03ce\x03d0-\x03f5\x03f7-\x03fb\x0400-\x0481\x048a-\x04ce\x04d0-\x04f5\x04f8-\x04f9\x0500-\x050f\x0531-\x0556\x0559\x0561-\x0587\x05d0-\x05ea\x05f0-\x05f2\x0621-\x063a\x0640-\x064a\x066e-\x066f\x0671-\x06d3\x06d5\x06e5-\x06e6\x06ee-\x06ef\x06fa-\x06fc\x06ff\x0710\x0712-\x072f\x074d-\x074f\x0780-\x07a5\x07b1\x0904-\x0939\x093d\x0950\x0958-\x0961\x0985-\x098c\x098f-\x0990\x0993-\x09a8\x09aa-\x09b0\x09b2\x09b6-\x09b9\x09bd\x09dc-\x09dd\x09df-\x09e1\x09f0-\x09f1\x0a05-\x0a0a\x0a0f-\x0a10\x0a13-\x0a28\x0a2a-\x0a30\x0a32-\x0a33\x0a35-\x0a36\x0a38-\x0a39\x0a59-\x0a5c\x0a5e\x0a72-\x0a74\x0a85-\x0a8d\x0a8f-\x0a91\x0a93-\x0aa8\x0aaa-\x0ab0\x0ab2-\x0ab3\x0ab5-\x0ab9\x0abd\x0ad0\x0ae0-\x0ae1\x0b05-\x0b0c\x0b0f-\x0b10\x0b13-\x0b28\x0b2a-\x0b30\x0b32-\x0b33\x0b35-\x0b39\x0b3d\x0b5c-\x0b5d\x0b5f-\x0b61\x0b71\x0b83\x0b85-\x0b8a\x0b8e-\x0b90\x0b92-\x0b95\x0b99-\x0b9a\x0b9c\x0b9e-\x0b9f\x0ba3-\x0ba4\x0ba8-\x0baa\x0bae-\x0bb5\x0bb7-\x0bb9\x0c05-\x0c0c\x0c0e-\x0c10\x0c12-\x0c28\x0c2a-\x0c33\x0c35-\x0c39\x0c60-\x0c61\x0c85-\x0c8c\x0c8e-\x0c90\x0c92-\x0ca8\x0caa-\x0cb3\x0cb5-\x0cb9\x0cbd\x0cde\x0ce0-\x0ce1\x0d05-\x0d0c\x0d0e-\x0d10\x0d12-\x0d28\x0d2a-\x0d39\x0d60-\x0d61\x0d85-\x0d96\x0d9a-\x0db1\x0db3-\x0dbb\x0dbd\x0dc0-\x0dc6\x0e01-\x0e30\x0e32-\x0e33\x0e40-\x0e46\x0e81-\x0e82\x0e84\x0e87-\x0e88\x0e8a\x0e8d\x0e94-\x0e97\x0e99-\x0e9f\x0ea1-\x0ea3\x0ea5\x0ea7\x0eaa-\x0eab\x0ead-\x0eb0\x0eb2-\x0eb3\x0ebd\x0ec0-\x0ec4\x0ec6\x0edc-\x0edd\x0f00\x0f40-\x0f47\x0f49-\x0f6a\x0f88-\x0f8b\x1000-\x1021\x1023-\x1027\x1029-\x102a\x1050-\x1055\x10a0-\x10c5\x10d0-\x10f8\x1100-\x1159\x115f-\x11a2\x11a8-\x11f9\x1200-\x1206\x1208-\x1246\x1248\x124a-\x124d\x1250-\x1256\x1258\x125a-\x125d\x1260-\x1286\x1288\x128a-\x128d\x1290-\x12ae\x12b0\x12b2-\x12b5\x12b8-\x12be\x12c0\x12c2-\x12c5\x12c8-\x12ce\x12d0-\x12d6\x12d8-\x12ee\x12f0-\x130e\x1310\x1312-\x1315\x1318-\x131e\x1320-\x1346\x1348-\x135a\x13a0-\x13f4\x1401-\x166c\x166f-\x1676\x1681-\x169a\x16a0-\x16ea\x1700-\x170c\x170e-\x1711\x1720-\x1731\x1740-\x1751\x1760-\x176c\x176e-\x1770\x1780-\x17b3\x17d7\x17dc\x1820-\x1877\x1880-\x18a8\x1900-\x191c\x1950-\x196d\x1970-\x1974\x1d00-\x1d6b\x1e00-\x1e9b\x1ea0-\x1ef9\x1f00-\x1f15\x1f18-\x1f1d\x1f20-\x1f45\x1f48-\x1f4d\x1f50-\x1f57\x1f59\x1f5b\x1f5d\x1f5f-\x1f7d\x1f80-\x1fb4\x1fb6-\x1fbc\x1fbe\x1fc2-\x1fc4\x1fc6-\x1fcc\x1fd0-\x1fd3\x1fd6-\x1fdb\x1fe0-\x1fec\x1ff2-\x1ff4\x1ff6-\x1ffc\x2071\x207f\x2102\x2107\x210a-\x2113\x2115\x2119-\x211d\x2124\x2126\x2128\x212a-\x212d\x212f-\x2131\x2133-\x2139\x213d-\x213f\x2145-\x2149\x3005-\x3006\x3031-\x3035\x303b-\x303c\x3041-\x3096\x309d-\x309f\x30a1-\x30fa\x30fc-\x30ff\x3105-\x312c\x3131-\x318e\x31a0-\x31b7\x31f0-\x31ff\xa000-\xa48c\xac00-\xd7a3\xfb00-\xfb06\xfb13-\xfb17\xfb1d\xfb1f-\xfb28\xfb2a-\xfb36\xfb38-\xfb3c\xfb3e\xfb40-\xfb41\xfb43-\xfb44\xfb46-\xfbb1\xfbd3-\xfd3d\xfd50-\xfd8f\xfd92-\xfdc7\xfdf0-\xfdfb\xfe70-\xfe74\xfe76-\xfefc\xff21-\xff3a\xff41-\xff5a\xff66-\xffbe\xffc2-\xffc7\xffca-\xffcf\xffd2-\xffd7\xffda-\xffdc\x10000-\x1000b\x1000d-\x10026\x10028-\x1003a\x1003c-\x1003d\x1003f-\x1004d\x10050-\x1005d\x10080-\x100fa\x10280-\x1029c\x102a0-\x102d0\x10300-\x1031e\x10330-\x10340\x10342-\x10349\x10380-\x1039d\x103a0-\x103c3\x103c8-\x103cf\x10400-\x1049d\x10800-\x10805\x10808\x1080a-\x10835\x10837-\x10838\x1083c\x1083f-\x10855\x10900-\x10915\x10920-\x10939\x10980-\x109b7\x109be-\x109bf\x10a00\x10a10-\x10a13\x10a15-\x10a17\x10a19-\x10a33\x10a60-\x10a7c\x10b00-\x10b35\x10b40-\x10b55\x10b60-\x10b72\x10c00-\x10c48\x11003-\x11037\x11083-\x110af\x110d0-\x110e8\x11103-\x11126\x11183-\x111b2\x111c1-\x111c4\x11680-\x116aa\x12000-\x1236e\x13000-\x1342e\x16800-\x16a38\x16f00-\x16f44\x16f50\x16f93-\x16f9f\x1b000-\x1b001\x1d400-\x1d454\x1d456-\x1d49c\x1d49e-\x1d49f\x1d4a2\x1d4a5-\x1d4a6\x1d4a9-\x1d4ac\x1d4ae-\x1d4b9\x1d4bb\x1d4bd-\x1d4c3\x1d4c5-\x1d505\x1d507-\x1d50a\x1d50d-\x1d514\x1d516-\x1d51c\x1d51e-\x1d539\x1d53b-\x1d53e\x1d540-\x1d544\x1d546\x1d54a-\x1d550\x1d552-\x1d6a5\x1d6a8-\x1d6c0\x1d6c2-\x1d6da\x1d6dc-\x1d6fa\x1d6fc-\x1d714\x1d716-\x1d734\x1d736-\x1d74e\x1d750-\x1d76e\x1d770-\x1d788\x1d78a-\x1d7a8\x1d7aa-\x1d7c2\x1d7c4-\x1d7cb\x1ee00-\x1ee03\x1ee05-\x1ee1f\x1ee21-\x1ee22\x1ee24\x1ee27\x1ee29-\x1ee32\x1ee34-\x1ee37\x1ee39\x1ee3b\x1ee42\x1ee47\x1ee49\x1ee4b\x1ee4d-\x1ee4f\x1ee51-\x1ee52\x1ee54\x1ee57\x1ee59\x1ee5b\x1ee5d\x1ee5f\x1ee61-\x1ee62\x1ee64\x1ee67-\x1ee6a\x1ee6c-\x1ee72\x1ee74-\x1ee77\x1ee79-\x1ee7c\x1ee7e\x1ee80-\x1ee89\x1ee8b-\x1ee9b\x1eea1-\x1eea3\x1eea5-\x1eea9\x1eeab-\x1eebb]
+
+# Mark, Spacing Combining - ChineseChars
+_define ChuMcNoChs [\x0903\x093e-\x0940\x0949-\x094c\x0982-\x0983\x09be-\x09c0\x09c7-\x09c8\x09cb-\x09cc\x09d7\x0a03\x0a3e-\x0a40\x0a83\x0abe-\x0ac0\x0ac9\x0acb-\x0acc\x0b02-\x0b03\x0b3e\x0b40\x0b47-\x0b48\x0b4b-\x0b4c\x0b57\x0bbe-\x0bbf\x0bc1-\x0bc2\x0bc6-\x0bc8\x0bca-\x0bcc\x0bd7\x0c01-\x0c03\x0c41-\x0c44\x0c82-\x0c83\x0cbe\x0cc0-\x0cc4\x0cc7-\x0cc8\x0cca-\x0ccb\x0cd5-\x0cd6\x0d02-\x0d03\x0d3e-\x0d40\x0d46-\x0d48\x0d4a-\x0d4c\x0d57\x0d82-\x0d83\x0dcf-\x0dd1\x0dd8-\x0ddf\x0df2-\x0df3\x0f3e-\x0f3f\x0f7f\x102c\x1031\x1038\x1056-\x1057\x17b6\x17be-\x17c5\x17c7-\x17c8\x1923-\x1926\x1929-\x192b\x1930-\x1931\x1933-\x1938\x11000\x11002\x11082\x110b0-\x110b2\x110b7-\x110b8\x1112c\x11182\x111b3-\x111b5\x111bf-\x111c0\x116ac\x116ae-\x116af\x116b6\x16f51-\x16f7e\x1d165-\x1d166\x1d16d-\x1d172]
+
+# Mark, Non-Spacing - ChineseChars
+_define ChuMnNoChs [\x0300-\x0357\x035d-\x036f\x0483-\x0486\x0591-\x05a1\x05a3-\x05b9\x05bb-\x05bd\x05bf\x05c1-\x05c2\x05c4\x0610-\x0615\x064b-\x0658\x0670\x06d6-\x06dc\x06df-\x06e4\x06e7-\x06e8\x06ea-\x06ed\x0711\x0730-\x074a\x07a6-\x07b0\x0901-\x0902\x093c\x0941-\x0948\x094d\x0951-\x0954\x0962-\x0963\x0981\x09bc\x09c1-\x09c4\x09cd\x09e2-\x09e3\x0a01-\x0a02\x0a3c\x0a41-\x0a42\x0a47-\x0a48\x0a4b-\x0a4d\x0a70-\x0a71\x0a81-\x0a82\x0abc\x0ac1-\x0ac5\x0ac7-\x0ac8\x0acd\x0ae2-\x0ae3\x0b01\x0b3c\x0b3f\x0b41-\x0b43\x0b4d\x0b56\x0b82\x0bc0\x0bcd\x0c3e-\x0c40\x0c46-\x0c48\x0c4a-\x0c4d\x0c55-\x0c56\x0cbc\x0cbf\x0cc6\x0ccc-\x0ccd\x0d41-\x0d43\x0d4d\x0dca\x0dd2-\x0dd4\x0dd6\x0e31\x0e34-\x0e3a\x0e47-\x0e4e\x0eb1\x0eb4-\x0eb9\x0ebb-\x0ebc\x0ec8-\x0ecd\x0f18-\x0f19\x0f35\x0f37\x0f39\x0f71-\x0f7e\x0f80-\x0f84\x0f86-\x0f87\x0f90-\x0f97\x0f99-\x0fbc\x0fc6\x102d-\x1030\x1032\x1036-\x1037\x1039\x1058-\x1059\x1712-\x1714\x1732-\x1734\x1752-\x1753\x1772-\x1773\x17b7-\x17bd\x17c6\x17c9-\x17d3\x17dd\x180b-\x180d\x18a9\x1920-\x1922\x1927-\x1928\x1932\x1939-\x193b\x20d0-\x20dc\x20e1\x20e5-\x20ea\x302a-\x302f\x3099-\x309a\xfb1e\xfe00-\xfe0f\xfe20-\xfe23\x101fd\x10a01-\x10a03\x10a05-\x10a06\x10a0c-\x10a0f\x10a38-\x10a3a\x10a3f\x11001\x11038-\x11046\x11080-\x11081\x110b3-\x110b6\x110b9-\x110ba\x11100-\x11102\x11127-\x1112b\x1112d-\x11134\x11180-\x11181\x111b6-\x111be\x116ab\x116ad\x116b0-\x116b5\x116b7\x16f8f-\x16f92\x1d167-\x1d169\x1d17b-\x1d182\x1d185-\x1d18b\x1d1aa-\x1d1ad\x1d242-\x1d244\xe0100-\xe01ef]
+
+
+ #
+ # Define a regular letter
+ #
+_define LETTER (ChuLXNoChs|ChuMcNoChs|ChuMnNoChs|ChuMe|[&_])
+
+
+ #
+ # Regular Words (numbers and letters go together)
+ #
+< ((LETTER)|(ChuNX))+ > --> WORD
+
+< ChineseChars > --> WORD
+
+ #
+ # Preserve punctuation
+ #
+< ChuPX | ChuSc | ChuSm | ChuSo > --> WORD
+< CURRENCY > --> WORD
+< [%] > --> WORD
+< [HYPHEN] > --> WORD
+
+ #
+ # Special words are always preffered
+ #
+_define SpecWordDelim (WHITESPACE|ChuPX|ChuSm|ChuSc|ChuSk|ChuSo|ChuNX|$)
+_define SpecWordDelimNoNum (WHITESPACE|ChuPX|ChuSm|ChuSc|ChuSk|ChuSo|$)
+_define SpecWordDelimNoNumNoEnd (WHITESPACE|ChuPX|ChuSm|ChuSc|ChuSk|ChuSo)
+
+ #
+ # Contractions
+ #
+
+ # no apostrophe
+< [cC][aA][nN][nN][oO][tT] > SpecWordDelim --> _call FnSplitCannot
+_function FnSplitCannot
+  < ^ [cC][aA][nN] > --> WORD
+  < [nN][oO][tT] $ > --> WORD
+_end
+
+ # with apostrophe
+_define CONTRACTIONS
+(
+  # you'd, we'll, apple's
+  (APOSTROPHE
+   (
+     (ll)|(LL)|
+     (re)|(RE)|
+     (ve)|(VE)|
+     (d)|(D)|
+     (s)|(S)|
+     (on)|(ON)|
+     (il)|(IL)
+   )
+  )
+  |
+  # shouldn't
+  (
+    [Nn] APOSTROPHE [Tt]
+  )
+)
+_end
+
+# words with contractions
+< ((LETTER)|(ChuNX))+ CONTRACTIONS > SpecWordDelim --> _call FnSeparateContractions
+
+_function FnSeparateContractions
+  < ^ ((LETTER)|(ChuNX))+ > CONTRACTIONS --> WORD
+  < CONTRACTIONS $ > --> WORD
+_end
+
+ # with apostrophe in the beginning (French + o'clock)
+_define PRECONTRACTIONS
+(
+  (([lLcCjJdDtTsSoO])|([qQ][uU])) APOSTROPHE
+)
+_end
+
+# words with precontractions
+< PRECONTRACTIONS ((LETTER)|(ChuNX))+ > SpecWordDelim --> _call FnSeparatePreContractions
+
+_function FnSeparatePreContractions
+  < ^ PRECONTRACTIONS > --> WORD
+  < ((LETTER)|(ChuNX))+ $ > --> WORD
+_end
+
+
+ #
+ # Abbreviations
+ #
+### changed in v5 _define AbbrLetterWord ((LETTER)(LETTER)?)
+_define AbbrLetterWord (LETTER)
+
+### # Single-word abbreviation:
+### #  "Dr.Anderson", "Dr. Anderson"
+### < UpToThreeLetterWord [.] > . --> WORD
+### < UpToThreeLetterWord [.] (WHITESPACE|['"])* $ > --> _call FnTokExcludePunktNoSpecWords
+
+_define ABBREVIATION_SEQUENCE
+(
+ # U.S.A, A.B.Jr., e.g., ...
+ (AbbrLetterWord [.])+ AbbrLetterWord
+)
+_end
+
+ # "e.g." --> [e.g.]
+< ABBREVIATION_SEQUENCE [.] > --> WORD
+
+ # "e.g," --> [e.g]
+< ABBREVIATION_SEQUENCE [.]? > SpecWordDelim --> WORD
+
+ # "etc.$" --> [etc][.]
+< ABBREVIATION_SEQUENCE [.] (WHITESPACE|['"])* $ > --> _call FnExcludeLastDotFromAbbr
+_function FnExcludeLastDotFromAbbr
+ < ^ ABBREVIATION_SEQUENCE > --> WORD
+ < [.'"] > --> WORD
+_end
+
+
+
+### # special words
+### # TODO: should be cleaned up
+###_define SPECIAL_WORDS
+### (
+###   ([Cc][+][+])
+###  |([Cc][#])
+###  |([Cc][Oo][Mm][+])
+###  |([Jj][#])
+###  |([Jj][+][+])
+###  |([Gg][Dd][Ii][+])
+###  |([.][Nn][Ee][Tt])
+###  |([Gg][+][+])
+###  |([Aa][*])
+###  |([Ff][#])
+### )
+###_end
+
+###< SPECIAL_WORDS > SpecWordDelim --> _call FnSpecialWord
+###
+###_function FnSpecialWord
+###  < ^ .+ > --> WORD
+###_end
+
+
+ #
+ # Numbers
+ #
+ # Note: formatted number cannot start with 0, e.g. 01,000 or 000,000
+ #
+
+ # comma delimited number (american/european) format 1,000,000.00
+###< MINUS? (NOT0NUM)(NUM)?(NUM)?([,](NUM)(NUM)(NUM))+ ([.](NUM)+)? > (SpecWordDelimNoNum) --> WORD
+ # not formatted number with matched right context (for optimization)
+###< MINUS? (NUM)+ > (SpecWordDelimNoNum) --> WORD
+ # not formatted numbers "1000.0", "10.5"
+###< MINUS? (NUM)+([.](NUM)+)? > (SpecWordDelimNoNum) --> WORD
+ # versions with up to three segments, e.g. "2.95.3"
+###< (NUM)+ [.](NUM)+[.](NUM)+ > (SpecWordDelimNoNum) --> WORD
+ # only with decimal part .99
+###< MINUS? [.](NUM)+ > (SpecWordDelimNoNum) --> WORD
+
+ # comma delimited number (american/european) format 1,000,000.00. 10PM, 10bn, 3d?
+< (NOT0NUM)(NUM)?(NUM)?([,](NUM)(NUM)(NUM))+ ([.](NUM)+)? (LETTER)* > (SpecWordDelimNoNum) --> WORD
+ # not formatted number with matched right context (for optimization)
+< (NUM)+ (LETTER)* > (SpecWordDelimNoNum) --> WORD
+ # not formatted numbers "1000.0", "10.5"
+< (NUM)+([.](NUM)+)? (LETTER)* > (SpecWordDelimNoNum) --> WORD
+ # versions with up to three segments, e.g. "2.95.3"
+< (NUM)+ [.](NUM)+[.](NUM)+ (LETTER)* > (SpecWordDelimNoNum) --> WORD
+ # only with decimal part .99
+< [.](NUM)+ (LETTER)* > (SpecWordDelimNoNum) --> WORD
+
+
+ # Suppress all sequences which start with number or dot and have dots in them and
+ # end with number but are not of the format above.
+### < MINUS? (NUM)+[.](NUM)+[.]((NUM)|[.])+(NUM) > (SpecWordDelimNoNum) --> IGNORE _call FnTokExcludePunktNoSpecWords
+
+
+ #
+ # Tech-terms
+ #
+
+ # Plus in a post position of a single letter:
+ # For exampe,  valid ones: c++, g++, A+, COM+, Star+
+ #              invalid ones: c+b  +c, , i+++, i--, z+++++++
+ # Note: 1. no exclusion is necessary as right context is specified
+ #       2. we don't do this for '-' because often is a dash as well
+ #       3. bad exaples: SmartMovie+video+, presure+pumps+, irs+ pay online
+ #
+< [A-Za-z]+[+][+]? > (SpecWordDelim) --> WORD
+< [A-Za-z]+[+][+][+]+ > --> _call FnTokExcludePunktNoSpecWords
+
+ # Chords: D#m7, D#7, D# 7
+< ([ABCDEFGabcdefg][#]) > ((SpecWordDelim)|([A-Za-z])) --> WORD
+
+ # make sure we break domains with .net or without as old wb does
+ #     "user@softhome.net" --> [user][softhome][net]
+ # and     "users of .net" --> [users][of][.net]
+ # Note: asp.net is also broken in the way the old word-breaker does: [asp][net]
+ # Tricky examples: "emanila.net46.net/for3968.html" --> [emanila][net46][net][for3968][html]
+ # Tricky examples: "benidorm @euskalnet.net.net" --> [benidorm][euskalnet][net][net]
+ # Note2: FnTokExcludePunktNoSpecWords has lower priority than FnSpecialWord, so just .net is always tokenized by FnSpecialWord
+### < [A-Za-z0-9_.-]*[.][Nn][Ee][Tt]([A-Za-z0-9_.-]*[A-Za-z0-9_-])? > (SpecWordDelimNoNum) --> _call FnTokExcludePunktNoSpecWords
+
+ # teams.microsoft.com, softhome.net, 3.1, 8.x
+### changed in v5 ### < (((LETTER)|(ChuNX))+[.])+((LETTER)|(ChuNX))+ > --> WORD
+< (((LETTER)|(ChuNX))+[.])+((LETTER)|(ChuNX))+ > --> _call FnBreakApartNoSpace
+
+_function FnBreakApartNoSpace
+  < ((LETTER)|(ChuNX))+ > --> WORD
+  < [.] > --> WORD
+_end
+
+< ([#]|[\xff03]) > ((LETTER)|(ChuNX)) --> WORD
+
+< ([@]|[\xff20]) > ((LETTER)|(ChuNX)) --> WORD
+
+< [/] > ((LETTER)|(ChuNX)) --> WORD
+
+ # a standalone file extensions .MHT , .HTM , .HTML and .Net, .mde , .ade , and .accde, .mp3 files .Net
+< [.][A-Za-z0-9]+ > (SpecWordDelim) --> WORD
+
+
+ #
+ # Ip addresses and alike:
+ # Note: we need to define the IP address tokenization because it conflicts with
+ #  the European format of number both IPs 10.10.12.102 and 100.100.120.102
+ #  should be tokenized respectevely: [10][10][12][102] and [100][100][120][102]
+ #
+### < [0-9][0-9]?[0-9]?[.][0-9][0-9]?[0-9]?[.][0-9][0-9]?[0-9]?[.][0-9][0-9]?[0-9]? > (SpecWordDelimNoNum) --> _call FnTokExcludePunktNoSpecWordsHighPri
+
+ #
+ # Single word identifiers starting with '_', e.g. _access, _wcsicmp, _wcsicmp_s, __try, __file__, etc.
+ #
+ # Note: 1. only upto two underscores are allowed on each side
+ #       2. the token cannot be a part of a longer sequence with '_', e.g. http_access
+ #
+### < [_][_]?[A-Za-z]+[_]?[_]? > (SpecWordDelimNoNum) --> WORD
+
+ # anything longer or with more '_' will be broken in a regular way
+### < ((LETTER)|(ChuNX)|[_])+[_]((LETTER)|(ChuNX)|[_])+ > (SpecWordDelimNoNum) --> IGNORE _call FnTokExcludePunktNoSpecWords
+
+ # also block things like part of the URL path:
+ #  /John_C._Reilly 
+ #  /Tenchi_Muyo!_Ryo-Ohki
+ #  /Chesapeake_Ranch_Estates,_Maryland
+### < [/]((LETTER)|(ChuNX)|[_])((LETTER)|(ChuNX)|[-_.,!?%])*[_]((LETTER)|(ChuNX)|[-_.,!?%])*((LETTER)|(ChuNX)|[_]) > (SpecWordDelimNoNum) --> IGNORE _call FnTokExcludePunktNoSpecWords
+
+
+ #
+ # common functions
+ #
+
+_function FnTokExcludePunktNoSpecWords
+  < ((LETTER)|(ChuNX))+ > --> WORD
+  < ChuPX | ChuSc | ChuSm | ChuSo > --> WORD
+_end
+
+_function FnTokExcludePunktNoSpecWordsHighPri
+  < ((LETTER)|(ChuNX))+ > --> WORD
+  < ChuPX | ChuSc | ChuSm | ChuSo > --> WORD
+_end
+
+_function FnDelete
+  < $ $ $ > --> WORD
+_end
