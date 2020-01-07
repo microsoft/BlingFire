@@ -82,7 +82,7 @@ This is the Bling - Fire tokenizer
 from blingfire import *
 
 # load a custom model from file
-# h = load_model(os.path.join(os.path.dirname(blingfire.__file__), "bert_base_tok.bin"))
+# h = load_model(os.path.join(os.path.dirname(blingfire.__file__), "wbd_chuni.bin"))
 h = load_model("./wbd_chuni.bin")
 
 text = 'This is the Bling-Fire tokenizer. 2007年9月日历表_2007年9月农历阳历一览表-万年历'
