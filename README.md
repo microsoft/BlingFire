@@ -62,7 +62,7 @@ If you simply want to use it in Python, you can install the latest release using
 
 
 ## Examples
-### Python example, simple tokenizer replacing NLTK:
+### 1. Python example, simple tokenizer replacing NLTK:
 ```python
 from blingfire import *
 text = 'This is the Bling-Fire tokenizer'
@@ -70,13 +70,13 @@ output = text_to_words(text)
 print(output)
 ```
 
-### Expected output:
+Expected output:
 ```
 This is the Bling - Fire tokenizer
 ```
 
 
-### Python example, calling BERT BASE tokenizer compiled as one finite-state machine
+### 2. Python example, calling BERT BASE tokenizer compiled as one finite-state machine
 On one thread, it works 14x faster than orignal BERT tokenizer written in Python. Given this code is written in C++ it can be called from multiple threads without blocking on global interpreter lock thus achiving higher speed-ups for batch mode.
 
 ```python
@@ -103,7 +103,7 @@ blingfire.free_model(h)
 print("Model Freed")
 ```
 
-### Expected output:
+Expected output:
 ```
 Model Handle: 2854016629088
 Эpple pie. How do I renew my virtual smart card?: /Microsoft IT/ 'virtual' smart card certificates for DirectAccess are valid for one year. In order to get to microsoft.com we need to type pi@1.2.1.2.
@@ -133,7 +133,7 @@ Model Handle: 2854016629088
 Model Freed
 ```
 
-### Example of using Bling Fire in your text classification task
+### 3. Example of using Bling Fire in your text classification task
 
 [This notebook](/doc/Bling%20Fire%20Tokenizer%20Demo.ipynb) demonstrates how Bling Fire tokenizer helps in Stack Overflow posts classification problem.
 
