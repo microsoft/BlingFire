@@ -62,7 +62,7 @@ If you simply want to use it in Python, you can install the latest release using
 
 
 ## Examples
-### 1. Python example, simple tokenizer replacing NLTK:
+### 1. Python example, simple tokenizer with default model:
 ```python
 from blingfire import *
 text = 'This is the Bling-Fire tokenizer'
