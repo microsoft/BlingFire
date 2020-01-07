@@ -76,7 +76,34 @@ This is the Bling - Fire tokenizer
 ```
 
 
-### 2. Python example, calling BERT BASE tokenizer compiled as one finite-state machine
+### 2. Python example, load a custom model for a simple tokenizer: 
+
+```python
+from blingfire import *
+
+# load a custom model from file
+# h = load_model(os.path.join(os.path.dirname(blingfire.__file__), "bert_base_tok.bin"))
+h = load_model("./wbd_chuni.bin")
+
+text = 'This is the Bling-Fire tokenizer. 2007年9月日历表_2007年9月农历阳历一览表-万年历'
+
+# custom model output
+print(text_to_words_with_model(h, text))
+
+# default model output
+print(text_to_words(text))
+
+free_model(h)
+```
+
+Expected output:
+```
+This is the Bling - Fire tokenizer . 2007 年 9 月 日 历 表 _2007 年 9 月 农 历 阳 历 一 览 表 - 万 年 历
+This is the Bling - Fire tokenizer . 2007年9月日历表_2007年9月农历阳历一览表 - 万年历
+```
+
+
+### 3. Python example, calling BERT BASE tokenizer compiled as one finite-state machine
 On one thread, it works 14x faster than orignal BERT tokenizer written in Python. Given this code is written in C++ it can be called from multiple threads without blocking on global interpreter lock thus achiving higher speed-ups for batch mode.
 
 ```python
@@ -133,7 +160,7 @@ Model Handle: 2854016629088
 Model Freed
 ```
 
-### 3. Example of using Bling Fire in your text classification task
+### 4. Example of using Bling Fire in your text classification task
 
 [This notebook](/doc/Bling%20Fire%20Tokenizer%20Demo.ipynb) demonstrates how Bling Fire tokenizer helps in Stack Overflow posts classification problem.
 
