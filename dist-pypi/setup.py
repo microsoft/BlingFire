@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="blingfire",
-    version="0.0.13",
+    version="0.0.14",
     author="Bling",
     author_email="bling@microsoft.com",
     description="Python wrapper of lightening fast Finite State machine and REgular expression manipulation library.",
@@ -13,7 +13,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/microsoft/blingfire/",
     packages=['blingfire'],
-    package_data={'blingfire':['bert_base_tok.bin','bert_base_cased_tok.bin','bert_chinese.bin','bert_multi_cased.bin','libblingfiretokdll.so','blingfiretokdll.dll']},
+    package_data={'blingfire':['bert_base_tok.bin','bert_base_cased_tok.bin','bert_chinese.bin','bert_multi_cased.bin','wbd_chuni.bin','libblingfiretokdll.so','blingfiretokdll.dll']},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
