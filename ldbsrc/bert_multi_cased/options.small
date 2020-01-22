@@ -4,12 +4,10 @@
 
 OUTPUT = bert_multi_cased.bin
 
-opt_build_wbd = --dict-root=. --full-unicode
+opt_build_wbd = --dict-root=. --full-unicode --no-min
 
 opt_pack_wbd_fsa = --alg=triv --type=moore-dfa --remap-iws --use-iwia
 opt_pack_wbd_mmap = --alg=triv --type=mmap
-
-# USE_TEST_WTBT_DICT = 1
 
 resources = \
 	$(tmpdir)/wbd.fsa.$(mode).dump \
