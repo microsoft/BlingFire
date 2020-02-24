@@ -16,7 +16,7 @@ if platform.system() == "Windows":
     blingfire = cdll.LoadLibrary(os.path.join(path, "blingfiretokdll.dll"))
 # detect Mac OSX
 elif platform.system() == "Darwin":
-    pass
+    blingfire = cdll.LoadLibrary(os.path.join(path, "libblingfiretokdll.dylib"))
 else:
 # detect linux
     blingfire = cdll.LoadLibrary(os.path.join(path, "libblingfiretokdll.so"))

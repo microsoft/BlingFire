@@ -22,7 +22,13 @@
 
 #include <ctype.h>
 #include <fcntl.h>
-#include <malloc.h>
+
+#ifdef BLING_FIRE_MAC
+  #include <string>
+#else
+  #include <malloc.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
