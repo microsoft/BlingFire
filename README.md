@@ -24,7 +24,6 @@ We provide 4 compiled models for BERT base/large, BERT base/large cased, BERT Ch
 
 Oh yes, it is also fast. We did a comparison of Bling Fire with tokenizers from Hugging Face, [Bling Fire runs 4-5 times faster than Hugging Face Tokenizers](https://github.com/Microsoft/BlingFire/wiki/Comparing-performance-of-Bling-Fire-and-Hugging-Face-Tokenizers). So if real-time inference is what you are doing and you need low latency solution then you have to try Bling Fire!
 
-
 ## Bling Fire vs NLTK Output
 
 **NLTK:** <pre>The South <b>Florida/Miami</b> area has previously hosted the event 10 times .
@@ -174,6 +173,10 @@ If you want to create your own tokenization or any other finite-state model, you
 1. [This Document](https://github.com/Microsoft/BlingFire/wiki/How-to-change-linguistic-resources) is an introduction into compilation of the C++ code and linguistic resources.
 2. [Adding BERT-like tokenization model](https://github.com/Microsoft/BlingFire/wiki/How-to-add-a-new-BERT-tokenizer-model) is describing how to add new tokenization model similar to BERT.
 
+
+## Supported Platforms
+
+Bling Fire is supported for Windows, Linux and Mac (Thanks to Andrew Kane!)
 
 
 ## Contributing
