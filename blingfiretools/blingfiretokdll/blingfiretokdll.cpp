@@ -815,6 +815,8 @@ const int TextToIds(
             // see if we have subtokens for this token and they cover the token completely
             int j = i + 3;
             int numSubTokens = 0;
+            bool subTokensCoveredAll = false;
+
             if (j < WbdOutSize) {
 
                 int ExpectedFrom = TokenFrom;
@@ -844,11 +846,14 @@ const int TextToIds(
                             pIdsArr[OutCount++] = SubTokenTag;
                         }
                     }
-                } else {
-                    // output an unk tag
-                    if (OutCount < MaxIdsArrLength) {
-                        pIdsArr[OutCount++] = UnkId;
-                    }
+                    subTokensCoveredAll = true;
+                }
+            }
+
+            if (false == subTokensCoveredAll) {
+                // output an unk tag
+                if (OutCount < MaxIdsArrLength) {
+                    pIdsArr[OutCount++] = UnkId;
                 }
             }
 
