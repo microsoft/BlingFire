@@ -57,6 +57,8 @@ const int MaxChainSize = 4096;
 int Chain [MaxChainSize];
 
 bool g_use_tags = false;
+bool g_float_nums = false;
+
 const char * pInTagSetFile = NULL;
 const char * pKey2FreqFile = NULL;
 
@@ -182,6 +184,9 @@ of unicode symbol codes in UTF-16.\n\
   --compounds - encodes the length of the right segment for tab-separated\n\
     pairs of words, uses --key-base=N as a base for this value\n\
 \n\
+  --float-nums - if specified, allows floating point numbers to be \n\
+    inter-mixed with tags\n\
+\n\
   --no-output - makes no output\n\
 \n\
 ";
@@ -298,6 +303,10 @@ void process_args (int& argc, char**& argv)
     }
     if (0 == strcmp ("--key-delim", *argv)) {
       g_key_delim = true;
+      continue;
+    }
+    if (0 == strcmp ("--float-nums", *argv)) {
+      g_float_nums = true;
       continue;
     }
     if (0 == strncmp ("--trim=", *argv, 7)) {
@@ -547,9 +556,20 @@ void PrintKey (const char * pKey, const int KeyLen)
             Key = g_tagset.Str2Tag (pTagStr, TagStrLen);
 
             if (0 >= Key) {
-                Key = atoi (pTagStr);
+                if (false == g_float_nums) {
+                    Key = atoi (pTagStr);
+                } else {
+                    double dKey = atof(pTagStr);
+                    if (0.0 == dKey) {
+                      std::cerr << std::endl << "ERROR: 0.0 weights are not allowed. Read from tag \"" << pTagStr << "\" " \
+                          << " in program " << __PROG__ << std::endl;
+                      exit (1);
+                    }
+                    float flKey = (float) dKey;
+                    Key = *((int*)&flKey); // Note: this is hacky but works for all 32 and 64 bit platforms
+                }
             }
-            if (0 >= Key) {
+            if (0 == Key) {
                 std::cerr << std::endl << "ERROR: Unknown tag \"" << pTagStr << "\" " \
                     << " in program " << __PROG__ << std::endl;
                 exit (1);

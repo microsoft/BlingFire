@@ -1,0 +1,1672 @@
+#
+# LDB compilation makefile
+#
+# Usage:
+#
+# 1. Compilation Makefile.nmake [ lang=<lang> ] [ mode=<mode> ] all
+# 2. Auto-test   Makefile.nmake [ lang=<lang> ] [ mode=<mode> ] test
+# 3. Performance Makefile.nmake [ lang=<lang> ] [ mode=<mode> ] perf
+#
+
+mode   = small
+lang   = english
+
+srcdir = $(lang)
+tmpdir = $(srcdir)\tmp$(VERSION)
+dstdir = ldb\$(lang)
+
+AUTOTEST = --auto-test
+
+#
+# Default values of the variables, they may be overridden
+# in the options.* files
+#
+
+WTBT_ANALYSIS=$(srcdir)/wtbt*.dict.utf8.zip
+WTBT_GENERATION=$(srcdir)/wtbt*.dict.utf8.zip
+
+
+!include $(srcdir)\options.$(mode)
+
+OUTPUT = $(dstdir)\$(OUTPUT)
+
+#
+# Variables adjustment
+#
+
+build_first = \
+!if "$(USE_PREFIX)" != ""
+  $(tmpdir)/prefixes.fsa.$(mode).dump \
+!endif
+!if "$(USE_CHARMAP)" != ""
+  $(tmpdir)/charmap.mmap.$(mode).dump \
+!endif
+
+
+WTBT_DICT1 = \
+!if "$(USE_TEST_WTBT_DICT)" != ""
+  $(tmpdir)/wtbt.dict1.utf8
+!else
+!  if "$(USE_PIPE_WTBT_DICT)" != ""
+!  else
+     $(WTBT_ANALYSIS)
+!  endif
+!endif
+
+TEST_WTBT_DICT1 = \
+!if "$(USE_TEST_WTBT_DICT)" != ""
+  $(tmpdir)/test.wtbt.dict1.utf8
+!else
+!  if "$(USE_PIPE_WTBT_DICT)" != ""
+!  else
+     $(WTBT_ANALYSIS)
+!  endif
+!endif
+
+cat_wtbt_dict1 = \
+!if "$(USE_TEST_WTBT_DICT)" != ""
+  cat $(WTBT_DICT1)
+!else
+!  if "$(USE_PIPE_WTBT_DICT)" != ""
+     lextract $(opt_lextract_wtbt)
+!  else
+     unzip -p "$(WTBT_DICT1)"
+!  endif
+!endif
+
+cat_test_wtbt_dict1 = \
+!if "$(USE_TEST_WTBT_DICT)" != ""
+  cat $(TEST_WTBT_DICT1)
+!else
+!  if "$(USE_PIPE_WTBT_DICT)" != ""
+     lextract $(opt_lextract_wtbt)
+!  else
+     unzip -p "$(TEST_WTBT_DICT1)"
+!  endif
+!endif
+
+WTBT_DICT2 = \
+!if "$(USE_TEST_WTBT_DICT)" != ""
+  $(tmpdir)/wtbt.dict2.utf8
+!else
+!  if "$(USE_PIPE_WTBT_DICT)" != ""
+!  else
+     $(WTBT_GENERATION)
+!  endif
+!endif
+
+TEST_WTBT_DICT2 = \
+!if "$(USE_TEST_WTBT_DICT)" != ""
+  $(tmpdir)/test.wtbt.dict2.utf8
+!else
+!  if "$(USE_PIPE_WTBT_DICT)" != ""
+!  else
+     $(WTBT_GENERATION)
+!  endif
+!endif
+
+cat_wtbt_dict2 = \
+!if "$(USE_TEST_WTBT_DICT)" != ""
+  cat $(WTBT_DICT2)
+!else
+!  if "$(USE_PIPE_WTBT_DICT)" != ""
+     lextract $(opt_lextract_wtbt)
+!  else
+     unzip -p "$(WTBT_DICT2)"
+!  endif
+!endif
+
+cat_test_wtbt_dict2 = \
+!if "$(USE_TEST_WTBT_DICT)" != ""
+  cat $(TEST_WTBT_DICT2)
+!else
+!  if "$(USE_PIPE_WTBT_DICT)" != ""
+     lextract $(opt_lextract_wtbt)
+!  else
+     unzip -p "$(TEST_WTBT_DICT2)"
+!  endif
+!endif
+
+TEST_COMP_DICT = \
+!if "$(TEST_COMP_DICT)" != ""
+  $(TEST_COMP_DICT)
+!else
+  $(tmpdir)/test.comp.dict.utf8
+!endif
+
+cat_test_comp_dict = \
+!if "$(cat_test_comp_dict)" != ""
+  $(cat_test_comp_dict)
+!else
+  cat $(TEST_COMP_DICT)
+!endif
+
+W2H_DICT = \
+!if "$(USE_TEST_W2H_DICT)" != ""
+  $(tmpdir)/w2h.dict.utf8
+!else
+  $(srcdir)/w2h.dict.utf8.zip
+!endif
+
+TEST_W2H_DICT = \
+!if "$(USE_TEST_W2H_DICT)" != ""
+  $(tmpdir)/test.w2h.dict.utf8
+!else
+  $(srcdir)/w2h.dict.utf8.zip
+!endif
+
+cat_w2h_dict = \
+!if "$(USE_TEST_W2H_DICT)" != ""
+  cat $(W2H_DICT)
+!else
+  unzip -p $(W2H_DICT)
+!endif
+
+cat_test_w2h_dict = \
+!if "$(USE_TEST_W2H_DICT)" != ""
+  cat $(TEST_W2H_DICT)
+!else
+  unzip -p $(TEST_W2H_DICT)
+!endif
+
+W2H_ALT_DICT = \
+!if "$(USE_TEST_W2H_DICT)" != ""
+  $(tmpdir)/w2h.alt.dict.utf8
+!else
+  $(srcdir)/w2h.alt.dict.utf8.zip
+!endif
+
+TEST_W2H_ALT_DICT = \
+!if "$(USE_TEST_W2H_DICT)" != ""
+  $(tmpdir)/test.w2h.alt.dict.utf8
+!else
+  $(srcdir)/w2h.alt.dict.utf8.zip
+!endif
+
+cat_w2h_alt_dict = \
+!if "$(USE_TEST_W2H_DICT)" != ""
+  cat $(W2H_ALT_DICT)
+!else
+  unzip -p $(W2H_ALT_DICT)
+!endif
+
+cat_test_w2h_alt_dict = \
+!if "$(USE_TEST_W2H_DICT)" != ""
+  cat $(TEST_W2H_ALT_DICT)
+!else
+  unzip -p $(TEST_W2H_ALT_DICT)
+!endif
+
+EXTRA_W2H_FILE = \
+!if "$(USE_EXTRA_W2H)" != ""
+  $(srcdir)/w2h.extra.pats.utf8
+!endif
+
+wtbt_to_wt2b = \
+!if "$(USE_EXPLICIT_BTBT)" != "1"
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"$$f[0]\t$$f[2]\t$$f[1]\n\"; if($$f[2] ne $$prev) { print \"$$f[2]\t$$f[2]\t$$f[3]\n\"; $$prev=$$f[2]; }"
+!else
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"$$f[0]\t$$f[2]\t$$f[1]\n\";"
+!endif
+
+wtbt_to_b2wt =  \
+!if "$(USE_EXPLICIT_BTBT)" != "1"
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"$$f[2]\t$$f[0]\t$$f[1]\n\"; if($$f[2] ne $$prev) { print \"$$f[2]\t$$f[2]\t$$f[3]\n\"; $$prev=$$f[2]; }"
+!else
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"$$f[2]\t$$f[0]\t$$f[1]\n\";"
+!endif
+
+wtbt_to_wt2bt = \
+!if "$(USE_EXPLICIT_BTBT)" != "1"
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"$$f[0]\t$$f[2]\t$$f[1]\t$$f[3]\n\"; if($$f[2] ne $$prev) { print \"$$f[2]\t$$f[2]\t$$f[3]\t$$f[3]\n\"; $$prev=$$f[2]; }"
+!else
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"$$f[0]\t$$f[2]\t$$f[1]\t$$f[3]\n\";"
+!endif
+
+wtbt_to_bt2wt = \
+!if "$(USE_EXPLICIT_BTBT)" != "1"
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"$$f[2]\t$$f[0]\t$$f[3]\t$$f[1]\n\"; if($$f[2] ne $$prev) { print \"$$f[2]\t$$f[2]\t$$f[3]\t$$f[3]\n\"; $$prev=$$f[2]; }"
+!else
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"$$f[2]\t$$f[0]\t$$f[3]\t$$f[1]\n\";"
+!endif
+
+wtbt_to_w2b = \
+!if "$(USE_EXPLICIT_BTBT)" != "1"
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"$$f[0]\t$$f[2]\n\"; if($$f[2] ne $$prev) { print \"$$f[2]\t$$f[2]\n\"; $$prev=$$f[2]; }"
+!else
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"$$f[0]\t$$f[2]\n\";"
+!endif
+
+wtbt_to_b2w = \
+!if "$(USE_EXPLICIT_BTBT)" != "1"
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"$$f[2]\t$$f[0]\n\"; if($$f[2] ne $$prev) { print \"$$f[2]\t$$f[2]\n\"; $$prev=$$f[2]; }"
+!else
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"$$f[2]\t$$f[0]\n\";"
+!endif
+
+wtbt_to_w2t =  \
+!if "$(USE_EXPLICIT_BTBT)" != "1"
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"$$f[0]\t$$f[1]\n\"; $$b=\"$$f[2]\t$$f[3]\"; if($$b ne $$prev) { print \"$$b\n\"; $$prev=$$b; }"
+!else
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"$$f[0]\t$$f[1]\n\"; $$b=\"$$f[2]\t$$f[3]\";"
+!endif
+
+wtbt_to_b2t =  \
+!if "$(USE_EXPLICIT_BTBT)" != "1"
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f = split(/[\t]/); print \"$$f[2]\t$$f[1]\n\"; $$b = \"$$f[2]\t$$f[3]\"; if($$b ne $$prev) { print \"$$b\n\"; $$prev = $$b; }"
+!else
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f = split(/[\t]/); print \"$$f[2]\t$$f[1]\n\"; $$b = \"$$f[2]\t$$f[3]\";"
+!endif
+
+wtbt_to_dom =  \
+!if "$(USE_EXPLICIT_BTBT)" != "1"
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f = split(/[\t]/); print \"$$f[0]\n$$f[2]\n\";"
+!else
+  perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f = split(/[\t]/); print \"$$f[0]\n$$f[2]\n\";"
+!endif
+
+build_b2w = \
+!if "$(USE_B2W_NFST)" != ""
+  fa_build_dict_fst $(opt_align_b2w) --no-epsilon --out-fsm=$(tmpdir)/b2w.suff.fsa.txt --out-ows=$(tmpdir)/b2w.suff.acts.txt
+!else
+  fa_dict2suff $(opt_dict2suff) $(opt_dict2suff_b2w) | fa_build_suff $(opt_build_suff) $(opt_build_suff_b2w) --out1=$(tmpdir)/b2w.suff.fsa.txt --out2=$(tmpdir)/b2w.suff.acts.txt
+!endif
+
+build_w2b = \
+!if "$(USE_W2B_NFST)" != ""
+  fa_build_dict_fst $(opt_align_w2b) --no-epsilon --out-fsm=$(tmpdir)/w2b.suff.fsa.txt --out-ows=$(tmpdir)/w2b.suff.acts.txt
+!else
+  fa_dict2suff $(opt_dict2suff) $(opt_dict2suff_w2b) | fa_build_suff $(opt_build_suff) $(opt_build_suff_w2b) --out1=$(tmpdir)/w2b.suff.fsa.txt --out2=$(tmpdir)/w2b.suff.acts.txt
+!endif
+
+
+#
+# Special targets
+#
+
+DIRECTORIES = $(tmpdir) $(dstdir)
+
+$(DIRECTORIES):
+	md $@
+
+dirs: $(DIRECTORIES)
+
+
+$(OUTPUT): $(tmpdir)/ldb.conf.$(mode).dump $(resources)
+	fa_merge_dumps --out=$(OUTPUT) \
+	  $(tmpdir)/ldb.conf.$(mode).dump $(resources)
+
+all: dirs $(OUTPUT)
+
+tlc: dirs $(srcdir)\FeatureVector.zip $(tmpdir)\FeatureVector.txt
+	TMSNlearn.exe $(tmpdir)\FeatureVector.txt $(opt_tlc_train) /mi:$(OUTPUT) /m:$(dstdir)\$(OUTPUTBin)
+
+$(tmpdir)\FeatureVector.txt: $(srcdir)\FeatureVector.zip
+	unzip -p $(srcdir)\FeatureVector.zip > $(tmpdir)\FeatureVector.txt
+
+clean:
+	rd /S /Q $(tmpdir)
+
+
+.PHONY: all dirs clean test usage test_b2w_w2b crfdirs crfeval
+
+
+#
+# Translation model
+#
+
+# unzip the model
+$(tmpdir)/tm.wwpp.utf8: $(srcdir)/tm.wwpp.utf8.zip
+	unzip -p $(srcdir)/tm.wwpp.utf8.zip > $(tmpdir)/tm.wwpp.utf8
+
+# extract the vocabulary
+$(tmpdir)/vocab.$(mode).txt: $(tmpdir)/tm.wwpp.utf8
+	NlpExtractVocab -in $(tmpdir)/tm.wwpp.utf8 -out $(tmpdir)/vocab.$(mode).txt
+
+# pack the vocabulary
+$(tmpdir)/vocab.$(mode).dump: $(tmpdir)/vocab.$(mode).txt
+	hashbuild $(opt_pack_tm_vocab) -name $(tmpdir)/vocab.$(mode).dump $(tmpdir)/vocab.$(mode).txt
+
+# pack the model
+$(tmpdir)/tm.wwpp.$(mode).dump: $(tmpdir)/vocab.$(mode).dump $(tmpdir)/tm.wwpp.utf8
+	NlpBuildTranslationModel -wordhash $(tmpdir)/vocab.$(mode).dump -in $(tmpdir)/tm.wwpp.utf8 -out $(tmpdir)/tm.wwpp.$(mode).dump
+
+
+#
+# Output resources <-- Intermediate resources
+#
+
+$(tmpdir)/wt2bt.suff.fsa.$(mode).dump: $(tmpdir)/wt2bt.suff.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_suff_fsa) \
+	  --in=$(tmpdir)/wt2bt.suff.fsa.txt \
+	  --out=$(tmpdir)/wt2bt.suff.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/wt2bt.suff.acts.$(mode).dump: $(tmpdir)/wt2bt.suff.acts.txt
+	fa_fsm2fsm_pack $(opt_pack_suff_acts) \
+	  --in=$(tmpdir)/wt2bt.suff.acts.txt \
+	  --out=$(tmpdir)/wt2bt.suff.acts.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/wt2b.suff.fsa.$(mode).dump: $(tmpdir)/wt2b.suff.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_suff_fsa) \
+	  --in=$(tmpdir)/wt2b.suff.fsa.txt \
+	  --out=$(tmpdir)/wt2b.suff.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/wt2b.suff.acts.$(mode).dump: $(tmpdir)/wt2b.suff.acts.txt
+	fa_fsm2fsm_pack $(opt_pack_suff_acts) \
+	  --in=$(tmpdir)/wt2b.suff.acts.txt \
+	  --out=$(tmpdir)/wt2b.suff.acts.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/bt2wt.suff.fsa.$(mode).dump: $(tmpdir)/bt2wt.suff.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_suff_fsa) \
+	  --in=$(tmpdir)/bt2wt.suff.fsa.txt \
+	  --out=$(tmpdir)/bt2wt.suff.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/bt2wt.suff.acts.$(mode).dump: $(tmpdir)/bt2wt.suff.acts.txt
+	fa_fsm2fsm_pack $(opt_pack_suff_acts) \
+	  --in=$(tmpdir)/bt2wt.suff.acts.txt \
+	  --out=$(tmpdir)/bt2wt.suff.acts.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/b2wt.suff.fsa.$(mode).dump: $(tmpdir)/b2wt.suff.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_suff_fsa) \
+	  --in=$(tmpdir)/b2wt.suff.fsa.txt \
+	  --out=$(tmpdir)/b2wt.suff.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/b2wt.suff.acts.$(mode).dump: $(tmpdir)/b2wt.suff.acts.txt
+	fa_fsm2fsm_pack $(opt_pack_suff_acts) \
+	  --in=$(tmpdir)/b2wt.suff.acts.txt \
+	  --out=$(tmpdir)/b2wt.suff.acts.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2b.suff.fsa.$(mode).dump: $(tmpdir)/w2b.suff.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_suff_fsa) \
+	  --in=$(tmpdir)/w2b.suff.fsa.txt \
+	  --out=$(tmpdir)/w2b.suff.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2b.suff.acts.$(mode).dump: $(tmpdir)/w2b.suff.acts.txt
+	fa_fsm2fsm_pack $(opt_pack_suff_acts) \
+	  --in=$(tmpdir)/w2b.suff.acts.txt \
+	  --out=$(tmpdir)/w2b.suff.acts.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/b2w.suff.fsa.$(mode).dump: $(tmpdir)/b2w.suff.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_suff_fsa) \
+	  --in=$(tmpdir)/b2w.suff.fsa.txt \
+	  --out=$(tmpdir)/b2w.suff.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/b2w.suff.acts.$(mode).dump: $(tmpdir)/b2w.suff.acts.txt
+	fa_fsm2fsm_pack $(opt_pack_suff_acts) \
+	  --in=$(tmpdir)/b2w.suff.acts.txt \
+	  --out=$(tmpdir)/b2w.suff.acts.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2t.fsa.$(mode).dump: $(tmpdir)/w2t.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_word_guesser) \
+	  --in=$(tmpdir)/w2t.fsa.txt \
+	  --out=$(tmpdir)/w2t.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/b2t.fsa.$(mode).dump: $(tmpdir)/b2t.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_word_guesser) \
+	  --in=$(tmpdir)/b2t.fsa.txt \
+	  --out=$(tmpdir)/b2t.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/prefixes.fsa.$(mode).dump: $(tmpdir)/prefixes.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_prefixes) \
+	  --in=$(tmpdir)/prefixes.fsa.txt \
+	  --out=$(tmpdir)/prefixes.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/charmap.mmap.$(mode).dump: $(tmpdir)/charmap.mmap.txt
+	fa_fsm2fsm_pack $(opt_pack_charmap) \
+	  --in=$(tmpdir)/charmap.mmap.txt \
+	  --out=$(tmpdir)/charmap.mmap.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/char2script.mmap.$(mode).dump: $(tmpdir)/char2script.mmap.txt
+	fa_fsm2fsm_pack $(opt_pack_char2script) \
+	  --in=$(tmpdir)/char2script.mmap.txt \
+	  --out=$(tmpdir)/char2script.mmap.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/script2lang.mmap.$(mode).dump: $(tmpdir)/script2lang.mmap.txt
+	fa_fsm2fsm_pack $(opt_pack_script2lang) \
+	  --in=$(tmpdir)/script2lang.mmap.txt \
+	  --out=$(tmpdir)/script2lang.mmap.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/segs.fsa.$(mode).dump: $(tmpdir)/segs.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_segs) \
+	  --in=$(tmpdir)/segs.fsa.txt \
+	  --out=$(tmpdir)/segs.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2p.fsa.$(mode).dump: $(tmpdir)/w2p.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_w2p) \
+	  --in=$(tmpdir)/w2p.fsa.txt \
+	  --out=$(tmpdir)/w2p.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/tag.dict.fsm.$(mode).dump: $(tmpdir)/tag.dict.fsm.txt
+	fa_fsm2fsm_pack $(opt_pack_dict_fsm) \
+	  --in=$(tmpdir)/tag.dict.fsm.txt \
+	  --out=$(tmpdir)/tag.dict.fsm.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/tag.dict.k2i.$(mode).dump: $(tmpdir)/tag.dict.k2i.txt
+	fa_fsm2fsm_pack $(opt_pack_dict_k2i) \
+	  --in=$(tmpdir)/tag.dict.k2i.txt \
+	  --out=$(tmpdir)/tag.dict.k2i.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/tag.dict.i2t.$(mode).dump: $(tmpdir)/tag.dict.i2t.txt
+	fa_fsm2fsm_pack $(opt_pack_dict_i2t) \
+	  --in=$(tmpdir)/tag.dict.i2t.txt \
+	  --out=$(tmpdir)/tag.dict.i2t.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/pos.dict.fsm.$(mode).dump: $(tmpdir)/pos.dict.fsm.txt
+	fa_fsm2fsm_pack $(opt_pack_dict_fsm) \
+	  --in=$(tmpdir)/pos.dict.fsm.txt \
+	  --out=$(tmpdir)/pos.dict.fsm.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/pos.dict.k2i.$(mode).dump: $(tmpdir)/pos.dict.k2i.txt
+	fa_fsm2fsm_pack $(opt_pack_dict_k2i) \
+	  --in=$(tmpdir)/pos.dict.k2i.txt \
+	  --out=$(tmpdir)/pos.dict.k2i.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/pos.dict.i2t.$(mode).dump: $(tmpdir)/pos.dict.i2t.txt
+	fa_fsm2fsm_pack $(opt_pack_dict_i2t) \
+	  --in=$(tmpdir)/pos.dict.i2t.txt \
+	  --out=$(tmpdir)/pos.dict.i2t.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/crf.pos.dict.fsm.$(mode).dump: $(tmpdir)/crf.pos.dict.fsm.txt
+	fa_fsm2fsm_pack $(opt_pack_dict_fsm) \
+	  --in=$(tmpdir)/crf.pos.dict.fsm.txt \
+	  --out=$(tmpdir)/crf.pos.dict.fsm.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/crf.pos.dict.k2i.$(mode).dump: $(tmpdir)/crf.pos.dict.k2i.txt
+	fa_fsm2fsm_pack $(opt_pack_dict_k2i) \
+	  --in=$(tmpdir)/crf.pos.dict.k2i.txt \
+	  --out=$(tmpdir)/crf.pos.dict.k2i.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/crf.pos.dict.i2t.$(mode).dump: $(tmpdir)/crf.pos.dict.i2t.txt
+	fa_fsm2fsm_pack $(opt_pack_dict_i2t) \
+	  --in=$(tmpdir)/crf.pos.dict.i2t.txt \
+	  --out=$(tmpdir)/crf.pos.dict.i2t.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2h.fsm.$(mode).dump: $(tmpdir)/w2h.fsm.txt
+	fa_fsm2fsm_pack $(opt_pack_w2h_fsm) \
+	  --in=$(tmpdir)/w2h.fsm.txt \
+	  --out=$(tmpdir)/w2h.fsm.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2h.i2h.$(mode).dump: $(tmpdir)/w2h.i2h.txt
+	fa_fsm2fsm_pack $(opt_pack_w2h_i2h) \
+	  --in=$(tmpdir)/w2h.i2h.txt \
+	  --out=$(tmpdir)/w2h.i2h.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2h.alt.fsm.$(mode).dump: $(tmpdir)/w2h.alt.fsm.txt
+	fa_fsm2fsm_pack $(opt_pack_w2h_alt_fsm) \
+	  --in=$(tmpdir)/w2h.alt.fsm.txt \
+	  --out=$(tmpdir)/w2h.alt.fsm.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2h.alt.i2h.$(mode).dump: $(tmpdir)/w2h.alt.i2h.txt
+	fa_fsm2fsm_pack $(opt_pack_w2h_alt_i2h) \
+	  --in=$(tmpdir)/w2h.alt.i2h.txt \
+	  --out=$(tmpdir)/w2h.alt.i2h.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/dom.fsa.$(mode).dump: $(tmpdir)/dom.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_dom) \
+	  --in=$(tmpdir)/dom.fsa.txt \
+	  --out=$(tmpdir)/dom.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/t2bt.map.$(mode).dump: $(tmpdir)/t2bt.map.txt
+	fa_fsm2fsm_pack --type=mmap --alg=triv \
+	  $(opt_pack_t2bt) \
+	  --in=$(tmpdir)/t2bt.map.txt \
+	  --out=$(tmpdir)/t2bt.map.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/bt2t.map.$(mode).dump: $(tmpdir)/bt2t.map.txt
+	fa_fsm2fsm_pack --type=mmap --alg=triv \
+	  $(opt_pack_bt2t) \
+	  --in=$(tmpdir)/bt2t.map.txt \
+	  --out=$(tmpdir)/bt2t.map.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2tp.fsa.$(mode).dump: $(tmpdir)/w2tp.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_w2tp) \
+	  --in=$(tmpdir)/w2tp.fsa.txt \
+	  --out=$(tmpdir)/w2tp.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2tpl.fsa.$(mode).dump: $(tmpdir)/w2tpl.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_w2tpl) \
+	  --in=$(tmpdir)/w2tpl.fsa.txt \
+	  --out=$(tmpdir)/w2tpl.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2tpr.fsa.$(mode).dump: $(tmpdir)/w2tpr.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_w2tpr) \
+	  --in=$(tmpdir)/w2tpr.fsa.txt \
+	  --out=$(tmpdir)/w2tpr.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/n2tp.fsa.$(mode).dump: $(tmpdir)/n2tp.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_n2tp) \
+	  --in=$(tmpdir)/n2tp.fsa.txt \
+	  --out=$(tmpdir)/n2tp.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2tp.dict.fsa.$(mode).dump: $(tmpdir)/w2tp.dict.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_w2tp_dict) \
+	  --in=$(tmpdir)/w2tp.dict.fsa.txt \
+	  --out=$(tmpdir)/w2tp.dict.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/n2tp.raw.dict.fsa.$(mode).dump: $(tmpdir)/n2tp.raw.dict.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_n2tp_raw_dict) \
+	  --in=$(tmpdir)/n2tp.raw.dict.fsa.txt \
+	  --out=$(tmpdir)/n2tp.raw.dict.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2tp.raw.dict.fsa.$(mode).dump: $(tmpdir)/w2tp.raw.dict.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_w2tp_raw_dict) \
+	  --in=$(tmpdir)/w2tp.raw.dict.fsa.txt \
+	  --out=$(tmpdir)/w2tp.raw.dict.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/wbd.fsa.$(mode).dump: $(tmpdir)/wbd.rules.fsa.txt \
+		$(tmpdir)/wbd.rules.fsa.iwmap.txt
+	fa_fsm2fsm_pack $(opt_pack_wbd_fsa) \
+	  --in=$(tmpdir)/wbd.rules.fsa.txt \
+	  --iw-map=$(tmpdir)/wbd.rules.fsa.iwmap.txt \
+	  --out=$(tmpdir)/wbd.fsa.$(mode).dump
+
+$(tmpdir)/wbd.mmap.$(mode).dump: $(tmpdir)/wbd.rules.map.txt
+	fa_fsm2fsm_pack $(opt_pack_wbd_mmap) \
+	  --in=$(tmpdir)/wbd.rules.map.txt \
+	  --out=$(tmpdir)/wbd.mmap.$(mode).dump \
+#	  $(AUTOTEST)
+
+$(tmpdir)/u2l.fsa.$(mode).dump: $(tmpdir)/u2l.rules.fsa.txt \
+		$(tmpdir)/u2l.rules.fsa.iwmap.txt
+	fa_fsm2fsm_pack $(opt_pack_u2l_fsa) \
+	  --in=$(tmpdir)/u2l.rules.fsa.txt \
+	  --iw-map=$(tmpdir)/u2l.rules.fsa.iwmap.txt \
+	  --out=$(tmpdir)/u2l.fsa.$(mode).dump
+
+$(tmpdir)/u2l.mmap.$(mode).dump: $(tmpdir)/u2l.rules.map.txt
+	fa_fsm2fsm_pack $(opt_pack_u2l_mmap) \
+	  --in=$(tmpdir)/u2l.rules.map.txt \
+	  --out=$(tmpdir)/u2l.mmap.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/norm.dict.fsa.$(mode).dump: $(tmpdir)/norm.dict.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_norm_dict_fsa) \
+	  --in=$(tmpdir)/norm.dict.fsa.txt \
+	  --out=$(tmpdir)/norm.dict.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+
+$(tmpdir)/concat.rules.fsa.$(mode).dump: $(tmpdir)/concat.rules.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_concat_rules_fsa) \
+	  --in=$(tmpdir)/concat.rules.fsa.txt \
+	  --out=$(tmpdir)/concat.rules.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/concat.rules.mmap.$(mode).dump: $(tmpdir)/concat.rules.mmap.txt
+	fa_fsm2fsm_pack $(opt_pack_concat_rules_mmap) \
+	  --in=$(tmpdir)/concat.rules.mmap.txt \
+	  --out=$(tmpdir)/concat.rules.mmap.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/emit.rules.fsa.$(mode).dump: $(tmpdir)/emit.rules.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_emit_rules_fsa) \
+	  --in=$(tmpdir)/emit.rules.fsa.txt \
+	  --out=$(tmpdir)/emit.rules.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/emit.rules.mmap.$(mode).dump: $(tmpdir)/emit.rules.mmap.txt
+	fa_fsm2fsm_pack $(opt_pack_emit_rules_mmap) \
+	  --in=$(tmpdir)/emit.rules.mmap.txt \
+	  --out=$(tmpdir)/emit.rules.mmap.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/num.arr.$(mode).dump: $(srcdir)/num.arr.txt
+	fa_fsm2fsm_pack --type=arr $(opt_pack_num_arr) \
+	  --in=$(srcdir)/num.arr.txt \
+	  --out=$(tmpdir)/num.arr.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/t2p.num.arr.$(mode).dump: $(tmpdir)/t2p.num.arr.txt
+	fa_fsm2fsm_pack $(opt_pack_t2p) \
+	  --in=$(tmpdir)/t2p.num.arr.txt \
+	  --out=$(tmpdir)/t2p.num.arr.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/norm.dict.mmap.$(mode).dump: $(tmpdir)/norm.dict.mmap.txt
+	fa_fsm2fsm_pack $(opt_pack_norm_dict_mmap) \
+	  --in=$(tmpdir)/norm.dict.mmap.txt \
+	  --out=$(tmpdir)/norm.dict.mmap.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/tt2p.num.arr.$(mode).dump: $(tmpdir)/tt2p.num.arr.txt
+	fa_fsm2fsm_pack $(opt_pack_tt2p) \
+	  --in=$(tmpdir)/tt2p.num.arr.txt \
+	  --out=$(tmpdir)/tt2p.num.arr.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/ttt2p.num.arr.$(mode).dump: $(tmpdir)/ttt2p.num.arr.txt
+	fa_fsm2fsm_pack $(opt_pack_ttt2p) \
+	  --in=$(tmpdir)/ttt2p.num.arr.txt \
+	  --out=$(tmpdir)/ttt2p.num.arr.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/t2p.raw.arr.$(mode).dump: $(tmpdir)/t2p.raw.arr.txt
+	fa_fsm2fsm_pack $(opt_pack_t2p) \
+	  --in=$(tmpdir)/t2p.raw.arr.txt \
+	  --out=$(tmpdir)/t2p.raw.arr.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/t2p.prob.arr.$(mode).dump: $(tmpdir)/t2p.prob.arr.txt
+	fa_fsm2fsm_pack $(opt_pack_t2p) \
+	  --in=$(tmpdir)/t2p.prob.arr.txt \
+	  --out=$(tmpdir)/t2p.prob.arr.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/tt2p.prob.arr.$(mode).dump: $(tmpdir)/tt2p.prob.arr.txt
+	fa_fsm2fsm_pack $(opt_pack_tt2p) \
+	  --in=$(tmpdir)/tt2p.prob.arr.txt \
+	  --out=$(tmpdir)/tt2p.prob.arr.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/ttt2p.prob.arr.$(mode).dump: $(tmpdir)/ttt2p.prob.arr.txt
+	fa_fsm2fsm_pack $(opt_pack_ttt2p) \
+	  --in=$(tmpdir)/ttt2p.prob.arr.txt \
+	  --out=$(tmpdir)/ttt2p.prob.arr.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/t2p.minmax.$(mode).dump: $(tmpdir)/t2p.minmax.txt
+	fa_fsm2fsm_pack $(opt_pack_minmax) $(opt_pack_t2p_minmax) \
+	  --in=$(tmpdir)/t2p.minmax.txt \
+	  --out=$(tmpdir)/t2p.minmax.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/tt2p.minmax.$(mode).dump: $(tmpdir)/tt2p.minmax.txt
+	fa_fsm2fsm_pack $(opt_pack_minmax) $(opt_pack_tt2p_minmax) \
+	  --in=$(tmpdir)/tt2p.minmax.txt \
+	  --out=$(tmpdir)/tt2p.minmax.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/ttt2p.minmax.$(mode).dump: $(tmpdir)/ttt2p.minmax.txt
+	fa_fsm2fsm_pack $(opt_pack_minmax) $(opt_pack_ttt2p_minmax) \
+	  --in=$(tmpdir)/ttt2p.minmax.txt \
+	  --out=$(tmpdir)/ttt2p.minmax.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2p.minmax.$(mode).dump: $(tmpdir)/w2p.minmax.txt
+	fa_fsm2fsm_pack $(opt_pack_minmax) $(opt_pack_w2p_minmax) \
+	  --in=$(tmpdir)/w2p.minmax.txt \
+	  --out=$(tmpdir)/w2p.minmax.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/n2tp.minmax.$(mode).dump: $(tmpdir)/n2tp.minmax.txt
+	fa_fsm2fsm_pack $(opt_pack_minmax) $(opt_pack_n2tp_minmax) \
+	  --in=$(tmpdir)/n2tp.minmax.txt \
+	  --out=$(tmpdir)/n2tp.minmax.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2tp.dict.minmax.$(mode).dump: $(tmpdir)/w2tp.dict.minmax.txt
+	fa_fsm2fsm_pack $(opt_pack_minmax) $(opt_pack_w2tp_dict_minmax) \
+	  --in=$(tmpdir)/w2tp.dict.minmax.txt \
+	  --out=$(tmpdir)/w2tp.dict.minmax.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/n2tp.raw.dict.minmax.$(mode).dump: $(tmpdir)/n2tp.raw.dict.minmax.txt
+	fa_fsm2fsm_pack $(opt_pack_minmax) $(opt_pack_n2tp_raw_dict_minmax) \
+	  --in=$(tmpdir)/n2tp.raw.dict.minmax.txt \
+	  --out=$(tmpdir)/n2tp.raw.dict.minmax.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2tp.raw.dict.minmax.$(mode).dump: $(tmpdir)/w2tp.raw.dict.minmax.txt
+	fa_fsm2fsm_pack $(opt_pack_minmax) $(opt_pack_w2tp_raw_dict_minmax) \
+	  --in=$(tmpdir)/w2tp.raw.dict.minmax.txt \
+	  --out=$(tmpdir)/w2tp.raw.dict.minmax.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2v.fsa.$(mode).dump: $(tmpdir)/w2v.fsa.txt
+	fa_fsm2fsm_pack $(opt_pack_w2v) \
+	  --in=$(tmpdir)/w2v.fsa.txt \
+	  --out=$(tmpdir)/w2v.fsa.$(mode).dump \
+	  $(AUTOTEST)
+
+$(tmpdir)/w2v.acts.$(mode).dump: $(tmpdir)/w2v.acts.txt
+	fa_fsm2fsm_pack $(opt_pack_w2v_acts) \
+	  --in=$(tmpdir)/w2v.acts.txt \
+	  --out=$(tmpdir)/w2v.acts.$(mode).dump \
+	  $(AUTOTEST)
+
+
+#
+# Configuration compilation
+#
+
+$(tmpdir)/ldb.mmap.$(mode).txt: $(srcdir)/ldb.conf.$(mode)
+	fa_build_conf \
+	  --in=$(srcdir)/ldb.conf.$(mode) \
+	  --out=$(tmpdir)/ldb.mmap.$(mode).txt
+
+$(tmpdir)/ldb.conf.$(mode).dump: $(tmpdir)/ldb.mmap.$(mode).txt
+	fa_fsm2fsm_pack --type=mmap \
+	  --in=$(tmpdir)/ldb.mmap.$(mode).txt \
+	  --out=$(tmpdir)/ldb.conf.$(mode).dump \
+	  $(AUTOTEST)
+
+#
+# Creation of testing dictionaries
+#
+
+$(tmpdir)/wtbt.dict1.utf8 \
+$(tmpdir)/test.wtbt.dict1.utf8: $(srcdir)/wtbt*.dict.utf8.zip
+	unzip -p "$(srcdir)/wtbt*.dict.utf8.zip" | \
+	fa_split_wtbt --out-test=$(tmpdir)/test.wtbt.dict1.utf8 \
+	 --word-count=1000 $(opt_test_wtbt_dict) $(opt_test_wtbt_dict1) \
+	 >$(tmpdir)/wtbt.dict1.utf8 2>$(tmpdir)/excluded.wtbt.dict1.utf8
+
+$(tmpdir)/wtbt.dict2.utf8 \
+$(tmpdir)/test.wtbt.dict2.utf8: $(srcdir)/wtbt*.dict.utf8.zip
+	unzip -p "$(srcdir)/wtbt*.dict.utf8.zip" | \
+	fa_split_wtbt --out-test=$(tmpdir)/test.wtbt.dict2.utf8 \
+	 --base-count=100 $(opt_test_wtbt_dict) $(opt_test_wtbt_dict2) \
+	 >$(tmpdir)/wtbt.dict2.utf8 2>$(tmpdir)/excluded.wtbt.dict2.utf8
+
+$(tmpdir)/test.comp.dict.utf8: $(srcdir)/sf.utf8.zip
+	unzip -p $(srcdir)/sf.utf8.zip | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"$$f[0]\n\"" | \
+	fa_segs2comps $(opt_test_comp_dict) > $(tmpdir)/test.comp.dict.utf8
+
+$(tmpdir)/w2h.dict.utf8 \
+$(tmpdir)/test.w2h.dict.utf8: $(srcdir)/w2h.dict.utf8.zip
+	unzip -p $(srcdir)/w2h.dict.utf8.zip | \
+	fa_split --test-size=1000 $(opt_test_w2h_dict) \
+	  --out-test=$(tmpdir)/test.w2h.dict.utf8 > $(tmpdir)/w2h.dict.utf8
+
+$(tmpdir)/w2h.alt.dict.utf8 \
+$(tmpdir)/test.w2h.alt.dict.utf8: $(srcdir)/w2h.alt.dict.utf8.zip
+	unzip -p $(srcdir)/w2h.alt.dict.utf8.zip | \
+	fa_split --test-size=1000 $(opt_test_w2h_dict) \
+	  --out-test=$(tmpdir)/test.w2h.alt.dict.utf8 > $(tmpdir)/w2h.alt.dict.utf8
+
+
+#
+# Creation of performance dictionaries
+#
+
+$(tmpdir)/w2b.perf.utf8: $(WTBT_DICT1)
+	$(cat_wtbt_dict1) | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"w2b $$f[0]\n\"; if($$f[2] ne $$prev) { print \"w2b $$f[2]\n\"; $$prev=$$f[2]; }" | \
+	fa_cat_ratio $(opt_w2b_perf_dict) | fa_shuffle >$(tmpdir)/w2b.perf.utf8
+
+$(tmpdir)/b2w.perf.utf8: $(WTBT_DICT2)
+	$(cat_wtbt_dict2) | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); if($$f[2] ne $$prev) { print \"b2w $$f[2]\n\"; $$prev=$$f[2]; }" | \
+	fa_cat_ratio $(opt_b2w_perf_dict) | fa_shuffle >$(tmpdir)/b2w.perf.utf8
+
+$(tmpdir)/w2t.perf.utf8: $(WTBT_DICT1)
+	$(cat_wtbt_dict1) | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"w2t $$f[0]\n\"; if($$f[2] ne $$prev) { print \"w2t $$f[2]\n\"; $$prev=$$f[2]; }" | \
+	fa_cat_ratio $(opt_w2t_perf_dict) | fa_shuffle >$(tmpdir)/w2t.perf.utf8
+
+$(tmpdir)/b2t.perf.utf8: $(WTBT_DICT2)
+	$(cat_wtbt_dict2) | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f = split(/[\t]/); if($$f[2] ne $$prev) { print \"b2t $$f[2]\n\"; $$prev = $$f[2]; }" | \
+	fa_cat_ratio $(opt_b2t_perf_dict) | fa_shuffle >$(tmpdir)/b2t.perf.utf8
+
+$(tmpdir)/w2s.perf.utf8: $(srcdir)/sf.utf8.zip
+	unzip -p $(srcdir)/sf.utf8.zip | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f=split(/[\t]/); print \"$$f[0]\n\"" | \
+	fa_segs2comps $(opt_test_comp_dict) | \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[\t]/); print \"w2s $$f[0]\n\"" >$(tmpdir)/w2s.perf.utf8
+
+$(tmpdir)/tag.dict.perf.utf8: $(srcdir)/tag.dict.utf8.zip
+	unzip -p $(srcdir)/tag.dict.utf8.zip | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f = split(/[\t]/); print \"tag-dict $$f[0]\n\"" | \
+	fa_cat_ratio $(opt_td_perf_dict) | fa_shuffle >$(tmpdir)/tag.dict.perf.utf8
+
+$(tmpdir)/pos.dict.perf.utf8: $(srcdir)/pos.dict.utf8.zip
+	unzip -p $(srcdir)/pos.dict.utf8.zip | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f = split(/[\t]/); print \"pos-dict $$f[0]\n\"" | \
+	fa_cat_ratio $(opt_pd_perf_dict) | fa_shuffle >$(tmpdir)/pos.dict.perf.utf8
+
+$(tmpdir)/w2h.perf.utf8: $(srcdir)/wtbt*.dict.utf8.zip
+	unzip -p "$(srcdir)/wtbt*.dict.utf8.zip" | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f = split(/[\t]/); print \"w2h $$f[0]\n\"; if($$f[2] ne $$prev) { print \"w2h $$f[2]\n\"; $$prev = $$f[2]; }" | \
+	fa_cat_ratio $(opt_w2h_perf_dict) | fa_shuffle >$(tmpdir)/w2h.perf.utf8
+
+$(tmpdir)/w2h.alt.perf.utf8: $(srcdir)/wtbt*.dict.utf8.zip
+	$(cat_wtbt_dict1) | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f = split(/[\t]/); print \"w2h-alt $$f[0]\n\"; if($$f[2] ne $$prev) { print \"w2h-alt $$f[2]\n\"; $$prev = $$f[2]; }" | \
+	fa_cat_ratio $(opt_w2h_alt_perf_dict) | fa_shuffle >$(tmpdir)/w2h.alt.perf.utf8
+
+$(tmpdir)/w2tp.perf.utf8: $(srcdir)/wtc.utf8.zip
+	unzip -p $(srcdir)/wtc.utf8.zip | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f = split(/[\t]/); print \"w2tp $$f[0]\n\";" | \
+	fa_cat_ratio $(opt_w2tp_perf_dict) | fa_shuffle >$(tmpdir)/w2tp.perf.utf8
+
+$(tmpdir)/w2tpl.perf.utf8: $(srcdir)/wltc.utf8.zip
+	unzip -p $(srcdir)/wltc.utf8.zip | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f = split(/[\t]/); print \"w2tpl $$f[0]\n\";" | \
+	fa_cat_ratio $(opt_w2tpl_perf_dict) | fa_shuffle >$(tmpdir)/w2tpl.perf.utf8
+
+$(tmpdir)/w2tpr.perf.utf8: $(srcdir)/wrtc.utf8.zip
+	unzip -p $(srcdir)/wrtc.utf8.zip | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f = split(/[\t]/); print \"w2tpr $$f[0]\n\";" | \
+	fa_cat_ratio $(opt_w2tpr_perf_dict) | fa_shuffle >$(tmpdir)/w2tpr.perf.utf8
+
+$(tmpdir)/t2p.perf.utf8: $(srcdir)/tc.utf8.zip
+	unzip -p $(srcdir)/tc.utf8.zip | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f = split(/[\t]/); print \"t2p $$f[0]\n\";" | \
+	fa_cat_ratio $(opt_t2p_perf_dict) | fa_shuffle >$(tmpdir)/t2p.perf.utf8
+
+$(tmpdir)/tt2p.perf.utf8: $(srcdir)/ttc.utf8.zip
+	unzip -p $(srcdir)/ttc.utf8.zip | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f = split(/[\t]/); print \"tt2p $$f[0] $$f[1]\n\";" | \
+	fa_cat_ratio $(opt_tt2p_perf_dict) | fa_shuffle >$(tmpdir)/tt2p.perf.utf8
+
+$(tmpdir)/ttt2p.perf.utf8: $(srcdir)/tttc.utf8.zip
+	unzip -p $(srcdir)/tttc.utf8.zip | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f = split(/[\t]/); print \"ttt2p $$f[0] $$f[1] $$f[2]\n\";" | \
+	fa_cat_ratio $(opt_ttt2p_perf_dict) | fa_shuffle >$(tmpdir)/ttt2p.perf.utf8
+
+$(tmpdir)/w2v.perf.utf8: $(srcdir)/variants.dict.utf8.zip
+	unzip -p $(srcdir)/variants.dict.utf8.zip | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f = split(/[\t]/); print \"w2v $$f[0]\n\"; print \"w2v $$f[1]\n\";" | \
+	fa_cat_ratio $(opt_w2v_perf_dict) | fa_shuffle >$(tmpdir)/w2v.perf.utf8
+
+$(tmpdir)/w2p.perf.utf8: $(srcdir)/wc.utf8.zip
+	unzip -p $(srcdir)/wc.utf8.zip | \
+	perl -ne "s/[\r\n]+$$//; s/^\xEF\xBB\xBF//; @f = split(/[\t]/); print \"w2p $$f[0]\n\";" | \
+	fa_cat_ratio $(opt_w2p_perf_dict) | fa_shuffle >$(tmpdir)/w2p.perf.utf8
+
+
+#
+# Intermediate Automata <-- Resources
+#
+
+$(tmpdir)/wt2b.suff.fsa.txt \
+$(tmpdir)/wt2b.suff.acts.txt: $(WTBT_DICT1) $(srcdir)/tagset.txt $(build_first)
+	$(cat_wtbt_dict1) | \
+	$(wtbt_to_wt2b) | \
+	fa_dict2suff $(opt_dict2suff) $(opt_dict2suff_wt2b) | \
+	fa_build_suff $(opt_build_suff) $(opt_build_suff_wt2b) \
+	  --tagset=$(srcdir)/tagset.txt \
+	  --out1=$(tmpdir)/wt2b.suff.fsa.txt \
+	  --out2=$(tmpdir)/wt2b.suff.acts.txt
+
+$(tmpdir)/b2wt.suff.fsa.txt \
+$(tmpdir)/b2wt.suff.acts.txt: $(WTBT_DICT2) $(srcdir)/tagset.txt $(build_first)
+	$(cat_wtbt_dict2) | \
+	$(wtbt_to_b2wt) | \
+	fa_dict2suff $(opt_dict2suff) $(opt_dict2suff_b2wt) | \
+	fa_build_suff $(opt_build_suff) $(opt_build_suff_b2wt) \
+	  --tagset=$(srcdir)/tagset.txt \
+	  --out1=$(tmpdir)/b2wt.suff.fsa.txt \
+	  --out2=$(tmpdir)/b2wt.suff.acts.txt
+
+$(tmpdir)/wt2bt.suff.fsa.txt \
+$(tmpdir)/wt2bt.suff.acts.txt: $(WTBT_DICT1) $(srcdir)/tagset.txt $(build_first)
+	$(cat_wtbt_dict1) | \
+	$(wtbt_to_wt2bt) | \
+	fa_dict2suff $(opt_dict2suff) $(opt_dict2suff_wt2bt) | \
+	fa_build_suff $(opt_build_suff) $(opt_build_suff_wt2bt) \
+	  --tagset=$(srcdir)/tagset.txt \
+	  --out1=$(tmpdir)/wt2bt.suff.fsa.txt \
+	  --out2=$(tmpdir)/wt2bt.suff.acts.txt
+
+$(tmpdir)/bt2wt.suff.fsa.txt \
+$(tmpdir)/bt2wt.suff.acts.txt: $(WTBT_DICT2) $(srcdir)/tagset.txt $(build_first)
+	$(cat_wtbt_dict2) | \
+	$(wtbt_to_bt2wt) | \
+	fa_dict2suff $(opt_dict2suff) $(opt_dict2suff_bt2wt) | \
+	fa_build_suff $(opt_build_suff) $(opt_build_suff_bt2wt) \
+	  --tagset=$(srcdir)/tagset.txt \
+	  --out1=$(tmpdir)/bt2wt.suff.fsa.txt \
+	  --out2=$(tmpdir)/bt2wt.suff.acts.txt
+
+$(tmpdir)/w2b.suff.fsa.txt \
+$(tmpdir)/w2b.suff.acts.txt: $(WTBT_DICT1) $(build_first)
+	$(cat_wtbt_dict1) | \
+	$(wtbt_to_w2b) | \
+	$(build_w2b)
+
+$(tmpdir)/b2w.suff.fsa.txt \
+$(tmpdir)/b2w.suff.acts.txt: $(WTBT_DICT2) $(build_first)
+	$(cat_wtbt_dict2) | \
+	$(wtbt_to_b2w) | \
+	$(build_b2w)
+
+$(tmpdir)/w2t.fsa.txt: $(WTBT_DICT1) $(srcdir)/tagset.txt $(build_first)
+	$(cat_wtbt_dict1) | \
+	$(wtbt_to_w2t) | \
+	fa_build_word_guesser $(opt_build_word_guesser) \
+	  --tagset=$(srcdir)/tagset.txt --out=$(tmpdir)/w2t.fsa.txt
+
+$(tmpdir)/b2t.fsa.txt: $(WTBT_DICT2) $(srcdir)/tagset.txt $(build_first)
+	$(cat_wtbt_dict2) | \
+	$(wtbt_to_b2t) | \
+	fa_build_word_guesser $(opt_build_word_guesser) \
+	  --tagset=$(srcdir)/tagset.txt --out=$(tmpdir)/b2t.fsa.txt
+
+$(tmpdir)/prefixes.fsa.txt: $(srcdir)/prefixes.utf8
+	fa_line2chain_unicode --input-enc=UTF-8 < $(srcdir)/prefixes.utf8 | \
+	sort | uniq | fa_chains2mindfa > $(tmpdir)/prefixes.fsa.txt
+
+$(tmpdir)/charmap.mmap.txt: $(srcdir)/charmap.utf8
+	fa_charmap2mmap < $(srcdir)/charmap.utf8 > $(tmpdir)/charmap.mmap.txt
+
+$(tmpdir)/segs.fsa.txt: $(srcdir)/sf.utf8.zip $(build_first)
+	unzip -p $(srcdir)/sf.utf8.zip | \
+	fa_build_segs $(opt_build_segs) --out=$(tmpdir)/segs.fsa.txt
+
+$(tmpdir)/w2p.fsa.txt \
+$(tmpdir)/w2p.minmax.txt: $(srcdir)/wc.utf8.zip $(build_first)
+	unzip -p $(srcdir)/wc.utf8.zip | \
+	fa_build_segs $(opt_build_w2p) --out=$(tmpdir)/w2p.fsa.txt \
+	 --out-minmax=$(tmpdir)/w2p.minmax.txt
+
+$(tmpdir)/tag.dict.fsm.txt \
+$(tmpdir)/tag.dict.k2i.txt \
+$(tmpdir)/tag.dict.i2t.txt: $(srcdir)/tag.dict.tagset.txt \
+                             $(srcdir)/tag.dict.utf8.zip $(build_first)
+	unzip -p $(srcdir)/tag.dict.utf8.zip | \
+	fa_build_dict $(opt_build_dict) $(opt_build_tag_dict) \
+	  --tagset=$(srcdir)/tag.dict.tagset.txt \
+	  --out-fsm=$(tmpdir)/tag.dict.fsm.txt \
+	  --out-k2i=$(tmpdir)/tag.dict.k2i.txt \
+	  --out-i2info=$(tmpdir)/tag.dict.i2t.txt
+
+$(tmpdir)/pos.dict.fsm.txt \
+$(tmpdir)/pos.dict.k2i.txt \
+$(tmpdir)/pos.dict.i2t.txt: $(srcdir)/pos.dict.utf8.zip $(build_first)
+	unzip -p $(srcdir)/pos.dict.utf8.zip | \
+	fa_build_dict $(opt_build_dict) $(opt_build_pos_dict) \
+	  --out-fsm=$(tmpdir)/pos.dict.fsm.txt \
+	  --out-k2i=$(tmpdir)/pos.dict.k2i.txt \
+	  --out-i2info=$(tmpdir)/pos.dict.i2t.txt
+
+$(tmpdir)/crf.pos.dict.fsm.txt \
+$(tmpdir)/crf.pos.dict.k2i.txt \
+$(tmpdir)/crf.pos.dict.i2t.txt: $(tmpdir)\crf.pos.dict.utf8 $(build_first)
+	cat $(tmpdir)/crf.pos.dict.utf8 | \
+	fa_build_dict $(opt_build_dict) $(opt_build_pos_dict) \
+	  --out-fsm=$(tmpdir)/crf.pos.dict.fsm.txt \
+	  --out-k2i=$(tmpdir)/crf.pos.dict.k2i.txt \
+	  --out-i2info=$(tmpdir)/crf.pos.dict.i2t.txt
+
+$(tmpdir)/w2h.file.utf8: $(W2H_DICT)
+	$(cat_w2h_dict) > $(tmpdir)/w2h.file.utf8
+
+$(tmpdir)/w2h.alt.file.utf8: $(W2H_ALT_DICT)
+	$(cat_w2h_alt_dict) > $(tmpdir)/w2h.alt.file.utf8
+
+$(tmpdir)/w2h.pats.utf8: $(tmpdir)/w2h.file.utf8 $(EXTRA_W2H_FILE) $(build_first)
+	fa_build_pats $(opt_dict2pats) $(opt_dict2pats_w2h) \
+	  --in=$(tmpdir)/w2h.file.utf8  \
+	  --out=$(tmpdir)/w2h.pats1.utf8 \
+	  --out-unsolved=$(tmpdir)/w2h.unsolved.utf8
+	cat $(tmpdir)/w2h.pats1.utf8 $(EXTRA_W2H_FILE) > $(tmpdir)/w2h.pats.utf8
+
+$(tmpdir)/w2h.alt.pats.utf8: $(tmpdir)/w2h.alt.file.utf8 $(EXTRA_W2H_FILE) $(build_first)
+	fa_build_pats $(opt_dict2pats) $(opt_dict2pats_w2h_alt) \
+	  --in=$(tmpdir)/w2h.alt.file.utf8  \
+	  --out=$(tmpdir)/w2h.alt.pats1.utf8 \
+	  --out-unsolved=$(tmpdir)/w2h.alt.unsolved.utf8
+	cat $(tmpdir)/w2h.alt.pats1.utf8 $(EXTRA_W2H_FILE) > $(tmpdir)/w2h.alt.pats.utf8
+
+$(tmpdir)/w2h.fsm.txt \
+$(tmpdir)/w2h.i2h.txt: $(tmpdir)/w2h.pats.utf8
+	fa_build_dict --type=moore --raw \
+	  --in=$(tmpdir)/w2h.pats.utf8 \
+	  --out-fsm=$(tmpdir)/w2h.fsm.txt \
+	  --out-i2info=$(tmpdir)/w2h.i2h.txt
+
+$(tmpdir)/w2h.alt.fsm.txt \
+$(tmpdir)/w2h.alt.i2h.txt: $(tmpdir)/w2h.alt.pats.utf8
+	fa_build_dict --type=moore --raw \
+	  --in=$(tmpdir)/w2h.alt.pats.utf8 \
+	  --out-fsm=$(tmpdir)/w2h.alt.fsm.txt \
+	  --out-i2info=$(tmpdir)/w2h.alt.i2h.txt
+
+$(tmpdir)/dom.fsa.txt: $(WTBT_DICT1) $(build_first)
+	$(cat_wtbt_dict1) | \
+	$(wtbt_to_dom) | \
+	fa_line2chain_unicode $(opt_build_dom) | \
+	sort | uniq | fa_chains2mindfa | \
+	fa_fsm_renum --alg=remove-gaps --fsm-type=rs-dfa >$(tmpdir)/dom.fsa.txt
+
+$(tmpdir)/bt2t.map.txt: $(WTBT_DICT1) $(srcdir)/tagset.txt
+	$(cat_wtbt_dict1) | \
+	fa_wtbt2tt --tagset=$(srcdir)/tagset.txt > $(tmpdir)/bt2t.map.txt
+
+$(tmpdir)/t2bt.map.txt: $(WTBT_DICT1) $(srcdir)/tagset.txt
+	$(cat_wtbt_dict1) | \
+	fa_wtbt2tt --tagset=$(srcdir)/tagset.txt \
+	  --reverse > $(tmpdir)/t2bt.map.txt
+
+$(tmpdir)/w2tp.file.utf8: $(srcdir)/wtc.utf8.zip
+	unzip -p $(srcdir)/wtc.utf8.zip > $(tmpdir)/w2tp.file.utf8
+
+$(tmpdir)/w2tpl.file.utf8: $(srcdir)/wltc.utf8.zip
+	unzip -p $(srcdir)/wltc.utf8.zip > $(tmpdir)/w2tpl.file.utf8
+
+$(tmpdir)/w2tpr.file.utf8: $(srcdir)/wrtc.utf8.zip
+	unzip -p $(srcdir)/wrtc.utf8.zip > $(tmpdir)/w2tpr.file.utf8
+
+$(tmpdir)/w2tp.fsa.txt: $(tmpdir)/w2tp.file.utf8 $(srcdir)/tagset.txt $(build_first)
+	fa_build_w2t_prob $(opt_build_w2tp) --in=$(tmpdir)/w2tp.file.utf8 \
+	  --tagset=$(srcdir)/tagset.txt --out=$(tmpdir)/w2tp.fsa.txt
+
+$(tmpdir)/w2tpl.fsa.txt: $(tmpdir)/w2tpl.file.utf8 $(srcdir)/tagset.txt $(build_first)
+	fa_build_w2t_prob $(opt_build_w2tpl) --in=$(tmpdir)/w2tpl.file.utf8 \
+	  --tagset=$(srcdir)/tagset.txt --out=$(tmpdir)/w2tpl.fsa.txt
+
+$(tmpdir)/w2tpr.fsa.txt: $(tmpdir)/w2tpr.file.utf8 $(srcdir)/tagset.txt $(build_first)
+	fa_build_w2t_prob $(opt_build_w2tpr) --in=$(tmpdir)/w2tpr.file.utf8 \
+	  --tagset=$(srcdir)/tagset.txt --out=$(tmpdir)/w2tpr.fsa.txt
+
+$(tmpdir)/wbd.rules.fsa.txt \
+$(tmpdir)/wbd.rules.fsa.iwmap.txt \
+$(tmpdir)/wbd.rules.map.txt: $(srcdir)/wbd.lex.utf8 $(srcdir)/wbd.tagset.txt
+	fa_build_lex $(opt_build_wbd) --in=$(srcdir)/wbd.lex.utf8 \
+	  --tagset=$(srcdir)/wbd.tagset.txt --out-fsa=$(tmpdir)/wbd.rules.fsa.txt \
+	  --out-fsa-iwmap=$(tmpdir)/wbd.rules.fsa.iwmap.txt \
+	  --out-map=$(tmpdir)/wbd.rules.map.txt
+
+$(tmpdir)/u2l.rules.fsa.txt \
+$(tmpdir)/u2l.rules.fsa.iwmap.txt \
+$(tmpdir)/u2l.rules.map.txt: $(srcdir)/u2l.lex.utf8 $(srcdir)/tagset.txt
+	fa_build_lex $(opt_build_u2l) --in=$(srcdir)/u2l.lex.utf8 \
+	  --tagset=$(srcdir)/tagset.txt --out-fsa=$(tmpdir)/u2l.rules.fsa.txt \
+	  --out-fsa-iwmap=$(tmpdir)/u2l.rules.fsa.iwmap.txt \
+	  --out-map=$(tmpdir)/u2l.rules.map.txt
+
+# getting log-probabilities
+
+$(tmpdir)/t2p.probs.txt: $(srcdir)/tc.utf8.zip
+	unzip -p $(srcdir)/tc.utf8.zip | \
+	fa_count2prob --log-scale > $(tmpdir)/t2p.probs.txt
+
+$(tmpdir)/tt2p.probs.txt: $(srcdir)/ttc.utf8.zip
+	unzip -p $(srcdir)/ttc.utf8.zip | \
+	fa_count2prob --log-scale > $(tmpdir)/tt2p.probs.txt
+
+$(tmpdir)/ttt2p.probs.txt: $(srcdir)/tttc.utf8.zip
+	unzip -p $(srcdir)/tttc.utf8.zip | \
+	fa_count2prob --log-scale > $(tmpdir)/ttt2p.probs.txt
+
+# conversion into the linear array without quantization
+
+$(tmpdir)/t2p.raw.arr.txt: $(srcdir)/tc.raw.utf8 $(srcdir)/tagset.txt
+	fa_ttt2arr $(opt_ttt2arr_t2p) --tagset=$(srcdir)/tagset.txt \
+	  < $(srcdir)/tc.raw.utf8 > $(tmpdir)/t2p.raw.arr.txt
+
+$(tmpdir)/t2p.prob.arr.txt: $(tmpdir)/t2p.probs.txt $(srcdir)/tagset.txt
+	fa_ttt2arr $(opt_ttt2arr_t2p) --tagset=$(srcdir)/tagset.txt \
+	  < $(tmpdir)/t2p.probs.txt > $(tmpdir)/t2p.prob.arr.txt
+
+$(tmpdir)/tt2p.prob.arr.txt: $(tmpdir)/tt2p.probs.txt $(srcdir)/tagset.txt
+	fa_ttt2arr $(opt_ttt2arr_tt2p) --tagset=$(srcdir)/tagset.txt \
+	  < $(tmpdir)/tt2p.probs.txt > $(tmpdir)/tt2p.prob.arr.txt
+
+$(tmpdir)/ttt2p.prob.arr.txt: $(tmpdir)/ttt2p.probs.txt $(srcdir)/tagset.txt
+	fa_ttt2arr $(opt_ttt2arr_ttt2p) --tagset=$(srcdir)/tagset.txt \
+	  < $(tmpdir)/ttt2p.probs.txt > $(tmpdir)/ttt2p.prob.arr.txt
+
+# quantization and conversion into the linear array
+
+$(tmpdir)/t2p.num.arr.txt: $(tmpdir)/t2p.probs.txt $(srcdir)/tagset.txt
+	fa_num2int $(opt_num2int_t2p) --field=2 --out-minmax=$(tmpdir)/t2p.minmax.txt < $(tmpdir)/t2p.probs.txt | \
+	fa_ttt2arr $(opt_ttt2arr_t2p) --tagset=$(srcdir)/tagset.txt > $(tmpdir)/t2p.num.arr.txt
+
+$(tmpdir)/tt2p.num.arr.txt: $(tmpdir)/tt2p.probs.txt $(srcdir)/tagset.txt
+	fa_num2int $(opt_num2int_tt2p) --field=3 --out-minmax=$(tmpdir)/tt2p.minmax.txt < $(tmpdir)/tt2p.probs.txt | \
+	fa_ttt2arr $(opt_ttt2arr_tt2p) --tagset=$(srcdir)/tagset.txt > $(tmpdir)/tt2p.num.arr.txt
+
+$(tmpdir)/ttt2p.num.arr.txt: $(tmpdir)/ttt2p.probs.txt $(srcdir)/tagset.txt
+	fa_num2int $(opt_num2int_ttt2p) --field=4 --out-minmax=$(tmpdir)/ttt2p.minmax.txt < $(tmpdir)/ttt2p.probs.txt | \
+	fa_ttt2arr $(opt_ttt2arr_ttt2p) --tagset=$(srcdir)/tagset.txt > $(tmpdir)/ttt2p.num.arr.txt
+
+$(tmpdir)/norm.dict.fsa.txt \
+$(tmpdir)/norm.dict.mmap.txt: $(srcdir)/normalization.map.utf8 neutral/normalization.map.utf8
+	cat $(srcdir)/normalization.map.utf8 neutral/normalization.map.utf8 | \
+#	fa_line2chain_unicode --tagset=$(srcdir)/wbd.tagset.txt --use-keypairs | \
+	ConvertSSDictToChains $(srcdir)/wbd.tagset.txt | \
+	sort | uniq | CollapseDuplicateKeys | \
+	fa_dict_split --raw --no-k2i --info-base=65536 --out-i2info=$(tmpdir)/norm.dict.mmap.txt | \
+	sort | fa_chains2mindfa | \
+	fa_fsm2fsm --in-type=rs-dfa --out-type=moore-dfa --ow-base=65536 \
+		--ow-max=2000000 \
+	| fa_fsm_renum --fsm-type=moore-dfa --alg=remove-gaps \
+	> $(tmpdir)/norm.dict.fsa.txt
+
+$(tmpdir)/concat.rules.fsa.txt \
+$(tmpdir)/concat.rules.mmap.txt: $(srcdir)/concat.txt
+	cat $(srcdir)/concat.txt | \
+	ParseNormConcatenation $(srcdir)/wbd.tagset.txt | \
+	sort | uniq | \
+	fa_dict_split --raw --no-k2i --info-base=65536 --out-i2info=$(tmpdir)/concat.rules.mmap.txt | \
+	sort | fa_chains2mindfa | \
+	fa_fsm2fsm --in-type=rs-dfa --out-type=moore-dfa --ow-base=65536 \
+		--ow-max=2000000 \
+	| fa_fsm_renum --fsm-type=moore-dfa --alg=remove-gaps \
+	> $(tmpdir)/concat.rules.fsa.txt
+
+$(tmpdir)/emit.rules.fsa.txt \
+$(tmpdir)/emit.rules.mmap.txt: $(srcdir)/neemission.txt
+	cat $(srcdir)/neemission.txt | \
+	ParseNEEmissionForMSWB $(srcdir)/wbd.tagset.txt | \
+	sort | uniq | \
+	fa_dict_split --raw --no-k2i --info-base=65536 --out-i2info=$(tmpdir)/emit.rules.mmap.txt | \
+	sort | fa_chains2mindfa | \
+	fa_fsm2fsm --in-type=rs-dfa --out-type=moore-dfa --ow-base=65536 \
+		--ow-max=2000000 \
+	| fa_fsm_renum --fsm-type=moore-dfa --alg=remove-gaps \
+	> $(tmpdir)/emit.rules.fsa.txt
+
+
+# CRF NER main compilation chain
+
+crf_train_wb_corpus = \
+!if "$(USE_PLAINTEXT_CRF_CORPUS)" != ""
+  $(tmpdir)\marker_crf_train
+!else
+  $(srcdir)\crf.train.zip
+!endif
+
+crf_eval_wb_corpus = \
+!if "$(USE_PLAINTEXT_CRF_CORPUS)" != ""
+  $(tmpdir)\marker_crf_eval
+!else
+  $(srcdir)\crf.eval.zip
+!endif
+
+
+CRFDIRECTORIES = $(tmpdir)\unigram $(tmpdir)\bigram $(tmpdir)\dictionary $(tmpdir)\pos \
+                 $(tmpdir)\train $(tmpdir)\train_tmp $(tmpdir)\train_plain \
+                 $(tmpdir)\eval $(tmpdir)\eval_tmp $(tmpdir)\eval_plain \
+
+
+$(CRFDIRECTORIES):
+	md $@
+
+crfdirs: $(CRFDIRECTORIES)
+
+# build external lexicon
+$(tmpdir)\ext.bin: crfdirs $(srcdir)/crf.features.bigram.zip $(srcdir)/crf.features.dictionary.zip $(srcdir)/crf.features.pos.zip $(srcdir)/crf.features.unigram.zip
+	unzip $(srcdir)/crf.features.unigram.zip -d $(tmpdir)/unigram
+	unzip $(srcdir)/crf.features.bigram.zip -d $(tmpdir)/bigram
+	unzip $(srcdir)/crf.features.dictionary.zip -d $(tmpdir)/dictionary
+	unzip $(srcdir)/crf.features.pos.zip -d $(tmpdir)/pos
+	LexiconMaker $(tmpdir)/unigram $(tmpdir)/unigram.dat
+	TemplatedCRF dict $(tmpdir)/unigram.dat $(tmpdir)/ext.unigram.bin
+	LexiconMaker $(tmpdir)/bigram $(tmpdir)/bigram.dat
+	TemplatedCRF dict $(tmpdir)/bigram.dat $(tmpdir)/ext.bigram.bin
+	LexiconMaker $(tmpdir)/dictionary $(tmpdir)/dictionary.dat
+	TemplatedCRF dict $(tmpdir)/dictionary.dat $(tmpdir)/ext.dictionary.bin
+	LexiconMaker $(tmpdir)/pos $(tmpdir)/pos.dat
+	TemplatedCRF dict $(tmpdir)/pos.dat $(tmpdir)/ext.pos.bin
+	rm $(tmpdir)/ext.bin
+	mergebin $(tmpdir)/ext.bin $(tmpdir)/ext.unigram.bin
+	mergebin $(tmpdir)/ext.bin $(tmpdir)/ext.bigram.bin
+	mergebin $(tmpdir)/ext.bin $(tmpdir)/ext.dictionary.bin
+	mergebin $(tmpdir)/ext.bin $(tmpdir)/ext.pos.bin
+
+# create a wordbroken corpus from the plain text corpus for eval and train
+#  Notes: 
+#    1. if plain text corpus is provided, the USE_PLAINTEXT_CRF_CORPUS = 1 should added to the options.small file
+#    2. CorpusHelper in "tokenize" mode calls DUWordBreaker.exe and needs some WB models, so the working directory has to be set to its package bin
+$(tmpdir)\marker_crf_train: crfdirs $(srcdir)\crf.plain.train.zip
+	unzip $(srcdir)\crf.plain.train.zip -d $(tmpdir)\train_plain
+	pushd %INETROOT%\private\packages\NerCrf.Tools\bin && CorpusHelper tokenize $(MAKEDIR)\$(tmpdir)\train_plain $(MAKEDIR)\$(tmpdir)\train && popd
+	ls -l $(tmpdir)\train > $(tmpdir)\marker_crf_train
+
+$(tmpdir)\marker_crf_eval: crfdirs $(srcdir)\crf.plain.eval.zip
+	unzip $(srcdir)\crf.plain.eval.zip -d $(tmpdir)\eval_plain
+	pushd %INETROOT%\private\packages\NerCrf.Tools\bin && CorpusHelper tokenize $(MAKEDIR)\$(tmpdir)\eval_plain $(MAKEDIR)\$(tmpdir)\eval && popd
+	ls -l $(tmpdir)\eval > $(tmpdir)\marker_crf_eval
+
+# convert the corpus from text to binary format
+$(tmpdir)\train.before_feature_proc.dat: crfdirs $(crf_train_wb_corpus)
+!if "$(USE_PLAINTEXT_CRF_CORPUS)" != ""
+!else
+	unzip $(crf_train_wb_corpus) -d $(tmpdir)/train
+!endif
+	CorpusHelper convert $(tmpdir)/train $(tmpdir)\train.before_feature_proc.dat
+
+$(tmpdir)\eval.before_feature_proc.dat: crfdirs $(crf_eval_wb_corpus)
+!if "$(USE_PLAINTEXT_CRF_CORPUS)" != ""
+!else
+	unzip $(crf_eval_wb_corpus) -d $(tmpdir)/eval
+!endif
+	CorpusHelper convert $(tmpdir)/eval $(tmpdir)\eval.before_feature_proc.dat
+
+# featurize the corpus
+$(tmpdir)\train.after_feature_proc.dat: $(tmpdir)\train.before_feature_proc.dat $(tmpdir)\ext.bin
+	TemplatedCRF process $(tmpdir)\train.before_feature_proc.dat $(tmpdir)\ext.bin $(tmpdir)\train.after_feature_proc.dat
+
+$(tmpdir)\eval.after_feature_proc.dat: $(tmpdir)\eval.before_feature_proc.dat $(tmpdir)\ext.bin
+	TemplatedCRF process $(tmpdir)\eval.before_feature_proc.dat $(tmpdir)\ext.bin $(tmpdir)\eval.after_feature_proc.dat
+
+# train and evaluate the CRF model (Note we need to include Bing tokenization step and make corpus format more friendly)
+$(tmpdir)\crf.train.mdl: $(tmpdir)\train.after_feature_proc.dat
+	TemplatedCRF train $(tmpdir)\train.after_feature_proc.dat $(srcdir)\config.ini $(tmpdir)\crf.train.mdl $(opt_crf_train)
+
+# evaluate CRF quality (optional but highly desirable step)
+crfeval: $(tmpdir)\train.after_feature_proc.dat $(tmpdir)\eval.after_feature_proc.dat $(tmpdir)\crf.train.mdl
+	TemplatedCRF eval $(tmpdir)\crf.train.mdl $(tmpdir)\train.after_feature_proc.dat $(tmpdir)\eval_on_training
+	TemplatedCRF eval $(tmpdir)\crf.train.mdl $(tmpdir)\eval.after_feature_proc.dat $(tmpdir)\eval_on_evaluation
+
+# conver the model to text
+$(tmpdir)\model.printed.txt: $(tmpdir)\crf.train.mdl
+	TemplatedCRF print $(tmpdir)\crf.train.mdl $(tmpdir)\model.printed.txt
+
+# extract the specific files from the printed model
+$(tmpdir)\unigram.txt $(tmpdir)\unigram.utf8 \
+$(tmpdir)\bigram.txt $(tmpdir)\bigram.utf8 \
+$(tmpdir)\external.txt \
+$(tmpdir)\misc.txt \
+$(tmpdir)\state-trans.txt : $(tmpdir)\model.printed.txt
+	pushd $(tmpdir) & ModelConvert model.printed.txt . & popd
+	copy $(tmpdir)\unigram.txt $(dstdir)
+	copy $(tmpdir)\bigram.txt $(dstdir)
+	copy $(tmpdir)\external.txt $(dstdir)
+	copy $(tmpdir)\misc.txt $(dstdir)
+	copy $(tmpdir)\state-trans.txt $(dstdir)
+
+# get the dictionary in text format
+$(tmpdir)\ext.txt: $(tmpdir)\ext.bin
+	ExtConvert $(tmpdir)\ext.bin $(tmpdir)\ext.txt
+
+# MPH
+$(tmpdir)\crf.pos.dict.utf8: $(tmpdir)\ext.txt $(tmpdir)\unigram.utf8 $(tmpdir)\bigram.utf8
+	copy /b $(tmpdir)\unigram.utf8+$(tmpdir)\bigram.utf8+$(tmpdir)\ext.txt $(tmpdir)\crf_all_dictionaries.txt
+	scope run -i %INETROOT%\private\packages\NerCrf.Tools\bin\build_mph_dict.script -params Input=\"$(srcdir)\\tmp$(VERSION)\\crf_all_dictionaries.txt\",Output=\"$(srcdir)\\tmp$(VERSION)\\crf.pos.dict.utf8\"
+
+# END OF CRF NER main compilation chain
+
+
+# WRE (parser-style rules compilation)
+
+$(tmpdir)/oic.$(mode).dump \
+$(tmpdir)/oic.map.$(mode).dump : $(srcdir)/oic.wre $(srcdir)/oic.tagset.txt
+	fa_build_parser --dict-root=$(srcdir) --in=$(srcdir)/oic.wre \
+	  --tagset=$(srcdir)/oic.tagset.txt --out=$(tmpdir)/oic.$(mode).dump \
+	  --out-map=$(tmpdir)/oic.map.$(mode).dump $(opt_build_oic)
+
+$(tmpdir)/css-rules.$(mode).dump \
+$(tmpdir)/css-rules.map.$(mode).dump : $(srcdir)/css-rules.wre $(srcdir)/css-rules.tagset.txt
+	fa_build_parser --dict-root=$(srcdir) --in=$(srcdir)/css-rules.wre \
+          --tagset=$(srcdir)/css-rules.tagset.txt --out=$(tmpdir)/css-rules.$(mode).dump \
+	  --out-map=$(tmpdir)/css-rules.map.$(mode).dump $(opt_build_css_rules)
+
+$(tmpdir)/ne-rules.$(mode).dump \
+$(tmpdir)/ne-rules.map.$(mode).dump : $(srcdir)/ne-rules.wre $(srcdir)/tagset.txt
+	fa_build_parser --dict-root=$(srcdir) --in=$(srcdir)/ne-rules.wre \
+	  --tagset=$(srcdir)/tagset.txt --out=$(tmpdir)/ne-rules.$(mode).dump \
+	  --out-map=$(tmpdir)/ne-rules.map.$(mode).dump $(opt_build_ne_rules)
+
+
+# spelling variants
+
+$(tmpdir)/w2v.fsa.txt \
+$(tmpdir)/w2v.acts.txt: $(srcdir)/variants.dict.utf8.zip $(build_first)
+	unzip -p $(srcdir)/variants.dict.utf8.zip | \
+	fa_build_dict_fst $(opt_build_w2v) --no-epsilon \
+	  --out-fsm=$(tmpdir)/w2v.fsa.txt --out-ows=$(tmpdir)/w2v.acts.txt
+
+
+#
+# n-gram counts --> n-gram probabilities
+#
+
+$(tmpdir)/1gr.utf8: $(srcdir)/1gr.utf8.zip $(build_first)
+	unzip -p $(srcdir)/1gr.utf8.zip | \
+	fa_count2prob_ngram $(opt_count2prob_ngrams) $(opt_count2prob_1grams) \
+	 --out=$(tmpdir)/1gr.utf8
+
+$(tmpdir)/2gr.utf8: $(srcdir)/2gr.utf8.zip $(build_first)
+	unzip -p $(srcdir)/2gr.utf8.zip | \
+	fa_count2prob_ngram $(opt_count2prob_ngrams) $(opt_count2prob_2grams) \
+	 --out=$(tmpdir)/2gr.utf8
+
+$(tmpdir)/3gr.utf8: $(srcdir)/3gr.utf8.zip $(build_first)
+	unzip -p $(srcdir)/3gr.utf8.zip | \
+	fa_count2prob_ngram $(opt_count2prob_ngrams) $(opt_count2prob_3grams) \
+	 --out=$(tmpdir)/3gr.utf8
+
+$(tmpdir)/4gr.utf8: $(srcdir)/4gr.utf8.zip $(build_first)
+	unzip -p $(srcdir)/4gr.utf8.zip | \
+	fa_count2prob_ngram $(opt_count2prob_ngrams) $(opt_count2prob_4grams) \
+	 --out=$(tmpdir)/4gr.utf8
+
+$(tmpdir)/5gr.utf8: $(srcdir)/5gr.utf8.zip $(build_first)
+	unzip -p $(srcdir)/5gr.utf8.zip | \
+	fa_count2prob_ngram $(opt_count2prob_ngrams) $(opt_count2prob_5grams) \
+	 --out=$(tmpdir)/5gr.utf8
+
+
+# merge all n-gram probabilities together
+
+ngram_list = $(tmpdir)/1gr.utf8 $(tmpdir)/2gr.utf8 $(tmpdir)/3gr.utf8 $(tmpdir)/4gr.utf8
+
+
+$(tmpdir)/ngrp.utf8: $(ngram_list)
+	cat $(ngram_list) > $(tmpdir)/ngrp.utf8
+
+
+# all n-gram probabilities --> single multi-moore automaton
+
+$(tmpdir)/n2tp.fsa.txt \
+$(tmpdir)/n2tp.minmax.txt: $(tmpdir)/ngrp.utf8 $(srcdir)/tagset.txt $(build_first)
+	fa_build_ngrams --raw $(opt_build_ngrams) \
+	  --in=$(tmpdir)/ngrp.utf8 \
+	  --tagset=$(srcdir)/tagset.txt \
+	  --out-minmax=$(tmpdir)/n2tp.minmax.txt \
+	  --out=$(tmpdir)/n2tp.fsa.txt
+
+
+# language detector dictionary
+
+$(tmpdir)/n2tp.raw.dict.utf8: $(srcdir)/n2tp.raw.dict.utf8.zip $(build_first)
+	unzip -p $(srcdir)/n2tp.raw.dict.utf8.zip > $(tmpdir)/n2tp.raw.dict.utf8
+
+$(tmpdir)/n2tp.raw.dict.fsa.txt \
+$(tmpdir)/n2tp.raw.dict.minmax.txt: $(tmpdir)/n2tp.raw.dict.utf8 $(srcdir)/tagset.txt $(build_first)
+	fa_build_ngrams --raw --no-key-delim --no-rescale $(opt_build_n2tp_raw_dict) \
+	  --in=$(tmpdir)/n2tp.raw.dict.utf8 \
+	  --tagset=$(srcdir)/tagset.txt \
+	  --out=$(tmpdir)/n2tp.raw.dict.fsa.txt
+
+
+$(tmpdir)/w2tp.raw.dict.utf8: $(srcdir)/w2tp.raw.dict.utf8.zip $(build_first)
+	unzip -p $(srcdir)/w2tp.raw.dict.utf8.zip > $(tmpdir)/w2tp.raw.dict.utf8
+
+$(tmpdir)/w2tp.raw.dict.fsa.txt \
+$(tmpdir)/w2tp.raw.dict.minmax.txt: $(tmpdir)/w2tp.raw.dict.utf8 $(srcdir)/tagset.txt $(build_first)
+	fa_build_ngrams --raw --no-key-delim --no-rescale $(opt_build_w2tp_raw_dict) \
+	  --in=$(tmpdir)/w2tp.raw.dict.utf8 \
+	  --tagset=$(srcdir)/tagset.txt \
+	  --out=$(tmpdir)/w2tp.raw.dict.fsa.txt
+
+
+# word --> P(T|W) or P(W|T) dictionary
+
+$(tmpdir)/w2tp.dict.utf8: $(srcdir)/w2tp.dict.utf8.zip $(build_first)
+	unzip -p $(srcdir)/w2tp.dict.utf8.zip | \
+	fa_count2prob_ngram $(opt_count2prob_w2tp_dict) \
+	 --out=$(tmpdir)/w2tp.dict.utf8
+
+$(tmpdir)/w2tp.dict.fsa.txt \
+$(tmpdir)/w2tp.dict.minmax.txt: $(tmpdir)/w2tp.dict.utf8 $(srcdir)/tagset.txt $(build_first)
+	fa_build_ngrams --raw $(opt_build_w2tp_dict) \
+	  --in=$(tmpdir)/w2tp.dict.utf8 \
+	  --tagset=$(srcdir)/tagset.txt \
+	  --out-minmax=$(tmpdir)/w2tp.dict.minmax.txt \
+	  --out=$(tmpdir)/w2tp.dict.fsa.txt
+
+
+# char --> script map
+
+$(tmpdir)/char2script.mmap.txt: $(srcdir)/char2script.txt $(srcdir)/tagset.txt
+	fa_combine $(srcdir)/tagset.txt $(srcdir)/char2script.txt |  \
+	perl -ne "s/[\r\n]+$$//; @f = split(/\t/); printf \"%s \\x%04X\n\", $$f[0], $$f[1];" | \
+	fa_charmap2mmap --out=$(tmpdir)/char2script.mmap.txt
+
+# script --> { language }
+
+$(tmpdir)/script2lang.mmap.txt: $(srcdir)/script2lang.txt $(srcdir)/tagset.txt
+	perl -ne "s/[\r\n]+$$//; @f = split(/\t/); print \"l\t$$f[1]\ts\t$$f[0]\n\";" < $(srcdir)/script2lang.txt | \
+	fa_wtbt2tt --tagset=$(srcdir)/tagset.txt > $(tmpdir)/script2lang.mmap.txt
+
+
+
+#
+# auto-test targets
+#
+
+test:
+	FOR /F "usebackq delims==" %i IN (`fa_conf2test_prm $(srcdir)/ldb.conf.$(mode)`) DO nmake -f Makefile.nmake mode=$(mode) lang=$(lang) %i
+
+
+test_w2b: $(OUTPUT) $(WTBT_DICT1)
+	$(cat_wtbt_dict1) | fa_wtbt2wbs $(opt_auto_test) | \
+	test_ldb --ldb=$(OUTPUT) --error-log=$(tmpdir)/errors.w2b.kn.utf8 \
+	  --auto-test=1 > $(tmpdir)/report.w2b.kn.utf8
+
+test_w2b_unk: $(OUTPUT) $(TEST_WTBT_DICT1)
+	$(cat_test_wtbt_dict1) | fa_wtbt2wbs --no-bases $(opt_auto_test) | \
+	test_ldb --ldb=$(OUTPUT) --error-log=$(tmpdir)/errors.w2b.un.utf8 \
+	  --auto-test=1 > $(tmpdir)/report.w2b.un.utf8
+
+
+test_b2w: $(OUTPUT) $(WTBT_DICT2)
+	$(cat_wtbt_dict2) | fa_wtbt2bws $(opt_auto_test) | \
+	test_ldb --ldb=$(OUTPUT) --error-log=$(tmpdir)/errors.b2w.kn.utf8 \
+	  --auto-test=2 > $(tmpdir)/report.b2w.kn.utf8
+
+test_b2w_unk: $(OUTPUT) $(TEST_WTBT_DICT2)
+	$(cat_test_wtbt_dict2) | fa_wtbt2bws $(opt_auto_test) | \
+	test_ldb --ldb=$(OUTPUT) --error-log=$(tmpdir)/errors.b2w.un.utf8 \
+	  --auto-test=2 > $(tmpdir)/report.b2w.un.utf8
+
+
+test_w2t: $(OUTPUT) $(WTBT_DICT1)
+	$(cat_wtbt_dict1) | fa_wtbt2wts $(opt_auto_test) | \
+	test_ldb --ldb=$(OUTPUT) --error-log=$(tmpdir)/errors.w2t.kn.utf8 \
+	  --tagset=$(srcdir)/tagset.txt --auto-test=4 > $(tmpdir)/report.w2t.kn.utf8
+
+test_w2t_unk: $(OUTPUT) $(TEST_WTBT_DICT1)
+	$(cat_test_wtbt_dict1) | fa_wtbt2wts $(opt_auto_test) | \
+	test_ldb --ldb=$(OUTPUT) --error-log=$(tmpdir)/errors.w2t.un.utf8 \
+	  --tagset=$(srcdir)/tagset.txt --auto-test=4 > $(tmpdir)/report.w2t.un.utf8
+
+
+test_b2t: $(OUTPUT) $(WTBT_DICT1)
+	$(cat_wtbt_dict1) | fa_wtbt2wts --get-bases $(opt_auto_test) | \
+	test_ldb --ldb=$(OUTPUT) --error-log=$(tmpdir)/errors.b2t.kn.utf8 \
+	  --tagset=$(srcdir)/tagset.txt --auto-test=7 > $(tmpdir)/report.b2t.kn.utf8
+
+test_b2t_unk: $(OUTPUT) $(TEST_WTBT_DICT1)
+	$(cat_test_wtbt_dict1) | fa_wtbt2wts --get-bases $(opt_auto_test) | \
+	test_ldb --ldb=$(OUTPUT) --error-log=$(tmpdir)/errors.b2t.un.utf8 \
+	  --tagset=$(srcdir)/tagset.txt --auto-test=7 > $(tmpdir)/report.b2t.un.utf8
+
+
+test_w2s: $(OUTPUT) $(TEST_COMP_DICT)
+	$(cat_test_comp_dict) | \
+	test_ldb --ldb=$(OUTPUT) --error-log=$(tmpdir)/errors.w2s.utf8 \
+	  --auto-test=3 > $(tmpdir)/report.w2s.utf8
+
+
+test_tag_dict: $(OUTPUT) $(srcdir)/tag.dict.utf8.zip
+	unzip -p $(srcdir)/tag.dict.utf8.zip | \
+	fa_wts2wts $(opt_auto_test) $(opt_dict_auto_test) | \
+	test_ldb --ldb=$(OUTPUT) --error-log=$(tmpdir)/errors.tag.dict.utf8 \
+	  --tagset=$(srcdir)/tag.dict.tagset.txt --auto-test=5 > $(tmpdir)/report.tag.dict.utf8
+
+
+test_w2h: $(OUTPUT) $(W2H_DICT)
+	$(cat_w2h_dict) | \
+	test_ldb --ldb=$(OUTPUT) --error-log=$(tmpdir)/errors.w2h.kn.utf8 \
+	  --auto-test=6 > $(tmpdir)/report.w2h.kn.utf8
+
+test_w2h_unk: $(OUTPUT) $(TEST_W2H_DICT)
+	$(cat_test_w2h_dict) | \
+	test_ldb --ldb=$(OUTPUT) --error-log=$(tmpdir)/errors.w2h.un.utf8 \
+	  --auto-test=6 > $(tmpdir)/report.w2h.un.utf8
+
+
+test_w2h_alt: $(OUTPUT) $(W2H_ALT_DICT)
+	$(cat_w2h_alt_dict) | \
+	test_ldb --ldb=$(OUTPUT) --error-log=$(tmpdir)/errors.w2h.alt.kn.utf8 \
+	  --auto-test=8 > $(tmpdir)/report.w2h.alt.kn.utf8
+
+test_w2h_alt_unk: $(OUTPUT) $(TEST_W2H_ALT_DICT)
+	$(cat_test_w2h_alt_dict) | \
+	test_ldb --ldb=$(OUTPUT) --error-log=$(tmpdir)/errors.w2h.alt.un.utf8 \
+	  --auto-test=8 > $(tmpdir)/report.w2h.alt.un.utf8
+
+
+#
+# Performance measurement targets
+#
+
+perf: perf_w2b \
+      perf_b2w \
+      perf_w2t \
+      perf_w2s \
+      perf_tag_dict \
+      perf_w2h \
+      perf_w2h_alt \
+      perf_w2tp \
+      perf_w2tpl \
+      perf_w2tpr \
+      perf_t2p \
+      perf_tt2p \
+      perf_ttt2p \
+      perf_w2v \
+      perf_w2p \
+
+
+perf_w2b: $(OUTPUT) $(tmpdir)/w2b.perf.utf8
+	test_perf --verbose --hires $(opt_auto_perf) --cmd test_ldb \
+	--ldb=$(OUTPUT) $(opt_auto_test) --data=$(tmpdir)/w2b.perf.utf8 && \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); if($$#f > 0) { print \"$$f[1]\n\" }" < $(tmpdir)/w2b.perf.utf8 | \
+	fa_line2chain_unicode --input-enc=UTF-8 | \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); $$c+=(1+$$#f); END { print \"Count $$c\n\" }"
+
+perf_b2w: $(OUTPUT) $(tmpdir)/b2w.perf.utf8
+	test_perf --verbose --hires $(opt_auto_perf) --cmd test_ldb \
+	--ldb=$(OUTPUT) $(opt_auto_test) --data=$(tmpdir)/b2w.perf.utf8 && \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); if($$#f > 0) { print \"$$f[1]\n\" }" < $(tmpdir)/b2w.perf.utf8 | \
+	fa_line2chain_unicode --input-enc=UTF-8 | \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); $$c+=(1+$$#f); END { print \"Count $$c\n\" }"
+
+perf_w2t: $(OUTPUT) $(tmpdir)/w2t.perf.utf8
+	test_perf --verbose --hires $(opt_auto_perf) --cmd test_ldb \
+	--ldb=$(OUTPUT) $(opt_auto_test) --data=$(tmpdir)/w2t.perf.utf8 && \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); if($$#f > 0) { print \"$$f[1]\n\" }" < $(tmpdir)/w2t.perf.utf8 | \
+	fa_line2chain_unicode --input-enc=UTF-8 | \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); $$c+=(1+$$#f); END { print \"Count $$c\n\" }"
+
+perf_b2t: $(OUTPUT) $(tmpdir)/b2t.perf.utf8
+	test_perf --verbose --hires $(opt_auto_perf) --cmd test_ldb \
+	--ldb=$(OUTPUT) $(opt_auto_test) --data=$(tmpdir)/b2t.perf.utf8 && \
+	perl -ne "s/[\r\n]+$$//; @f = split(/[ ]/); if($$#f > 0) { print \"$$f[1]\n\" }" < $(tmpdir)/b2t.perf.utf8 | \
+	fa_line2chain_unicode --input-enc=UTF-8 | \
+	perl -ne "s/[\r\n]+$$//; @f = split(/[ ]/); $$c += (1 + $$#f); END { print \"Count $$c\n\" }"
+
+perf_w2s: $(OUTPUT) $(tmpdir)/w2s.perf.utf8
+	test_perf --verbose --hires $(opt_auto_perf) --cmd test_ldb \
+	--ldb=$(OUTPUT) $(opt_auto_test) --data=$(tmpdir)/w2s.perf.utf8 && \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); if($$#f > 0) { print \"$$f[1]\n\" }" < $(tmpdir)/w2s.perf.utf8 | \
+	fa_line2chain_unicode --input-enc=UTF-8 | \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); $$c+=(1+$$#f); END { print \"Count $$c\n\" }"
+
+perf_tag_dict: $(OUTPUT) $(tmpdir)/tag.dict.perf.utf8
+	test_perf --verbose --hires $(opt_auto_perf) --cmd test_ldb \
+	--ldb=$(OUTPUT) $(opt_auto_test) --data=$(tmpdir)/tag.dict.perf.utf8 && \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); if($$#f > 0) { print \"$$f[1]\n\" }" < $(tmpdir)/tag.dict.perf.utf8 | \
+	fa_line2chain_unicode --input-enc=UTF-8 | \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); $$c+=(1+$$#f); END { print \"Count $$c\n\" }"
+
+perf_pos_dict: $(OUTPUT) $(tmpdir)/pos.dict.perf.utf8
+	test_perf --verbose --hires $(opt_auto_perf) --cmd test_ldb \
+	--ldb=$(OUTPUT) $(opt_auto_test) --data=$(tmpdir)/pos.dict.perf.utf8 && \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); if($$#f > 0) { print \"$$f[1]\n\" }" < $(tmpdir)/pos.dict.perf.utf8 | \
+	fa_line2chain_unicode --input-enc=UTF-8 | \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); $$c+=(1+$$#f); END { print \"Count $$c\n\" }"
+
+perf_w2h: $(OUTPUT) $(tmpdir)/w2h.perf.utf8
+	test_perf --verbose --hires $(opt_auto_perf) --cmd test_ldb \
+	--ldb=$(OUTPUT) $(opt_auto_test) --data=$(tmpdir)/w2h.perf.utf8 && \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); if($$#f > 0) { print \"$$f[1]\n\" }" < $(tmpdir)/w2h.perf.utf8 | \
+	fa_line2chain_unicode --input-enc=UTF-8 | \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); $$c+=(1+$$#f); END { print \"Count $$c\n\" }"
+
+perf_w2h_alt: $(OUTPUT) $(tmpdir)/w2h.perf.alt.utf8
+	test_perf --verbose --hires $(opt_auto_perf) --cmd test_ldb \
+	--ldb=$(OUTPUT) $(opt_auto_test) --data=$(tmpdir)/w2h.perf.alt.utf8 && \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); if($$#f > 0) { print \"$$f[1]\n\" }" < $(tmpdir)/w2h.perf.alt.utf8 | \
+	fa_line2chain_unicode --input-enc=UTF-8 | \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); $$c+=(1+$$#f); END { print \"Count $$c\n\" }"
+
+perf_w2tp: $(OUTPUT) $(tmpdir)/w2tp.perf.utf8
+	test_perf --verbose --hires $(opt_auto_perf) --cmd test_ldb \
+	--ldb=$(OUTPUT) $(opt_auto_test) --data=$(tmpdir)/w2tp.perf.utf8 && \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); if($$#f > 0) { print \"$$f[1]\n\" }" < $(tmpdir)/w2tp.perf.utf8 | \
+	fa_line2chain_unicode --input-enc=UTF-8 | \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); $$c+=(1+$$#f); END { print \"Count $$c\n\" }"
+
+perf_w2tpl: $(OUTPUT) $(tmpdir)/w2tpl.perf.utf8
+	test_perf --verbose --hires $(opt_auto_perf) --cmd test_ldb \
+	--ldb=$(OUTPUT) $(opt_auto_test) --data=$(tmpdir)/w2tpl.perf.utf8 && \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); if($$#f > 0) { print \"$$f[1]\n\" }" < $(tmpdir)/w2tpl.perf.utf8 | \
+	fa_line2chain_unicode --input-enc=UTF-8 | \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); $$c+=(1+$$#f); END { print \"Count $$c\n\" }"
+
+perf_w2tpr: $(OUTPUT) $(tmpdir)/w2tpr.perf.utf8
+	test_perf --verbose --hires $(opt_auto_perf) --cmd test_ldb \
+	--ldb=$(OUTPUT) $(opt_auto_test) --data=$(tmpdir)/w2tpr.perf.utf8 && \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); if($$#f > 0) { print \"$$f[1]\n\" }" < $(tmpdir)/w2tpr.perf.utf8 | \
+	fa_line2chain_unicode --input-enc=UTF-8 | \
+	perl -ne "s/[\r\n]+$$//; @f=split(/[ ]/); $$c+=(1+$$#f); END { print \"Count $$c\n\" }"
+
+perf_t2p: $(OUTPUT) $(tmpdir)/t2p.perf.utf8
+	test_perf --verbose --hires $(opt_auto_perf) --cmd test_ldb \
+	--ldb=$(OUTPUT) $(opt_auto_test) --data=$(tmpdir)/t2p.perf.utf8 --tagset=$(srcdir)/tagset.txt && \
+	perl -ne "$$c++; END { print \"Count $$c\n\" }" < $(tmpdir)/t2p.perf.utf8
+
+perf_tt2p: $(OUTPUT) $(tmpdir)/tt2p.perf.utf8
+	test_perf --verbose --hires $(opt_auto_perf) --cmd test_ldb \
+	--ldb=$(OUTPUT) $(opt_auto_test) --data=$(tmpdir)/tt2p.perf.utf8 --tagset=$(srcdir)/tagset.txt && \
+	perl -ne "$$c++; END { $$c *= 2; print \"Count $$c\n\" }" < $(tmpdir)/tt2p.perf.utf8
+
+perf_ttt2p: $(OUTPUT) $(tmpdir)/ttt2p.perf.utf8
+	test_perf --verbose --hires $(opt_auto_perf) --cmd test_ldb \
+	--ldb=$(OUTPUT) $(opt_auto_test) --data=$(tmpdir)/ttt2p.perf.utf8 --tagset=$(srcdir)/tagset.txt && \
+	perl -ne "$$c++; END { $$c *= 3; print \"Count $$c\n\" }" < $(tmpdir)/ttt2p.perf.utf8
+
+perf_w2v: $(OUTPUT) $(tmpdir)/w2v.perf.utf8
+	test_perf --verbose --hires $(opt_auto_perf) --cmd test_ldb \
+	--ldb=$(OUTPUT) $(opt_auto_test) --data=$(tmpdir)/w2v.perf.utf8 && \
+	perl -ne "$$c++; END { $$c *= 3; print \"Count $$c\n\" }" < $(tmpdir)/w2v.perf.utf8
+
+perf_w2p: $(OUTPUT) $(tmpdir)/w2p.perf.utf8
+	test_perf --verbose --hires $(opt_auto_perf) --cmd test_ldb \
+	--ldb=$(OUTPUT) $(opt_auto_test) --data=$(tmpdir)/w2p.perf.utf8 && \
+	perl -ne "s/[\r\n]+$$//; @f = split(/[ ]/); if($$#f > 0) { print \"$$f[1]\n\" }" < $(tmpdir)/w2p.perf.utf8 | \
+	fa_line2chain_unicode --input-enc=UTF-8 | \
+	perl -ne "s/[\r\n]+$$//; @f = split(/[ ]/); $$c += (1 + $$#f); END { print \"Count $$c\n\" }"
+
