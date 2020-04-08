@@ -125,6 +125,8 @@ void SetupConfParams ()
                           "triv-dump", FAFsmConst::MODE_PACK_TRIV);
     g_parser.AddStrParam ("multi-map-mode", FAFsmConst::PARAM_MAP_MODE,
                           "mph-dump", FAFsmConst::MODE_PACK_MPH);
+    g_parser.AddStrParam ("multi-map-mode", FAFsmConst::PARAM_MAP_MODE,
+                          "fixed-dump", FAFsmConst::MODE_PACK_FIXED);
     g_parser.AddNumParam ("min-len", FAFsmConst::PARAM_MIN_LEN);
     g_parser.AddNumParam ("min-comp-len", FAFsmConst::PARAM_MIN_LEN);
     g_parser.AddNumParam ("min-len2", FAFsmConst::PARAM_MIN_LEN2);

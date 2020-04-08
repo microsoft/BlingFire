@@ -72,6 +72,9 @@ symbol and Info is a set of tags associated with the word W.
     should contain KEY FREQ OWS values (not used by default)
 
   --sort-info - applies lexicographical sorting to the InfoId -> Info map
+
+  --float-nums - if specified, allows floating point numbers to be
+    inter-mixed with tags
 EOM
 
 }
@@ -89,6 +92,7 @@ $dir = "--dir=l2r" ;
 $in_tr_params = "" ;
 $mode = "" ;
 $sort_info = "" ;
+$float_nums = "" ;
 
 
 while (0 < 1 + $#ARGV) {
@@ -125,6 +129,10 @@ while (0 < 1 + $#ARGV) {
     } elsif ("--ignore-case" eq $ARGV [0]) {
 
         $ignore_case .= (" " . $ARGV [0]);
+
+    } elsif ("--float-nums" eq $ARGV [0]) {
+
+        $float_nums = $ARGV [0];
 
     } elsif ($ARGV [0] =~ /^--charmap=./) {
 
@@ -202,7 +210,7 @@ if ("--type=mph" eq $type) {
 
   $command = "".
     "cat $input | ".
-    "fa_line2chain_unicode --use-keys --base=16 --key-delim $dir $in_tr_params $tagset $input_enc $ignore_case | ".
+    "fa_line2chain_unicode --use-keys --base=16 --key-delim $dir $in_tr_params $tagset $input_enc $ignore_case $float_nums | ".
     "sort | uniq | ".
     "fa_dict_split --base=16 $mode --out-k2i=$out_k2i --out-i2info=$out_i2info | ".
     "fa_chains2mindfa --base=hex | ".
@@ -241,7 +249,7 @@ if ("--type=mph" eq $type) {
 
   $command = "".
     "cat $input | ".
-    "fa_line2chain_unicode --use-keys --key-delim --base=16 --num-size=5 $dir $in_tr_params $tagset $input_enc $ignore_case | ".
+    "fa_line2chain_unicode --use-keys --key-delim --base=16 --num-size=5 $dir $in_tr_params $tagset $input_enc $ignore_case $float_nums | ".
     "sort | uniq | ".
     "fa_dict_split --no-k2i --base=16 --num-size=5 --info-base=65536 $mode --out-i2info=$out_i2info | ".
     "sort | ".

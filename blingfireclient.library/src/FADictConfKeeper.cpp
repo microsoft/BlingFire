@@ -27,6 +27,7 @@ FADictConfKeeper::FADictConfKeeper () :
     m_pK2I (NULL),
     m_pI2Info_triv (NULL),
     m_pI2Info_mph (NULL),
+    m_pI2Info_fixed (NULL),
     m_pI2Info (NULL),
     m_IgnoreCase (false),
     m_NoTrUse (true),
@@ -95,7 +96,8 @@ void FADictConfKeeper::Init (const int * pValues, const int Size)
             i2info_mode = pValues [++i];
 
             LogAssert (FAFsmConst::MODE_PACK_TRIV == i2info_mode || \
-                FAFsmConst::MODE_PACK_MPH == i2info_mode);
+                FAFsmConst::MODE_PACK_MPH == i2info_mode || \
+                FAFsmConst::MODE_PACK_FIXED == i2info_mode);
 
             break;
         }
@@ -169,6 +171,14 @@ void FADictConfKeeper::Init (const int * pValues, const int Size)
                 m_pI2Info_triv->SetImage (pDump);
                 m_pI2Info = m_pI2Info_triv;
 
+            } else if (FAFsmConst::MODE_PACK_FIXED == i2info_mode) {
+
+                if (!m_pI2Info_fixed) {
+                    m_pI2Info_fixed = NEW FAMultiMap_pack_fixed;
+                }
+                m_pI2Info_fixed->SetImage (pDump);
+                m_pI2Info = m_pI2Info_fixed;
+
             } else {
                 DebugLogAssert (FAFsmConst::MODE_PACK_MPH == i2info_mode);
 
@@ -213,6 +223,10 @@ void FADictConfKeeper::Clear ()
     if (m_pI2Info_mph) {
         delete m_pI2Info_mph;
         m_pI2Info_mph = NULL;
+    }
+    if (m_pI2Info_fixed) {
+        delete m_pI2Info_fixed;
+        m_pI2Info_fixed = NULL;
     }
     if (m_pCharMap) {
         delete m_pCharMap;

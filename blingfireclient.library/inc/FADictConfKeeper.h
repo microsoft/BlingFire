@@ -68,6 +68,7 @@ private:
     // I2Info: multi-map
     FAMultiMap_pack * m_pI2Info_triv;
     FAMultiMap_pack_mph * m_pI2Info_mph;
+    FAMultiMap_pack_fixed * m_pI2Info_fixed;
     const FAMultiMapCA * m_pI2Info;
     // configuration options
     bool m_IgnoreCase;
