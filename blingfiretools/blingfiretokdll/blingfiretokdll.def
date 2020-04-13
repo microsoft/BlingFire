@@ -15,3 +15,5 @@ EXPORTS
     TextToSentencesWithModel
     TextToWordsWithOffsetsWithModel
     TextToWordsWithModel
+    TextToIds_sp
+    TextToIds_wp

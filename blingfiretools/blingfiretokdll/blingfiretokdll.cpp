@@ -5,6 +5,8 @@
 #include "FAWbdConfKeeper.h"
 #include "FALDB.h"
 #include "FALexTools_t.h"
+#include "FADictConfKeeper.h"
+#include "FATokenSegmentationTools_1best_t.h"
 
 #include <algorithm>
 #include <vector>
@@ -29,8 +31,8 @@ on Windows, Linux, etc.
 #include "BlingFireTokLibSbdData.cxx"
 
 // version of this binary and the algo logic
-#define BLINGFIRETOK_MAJOR_VERSION_NUM 5
-#define BLINGFIRETOK_MINOR_VERSION_NUM 5
+#define BLINGFIRETOK_MAJOR_VERSION_NUM 6
+#define BLINGFIRETOK_MINOR_VERSION_NUM 1
 
 const int WBD_WORD_TAG = 1;
 const int WBD_IGNORE_TAG = 4;
@@ -42,10 +44,24 @@ std::mutex g_InitializationMutex; // this mutex is used once for default models 
 // keep model data together
 struct FAModelData
 {
+    // image of the loaded file
     FAImageDump m_Img;
     FALDB m_Ldb;
+
+    // data and const processor for tokenization
     FAWbdConfKeeper m_Conf;
-    FALexTools_t < int > m_Engine; // initialized engine can be shared accross threads
+    FALexTools_t < int > m_Engine;
+    bool m_hasWbd;
+
+    // data and const processor for tokenization
+    FADictConfKeeper m_DictConf;
+    FATokenSegmentationTools_1best_t < int > m_SegEngine;
+    bool m_hasSeg;
+
+    FAModelData ():
+        m_hasWbd (false),
+        m_hasSeg (false)
+    {}
 };
 
 // keep two built-in models one for default WBD and one for default SBD 
@@ -83,20 +99,25 @@ void InitializeWbdSbd()
     g_DefaultSbd.m_Engine.SetConf(&g_DefaultSbd.m_Conf);
 }
 
+// SENTENCE PIECE DELIMITER
+#define __FASpDelimiter__ 0x2581
+
+// WHITESPACE [\x0004-\x0020\x007F-\x009F\x00A0\x2000-\x200B\x200E\x200F\x202F\x205F\x2060\x2420\x2424\x3000\xFEFF]
+#define __FAIsWhiteSpace__(C) ( \
+        (C <= 0x20 || (C >= 0x7f && C <= 0x9f) || C == 0xa0 || (C >= 0x2000 && C <= 0x200b) || \
+        C == 0x200e || C == 0x200f || C == 0x202f || C == 0x205f || C == 0x2060 || C == 0x2420 || \
+        C == 0x2424 || C == 0x3000 || C == 0xfeff) \
+    )
+
 
 inline int FAGetFirstNonWhiteSpace(int * pStr, const int StrLen)
 {
     for (int i = 0; i < StrLen; ++i)
     {
-        int C = pStr[i];
-
-        // WHITESPACE [\x0004-\x0020\x007F-\x009F\x00A0\x2000-\x200B\x200E\x200F\x202F\x205F\x2060\x2420\x2424\x3000\xFEFF]
-        if (C <= 0x20 || (C >= 0x7f && C <= 0x9f) || C == 0xa0 || (C >= 0x2000 && C <= 0x200b) ||
-            C == 0x200e || C == 0x200f || C == 0x202f || C == 0x205f || C == 0x2060 || C == 0x2420 ||
-            C == 0x2424 || C == 0x3000 || C == 0xfeff) {
+        const int C = pStr[i];
+        if (__FAIsWhiteSpace__(C)) {
             continue;
         }
-
         return i;
     }
 
@@ -707,23 +728,40 @@ void* LoadModel(const char * pszLdbFileName)
     // create a generic LDB object from bytes
     pNewModelData->m_Ldb.SetImage (pImgBytes);
 
-    // get the configuration paramenters for [WBD]
+    // get the configuration paramenters for [wbd]
     const int * pValues = NULL;
-    const int iSize = pNewModelData->m_Ldb.GetHeader ()->Get (FAFsmConst::FUNC_WBD, &pValues);
+    int iSize = pNewModelData->m_Ldb.GetHeader ()->Get (FAFsmConst::FUNC_WBD, &pValues);
 
-    // initialize WBD configuration
-    pNewModelData->m_Conf.Initialize (&(pNewModelData->m_Ldb), pValues, iSize);
+    // see if the [wbd] section is present
+    if (-1 != iSize) {
+        pNewModelData->m_hasWbd = true;
+        // initialize WBD configuration
+        pNewModelData->m_Conf.Initialize (&(pNewModelData->m_Ldb), pValues, iSize);
+        // now initialize the engine
+        pNewModelData->m_Engine.SetConf(&(pNewModelData->m_Conf));
+    }
 
-    // now initialize the engine
-    pNewModelData->m_Engine.SetConf(&(pNewModelData->m_Conf));
+    // get the configuration paramenters for [pos-dict]
+    pValues = NULL;
+    iSize = pNewModelData->m_Ldb.GetHeader ()->Get (FAFsmConst::FUNC_POS_DICT, &pValues);
+
+    // see if the [pos-dict] section is present
+    if (-1 != iSize) {
+        pNewModelData->m_hasSeg = true;
+        // initialize dict configuration
+        pNewModelData->m_DictConf.SetLDB (&(pNewModelData->m_Ldb));
+        pNewModelData->m_DictConf.Init (pValues, iSize);
+        // initialize the segmentation engine
+        pNewModelData->m_SegEngine.SetConf(&pNewModelData->m_DictConf);
+    }
 
     return (void*) pNewModelData;
 }
 
 
 //
-// Gets fa_lex predictions and returns ids of words or sub-words, returns upto MaxIdsArrLength ids, the rest of the array
-// is unchanged, so the array can be set to initial length and fill with 0's for padding.
+// Implements a word-piece algorithm. Returns ids of words or sub-words, returns upto MaxIdsArrLength ids,
+// the rest of the array is unchanged, so the array can be set to initial length and fill with 0's for padding.
 // Returns number of ids copied into the array.
 //
 // Example:
@@ -732,7 +770,7 @@ void* LoadModel(const char * pszLdbFileName)
 //  TextToIds output: [1208, 9397, 2571, 11345, 1012, ... <unchanged>]
 //
 extern "C"
-const int TextToIds(
+const int TextToIds_wp(
         void* ModelPtr,
         const char * pInUtf8Str,
         int InUtf8StrByteCount,
@@ -746,14 +784,14 @@ const int TextToIds(
         return 0;
     }
 
-    // allocate buffer for UTF-32, sentence breaking results, word-breaking results
+    // allocate buffer for UTF-8 --> UTF-32 conversion
     std::vector< int > utf32input(InUtf8StrByteCount);
     int * pBuff = utf32input.data();
     if (NULL == pBuff) {
         return 0;
     }
 
-    // allocate buffer for UTF-32, sentence breaking results, word-breaking results
+    // allocate buffer for normalization
     std::vector< int > utf32input_norm(InUtf8StrByteCount);
     int * pNormBuff = utf32input_norm.data();
     if (NULL == pNormBuff) {
@@ -868,6 +906,153 @@ const int TextToIds(
     }
 
     return OutCount;
+}
+
+
+//
+// Implements a sentence piece algorithm, returns predictions from FATokenSegmentationTools_1best_t.
+// The input is always prepended with ' ' / '▁' since this seems the case in the sentence piece.
+// Returns upto MaxIdsArrLength ids, the rest of the array is unchanged, so the array can be set to 
+// initial length and fill with 0's for padding. Returns number of ids copied into the array.
+//
+// Example:
+// printf "Sergei Alonichau I saw a girl with a \ttelescope." | spm_encode --model=xlnet/spiece.model 
+// ▁Sergei ▁Al oni chau ▁I ▁saw ▁a ▁girl ▁with ▁a ▁telescope .
+//
+// printf "Sergei Alonichau I saw a girl with a \ttelescope." | spm_encode --model=xlnet/spiece.model --output_format=id
+// 14363 651 7201 25263 35 685 24 1615 33 24 16163 9
+//
+// TextToIds_sp output: 12, [14363 651 7201 25263 35 685 24 1615 33 24 16163 9]
+//
+extern "C"
+const int TextToIds_sp(
+        void* ModelPtr,
+        const char * pInUtf8Str,
+        int InUtf8StrByteCount,
+        int32_t * pIdsArr,
+        const int MaxIdsArrLength,
+        const int UnkId = 0
+)
+{
+    // validate the parameters
+    if (0 >= InUtf8StrByteCount || InUtf8StrByteCount > FALimits::MaxArrSize || NULL == pInUtf8Str || 0 == ModelPtr) {
+        return 0;
+    }
+
+    // allocate buffer for UTF-8 --> UTF-32 conversion
+    std::vector< int > utf32input(InUtf8StrByteCount + 1);
+    int * pBuff = utf32input.data();
+    if (NULL == pBuff) {
+        return 0;
+    }
+    pBuff[0] = __FASpDelimiter__; // always add a space in the beginning, SP uses U+2581 as a space mark
+
+    // convert input to UTF-32 (write past the added first space)
+    int BuffSize = ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + 1, InUtf8StrByteCount);
+    if (BuffSize <= 0 || BuffSize > InUtf8StrByteCount) {
+        return 0;
+    }
+    BuffSize++; // to accomodate the first space
+
+    const FAModelData * pModelData = (const FAModelData *)ModelPtr;
+    const FADictConfKeeper * pConf = &(pModelData->m_DictConf);
+    const FAMultiMapCA * pCharMap = pConf->GetCharMap ();
+    std::vector< int > utf32input_norm;
+    int * pNormBuff = NULL;
+
+    // do normalization if needed
+    if (NULL != pCharMap) {
+
+        utf32input_norm.resize(InUtf8StrByteCount);
+        pNormBuff = utf32input_norm.data();
+        if (NULL == pNormBuff) {
+            return 0;
+        }
+
+        // do the normalization for the entire input
+        BuffSize = ::FANormalize(pBuff, BuffSize, pNormBuff, InUtf8StrByteCount, pCharMap);
+        if (BuffSize <= 0 || BuffSize > InUtf8StrByteCount) {
+            return 0;
+        }
+        pBuff = pNormBuff;
+    }
+
+    // replace every space sequence with U+2581 in-place
+    int i = 1; // index for reading
+    int j = 1; // index for writing
+    while (i < BuffSize) {
+
+        const int Ci = pBuff[i++];
+
+        // check if the Ci is not a space
+        if (!__FAIsWhiteSpace__(Ci)) {
+            // copy it
+            pBuff[j++] = Ci;
+        // if Ci is a space, check if the previous character was not a sapce
+        } else if (__FASpDelimiter__ != pBuff[j - 1]) {
+            // copy normalized space
+            pBuff[j++] = __FASpDelimiter__;
+        }
+    } // of while ...
+
+    // adjust the length
+    BuffSize = j;
+
+    // do the segmentation
+    const int WbdResMaxSize = InUtf8StrByteCount * 3;
+    std::vector< int > WbdResults(WbdResMaxSize);
+    int * pWbdResults = WbdResults.data ();
+    const int WbdOutSize = pModelData->m_SegEngine.Process (pBuff, BuffSize, pWbdResults, WbdResMaxSize, 0);
+    if (WbdOutSize > WbdResMaxSize || 0 != WbdOutSize % 3) {
+        return 0;
+    }
+
+    int OutSize = 0;
+
+    // return the ids only
+    for (int i = 0; i < WbdOutSize && OutSize < MaxIdsArrLength; i += 3) {
+        const int id = pWbdResults [i];
+        pIdsArr [OutSize++] = id;
+    }
+
+    return OutSize;
+}
+
+
+//
+// Implements a word-piece or sentence piece algorithms which is defined by the loaded model. 
+// Returns ids of words or sub-words, returns upto MaxIdsArrLength ids, the rest of the array 
+// is unchanged, so the array can be set to initial length and fill with 0's for padding.
+// Returns number of ids copied into the array.
+//
+
+extern "C"
+const int TextToIds(
+        void* ModelPtr,
+        const char * pInUtf8Str,
+        int InUtf8StrByteCount,
+        int32_t * pIdsArr,
+        const int MaxIdsArrLength,
+        const int UnkId = 0
+)
+{
+    if (0 == ModelPtr) {
+        return 0;
+    }
+
+    // check if loaded model has segmentation data
+    const FAModelData * pModelData = (const FAModelData *)ModelPtr;
+
+    if (!pModelData->m_hasSeg)
+    {
+        // call word-piece algorithm
+        return TextToIds_wp(ModelPtr, pInUtf8Str, InUtf8StrByteCount, pIdsArr, MaxIdsArrLength, UnkId);
+    }
+    else
+    {
+        // call sentence-piece algorithm
+        return TextToIds_sp(ModelPtr, pInUtf8Str, InUtf8StrByteCount, pIdsArr, MaxIdsArrLength, UnkId);
+    }
 }
 
 

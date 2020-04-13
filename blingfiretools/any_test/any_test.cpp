@@ -13,6 +13,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
 #include <assert.h>
 #include <dlfcn.h>
 
@@ -70,13 +71,13 @@ int __cdecl main (int argc, char ** argv)
 
         // tests
 
-        void* hModel = (*g_LoadModelPtr)("bert_base_tok.bin");
+        void* hModel = (*g_LoadModelPtr)("testsp1.bin");
 
         const int MaxIdCount = 128;
         int Ids [MaxIdCount];
 
-        std::string in1 ("⭕Namaz Ke Masail  ⭕");
-         int IdCount = (*g_TextToIdsPtr)(hModel, in1.c_str(), in1.length(), Ids, MaxIdCount, 100);
+        std::string in1 ("Sergei Alonichau I saw a girl with a telescope.");
+        int IdCount = (*g_TextToIdsPtr)(hModel, in1.c_str(), in1.length(), Ids, MaxIdCount, 100);
 
         for(int i = 0; i < IdCount; ++i)
         {
