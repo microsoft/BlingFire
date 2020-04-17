@@ -173,6 +173,8 @@ If you want to create your own tokenization or any other finite-state model, you
 1. [This Document](https://github.com/Microsoft/BlingFire/wiki/How-to-change-linguistic-resources) is an introduction into compilation of the C++ code and linguistic resources.
 2. [Adding BERT-like tokenization model](https://github.com/Microsoft/BlingFire/wiki/How-to-add-a-new-BERT-tokenizer-model) is describing how to add new tokenization model similar to BERT.
 
+## Support for other languages
+1. [Rust wrapper](https://github.com/reinfer/blingfire-rs)
 
 ## Supported Platforms
 
