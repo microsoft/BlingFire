@@ -17,3 +17,6 @@ EXPORTS
     TextToWordsWithModel
     TextToIds_sp
     TextToIds_wp
+    TextToIdsWithOffsets_sp
+    TextToIdsWithOffsets_wp
+    TextToIdsWithOffsets
