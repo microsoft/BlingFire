@@ -9,4 +9,4 @@ cat spiece.model.exportvocab.txt | awk 'BEGIN {FS="\t"} NF == 2 { if (NR > 1) { 
 zip pos.dict.utf8.zip pos.dict.utf8
 
 # build as usual
-make -f Makefile.gnu lang=testsp1 all
+make -f Makefile.gnu lang=xlnet all
