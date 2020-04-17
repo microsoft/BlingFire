@@ -175,6 +175,7 @@ If you want to create your own tokenization or any other finite-state model, you
 
 ## Support for other languages
 1. [Rust wrapper](https://github.com/reinfer/blingfire-rs)
+2. [Ruby wrapper](https://github.com/ankane/blingfire)
 
 ## Supported Platforms
 
