@@ -200,13 +200,29 @@ def free_model(h):
     free_model_fn(c_void_p(h))
 
 
-def text_to_ids(h, s, max_len, unk = 0):
+def text_to_ids(h, s, max_len, unk = 0, no_padding = False):
     # get the UTF-8 bytes
     s_bytes = s.encode("utf-8")
     # allocate the output buffer
     o_bytes = (c_int32 * max_len)()
     o_bytes_count = len(o_bytes)
     # fill in the ids
-    blingfire.TextToIds(c_void_p(h), c_char_p(s_bytes), c_int(len(s_bytes)), byref(o_bytes), c_int(o_bytes_count), c_int(unk))
+    t_count = blingfire.TextToIds(c_void_p(h), c_char_p(s_bytes), c_int(len(s_bytes)), byref(o_bytes), c_int(o_bytes_count), c_int(unk))
+    out_count = min (o_bytes_count, t_count) if no_padding else o_bytes_count
     # return numpy array without copying
-    return np.frombuffer(o_bytes, dtype=c_uint32, count = o_bytes_count)
+    return np.frombuffer(o_bytes, dtype=c_uint32, count = out_count)
+
+
+def utf8text_to_ids_with_offsets(h, s_bytes, max_len, unk = 0, no_padding = False):
+    # allocate the output buffers
+    o_bytes = (c_int32 * max_len)()
+    o_bytes_starts = (c_int32 * max_len)()
+    o_bytes_ends = (c_int32 * max_len)()
+    o_bytes_count = len(o_bytes)
+    # fill in the ids
+    t_count = blingfire.TextToIdsWithOffsets(c_void_p(h), c_char_p(s_bytes), c_int(len(s_bytes)), byref(o_bytes), byref(o_bytes_starts), byref(o_bytes_ends), c_int(o_bytes_count), c_int(unk))
+    out_count = min (o_bytes_count, t_count) if no_padding else o_bytes_count
+    # return numpy array without copying
+    return ( np.frombuffer(o_bytes, dtype=c_uint32, count = out_count), 
+             np.frombuffer(o_bytes_starts, dtype=c_uint32, count = out_count), 
+             np.frombuffer(o_bytes_ends, dtype=c_uint32, count = out_count) )

@@ -20,7 +20,7 @@ This library provides easy interface to sentence and word-breaking functionality
 which can be used in C#, Python, Perl, etc.
 
 Also the goal is to reduce dependecies and provide the same library available
-on Windows, Linux, etc.
+on Windows, Linux, Mac OSX, etc.
 */
 
 
@@ -762,7 +762,8 @@ void* LoadModel(const char * pszLdbFileName)
 //
 // Implements a word-piece algorithm. Returns ids of words or sub-words, returns upto MaxIdsArrLength ids,
 // the rest of the array is unchanged, so the array can be set to initial length and fill with 0's for padding.
-// Returns number of ids copied into the array.
+// If pStartOffsets and pEndOffsets are not NULL then fills in the start and end offset for each token.
+// Return value is the number of ids copied into the array.
 //
 // Example:
 //  input: Эpple pie.
@@ -770,11 +771,13 @@ void* LoadModel(const char * pszLdbFileName)
 //  TextToIds output: [1208, 9397, 2571, 11345, 1012, ... <unchanged>]
 //
 extern "C"
-const int TextToIds_wp(
+const int TextToIdsWithOffsets_wp(
         void* ModelPtr,
         const char * pInUtf8Str,
         int InUtf8StrByteCount,
-        int32_t * pIdsArr,
+        int32_t * pIdsArr, 
+        int * pStartOffsets, 
+        int * pEndOffsets,
         const int MaxIdsArrLength,
         const int UnkId = 0
 )
@@ -791,29 +794,64 @@ const int TextToIds_wp(
         return 0;
     }
 
-    // allocate buffer for normalization
-    std::vector< int > utf32input_norm(InUtf8StrByteCount);
-    int * pNormBuff = utf32input_norm.data();
-    if (NULL == pNormBuff) {
-        return 0;
+    // a container for the offsets
+    std::vector< int > utf32offsets;
+    int * pOffsets = NULL;
+
+    // flag to alter the logic in case we don't need the offsets
+    const bool fNeedOffsets = NULL != pStartOffsets && NULL != pEndOffsets;
+
+    if (fNeedOffsets) {
+        utf32offsets.resize(InUtf8StrByteCount);
+        pOffsets = utf32offsets.data();
+        if (NULL == pOffsets) {
+            return 0;
+        }
     }
 
-    // convert input to UTF-32
-    int BuffSize = ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff, InUtf8StrByteCount);
+    // convert input to UTF-32, track offsets if needed
+    int BuffSize = fNeedOffsets ? 
+        ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff, pOffsets, InUtf8StrByteCount) :
+        ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff, InUtf8StrByteCount);
     if (BuffSize <= 0 || BuffSize > InUtf8StrByteCount) {
         return 0;
     }
 
+    // needed for normalization
+    std::vector< int > utf32input_norm;
+    int * pNormBuff = NULL;
+    std::vector< int > utf32norm_offsets;
+    int * pNormOffsets = NULL;
+
+    // get the model data
     const FAModelData * pModelData = (const FAModelData *)ModelPtr;
     const FAWbdConfKeeper * pConf = &(pModelData->m_Conf);
     const FAMultiMapCA * pCharMap = pConf->GetCharMap ();
 
     // do the normalization for the entire input
     if (pCharMap) {
-        BuffSize = ::FANormalize(pBuff, BuffSize, pNormBuff, InUtf8StrByteCount, pCharMap);
+
+        utf32input_norm.resize(InUtf8StrByteCount);
+        pNormBuff = utf32input_norm.data();
+        if (NULL == pNormBuff) {
+            return 0;
+        }
+        if (fNeedOffsets) {
+            utf32norm_offsets.resize(InUtf8StrByteCount);
+            pNormOffsets = utf32norm_offsets.data();
+            if (NULL == pNormOffsets) {
+                return 0;
+            }
+        }
+
+        BuffSize = fNeedOffsets ? 
+            ::FANormalize(pBuff, BuffSize, pNormBuff, pNormOffsets, InUtf8StrByteCount, pCharMap) :
+            ::FANormalize(pBuff, BuffSize, pNormBuff, InUtf8StrByteCount, pCharMap);
         if (BuffSize <= 0 || BuffSize > InUtf8StrByteCount) {
             return 0;
         }
+
+        // use normalized buffer as input
         pBuff = pNormBuff;
     }
 
@@ -879,9 +917,27 @@ const int TextToIds_wp(
                 if (0 < numSubTokens && ExpectedFrom - 1 == TokenTo) {
                     // output all subtokens tags
                     for(int k = 0; k < numSubTokens && OutCount < MaxIdsArrLength; ++k) {
-                        const int SubTokenTag = pWbdRes[((k + 1) * 3) + i];
+
+                        const int TagIdx = ((k + 1) * 3) + i;
+                        const int SubTokenTag = pWbdRes[TagIdx];
+
                         if (OutCount < MaxIdsArrLength) {
-                            pIdsArr[OutCount++] = SubTokenTag;
+
+                            pIdsArr[OutCount] = SubTokenTag;
+
+                            if (fNeedOffsets) {
+
+                                const int SubTokenFrom = pWbdRes[TagIdx + 1];
+                                const int FromOffset = pOffsets[(pCharMap) ? pNormOffsets [SubTokenFrom] : SubTokenFrom];
+                                pStartOffsets[OutCount] = FromOffset;
+
+                                const int SubTokenTo = pWbdRes[TagIdx + 2];
+                                const int ToOffset = pOffsets[(pCharMap) ? pNormOffsets [SubTokenTo] : SubTokenTo];
+                                const int ToCharSize = ::FAUtf8Size(pInUtf8Str + ToOffset);
+                                pEndOffsets[OutCount] = ToOffset + (0 < ToCharSize ? ToCharSize - 1 : 0);
+                            }
+
+                            OutCount++;
                         }
                     }
                     subTokensCoveredAll = true;
@@ -891,7 +947,21 @@ const int TextToIds_wp(
             if (false == subTokensCoveredAll) {
                 // output an unk tag
                 if (OutCount < MaxIdsArrLength) {
-                    pIdsArr[OutCount++] = UnkId;
+
+                    pIdsArr[OutCount] = UnkId;
+
+                    // for unknown tokens take offsets from the word
+                    if (fNeedOffsets) {
+
+                        const int FromOffset = pOffsets[(pCharMap) ? pNormOffsets [TokenFrom] : TokenFrom];
+                        pStartOffsets[OutCount] = FromOffset;
+
+                        const int ToOffset = pOffsets[(pCharMap) ? pNormOffsets [TokenTo] : TokenTo];
+                        const int ToCharSize = ::FAUtf8Size(pInUtf8Str + ToOffset);
+                        pEndOffsets[OutCount] = ToOffset + (0 < ToCharSize ? ToCharSize - 1 : 0);
+                    }
+
+                    OutCount++;
                 }
             }
 
@@ -906,6 +976,23 @@ const int TextToIds_wp(
     }
 
     return OutCount;
+}
+
+
+//
+// The same as TextToIdsWithOffsets_wp, except does not return offsets
+//
+extern "C"
+const int TextToIds_wp(
+        void* ModelPtr,
+        const char * pInUtf8Str,
+        int InUtf8StrByteCount,
+        int32_t * pIdsArr,
+        const int MaxIdsArrLength,
+        const int UnkId = 0
+)
+{
+    return TextToIdsWithOffsets_wp(ModelPtr,pInUtf8Str,InUtf8StrByteCount,pIdsArr,NULL,NULL,MaxIdsArrLength,UnkId);
 }
 
 
@@ -925,11 +1012,13 @@ const int TextToIds_wp(
 // TextToIds_sp output: 12, [14363 651 7201 25263 35 685 24 1615 33 24 16163 9]
 //
 extern "C"
-const int TextToIds_sp(
+const int TextToIdsWithOffsets_sp(
         void* ModelPtr,
         const char * pInUtf8Str,
         int InUtf8StrByteCount,
         int32_t * pIdsArr,
+        int * pStartOffsets, 
+        int * pEndOffsets,
         const int MaxIdsArrLength,
         const int UnkId = 0
 )
@@ -947,52 +1036,104 @@ const int TextToIds_sp(
     }
     pBuff[0] = __FASpDelimiter__; // always add a space in the beginning, SP uses U+2581 as a space mark
 
+    // a container for the offsets
+    std::vector< int > utf32offsets;
+    int * pOffsets = NULL;
+
+    // flag to alter the logic in case we don't need the offsets
+    const bool fNeedOffsets = NULL != pStartOffsets && NULL != pEndOffsets;
+
+    if (fNeedOffsets) {
+        utf32offsets.resize(InUtf8StrByteCount + 1);
+        pOffsets = utf32offsets.data();
+        if (NULL == pOffsets) {
+            return 0;
+        }
+        pOffsets[0] = 0; // added for prepended first character
+    }
+
     // convert input to UTF-32 (write past the added first space)
-    int BuffSize = ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + 1, InUtf8StrByteCount);
+    int BuffSize = fNeedOffsets ? 
+        ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + 1, pOffsets + 1, InUtf8StrByteCount) :
+        ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + 1, InUtf8StrByteCount);
     if (BuffSize <= 0 || BuffSize > InUtf8StrByteCount) {
         return 0;
     }
     BuffSize++; // to accomodate the first space
 
+    // get the model data
     const FAModelData * pModelData = (const FAModelData *)ModelPtr;
     const FADictConfKeeper * pConf = &(pModelData->m_DictConf);
     const FAMultiMapCA * pCharMap = pConf->GetCharMap ();
+
+    // needed for normalization
     std::vector< int > utf32input_norm;
     int * pNormBuff = NULL;
+    std::vector< int > utf32norm_offsets;
+    int * pNormOffsets = NULL;
 
     // do normalization if needed
     if (NULL != pCharMap) {
 
-        utf32input_norm.resize(InUtf8StrByteCount);
+        utf32input_norm.resize(InUtf8StrByteCount + 1);
         pNormBuff = utf32input_norm.data();
         if (NULL == pNormBuff) {
             return 0;
         }
+        if (fNeedOffsets) {
+            utf32norm_offsets.resize(InUtf8StrByteCount + 1);
+            pNormOffsets = utf32norm_offsets.data();
+            if (NULL == pNormOffsets) {
+                return 0;
+            }
+        }
 
         // do the normalization for the entire input
-        BuffSize = ::FANormalize(pBuff, BuffSize, pNormBuff, InUtf8StrByteCount, pCharMap);
-        if (BuffSize <= 0 || BuffSize > InUtf8StrByteCount) {
+        BuffSize = fNeedOffsets ? 
+            ::FANormalize(pBuff, BuffSize, pNormBuff, pNormOffsets, InUtf8StrByteCount + 1, pCharMap) :
+            ::FANormalize(pBuff, BuffSize, pNormBuff, InUtf8StrByteCount + 1, pCharMap);
+        if (BuffSize <= 0 || BuffSize > InUtf8StrByteCount + 1) {
             return 0;
         }
         pBuff = pNormBuff;
     }
 
-    // replace every space sequence with U+2581 in-place
+    // Replace every space sequence with U+2581 in-place
+    //
+    // Note: This operation affect offsets. Since the output sequence is always the 
+    //       same length or shorter we can update the offsets in-place.
+    //       If normalization is enbled the offsets are computed as a superposition of
+    //       normalization and utf-32 offsets, then transformation should be applied to 
+    //       normalization offsets, otherwise to utf-32 offsets.
+    //
+    int * pAdjustedOffsets = fNeedOffsets ? (NULL != pCharMap ? pNormOffsets : pOffsets) : NULL;
+
     int i = 1; // index for reading
     int j = 1; // index for writing
     while (i < BuffSize) {
 
-        const int Ci = pBuff[i++];
+        const int Ci = pBuff[i];
 
         // check if the Ci is not a space
         if (!__FAIsWhiteSpace__(Ci)) {
             // copy it
-            pBuff[j++] = Ci;
+            pBuff[j] = Ci;
+            if (fNeedOffsets) {
+                pAdjustedOffsets[j] = pAdjustedOffsets[i];
+            }
+            j++;
         // if Ci is a space, check if the previous character was not a sapce
         } else if (__FASpDelimiter__ != pBuff[j - 1]) {
             // copy normalized space
-            pBuff[j++] = __FASpDelimiter__;
+            pBuff[j] = __FASpDelimiter__;
+            if (fNeedOffsets) {
+                pAdjustedOffsets[j] = pAdjustedOffsets[i];
+            }
+            j++;
         }
+
+        i++;
+
     } // of while ...
 
     // adjust the length
@@ -1011,11 +1152,102 @@ const int TextToIds_sp(
 
     // return the ids only
     for (int i = 0; i < WbdOutSize && OutSize < MaxIdsArrLength; i += 3) {
+
+        // copy id
         const int id = pWbdResults [i];
-        pIdsArr [OutSize++] = id;
+        pIdsArr [OutSize] = id;
+
+        // copy offsets if needed
+        if (fNeedOffsets) {
+
+            const int TokenFrom = pWbdResults [i + 1];
+            const int FromOffset = pOffsets[(pCharMap) ? pNormOffsets [TokenFrom] : TokenFrom];
+            pStartOffsets[OutSize] = FromOffset;
+
+            const int TokenTo = pWbdResults [i + 2];
+            const int ToOffset = pOffsets[(pCharMap) ? pNormOffsets [TokenTo] : TokenTo];
+            const int ToCharSize = ::FAUtf8Size(pInUtf8Str + ToOffset);
+            pEndOffsets[OutSize] = ToOffset + (0 < ToCharSize ? ToCharSize - 1 : 0);
+        }
+
+        OutSize++;
     }
 
     return OutSize;
+}
+
+
+//
+// The same as TextToIdsWithOffsets_sp, except does not return offsets
+//
+extern "C"
+const int TextToIds_sp(
+        void* ModelPtr,
+        const char * pInUtf8Str,
+        int InUtf8StrByteCount,
+        int32_t * pIdsArr,
+        const int MaxIdsArrLength,
+        const int UnkId = 0
+)
+{
+    return TextToIdsWithOffsets_sp(ModelPtr,pInUtf8Str,InUtf8StrByteCount,pIdsArr,NULL,NULL,MaxIdsArrLength,UnkId);
+}
+
+
+//
+// Implements a word-piece or sentence piece algorithms which is defined by the loaded model. 
+// Returns ids of words or sub-words, returns upto MaxIdsArrLength ids, the rest of the array 
+// is unchanged, so the array can be set to initial length and fill with 0's for padding.
+// Returns number of ids copied into the array.
+//
+
+extern "C"
+const int TextToIdsWithOffsets(
+        void* ModelPtr,
+        const char * pInUtf8Str,
+        int InUtf8StrByteCount,
+        int32_t * pIdsArr,
+        int * pStartOffsets, 
+        int * pEndOffsets,
+        const int MaxIdsArrLength,
+        const int UnkId = 0
+)
+{
+    if (0 == ModelPtr) {
+        return 0;
+    }
+
+    // check if loaded model has segmentation data
+    const FAModelData * pModelData = (const FAModelData *)ModelPtr;
+
+    if (!pModelData->m_hasSeg)
+    {
+        // call word-piece algorithm
+        return TextToIdsWithOffsets_wp(
+                ModelPtr, 
+                pInUtf8Str, 
+                InUtf8StrByteCount, 
+                pIdsArr, 
+                pStartOffsets, 
+                pEndOffsets, 
+                MaxIdsArrLength, 
+                UnkId
+            );
+    }
+    else
+    {
+        // call sentence-piece algorithm
+        return TextToIdsWithOffsets_sp(
+                ModelPtr, 
+                pInUtf8Str, 
+                InUtf8StrByteCount, 
+                pIdsArr, 
+                pStartOffsets, 
+                pEndOffsets, 
+                MaxIdsArrLength, 
+                UnkId
+            );
+    }
 }
 
 
@@ -1046,12 +1278,12 @@ const int TextToIds(
     if (!pModelData->m_hasSeg)
     {
         // call word-piece algorithm
-        return TextToIds_wp(ModelPtr, pInUtf8Str, InUtf8StrByteCount, pIdsArr, MaxIdsArrLength, UnkId);
+        return TextToIdsWithOffsets_wp(ModelPtr, pInUtf8Str, InUtf8StrByteCount, pIdsArr, NULL, NULL, MaxIdsArrLength, UnkId);
     }
     else
     {
         // call sentence-piece algorithm
-        return TextToIds_sp(ModelPtr, pInUtf8Str, InUtf8StrByteCount, pIdsArr, MaxIdsArrLength, UnkId);
+        return TextToIdsWithOffsets_sp(ModelPtr, pInUtf8Str, InUtf8StrByteCount, pIdsArr, NULL, NULL, MaxIdsArrLength, UnkId);
     }
 }
 

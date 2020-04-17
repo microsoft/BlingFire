@@ -210,9 +210,9 @@ if ("--type=mph" eq $type) {
 
   $command = "".
     "cat $input | ".
-    "fa_line2chain_unicode --use-keys --base=16 --key-delim $dir $in_tr_params $tagset $input_enc $ignore_case $float_nums | ".
+    "fa_line2chain_unicode --use-keys --base=16 --num-size=6 --key-delim $dir $in_tr_params $tagset $input_enc $ignore_case $float_nums | ".
     "sort | uniq | ".
-    "fa_dict_split --base=16 $mode --out-k2i=$out_k2i --out-i2info=$out_i2info | ".
+    "fa_dict_split --base=16 --num-size=6 $mode --out-k2i=$out_k2i --out-i2info=$out_i2info | ".
     "fa_chains2mindfa --base=hex | ".
     "fa_fsm_renum --fsm-type=rs-dfa --alg=remove-gaps | ".
     "fa_dfa2mph --type=mealy-dfa --out=$out_fsm";

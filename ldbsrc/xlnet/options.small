@@ -4,7 +4,7 @@
 # Note: this is work in progress so it will likely to change soon
 # 
 
-OUTPUT = testsp1.bin
+OUTPUT = xlnet.bin
 
 opt_build_pos_dict = --input-enc=UTF-8 --type=mph --raw --tagset=$(srcdir)/tagset.txt --float-nums
 

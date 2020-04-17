@@ -26,6 +26,9 @@ _TLoadModelPtr g_LoadModelPtr = NULL;
 typedef const int (__cdecl* _TTextToIdsPtr)(void*, const char*, int, int32_t*,const int, const int);
 _TTextToIdsPtr g_TextToIdsPtr = NULL;
 
+typedef const int (__cdecl* _TTextToIdsWithOffsetsPtr)(void*, const char*, int, int32_t*, int*, int*, const int, const int);
+_TTextToIdsWithOffsetsPtr g_TextToIdsWithOffsetsPtr = NULL;
+
 typedef int (__cdecl* _TFreeModel)(void* ModelPtr);
 _TFreeModel g_FreeModelPtr = NULL;
 
@@ -62,6 +65,12 @@ int __cdecl main (int argc, char ** argv)
             std::cerr << "ERROR: Cannot get address of TextToIds function" << std::endl;
             return false;
         }
+        g_TextToIdsWithOffsetsPtr = (_TTextToIdsWithOffsetsPtr) dlsym(g_Module, "TextToIdsWithOffsets");
+        if (NULL == g_TextToIdsWithOffsetsPtr)
+        {
+            std::cerr << "ERROR: Cannot get address of TextToIdsWithOffsets function" << std::endl;
+            return false;
+        }
         g_FreeModelPtr = (_TFreeModel) dlsym(g_Module, "FreeModel");
         if (NULL == g_FreeModelPtr)
         {
@@ -71,17 +80,38 @@ int __cdecl main (int argc, char ** argv)
 
         // tests
 
-        void* hModel = (*g_LoadModelPtr)("testsp1.bin");
+        void* hModel = (*g_LoadModelPtr)("bert_base_tok.bin");
 
         const int MaxIdCount = 128;
         int Ids [MaxIdCount];
+        int Starts [MaxIdCount];
+        int Ends [MaxIdCount];
 
         std::string in1 ("Sergei Alonichau I saw a girl with a telescope.");
-        int IdCount = (*g_TextToIdsPtr)(hModel, in1.c_str(), in1.length(), Ids, MaxIdCount, 100);
 
-        for(int i = 0; i < IdCount; ++i)
-        {
+        int IdCount = (*g_TextToIdsPtr)(hModel, in1.c_str(), in1.length(), Ids, MaxIdCount, 100);
+        for(int i = 0; i < IdCount; ++i) {
             std::cout << Ids[i] << ' ';
+        }
+        std::cout << std::endl;
+
+        IdCount = (*g_TextToIdsWithOffsetsPtr)(hModel, in1.c_str(), in1.length(), Ids, Starts, Ends, MaxIdCount, 100);
+        for(int i = 0; i < IdCount; ++i) {
+            std::cout << Ids[i] << ' ';
+        }
+        std::cout << std::endl;
+
+        for(int i = 0; i < IdCount; ++i) {
+
+            const int _from = Starts[i];
+            const int _to = Ends[i];
+
+            if (0 <= _from && 0 <= _to && _to >= _from) {
+                std::string s (in1.c_str() + _from, _to - _from + 1);
+                std::cout << s << ':' << Ids[i] << ' ';
+            } else {
+                std::cout << "UNK" << ':' << Ids[i] << ' ';
+            }
         }
         std::cout << std::endl;
 

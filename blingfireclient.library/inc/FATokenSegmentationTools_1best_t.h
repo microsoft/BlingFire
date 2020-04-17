@@ -90,7 +90,7 @@ FATokenSegmentationTools_1best_t < Ty >::
         m_pMealy (NULL),
         m_pK2I (NULL),
         m_pI2Info (NULL),
-        m_UnkScore (-100.0f) // this is guaranteed lower than any of the segment scores
+        m_UnkScore (-100000.0f) // this is guaranteed lower than any of the segment scores
 {}
 
 

@@ -316,6 +316,7 @@ inline const int FANormalize (
 {
     DebugLogAssert (pIn != pOut);
     DebugLogAssert (pMap);
+    DebugLogAssert (0 == MaxOutSize || NULL != pOut);
 
     const int MaxNormCount = 10;
     int Norm [MaxNormCount];
@@ -363,6 +364,74 @@ inline const int FANormalize (
 
     return OutSize;
 }
+
+/// normalizes pIn string with respect to the given map
+/// function returns the size of the output string
+/// !!! normalization cannot be done in-place !!!
+template < class Ty >
+inline const int FANormalize (
+        const Ty * pIn,
+        const int InCount,
+        __out_ecount(MaxOutSize) Ty * pOut,
+        __out_ecount(MaxOutSize) int * pOffsets,
+        const int MaxOutSize,
+        const FAMultiMapCA * pMap
+    )
+{
+    DebugLogAssert (pIn != pOut);
+    DebugLogAssert (pMap);
+    DebugLogAssert (0 == MaxOutSize || (NULL != pOut && NULL != pOffsets));
+
+    const int MaxNormCount = 10;
+    int Norm [MaxNormCount];
+
+    int OutSize = 0;
+
+    for (int i = 0; i < InCount; ++i) {
+
+        const Ty Ci = pIn [i];
+        const int NormCount = pMap->Get (Ci, Norm, MaxNormCount);
+
+        if (-1 == NormCount) {
+
+            if (OutSize < MaxOutSize) {
+                pOut [OutSize] = Ci;
+                pOffsets [OutSize] = i;
+            }
+            OutSize++;
+
+        } else if (1 == NormCount) {
+
+            if (OutSize < MaxOutSize) {
+                pOut [OutSize] = (Ty) Norm [0];
+                pOffsets [OutSize] = i;
+            }
+            OutSize++;
+
+        } else if (1 < NormCount && NormCount <= MaxNormCount) {
+
+            // see how much of the buffer left, can be 0 or less 
+            int CopyCount = MaxOutSize - OutSize;
+
+            // CopyCount = MIN {left buffer size, NormCount}
+            if (NormCount < CopyCount) {
+                CopyCount = NormCount;
+            }
+
+            for (int j = 0; j < CopyCount; ++j) {
+                const Ty Co = (Ty) Norm [j];
+                pOut [OutSize + j] = Co;
+                pOffsets [OutSize + j] = i;
+            }
+
+            OutSize += NormCount;
+
+        } // of if (-1 == NormCount) ...
+    } // of for (int i = 0; ...
+
+    return OutSize;
+}
+
 
 /// normalizes input word (IN-PLACE is allowed)
 /// a new word length is returned
