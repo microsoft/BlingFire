@@ -4,9 +4,7 @@
 # Note: compilation options for ldb file
 # 
 
-OUTPUT = xlnet.bin
-
-USE_CHARMAP = 1
+OUTPUT = xlnet_nonorm.bin
 
 opt_build_pos_dict = --input-enc=UTF-8 --type=mph --raw --tagset=$(srcdir)/tagset.txt --float-nums
 
@@ -14,10 +12,8 @@ opt_build_pos_dict = --input-enc=UTF-8 --type=mph --raw --tagset=$(srcdir)/tagse
 opt_pack_dict_fsm = --alg=triv --type=mealy-dfa
 opt_pack_dict_k2i = --alg=triv --type=arr --force-flat
 opt_pack_dict_i2t = --alg=fixed --type=mmap
-opt_pack_charmap = --alg=fixed --type=mmap --imp-mmap
 
 resources = \
 	$(tmpdir)/pos.dict.fsm.$(mode).dump \
 	$(tmpdir)/pos.dict.k2i.$(mode).dump \
 	$(tmpdir)/pos.dict.i2t.$(mode).dump \
-	$(tmpdir)/charmap.mmap.$(mode).dump \

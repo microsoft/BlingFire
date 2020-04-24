@@ -104,7 +104,7 @@ void InitializeWbdSbd()
 
 // WHITESPACE [\x0004-\x0020\x007F-\x009F\x00A0\x2000-\x200B\x200E\x200F\x202F\x205F\x2060\x2420\x2424\x3000\xFEFF]
 #define __FAIsWhiteSpace__(C) ( \
-        (C <= 0x20 || (C >= 0x7f && C <= 0x9f) || C == 0xa0 || (C >= 0x2000 && C <= 0x200b) || \
+        (C <= 0x20 || (C >= 0x7f && C <= 0xa0) || (C >= 0x2000 && C <= 0x200c) || \
         C == 0x200e || C == 0x200f || C == 0x202f || C == 0x205f || C == 0x2060 || C == 0x2420 || \
         C == 0x2424 || C == 0x3000 || C == 0xfeff) \
     )
@@ -1072,16 +1072,17 @@ const int TextToIdsWithOffsets_sp(
     std::vector< int > utf32norm_offsets;
     int * pNormOffsets = NULL;
 
-    // do normalization if needed
+    // do normalization, if needed
     if (NULL != pCharMap) {
 
-        utf32input_norm.resize(InUtf8StrByteCount + 1);
+        const int MaxNormBuffSize = (InUtf8StrByteCount + 1) * 2;
+        utf32input_norm.resize(MaxNormBuffSize);
         pNormBuff = utf32input_norm.data();
         if (NULL == pNormBuff) {
             return 0;
         }
         if (fNeedOffsets) {
-            utf32norm_offsets.resize(InUtf8StrByteCount + 1);
+            utf32norm_offsets.resize(MaxNormBuffSize);
             pNormOffsets = utf32norm_offsets.data();
             if (NULL == pNormOffsets) {
                 return 0;
@@ -1089,13 +1090,18 @@ const int TextToIdsWithOffsets_sp(
         }
 
         // do the normalization for the entire input
-        BuffSize = fNeedOffsets ? 
-            ::FANormalize(pBuff, BuffSize, pNormBuff, pNormOffsets, InUtf8StrByteCount + 1, pCharMap) :
-            ::FANormalize(pBuff, BuffSize, pNormBuff, InUtf8StrByteCount + 1, pCharMap);
-        if (BuffSize <= 0 || BuffSize > InUtf8StrByteCount + 1) {
+        const int ActualNormBuffSize = fNeedOffsets ? 
+            ::FANormalize(pBuff, BuffSize, pNormBuff, pNormOffsets, MaxNormBuffSize, pCharMap) :
+            ::FANormalize(pBuff, BuffSize, pNormBuff, MaxNormBuffSize, pCharMap);
+
+        if (ActualNormBuffSize <= 0 || ActualNormBuffSize > MaxNormBuffSize) {
+            pCharMap = NULL;
+            // don't proceed without normalization, TODO: 99% times it does not change anything... so it is ok to proceed
             return 0;
+        } else {
+            BuffSize = ActualNormBuffSize;
+            pBuff = pNormBuff;
         }
-        pBuff = pNormBuff;
     }
 
     // Replace every space sequence with U+2581 in-place
@@ -1140,7 +1146,7 @@ const int TextToIdsWithOffsets_sp(
     BuffSize = j;
 
     // do the segmentation
-    const int WbdResMaxSize = InUtf8StrByteCount * 3;
+    const int WbdResMaxSize = BuffSize * 3;
     std::vector< int > WbdResults(WbdResMaxSize);
     int * pWbdResults = WbdResults.data ();
     const int WbdOutSize = pModelData->m_SegEngine.Process (pBuff, BuffSize, pWbdResults, WbdResMaxSize, 0);

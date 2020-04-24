@@ -63,9 +63,9 @@ private:
     // to keep track of arc data
     struct _TArc {
 
-        int _Begin;   // the begging position of the ssegment
-        int _Id;      // ID of a segment from the vocab
-        float _Score; // cumulative score
+        int _Begin;    // the begging position of the ssegment
+        int _Id;       // ID of a segment from the vocab
+        double _Score; // cumulative score
 
     public:
         _TArc ():
@@ -90,7 +90,7 @@ FATokenSegmentationTools_1best_t < Ty >::
         m_pMealy (NULL),
         m_pK2I (NULL),
         m_pI2Info (NULL),
-        m_UnkScore (-100000.0f) // this is guaranteed lower than any of the segment scores
+        m_UnkScore (-100000.0) // this is guaranteed lower than any of the segment scores
 {}
 
 
@@ -122,7 +122,7 @@ inline void FATokenSegmentationTools_1best_t < Ty >::
     const float Score = *((const float*) &(pValues [1]));
 
     // compute previous score given the start
-    const float prevScore = 0 < start ? pArcs [start - 1]._Score : 0.0f;
+    const double prevScore = 0 < start ? pArcs [start - 1]._Score : 0;
 
     // get a pointer to the arc object
     _TArc * pA =  pArcs + end;
@@ -149,7 +149,7 @@ inline void FATokenSegmentationTools_1best_t < Ty >::
     _TArc * pPrevA =  pA - 1;
 
     // compute previous score given the start
-    const float prevScore = 0 < start ? pPrevA->_Score : 0.0f;
+    const double prevScore = 0 < start ? pPrevA->_Score : 0;
 
     // set the arc, if it was never set then it has smallest negative float number
     // so the condition is always true

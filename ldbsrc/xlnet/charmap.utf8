@@ -1,0 +1,4805 @@
+
+### this one is manually added for xlnet compatibility, but strictly it is not a space
+\xfffd \x20
+
+
+# FEMININE ORDINAL INDICATOR: ª --> a
+\xaa \x61
+
+# SUPERSCRIPT TWO: ² --> 2
+\xb2 \x32
+
+# SUPERSCRIPT THREE: ³ --> 3
+\xb3 \x33
+
+# SUPERSCRIPT ONE: ¹ --> 1
+\xb9 \x31
+
+# MASCULINE ORDINAL INDICATOR: º --> o
+\xba \x6f
+
+# VULGAR FRACTION ONE QUARTER: ¼ --> 1⁄4
+\xbc 1⁄4
+
+# VULGAR FRACTION ONE HALF: ½ --> 1⁄2
+\xbd 1⁄2
+
+# VULGAR FRACTION THREE QUARTERS: ¾ --> 3⁄4
+\xbe 3⁄4
+
+# LATIN CAPITAL LIGATURE IJ: Ĳ --> IJ
+\x132 IJ
+
+# LATIN SMALL LIGATURE IJ: ĳ --> ij
+\x133 ij
+
+# LATIN CAPITAL LETTER L WITH MIDDLE DOT: Ŀ --> L·
+\x13f L·
+
+# LATIN SMALL LETTER L WITH MIDDLE DOT: ŀ --> l·
+\x140 l·
+
+# LATIN SMALL LETTER N PRECEDED BY APOSTROPHE: ŉ --> ʼn
+\x149 ʼn
+
+# LATIN SMALL LETTER LONG S: ſ --> s
+\x17f \x73
+
+# LATIN CAPITAL LETTER DZ WITH CARON: Ǆ --> DŽ
+\x1c4 DŽ
+
+# LATIN CAPITAL LETTER D WITH SMALL LETTER Z WITH CARON: ǅ --> Dž
+\x1c5 Dž
+
+# LATIN SMALL LETTER DZ WITH CARON: ǆ --> dž
+\x1c6 dž
+
+# LATIN CAPITAL LETTER LJ: Ǉ --> LJ
+\x1c7 LJ
+
+# LATIN CAPITAL LETTER L WITH SMALL LETTER J: ǈ --> Lj
+\x1c8 Lj
+
+# LATIN SMALL LETTER LJ: ǉ --> lj
+\x1c9 lj
+
+# LATIN CAPITAL LETTER NJ: Ǌ --> NJ
+\x1ca NJ
+
+# LATIN CAPITAL LETTER N WITH SMALL LETTER J: ǋ --> Nj
+\x1cb Nj
+
+# LATIN SMALL LETTER NJ: ǌ --> nj
+\x1cc nj
+
+# LATIN CAPITAL LETTER DZ: Ǳ --> DZ
+\x1f1 DZ
+
+# LATIN CAPITAL LETTER D WITH SMALL LETTER Z: ǲ --> Dz
+\x1f2 Dz
+
+# LATIN SMALL LETTER DZ: ǳ --> dz
+\x1f3 dz
+
+# MODIFIER LETTER SMALL H: ʰ --> h
+\x2b0 \x68
+
+# MODIFIER LETTER SMALL J: ʲ --> j
+\x2b2 \x6a
+
+# MODIFIER LETTER SMALL R: ʳ --> r
+\x2b3 \x72
+
+# MODIFIER LETTER SMALL W: ʷ --> w
+\x2b7 \x77
+
+# MODIFIER LETTER SMALL Y: ʸ --> y
+\x2b8 \x79
+
+# MODIFIER LETTER SMALL L: ˡ --> l
+\x2e1 \x6c
+
+# MODIFIER LETTER SMALL S: ˢ --> s
+\x2e2 \x73
+
+# MODIFIER LETTER SMALL X: ˣ --> x
+\x2e3 \x78
+
+# GREEK QUESTION MARK: ; --> ;
+\x37e \x3b
+
+# ARABIC LETTER HIGH HAMZA ALEF: ٵ --> اٴ
+\x675 اٴ
+
+# MODIFIER LETTER CAPITAL A: ᴬ --> A
+\x1d2c \x41
+
+# MODIFIER LETTER CAPITAL B: ᴮ --> B
+\x1d2e \x42
+
+# MODIFIER LETTER CAPITAL D: ᴰ --> D
+\x1d30 \x44
+
+# MODIFIER LETTER CAPITAL E: ᴱ --> E
+\x1d31 \x45
+
+# MODIFIER LETTER CAPITAL G: ᴳ --> G
+\x1d33 \x47
+
+# MODIFIER LETTER CAPITAL H: ᴴ --> H
+\x1d34 \x48
+
+# MODIFIER LETTER CAPITAL I: ᴵ --> I
+\x1d35 \x49
+
+# MODIFIER LETTER CAPITAL J: ᴶ --> J
+\x1d36 \x4a
+
+# MODIFIER LETTER CAPITAL K: ᴷ --> K
+\x1d37 \x4b
+
+# MODIFIER LETTER CAPITAL L: ᴸ --> L
+\x1d38 \x4c
+
+# MODIFIER LETTER CAPITAL M: ᴹ --> M
+\x1d39 \x4d
+
+# MODIFIER LETTER CAPITAL N: ᴺ --> N
+\x1d3a \x4e
+
+# MODIFIER LETTER CAPITAL O: ᴼ --> O
+\x1d3c \x4f
+
+# MODIFIER LETTER CAPITAL P: ᴾ --> P
+\x1d3e \x50
+
+# MODIFIER LETTER CAPITAL R: ᴿ --> R
+\x1d3f \x52
+
+# MODIFIER LETTER CAPITAL T: ᵀ --> T
+\x1d40 \x54
+
+# MODIFIER LETTER CAPITAL U: ᵁ --> U
+\x1d41 \x55
+
+# MODIFIER LETTER CAPITAL W: ᵂ --> W
+\x1d42 \x57
+
+# MODIFIER LETTER SMALL A: ᵃ --> a
+\x1d43 \x61
+
+# MODIFIER LETTER SMALL B: ᵇ --> b
+\x1d47 \x62
+
+# MODIFIER LETTER SMALL D: ᵈ --> d
+\x1d48 \x64
+
+# MODIFIER LETTER SMALL E: ᵉ --> e
+\x1d49 \x65
+
+# MODIFIER LETTER SMALL G: ᵍ --> g
+\x1d4d \x67
+
+# MODIFIER LETTER SMALL K: ᵏ --> k
+\x1d4f \x6b
+
+# MODIFIER LETTER SMALL M: ᵐ --> m
+\x1d50 \x6d
+
+# MODIFIER LETTER SMALL O: ᵒ --> o
+\x1d52 \x6f
+
+# MODIFIER LETTER SMALL P: ᵖ --> p
+\x1d56 \x70
+
+# MODIFIER LETTER SMALL T: ᵗ --> t
+\x1d57 \x74
+
+# MODIFIER LETTER SMALL U: ᵘ --> u
+\x1d58 \x75
+
+# MODIFIER LETTER SMALL V: ᵛ --> v
+\x1d5b \x76
+
+# LATIN SUBSCRIPT SMALL LETTER I: ᵢ --> i
+\x1d62 \x69
+
+# LATIN SUBSCRIPT SMALL LETTER R: ᵣ --> r
+\x1d63 \x72
+
+# LATIN SUBSCRIPT SMALL LETTER U: ᵤ --> u
+\x1d64 \x75
+
+# LATIN SUBSCRIPT SMALL LETTER V: ᵥ --> v
+\x1d65 \x76
+
+# MODIFIER LETTER CYRILLIC EN: ᵸ --> н
+\x1d78 \x43d
+
+# MODIFIER LETTER SMALL C: ᶜ --> c
+\x1d9c \x63
+
+# MODIFIER LETTER SMALL F: ᶠ --> f
+\x1da0 \x66
+
+# MODIFIER LETTER SMALL Z: ᶻ --> z
+\x1dbb \x7a
+
+# LATIN SMALL LETTER A WITH RIGHT HALF RING: ẚ --> aʾ
+\x1e9a aʾ
+
+# GREEK PROSGEGRAMMENI: ι --> ι
+\x1fbe \x3b9
+
+# GREEK VARIA: ` --> `
+\x1fef \x60
+
+# ONE DOT LEADER: ․ --> .
+\x2024 \x2e
+
+# TWO DOT LEADER: ‥ --> ..
+\x2025 ..
+
+# HORIZONTAL ELLIPSIS: … --> ...
+\x2026 ...
+
+# DOUBLE PRIME: ″ --> ′′
+\x2033 ′′
+
+# TRIPLE PRIME: ‴ --> ′′′
+\x2034 ′′′
+
+# DOUBLE EXCLAMATION MARK: ‼ --> !!
+\x203c !!
+
+# DOUBLE QUESTION MARK: ⁇ --> ??
+\x2047 ??
+
+# QUESTION EXCLAMATION MARK: ⁈ --> ?!
+\x2048 ?!
+
+# EXCLAMATION QUESTION MARK: ⁉ --> !?
+\x2049 !?
+
+# QUADRUPLE PRIME: ⁗ --> ′′′′
+\x2057 ′′′′
+
+# SUPERSCRIPT ZERO: ⁰ --> 0
+\x2070 \x30
+
+# SUPERSCRIPT LATIN SMALL LETTER I: ⁱ --> i
+\x2071 \x69
+
+# SUPERSCRIPT FOUR: ⁴ --> 4
+\x2074 \x34
+
+# SUPERSCRIPT FIVE: ⁵ --> 5
+\x2075 \x35
+
+# SUPERSCRIPT SIX: ⁶ --> 6
+\x2076 \x36
+
+# SUPERSCRIPT SEVEN: ⁷ --> 7
+\x2077 \x37
+
+# SUPERSCRIPT EIGHT: ⁸ --> 8
+\x2078 \x38
+
+# SUPERSCRIPT NINE: ⁹ --> 9
+\x2079 \x39
+
+# SUPERSCRIPT PLUS SIGN: ⁺ --> +
+\x207a \x2b
+
+# SUPERSCRIPT MINUS: ⁻ --> −
+\x207b \x2212
+
+# SUPERSCRIPT EQUALS SIGN: ⁼ --> =
+\x207c \x3d
+
+# SUPERSCRIPT LEFT PARENTHESIS: ⁽ --> (
+\x207d \x28
+
+# SUPERSCRIPT RIGHT PARENTHESIS: ⁾ --> )
+\x207e \x29
+
+# SUPERSCRIPT LATIN SMALL LETTER N: ⁿ --> n
+\x207f \x6e
+
+# SUBSCRIPT ZERO: ₀ --> 0
+\x2080 \x30
+
+# SUBSCRIPT ONE: ₁ --> 1
+\x2081 \x31
+
+# SUBSCRIPT TWO: ₂ --> 2
+\x2082 \x32
+
+# SUBSCRIPT THREE: ₃ --> 3
+\x2083 \x33
+
+# SUBSCRIPT FOUR: ₄ --> 4
+\x2084 \x34
+
+# SUBSCRIPT FIVE: ₅ --> 5
+\x2085 \x35
+
+# SUBSCRIPT SIX: ₆ --> 6
+\x2086 \x36
+
+# SUBSCRIPT SEVEN: ₇ --> 7
+\x2087 \x37
+
+# SUBSCRIPT EIGHT: ₈ --> 8
+\x2088 \x38
+
+# SUBSCRIPT NINE: ₉ --> 9
+\x2089 \x39
+
+# SUBSCRIPT PLUS SIGN: ₊ --> +
+\x208a \x2b
+
+# SUBSCRIPT MINUS: ₋ --> −
+\x208b \x2212
+
+# SUBSCRIPT EQUALS SIGN: ₌ --> =
+\x208c \x3d
+
+# SUBSCRIPT LEFT PARENTHESIS: ₍ --> (
+\x208d \x28
+
+# SUBSCRIPT RIGHT PARENTHESIS: ₎ --> )
+\x208e \x29
+
+# LATIN SUBSCRIPT SMALL LETTER A: ₐ --> a
+\x2090 \x61
+
+# LATIN SUBSCRIPT SMALL LETTER E: ₑ --> e
+\x2091 \x65
+
+# LATIN SUBSCRIPT SMALL LETTER O: ₒ --> o
+\x2092 \x6f
+
+# LATIN SUBSCRIPT SMALL LETTER X: ₓ --> x
+\x2093 \x78
+
+# LATIN SUBSCRIPT SMALL LETTER H: ₕ --> h
+\x2095 \x68
+
+# LATIN SUBSCRIPT SMALL LETTER K: ₖ --> k
+\x2096 \x6b
+
+# LATIN SUBSCRIPT SMALL LETTER L: ₗ --> l
+\x2097 \x6c
+
+# LATIN SUBSCRIPT SMALL LETTER M: ₘ --> m
+\x2098 \x6d
+
+# LATIN SUBSCRIPT SMALL LETTER N: ₙ --> n
+\x2099 \x6e
+
+# LATIN SUBSCRIPT SMALL LETTER P: ₚ --> p
+\x209a \x70
+
+# LATIN SUBSCRIPT SMALL LETTER S: ₛ --> s
+\x209b \x73
+
+# LATIN SUBSCRIPT SMALL LETTER T: ₜ --> t
+\x209c \x74
+
+# RUPEE SIGN: ₨ --> Rs
+\x20a8 Rs
+
+# ACCOUNT OF: ℀ --> a/c
+\x2100 a/c
+
+# ADDRESSED TO THE SUBJECT: ℁ --> a/s
+\x2101 a/s
+
+# DOUBLE-STRUCK CAPITAL C: ℂ --> C
+\x2102 \x43
+
+# DEGREE CELSIUS: ℃ --> °C
+\x2103 °C
+
+# CARE OF: ℅ --> c/o
+\x2105 c/o
+
+# CADA UNA: ℆ --> c/u
+\x2106 c/u
+
+# DEGREE FAHRENHEIT: ℉ --> °F
+\x2109 °F
+
+# SCRIPT SMALL G: ℊ --> g
+\x210a \x67
+
+# SCRIPT CAPITAL H: ℋ --> H
+\x210b \x48
+
+# BLACK-LETTER CAPITAL H: ℌ --> H
+\x210c \x48
+
+# DOUBLE-STRUCK CAPITAL H: ℍ --> H
+\x210d \x48
+
+# PLANCK CONSTANT: ℎ --> h
+\x210e \x68
+
+# SCRIPT CAPITAL I: ℐ --> I
+\x2110 \x49
+
+# BLACK-LETTER CAPITAL I: ℑ --> I
+\x2111 \x49
+
+# SCRIPT CAPITAL L: ℒ --> L
+\x2112 \x4c
+
+# SCRIPT SMALL L: ℓ --> l
+\x2113 \x6c
+
+# DOUBLE-STRUCK CAPITAL N: ℕ --> N
+\x2115 \x4e
+
+# NUMERO SIGN: № --> No
+\x2116 No
+
+# DOUBLE-STRUCK CAPITAL P: ℙ --> P
+\x2119 \x50
+
+# DOUBLE-STRUCK CAPITAL Q: ℚ --> Q
+\x211a \x51
+
+# SCRIPT CAPITAL R: ℛ --> R
+\x211b \x52
+
+# BLACK-LETTER CAPITAL R: ℜ --> R
+\x211c \x52
+
+# DOUBLE-STRUCK CAPITAL R: ℝ --> R
+\x211d \x52
+
+# SERVICE MARK: ℠ --> SM
+\x2120 SM
+
+# TELEPHONE SIGN: ℡ --> TEL
+\x2121 TEL
+
+# TRADE MARK SIGN: ™ --> TM
+\x2122 TM
+
+# DOUBLE-STRUCK CAPITAL Z: ℤ --> Z
+\x2124 \x5a
+
+# BLACK-LETTER CAPITAL Z: ℨ --> Z
+\x2128 \x5a
+
+# KELVIN SIGN: K --> K
+\x212a \x4b
+
+# SCRIPT CAPITAL B: ℬ --> B
+\x212c \x42
+
+# BLACK-LETTER CAPITAL C: ℭ --> C
+\x212d \x43
+
+# SCRIPT SMALL E: ℯ --> e
+\x212f \x65
+
+# SCRIPT CAPITAL E: ℰ --> E
+\x2130 \x45
+
+# SCRIPT CAPITAL F: ℱ --> F
+\x2131 \x46
+
+# SCRIPT CAPITAL M: ℳ --> M
+\x2133 \x4d
+
+# SCRIPT SMALL O: ℴ --> o
+\x2134 \x6f
+
+# INFORMATION SOURCE: ℹ --> i
+\x2139 \x69
+
+# FACSIMILE SIGN: ℻ --> FAX
+\x213b FAX
+
+# DOUBLE-STRUCK ITALIC CAPITAL D: ⅅ --> D
+\x2145 \x44
+
+# DOUBLE-STRUCK ITALIC SMALL D: ⅆ --> d
+\x2146 \x64
+
+# DOUBLE-STRUCK ITALIC SMALL E: ⅇ --> e
+\x2147 \x65
+
+# DOUBLE-STRUCK ITALIC SMALL I: ⅈ --> i
+\x2148 \x69
+
+# DOUBLE-STRUCK ITALIC SMALL J: ⅉ --> j
+\x2149 \x6a
+
+# VULGAR FRACTION ONE SEVENTH: ⅐ --> 1⁄7
+\x2150 1⁄7
+
+# VULGAR FRACTION ONE NINTH: ⅑ --> 1⁄9
+\x2151 1⁄9
+
+# VULGAR FRACTION ONE TENTH: ⅒ --> 1⁄10
+\x2152 1⁄10
+
+# VULGAR FRACTION ONE THIRD: ⅓ --> 1⁄3
+\x2153 1⁄3
+
+# VULGAR FRACTION TWO THIRDS: ⅔ --> 2⁄3
+\x2154 2⁄3
+
+# VULGAR FRACTION ONE FIFTH: ⅕ --> 1⁄5
+\x2155 1⁄5
+
+# VULGAR FRACTION TWO FIFTHS: ⅖ --> 2⁄5
+\x2156 2⁄5
+
+# VULGAR FRACTION THREE FIFTHS: ⅗ --> 3⁄5
+\x2157 3⁄5
+
+# VULGAR FRACTION FOUR FIFTHS: ⅘ --> 4⁄5
+\x2158 4⁄5
+
+# VULGAR FRACTION ONE SIXTH: ⅙ --> 1⁄6
+\x2159 1⁄6
+
+# VULGAR FRACTION FIVE SIXTHS: ⅚ --> 5⁄6
+\x215a 5⁄6
+
+# VULGAR FRACTION ONE EIGHTH: ⅛ --> 1⁄8
+\x215b 1⁄8
+
+# VULGAR FRACTION THREE EIGHTHS: ⅜ --> 3⁄8
+\x215c 3⁄8
+
+# VULGAR FRACTION FIVE EIGHTHS: ⅝ --> 5⁄8
+\x215d 5⁄8
+
+# VULGAR FRACTION SEVEN EIGHTHS: ⅞ --> 7⁄8
+\x215e 7⁄8
+
+# FRACTION NUMERATOR ONE: ⅟ --> 1⁄
+\x215f 1⁄
+
+# ROMAN NUMERAL ONE: Ⅰ --> I
+\x2160 \x49
+
+# ROMAN NUMERAL TWO: Ⅱ --> II
+\x2161 II
+
+# ROMAN NUMERAL THREE: Ⅲ --> III
+\x2162 III
+
+# ROMAN NUMERAL FOUR: Ⅳ --> IV
+\x2163 IV
+
+# ROMAN NUMERAL FIVE: Ⅴ --> V
+\x2164 \x56
+
+# ROMAN NUMERAL SIX: Ⅵ --> VI
+\x2165 VI
+
+# ROMAN NUMERAL SEVEN: Ⅶ --> VII
+\x2166 VII
+
+# ROMAN NUMERAL EIGHT: Ⅷ --> VIII
+\x2167 VIII
+
+# ROMAN NUMERAL NINE: Ⅸ --> IX
+\x2168 IX
+
+# ROMAN NUMERAL TEN: Ⅹ --> X
+\x2169 \x58
+
+# ROMAN NUMERAL ELEVEN: Ⅺ --> XI
+\x216a XI
+
+# ROMAN NUMERAL TWELVE: Ⅻ --> XII
+\x216b XII
+
+# ROMAN NUMERAL FIFTY: Ⅼ --> L
+\x216c \x4c
+
+# ROMAN NUMERAL ONE HUNDRED: Ⅽ --> C
+\x216d \x43
+
+# ROMAN NUMERAL FIVE HUNDRED: Ⅾ --> D
+\x216e \x44
+
+# ROMAN NUMERAL ONE THOUSAND: Ⅿ --> M
+\x216f \x4d
+
+# SMALL ROMAN NUMERAL ONE: ⅰ --> i
+\x2170 \x69
+
+# SMALL ROMAN NUMERAL TWO: ⅱ --> ii
+\x2171 ii
+
+# SMALL ROMAN NUMERAL THREE: ⅲ --> iii
+\x2172 iii
+
+# SMALL ROMAN NUMERAL FOUR: ⅳ --> iv
+\x2173 iv
+
+# SMALL ROMAN NUMERAL FIVE: ⅴ --> v
+\x2174 \x76
+
+# SMALL ROMAN NUMERAL SIX: ⅵ --> vi
+\x2175 vi
+
+# SMALL ROMAN NUMERAL SEVEN: ⅶ --> vii
+\x2176 vii
+
+# SMALL ROMAN NUMERAL EIGHT: ⅷ --> viii
+\x2177 viii
+
+# SMALL ROMAN NUMERAL NINE: ⅸ --> ix
+\x2178 ix
+
+# SMALL ROMAN NUMERAL TEN: ⅹ --> x
+\x2179 \x78
+
+# SMALL ROMAN NUMERAL ELEVEN: ⅺ --> xi
+\x217a xi
+
+# SMALL ROMAN NUMERAL TWELVE: ⅻ --> xii
+\x217b xii
+
+# SMALL ROMAN NUMERAL FIFTY: ⅼ --> l
+\x217c \x6c
+
+# SMALL ROMAN NUMERAL ONE HUNDRED: ⅽ --> c
+\x217d \x63
+
+# SMALL ROMAN NUMERAL FIVE HUNDRED: ⅾ --> d
+\x217e \x64
+
+# SMALL ROMAN NUMERAL ONE THOUSAND: ⅿ --> m
+\x217f \x6d
+
+# VULGAR FRACTION ZERO THIRDS: ↉ --> 0⁄3
+\x2189 0⁄3
+
+# CIRCLED DIGIT ONE: ① --> 1
+\x2460 \x31
+
+# CIRCLED DIGIT TWO: ② --> 2
+\x2461 \x32
+
+# CIRCLED DIGIT THREE: ③ --> 3
+\x2462 \x33
+
+# CIRCLED DIGIT FOUR: ④ --> 4
+\x2463 \x34
+
+# CIRCLED DIGIT FIVE: ⑤ --> 5
+\x2464 \x35
+
+# CIRCLED DIGIT SIX: ⑥ --> 6
+\x2465 \x36
+
+# CIRCLED DIGIT SEVEN: ⑦ --> 7
+\x2466 \x37
+
+# CIRCLED DIGIT EIGHT: ⑧ --> 8
+\x2467 \x38
+
+# CIRCLED DIGIT NINE: ⑨ --> 9
+\x2468 \x39
+
+# CIRCLED NUMBER TEN: ⑩ --> 10
+\x2469 10
+
+# CIRCLED NUMBER ELEVEN: ⑪ --> 11
+\x246a 11
+
+# CIRCLED NUMBER TWELVE: ⑫ --> 12
+\x246b 12
+
+# CIRCLED NUMBER THIRTEEN: ⑬ --> 13
+\x246c 13
+
+# CIRCLED NUMBER FOURTEEN: ⑭ --> 14
+\x246d 14
+
+# CIRCLED NUMBER FIFTEEN: ⑮ --> 15
+\x246e 15
+
+# CIRCLED NUMBER SIXTEEN: ⑯ --> 16
+\x246f 16
+
+# CIRCLED NUMBER SEVENTEEN: ⑰ --> 17
+\x2470 17
+
+# CIRCLED NUMBER EIGHTEEN: ⑱ --> 18
+\x2471 18
+
+# CIRCLED NUMBER NINETEEN: ⑲ --> 19
+\x2472 19
+
+# CIRCLED NUMBER TWENTY: ⑳ --> 20
+\x2473 20
+
+# PARENTHESIZED DIGIT ONE: ⑴ --> (1)
+\x2474 (1)
+
+# PARENTHESIZED DIGIT TWO: ⑵ --> (2)
+\x2475 (2)
+
+# PARENTHESIZED DIGIT THREE: ⑶ --> (3)
+\x2476 (3)
+
+# PARENTHESIZED DIGIT FOUR: ⑷ --> (4)
+\x2477 (4)
+
+# PARENTHESIZED DIGIT FIVE: ⑸ --> (5)
+\x2478 (5)
+
+# PARENTHESIZED DIGIT SIX: ⑹ --> (6)
+\x2479 (6)
+
+# PARENTHESIZED DIGIT SEVEN: ⑺ --> (7)
+\x247a (7)
+
+# PARENTHESIZED DIGIT EIGHT: ⑻ --> (8)
+\x247b (8)
+
+# PARENTHESIZED DIGIT NINE: ⑼ --> (9)
+\x247c (9)
+
+# PARENTHESIZED NUMBER TEN: ⑽ --> (10)
+\x247d (10)
+
+# PARENTHESIZED NUMBER ELEVEN: ⑾ --> (11)
+\x247e (11)
+
+# PARENTHESIZED NUMBER TWELVE: ⑿ --> (12)
+\x247f (12)
+
+# PARENTHESIZED NUMBER THIRTEEN: ⒀ --> (13)
+\x2480 (13)
+
+# PARENTHESIZED NUMBER FOURTEEN: ⒁ --> (14)
+\x2481 (14)
+
+# PARENTHESIZED NUMBER FIFTEEN: ⒂ --> (15)
+\x2482 (15)
+
+# PARENTHESIZED NUMBER SIXTEEN: ⒃ --> (16)
+\x2483 (16)
+
+# PARENTHESIZED NUMBER SEVENTEEN: ⒄ --> (17)
+\x2484 (17)
+
+# PARENTHESIZED NUMBER EIGHTEEN: ⒅ --> (18)
+\x2485 (18)
+
+# PARENTHESIZED NUMBER NINETEEN: ⒆ --> (19)
+\x2486 (19)
+
+# PARENTHESIZED NUMBER TWENTY: ⒇ --> (20)
+\x2487 (20)
+
+# DIGIT ONE FULL STOP: ⒈ --> 1.
+\x2488 1.
+
+# DIGIT TWO FULL STOP: ⒉ --> 2.
+\x2489 2.
+
+# DIGIT THREE FULL STOP: ⒊ --> 3.
+\x248a 3.
+
+# DIGIT FOUR FULL STOP: ⒋ --> 4.
+\x248b 4.
+
+# DIGIT FIVE FULL STOP: ⒌ --> 5.
+\x248c 5.
+
+# DIGIT SIX FULL STOP: ⒍ --> 6.
+\x248d 6.
+
+# DIGIT SEVEN FULL STOP: ⒎ --> 7.
+\x248e 7.
+
+# DIGIT EIGHT FULL STOP: ⒏ --> 8.
+\x248f 8.
+
+# DIGIT NINE FULL STOP: ⒐ --> 9.
+\x2490 9.
+
+# NUMBER TEN FULL STOP: ⒑ --> 10.
+\x2491 10.
+
+# NUMBER ELEVEN FULL STOP: ⒒ --> 11.
+\x2492 11.
+
+# NUMBER TWELVE FULL STOP: ⒓ --> 12.
+\x2493 12.
+
+# NUMBER THIRTEEN FULL STOP: ⒔ --> 13.
+\x2494 13.
+
+# NUMBER FOURTEEN FULL STOP: ⒕ --> 14.
+\x2495 14.
+
+# NUMBER FIFTEEN FULL STOP: ⒖ --> 15.
+\x2496 15.
+
+# NUMBER SIXTEEN FULL STOP: ⒗ --> 16.
+\x2497 16.
+
+# NUMBER SEVENTEEN FULL STOP: ⒘ --> 17.
+\x2498 17.
+
+# NUMBER EIGHTEEN FULL STOP: ⒙ --> 18.
+\x2499 18.
+
+# NUMBER NINETEEN FULL STOP: ⒚ --> 19.
+\x249a 19.
+
+# NUMBER TWENTY FULL STOP: ⒛ --> 20.
+\x249b 20.
+
+# PARENTHESIZED LATIN SMALL LETTER A: ⒜ --> (a)
+\x249c (a)
+
+# PARENTHESIZED LATIN SMALL LETTER B: ⒝ --> (b)
+\x249d (b)
+
+# PARENTHESIZED LATIN SMALL LETTER C: ⒞ --> (c)
+\x249e (c)
+
+# PARENTHESIZED LATIN SMALL LETTER D: ⒟ --> (d)
+\x249f (d)
+
+# PARENTHESIZED LATIN SMALL LETTER E: ⒠ --> (e)
+\x24a0 (e)
+
+# PARENTHESIZED LATIN SMALL LETTER F: ⒡ --> (f)
+\x24a1 (f)
+
+# PARENTHESIZED LATIN SMALL LETTER G: ⒢ --> (g)
+\x24a2 (g)
+
+# PARENTHESIZED LATIN SMALL LETTER H: ⒣ --> (h)
+\x24a3 (h)
+
+# PARENTHESIZED LATIN SMALL LETTER I: ⒤ --> (i)
+\x24a4 (i)
+
+# PARENTHESIZED LATIN SMALL LETTER J: ⒥ --> (j)
+\x24a5 (j)
+
+# PARENTHESIZED LATIN SMALL LETTER K: ⒦ --> (k)
+\x24a6 (k)
+
+# PARENTHESIZED LATIN SMALL LETTER L: ⒧ --> (l)
+\x24a7 (l)
+
+# PARENTHESIZED LATIN SMALL LETTER M: ⒨ --> (m)
+\x24a8 (m)
+
+# PARENTHESIZED LATIN SMALL LETTER N: ⒩ --> (n)
+\x24a9 (n)
+
+# PARENTHESIZED LATIN SMALL LETTER O: ⒪ --> (o)
+\x24aa (o)
+
+# PARENTHESIZED LATIN SMALL LETTER P: ⒫ --> (p)
+\x24ab (p)
+
+# PARENTHESIZED LATIN SMALL LETTER Q: ⒬ --> (q)
+\x24ac (q)
+
+# PARENTHESIZED LATIN SMALL LETTER R: ⒭ --> (r)
+\x24ad (r)
+
+# PARENTHESIZED LATIN SMALL LETTER S: ⒮ --> (s)
+\x24ae (s)
+
+# PARENTHESIZED LATIN SMALL LETTER T: ⒯ --> (t)
+\x24af (t)
+
+# PARENTHESIZED LATIN SMALL LETTER U: ⒰ --> (u)
+\x24b0 (u)
+
+# PARENTHESIZED LATIN SMALL LETTER V: ⒱ --> (v)
+\x24b1 (v)
+
+# PARENTHESIZED LATIN SMALL LETTER W: ⒲ --> (w)
+\x24b2 (w)
+
+# PARENTHESIZED LATIN SMALL LETTER X: ⒳ --> (x)
+\x24b3 (x)
+
+# PARENTHESIZED LATIN SMALL LETTER Y: ⒴ --> (y)
+\x24b4 (y)
+
+# PARENTHESIZED LATIN SMALL LETTER Z: ⒵ --> (z)
+\x24b5 (z)
+
+# CIRCLED LATIN CAPITAL LETTER A: Ⓐ --> A
+\x24b6 \x41
+
+# CIRCLED LATIN CAPITAL LETTER B: Ⓑ --> B
+\x24b7 \x42
+
+# CIRCLED LATIN CAPITAL LETTER C: Ⓒ --> C
+\x24b8 \x43
+
+# CIRCLED LATIN CAPITAL LETTER D: Ⓓ --> D
+\x24b9 \x44
+
+# CIRCLED LATIN CAPITAL LETTER E: Ⓔ --> E
+\x24ba \x45
+
+# CIRCLED LATIN CAPITAL LETTER F: Ⓕ --> F
+\x24bb \x46
+
+# CIRCLED LATIN CAPITAL LETTER G: Ⓖ --> G
+\x24bc \x47
+
+# CIRCLED LATIN CAPITAL LETTER H: Ⓗ --> H
+\x24bd \x48
+
+# CIRCLED LATIN CAPITAL LETTER I: Ⓘ --> I
+\x24be \x49
+
+# CIRCLED LATIN CAPITAL LETTER J: Ⓙ --> J
+\x24bf \x4a
+
+# CIRCLED LATIN CAPITAL LETTER K: Ⓚ --> K
+\x24c0 \x4b
+
+# CIRCLED LATIN CAPITAL LETTER L: Ⓛ --> L
+\x24c1 \x4c
+
+# CIRCLED LATIN CAPITAL LETTER M: Ⓜ --> M
+\x24c2 \x4d
+
+# CIRCLED LATIN CAPITAL LETTER N: Ⓝ --> N
+\x24c3 \x4e
+
+# CIRCLED LATIN CAPITAL LETTER O: Ⓞ --> O
+\x24c4 \x4f
+
+# CIRCLED LATIN CAPITAL LETTER P: Ⓟ --> P
+\x24c5 \x50
+
+# CIRCLED LATIN CAPITAL LETTER Q: Ⓠ --> Q
+\x24c6 \x51
+
+# CIRCLED LATIN CAPITAL LETTER R: Ⓡ --> R
+\x24c7 \x52
+
+# CIRCLED LATIN CAPITAL LETTER S: Ⓢ --> S
+\x24c8 \x53
+
+# CIRCLED LATIN CAPITAL LETTER T: Ⓣ --> T
+\x24c9 \x54
+
+# CIRCLED LATIN CAPITAL LETTER U: Ⓤ --> U
+\x24ca \x55
+
+# CIRCLED LATIN CAPITAL LETTER V: Ⓥ --> V
+\x24cb \x56
+
+# CIRCLED LATIN CAPITAL LETTER W: Ⓦ --> W
+\x24cc \x57
+
+# CIRCLED LATIN CAPITAL LETTER X: Ⓧ --> X
+\x24cd \x58
+
+# CIRCLED LATIN CAPITAL LETTER Y: Ⓨ --> Y
+\x24ce \x59
+
+# CIRCLED LATIN CAPITAL LETTER Z: Ⓩ --> Z
+\x24cf \x5a
+
+# CIRCLED LATIN SMALL LETTER A: ⓐ --> a
+\x24d0 \x61
+
+# CIRCLED LATIN SMALL LETTER B: ⓑ --> b
+\x24d1 \x62
+
+# CIRCLED LATIN SMALL LETTER C: ⓒ --> c
+\x24d2 \x63
+
+# CIRCLED LATIN SMALL LETTER D: ⓓ --> d
+\x24d3 \x64
+
+# CIRCLED LATIN SMALL LETTER E: ⓔ --> e
+\x24d4 \x65
+
+# CIRCLED LATIN SMALL LETTER F: ⓕ --> f
+\x24d5 \x66
+
+# CIRCLED LATIN SMALL LETTER G: ⓖ --> g
+\x24d6 \x67
+
+# CIRCLED LATIN SMALL LETTER H: ⓗ --> h
+\x24d7 \x68
+
+# CIRCLED LATIN SMALL LETTER I: ⓘ --> i
+\x24d8 \x69
+
+# CIRCLED LATIN SMALL LETTER J: ⓙ --> j
+\x24d9 \x6a
+
+# CIRCLED LATIN SMALL LETTER K: ⓚ --> k
+\x24da \x6b
+
+# CIRCLED LATIN SMALL LETTER L: ⓛ --> l
+\x24db \x6c
+
+# CIRCLED LATIN SMALL LETTER M: ⓜ --> m
+\x24dc \x6d
+
+# CIRCLED LATIN SMALL LETTER N: ⓝ --> n
+\x24dd \x6e
+
+# CIRCLED LATIN SMALL LETTER O: ⓞ --> o
+\x24de \x6f
+
+# CIRCLED LATIN SMALL LETTER P: ⓟ --> p
+\x24df \x70
+
+# CIRCLED LATIN SMALL LETTER Q: ⓠ --> q
+\x24e0 \x71
+
+# CIRCLED LATIN SMALL LETTER R: ⓡ --> r
+\x24e1 \x72
+
+# CIRCLED LATIN SMALL LETTER S: ⓢ --> s
+\x24e2 \x73
+
+# CIRCLED LATIN SMALL LETTER T: ⓣ --> t
+\x24e3 \x74
+
+# CIRCLED LATIN SMALL LETTER U: ⓤ --> u
+\x24e4 \x75
+
+# CIRCLED LATIN SMALL LETTER V: ⓥ --> v
+\x24e5 \x76
+
+# CIRCLED LATIN SMALL LETTER W: ⓦ --> w
+\x24e6 \x77
+
+# CIRCLED LATIN SMALL LETTER X: ⓧ --> x
+\x24e7 \x78
+
+# CIRCLED LATIN SMALL LETTER Y: ⓨ --> y
+\x24e8 \x79
+
+# CIRCLED LATIN SMALL LETTER Z: ⓩ --> z
+\x24e9 \x7a
+
+# CIRCLED DIGIT ZERO: ⓪ --> 0
+\x24ea \x30
+
+# DOUBLE COLON EQUAL: ⩴ --> ::=
+\x2a74 ::=
+
+# TWO CONSECUTIVE EQUALS SIGNS: ⩵ --> ==
+\x2a75 ==
+
+# THREE CONSECUTIVE EQUALS SIGNS: ⩶ --> ===
+\x2a76 ===
+
+# LATIN SUBSCRIPT SMALL LETTER J: ⱼ --> j
+\x2c7c \x6a
+
+# MODIFIER LETTER CAPITAL V: ⱽ --> V
+\x2c7d \x56
+
+# PARENTHESIZED HANGUL KIYEOK: ㈀ --> (ᄀ)
+\x3200 (ᄀ)
+
+# PARENTHESIZED HANGUL NIEUN: ㈁ --> (ᄂ)
+\x3201 (ᄂ)
+
+# PARENTHESIZED HANGUL TIKEUT: ㈂ --> (ᄃ)
+\x3202 (ᄃ)
+
+# PARENTHESIZED HANGUL RIEUL: ㈃ --> (ᄅ)
+\x3203 (ᄅ)
+
+# PARENTHESIZED HANGUL MIEUM: ㈄ --> (ᄆ)
+\x3204 (ᄆ)
+
+# PARENTHESIZED HANGUL PIEUP: ㈅ --> (ᄇ)
+\x3205 (ᄇ)
+
+# PARENTHESIZED HANGUL SIOS: ㈆ --> (ᄉ)
+\x3206 (ᄉ)
+
+# PARENTHESIZED HANGUL IEUNG: ㈇ --> (ᄋ)
+\x3207 (ᄋ)
+
+# PARENTHESIZED HANGUL CIEUC: ㈈ --> (ᄌ)
+\x3208 (ᄌ)
+
+# PARENTHESIZED HANGUL CHIEUCH: ㈉ --> (ᄎ)
+\x3209 (ᄎ)
+
+# PARENTHESIZED HANGUL KHIEUKH: ㈊ --> (ᄏ)
+\x320a (ᄏ)
+
+# PARENTHESIZED HANGUL THIEUTH: ㈋ --> (ᄐ)
+\x320b (ᄐ)
+
+# PARENTHESIZED HANGUL PHIEUPH: ㈌ --> (ᄑ)
+\x320c (ᄑ)
+
+# PARENTHESIZED HANGUL HIEUH: ㈍ --> (ᄒ)
+\x320d (ᄒ)
+
+# PARENTHESIZED HANGUL KIYEOK A: ㈎ --> (가)
+\x320e (가)
+
+# PARENTHESIZED HANGUL NIEUN A: ㈏ --> (나)
+\x320f (나)
+
+# PARENTHESIZED HANGUL TIKEUT A: ㈐ --> (다)
+\x3210 (다)
+
+# PARENTHESIZED HANGUL RIEUL A: ㈑ --> (라)
+\x3211 (라)
+
+# PARENTHESIZED HANGUL MIEUM A: ㈒ --> (마)
+\x3212 (마)
+
+# PARENTHESIZED HANGUL PIEUP A: ㈓ --> (바)
+\x3213 (바)
+
+# PARENTHESIZED HANGUL SIOS A: ㈔ --> (사)
+\x3214 (사)
+
+# PARENTHESIZED HANGUL IEUNG A: ㈕ --> (아)
+\x3215 (아)
+
+# PARENTHESIZED HANGUL CIEUC A: ㈖ --> (자)
+\x3216 (자)
+
+# PARENTHESIZED HANGUL CHIEUCH A: ㈗ --> (차)
+\x3217 (차)
+
+# PARENTHESIZED HANGUL KHIEUKH A: ㈘ --> (카)
+\x3218 (카)
+
+# PARENTHESIZED HANGUL THIEUTH A: ㈙ --> (타)
+\x3219 (타)
+
+# PARENTHESIZED HANGUL PHIEUPH A: ㈚ --> (파)
+\x321a (파)
+
+# PARENTHESIZED HANGUL HIEUH A: ㈛ --> (하)
+\x321b (하)
+
+# PARENTHESIZED HANGUL CIEUC U: ㈜ --> (주)
+\x321c (주)
+
+# PARENTHESIZED KOREAN CHARACTER OJEON: ㈝ --> (오전)
+\x321d (오전)
+
+# PARENTHESIZED KOREAN CHARACTER O HU: ㈞ --> (오후)
+\x321e (오후)
+
+# PARENTHESIZED IDEOGRAPH ONE: ㈠ --> (一)
+\x3220 (一)
+
+# PARENTHESIZED IDEOGRAPH TWO: ㈡ --> (二)
+\x3221 (二)
+
+# PARENTHESIZED IDEOGRAPH THREE: ㈢ --> (三)
+\x3222 (三)
+
+# PARENTHESIZED IDEOGRAPH FOUR: ㈣ --> (四)
+\x3223 (四)
+
+# PARENTHESIZED IDEOGRAPH FIVE: ㈤ --> (五)
+\x3224 (五)
+
+# PARENTHESIZED IDEOGRAPH SIX: ㈥ --> (六)
+\x3225 (六)
+
+# PARENTHESIZED IDEOGRAPH SEVEN: ㈦ --> (七)
+\x3226 (七)
+
+# PARENTHESIZED IDEOGRAPH EIGHT: ㈧ --> (八)
+\x3227 (八)
+
+# PARENTHESIZED IDEOGRAPH NINE: ㈨ --> (九)
+\x3228 (九)
+
+# PARENTHESIZED IDEOGRAPH TEN: ㈩ --> (十)
+\x3229 (十)
+
+# PARENTHESIZED IDEOGRAPH MOON: ㈪ --> (月)
+\x322a (月)
+
+# PARENTHESIZED IDEOGRAPH FIRE: ㈫ --> (火)
+\x322b (火)
+
+# PARENTHESIZED IDEOGRAPH WATER: ㈬ --> (水)
+\x322c (水)
+
+# PARENTHESIZED IDEOGRAPH WOOD: ㈭ --> (木)
+\x322d (木)
+
+# PARENTHESIZED IDEOGRAPH METAL: ㈮ --> (金)
+\x322e (金)
+
+# PARENTHESIZED IDEOGRAPH EARTH: ㈯ --> (土)
+\x322f (土)
+
+# PARENTHESIZED IDEOGRAPH SUN: ㈰ --> (日)
+\x3230 (日)
+
+# PARENTHESIZED IDEOGRAPH STOCK: ㈱ --> (株)
+\x3231 (株)
+
+# PARENTHESIZED IDEOGRAPH HAVE: ㈲ --> (有)
+\x3232 (有)
+
+# PARENTHESIZED IDEOGRAPH SOCIETY: ㈳ --> (社)
+\x3233 (社)
+
+# PARENTHESIZED IDEOGRAPH NAME: ㈴ --> (名)
+\x3234 (名)
+
+# PARENTHESIZED IDEOGRAPH SPECIAL: ㈵ --> (特)
+\x3235 (特)
+
+# PARENTHESIZED IDEOGRAPH FINANCIAL: ㈶ --> (財)
+\x3236 (財)
+
+# PARENTHESIZED IDEOGRAPH CONGRATULATION: ㈷ --> (祝)
+\x3237 (祝)
+
+# PARENTHESIZED IDEOGRAPH LABOR: ㈸ --> (労)
+\x3238 (労)
+
+# PARENTHESIZED IDEOGRAPH REPRESENT: ㈹ --> (代)
+\x3239 (代)
+
+# PARENTHESIZED IDEOGRAPH CALL: ㈺ --> (呼)
+\x323a (呼)
+
+# PARENTHESIZED IDEOGRAPH STUDY: ㈻ --> (学)
+\x323b (学)
+
+# PARENTHESIZED IDEOGRAPH SUPERVISE: ㈼ --> (監)
+\x323c (監)
+
+# PARENTHESIZED IDEOGRAPH ENTERPRISE: ㈽ --> (企)
+\x323d (企)
+
+# PARENTHESIZED IDEOGRAPH RESOURCE: ㈾ --> (資)
+\x323e (資)
+
+# PARENTHESIZED IDEOGRAPH ALLIANCE: ㈿ --> (協)
+\x323f (協)
+
+# PARENTHESIZED IDEOGRAPH FESTIVAL: ㉀ --> (祭)
+\x3240 (祭)
+
+# PARENTHESIZED IDEOGRAPH REST: ㉁ --> (休)
+\x3241 (休)
+
+# PARENTHESIZED IDEOGRAPH SELF: ㉂ --> (自)
+\x3242 (自)
+
+# PARENTHESIZED IDEOGRAPH REACH: ㉃ --> (至)
+\x3243 (至)
+
+# PARTNERSHIP SIGN: ㉐ --> PTE
+\x3250 PTE
+
+# CIRCLED NUMBER TWENTY ONE: ㉑ --> 21
+\x3251 21
+
+# CIRCLED NUMBER TWENTY TWO: ㉒ --> 22
+\x3252 22
+
+# CIRCLED NUMBER TWENTY THREE: ㉓ --> 23
+\x3253 23
+
+# CIRCLED NUMBER TWENTY FOUR: ㉔ --> 24
+\x3254 24
+
+# CIRCLED NUMBER TWENTY FIVE: ㉕ --> 25
+\x3255 25
+
+# CIRCLED NUMBER TWENTY SIX: ㉖ --> 26
+\x3256 26
+
+# CIRCLED NUMBER TWENTY SEVEN: ㉗ --> 27
+\x3257 27
+
+# CIRCLED NUMBER TWENTY EIGHT: ㉘ --> 28
+\x3258 28
+
+# CIRCLED NUMBER TWENTY NINE: ㉙ --> 29
+\x3259 29
+
+# CIRCLED NUMBER THIRTY: ㉚ --> 30
+\x325a 30
+
+# CIRCLED NUMBER THIRTY ONE: ㉛ --> 31
+\x325b 31
+
+# CIRCLED NUMBER THIRTY TWO: ㉜ --> 32
+\x325c 32
+
+# CIRCLED NUMBER THIRTY THREE: ㉝ --> 33
+\x325d 33
+
+# CIRCLED NUMBER THIRTY FOUR: ㉞ --> 34
+\x325e 34
+
+# CIRCLED NUMBER THIRTY FIVE: ㉟ --> 35
+\x325f 35
+
+# CIRCLED NUMBER THIRTY SIX: ㊱ --> 36
+\x32b1 36
+
+# CIRCLED NUMBER THIRTY SEVEN: ㊲ --> 37
+\x32b2 37
+
+# CIRCLED NUMBER THIRTY EIGHT: ㊳ --> 38
+\x32b3 38
+
+# CIRCLED NUMBER THIRTY NINE: ㊴ --> 39
+\x32b4 39
+
+# CIRCLED NUMBER FORTY: ㊵ --> 40
+\x32b5 40
+
+# CIRCLED NUMBER FORTY ONE: ㊶ --> 41
+\x32b6 41
+
+# CIRCLED NUMBER FORTY TWO: ㊷ --> 42
+\x32b7 42
+
+# CIRCLED NUMBER FORTY THREE: ㊸ --> 43
+\x32b8 43
+
+# CIRCLED NUMBER FORTY FOUR: ㊹ --> 44
+\x32b9 44
+
+# CIRCLED NUMBER FORTY FIVE: ㊺ --> 45
+\x32ba 45
+
+# CIRCLED NUMBER FORTY SIX: ㊻ --> 46
+\x32bb 46
+
+# CIRCLED NUMBER FORTY SEVEN: ㊼ --> 47
+\x32bc 47
+
+# CIRCLED NUMBER FORTY EIGHT: ㊽ --> 48
+\x32bd 48
+
+# CIRCLED NUMBER FORTY NINE: ㊾ --> 49
+\x32be 49
+
+# CIRCLED NUMBER FIFTY: ㊿ --> 50
+\x32bf 50
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR JANUARY: ㋀ --> 1月
+\x32c0 1月
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR FEBRUARY: ㋁ --> 2月
+\x32c1 2月
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR MARCH: ㋂ --> 3月
+\x32c2 3月
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR APRIL: ㋃ --> 4月
+\x32c3 4月
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR MAY: ㋄ --> 5月
+\x32c4 5月
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR JUNE: ㋅ --> 6月
+\x32c5 6月
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR JULY: ㋆ --> 7月
+\x32c6 7月
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR AUGUST: ㋇ --> 8月
+\x32c7 8月
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR SEPTEMBER: ㋈ --> 9月
+\x32c8 9月
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR OCTOBER: ㋉ --> 10月
+\x32c9 10月
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR NOVEMBER: ㋊ --> 11月
+\x32ca 11月
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DECEMBER: ㋋ --> 12月
+\x32cb 12月
+
+# SQUARE HG: ㋌ --> Hg
+\x32cc Hg
+
+# SQUARE ERG: ㋍ --> erg
+\x32cd erg
+
+# SQUARE EV: ㋎ --> eV
+\x32ce eV
+
+# LIMITED LIABILITY SIGN: ㋏ --> LTD
+\x32cf LTD
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR ZERO: ㍘ --> 0点
+\x3358 0点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR ONE: ㍙ --> 1点
+\x3359 1点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR TWO: ㍚ --> 2点
+\x335a 2点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR THREE: ㍛ --> 3点
+\x335b 3点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR FOUR: ㍜ --> 4点
+\x335c 4点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR FIVE: ㍝ --> 5点
+\x335d 5点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR SIX: ㍞ --> 6点
+\x335e 6点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR SEVEN: ㍟ --> 7点
+\x335f 7点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR EIGHT: ㍠ --> 8点
+\x3360 8点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR NINE: ㍡ --> 9点
+\x3361 9点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR TEN: ㍢ --> 10点
+\x3362 10点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR ELEVEN: ㍣ --> 11点
+\x3363 11点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR TWELVE: ㍤ --> 12点
+\x3364 12点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR THIRTEEN: ㍥ --> 13点
+\x3365 13点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR FOURTEEN: ㍦ --> 14点
+\x3366 14点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR FIFTEEN: ㍧ --> 15点
+\x3367 15点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR SIXTEEN: ㍨ --> 16点
+\x3368 16点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR SEVENTEEN: ㍩ --> 17点
+\x3369 17点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR EIGHTEEN: ㍪ --> 18点
+\x336a 18点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR NINETEEN: ㍫ --> 19点
+\x336b 19点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR TWENTY: ㍬ --> 20点
+\x336c 20点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR TWENTY-ONE: ㍭ --> 21点
+\x336d 21点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR TWENTY-TWO: ㍮ --> 22点
+\x336e 22点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR TWENTY-THREE: ㍯ --> 23点
+\x336f 23点
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR HOUR TWENTY-FOUR: ㍰ --> 24点
+\x3370 24点
+
+# SQUARE HPA: ㍱ --> hPa
+\x3371 hPa
+
+# SQUARE DA: ㍲ --> da
+\x3372 da
+
+# SQUARE AU: ㍳ --> AU
+\x3373 AU
+
+# SQUARE BAR: ㍴ --> bar
+\x3374 bar
+
+# SQUARE OV: ㍵ --> oV
+\x3375 oV
+
+# SQUARE PC: ㍶ --> pc
+\x3376 pc
+
+# SQUARE DM: ㍷ --> dm
+\x3377 dm
+
+# SQUARE DM SQUARED: ㍸ --> dm2
+\x3378 dm2
+
+# SQUARE DM CUBED: ㍹ --> dm3
+\x3379 dm3
+
+# SQUARE IU: ㍺ --> IU
+\x337a IU
+
+# SQUARE PA AMPS: ㎀ --> pA
+\x3380 pA
+
+# SQUARE NA: ㎁ --> nA
+\x3381 nA
+
+# SQUARE MU A: ㎂ --> μA
+\x3382 μA
+
+# SQUARE MA: ㎃ --> mA
+\x3383 mA
+
+# SQUARE KA: ㎄ --> kA
+\x3384 kA
+
+# SQUARE KB: ㎅ --> KB
+\x3385 KB
+
+# SQUARE MB: ㎆ --> MB
+\x3386 MB
+
+# SQUARE GB: ㎇ --> GB
+\x3387 GB
+
+# SQUARE CAL: ㎈ --> cal
+\x3388 cal
+
+# SQUARE KCAL: ㎉ --> kcal
+\x3389 kcal
+
+# SQUARE PF: ㎊ --> pF
+\x338a pF
+
+# SQUARE NF: ㎋ --> nF
+\x338b nF
+
+# SQUARE MU F: ㎌ --> μF
+\x338c μF
+
+# SQUARE MU G: ㎍ --> μg
+\x338d μg
+
+# SQUARE MG: ㎎ --> mg
+\x338e mg
+
+# SQUARE KG: ㎏ --> kg
+\x338f kg
+
+# SQUARE HZ: ㎐ --> Hz
+\x3390 Hz
+
+# SQUARE KHZ: ㎑ --> kHz
+\x3391 kHz
+
+# SQUARE MHZ: ㎒ --> MHz
+\x3392 MHz
+
+# SQUARE GHZ: ㎓ --> GHz
+\x3393 GHz
+
+# SQUARE THZ: ㎔ --> THz
+\x3394 THz
+
+# SQUARE MU L: ㎕ --> μl
+\x3395 μl
+
+# SQUARE ML: ㎖ --> ml
+\x3396 ml
+
+# SQUARE DL: ㎗ --> dl
+\x3397 dl
+
+# SQUARE KL: ㎘ --> kl
+\x3398 kl
+
+# SQUARE FM: ㎙ --> fm
+\x3399 fm
+
+# SQUARE NM: ㎚ --> nm
+\x339a nm
+
+# SQUARE MU M: ㎛ --> μm
+\x339b μm
+
+# SQUARE MM: ㎜ --> mm
+\x339c mm
+
+# SQUARE CM: ㎝ --> cm
+\x339d cm
+
+# SQUARE KM: ㎞ --> km
+\x339e km
+
+# SQUARE MM SQUARED: ㎟ --> mm2
+\x339f mm2
+
+# SQUARE CM SQUARED: ㎠ --> cm2
+\x33a0 cm2
+
+# SQUARE M SQUARED: ㎡ --> m2
+\x33a1 m2
+
+# SQUARE KM SQUARED: ㎢ --> km2
+\x33a2 km2
+
+# SQUARE MM CUBED: ㎣ --> mm3
+\x33a3 mm3
+
+# SQUARE CM CUBED: ㎤ --> cm3
+\x33a4 cm3
+
+# SQUARE M CUBED: ㎥ --> m3
+\x33a5 m3
+
+# SQUARE KM CUBED: ㎦ --> km3
+\x33a6 km3
+
+# SQUARE M OVER S: ㎧ --> m∕s
+\x33a7 m∕s
+
+# SQUARE M OVER S SQUARED: ㎨ --> m∕s2
+\x33a8 m∕s2
+
+# SQUARE PA: ㎩ --> Pa
+\x33a9 Pa
+
+# SQUARE KPA: ㎪ --> kPa
+\x33aa kPa
+
+# SQUARE MPA: ㎫ --> MPa
+\x33ab MPa
+
+# SQUARE GPA: ㎬ --> GPa
+\x33ac GPa
+
+# SQUARE RAD: ㎭ --> rad
+\x33ad rad
+
+# SQUARE RAD OVER S: ㎮ --> rad∕s
+## too long, uncomment if you want it ##\x33ae rad∕s
+
+# SQUARE RAD OVER S SQUARED: ㎯ --> rad∕s2
+## too long, uncomment if you want it ##\x33af rad∕s2
+
+# SQUARE PS: ㎰ --> ps
+\x33b0 ps
+
+# SQUARE NS: ㎱ --> ns
+\x33b1 ns
+
+# SQUARE MU S: ㎲ --> μs
+\x33b2 μs
+
+# SQUARE MS: ㎳ --> ms
+\x33b3 ms
+
+# SQUARE PV: ㎴ --> pV
+\x33b4 pV
+
+# SQUARE NV: ㎵ --> nV
+\x33b5 nV
+
+# SQUARE MU V: ㎶ --> μV
+\x33b6 μV
+
+# SQUARE MV: ㎷ --> mV
+\x33b7 mV
+
+# SQUARE KV: ㎸ --> kV
+\x33b8 kV
+
+# SQUARE MV MEGA: ㎹ --> MV
+\x33b9 MV
+
+# SQUARE PW: ㎺ --> pW
+\x33ba pW
+
+# SQUARE NW: ㎻ --> nW
+\x33bb nW
+
+# SQUARE MU W: ㎼ --> μW
+\x33bc μW
+
+# SQUARE MW: ㎽ --> mW
+\x33bd mW
+
+# SQUARE KW: ㎾ --> kW
+\x33be kW
+
+# SQUARE MW MEGA: ㎿ --> MW
+\x33bf MW
+
+# SQUARE K OHM: ㏀ --> kΩ
+\x33c0 kΩ
+
+# SQUARE M OHM: ㏁ --> MΩ
+\x33c1 MΩ
+
+# SQUARE AM: ㏂ --> a.m.
+\x33c2 a.m.
+
+# SQUARE BQ: ㏃ --> Bq
+\x33c3 Bq
+
+# SQUARE CC: ㏄ --> cc
+\x33c4 cc
+
+# SQUARE CD: ㏅ --> cd
+\x33c5 cd
+
+# SQUARE C OVER KG: ㏆ --> C∕kg
+\x33c6 C∕kg
+
+# SQUARE CO: ㏇ --> Co.
+\x33c7 Co.
+
+# SQUARE DB: ㏈ --> dB
+\x33c8 dB
+
+# SQUARE GY: ㏉ --> Gy
+\x33c9 Gy
+
+# SQUARE HA: ㏊ --> ha
+\x33ca ha
+
+# SQUARE HP: ㏋ --> HP
+\x33cb HP
+
+# SQUARE IN: ㏌ --> in
+\x33cc in
+
+# SQUARE KK: ㏍ --> KK
+\x33cd KK
+
+# SQUARE KM CAPITAL: ㏎ --> KM
+\x33ce KM
+
+# SQUARE KT: ㏏ --> kt
+\x33cf kt
+
+# SQUARE LM: ㏐ --> lm
+\x33d0 lm
+
+# SQUARE LN: ㏑ --> ln
+\x33d1 ln
+
+# SQUARE LOG: ㏒ --> log
+\x33d2 log
+
+# SQUARE LX: ㏓ --> lx
+\x33d3 lx
+
+# SQUARE MB SMALL: ㏔ --> mb
+\x33d4 mb
+
+# SQUARE MIL: ㏕ --> mil
+\x33d5 mil
+
+# SQUARE MOL: ㏖ --> mol
+\x33d6 mol
+
+# SQUARE PH: ㏗ --> PH
+\x33d7 PH
+
+# SQUARE PM: ㏘ --> p.m.
+\x33d8 p.m.
+
+# SQUARE PPM: ㏙ --> PPM
+\x33d9 PPM
+
+# SQUARE PR: ㏚ --> PR
+\x33da PR
+
+# SQUARE SR: ㏛ --> sr
+\x33db sr
+
+# SQUARE SV: ㏜ --> Sv
+\x33dc Sv
+
+# SQUARE WB: ㏝ --> Wb
+\x33dd Wb
+
+# SQUARE V OVER M: ㏞ --> V∕m
+\x33de V∕m
+
+# SQUARE A OVER M: ㏟ --> A∕m
+\x33df A∕m
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY ONE: ㏠ --> 1日
+\x33e0 1日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY TWO: ㏡ --> 2日
+\x33e1 2日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY THREE: ㏢ --> 3日
+\x33e2 3日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY FOUR: ㏣ --> 4日
+\x33e3 4日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY FIVE: ㏤ --> 5日
+\x33e4 5日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY SIX: ㏥ --> 6日
+\x33e5 6日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY SEVEN: ㏦ --> 7日
+\x33e6 7日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY EIGHT: ㏧ --> 8日
+\x33e7 8日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY NINE: ㏨ --> 9日
+\x33e8 9日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY TEN: ㏩ --> 10日
+\x33e9 10日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY ELEVEN: ㏪ --> 11日
+\x33ea 11日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY TWELVE: ㏫ --> 12日
+\x33eb 12日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY THIRTEEN: ㏬ --> 13日
+\x33ec 13日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY FOURTEEN: ㏭ --> 14日
+\x33ed 14日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY FIFTEEN: ㏮ --> 15日
+\x33ee 15日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY SIXTEEN: ㏯ --> 16日
+\x33ef 16日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY SEVENTEEN: ㏰ --> 17日
+\x33f0 17日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY EIGHTEEN: ㏱ --> 18日
+\x33f1 18日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY NINETEEN: ㏲ --> 19日
+\x33f2 19日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY TWENTY: ㏳ --> 20日
+\x33f3 20日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY TWENTY-ONE: ㏴ --> 21日
+\x33f4 21日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY TWENTY-TWO: ㏵ --> 22日
+\x33f5 22日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY TWENTY-THREE: ㏶ --> 23日
+\x33f6 23日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY TWENTY-FOUR: ㏷ --> 24日
+\x33f7 24日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY TWENTY-FIVE: ㏸ --> 25日
+\x33f8 25日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY TWENTY-SIX: ㏹ --> 26日
+\x33f9 26日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY TWENTY-SEVEN: ㏺ --> 27日
+\x33fa 27日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY TWENTY-EIGHT: ㏻ --> 28日
+\x33fb 28日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY TWENTY-NINE: ㏼ --> 29日
+\x33fc 29日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY THIRTY: ㏽ --> 30日
+\x33fd 30日
+
+# IDEOGRAPHIC TELEGRAPH SYMBOL FOR DAY THIRTY-ONE: ㏾ --> 31日
+\x33fe 31日
+
+# SQUARE GAL: ㏿ --> gal
+\x33ff gal
+
+# LATIN SMALL LIGATURE FF: ﬀ --> ff
+\xfb00 ff
+
+# LATIN SMALL LIGATURE FI: ﬁ --> fi
+\xfb01 fi
+
+# LATIN SMALL LIGATURE FL: ﬂ --> fl
+\xfb02 fl
+
+# LATIN SMALL LIGATURE FFI: ﬃ --> ffi
+\xfb03 ffi
+
+# LATIN SMALL LIGATURE FFL: ﬄ --> ffl
+\xfb04 ffl
+
+# LATIN SMALL LIGATURE LONG S T: ﬅ --> st
+\xfb05 st
+
+# LATIN SMALL LIGATURE ST: ﬆ --> st
+\xfb06 st
+
+# HEBREW LETTER ALTERNATIVE PLUS SIGN: ﬩ --> +
+\xfb29 \x2b
+
+# ARABIC LIGATURE YEH WITH HAMZA ABOVE WITH ALEF ISOLATED FORM: ﯪ --> ئا
+\xfbea ئا
+
+# ARABIC LIGATURE YEH WITH HAMZA ABOVE WITH ALEF FINAL FORM: ﯫ --> ئا
+\xfbeb ئا
+
+# ARABIC LIGATURE KAF WITH ALEF ISOLATED FORM: ﰷ --> كا
+\xfc37 كا
+
+# ARABIC LIGATURE KAF WITH ALEF FINAL FORM: ﲀ --> كا
+\xfc80 كا
+
+# ARABIC LIGATURE MEEM WITH ALEF FINAL FORM: ﲈ --> ما
+\xfc88 ما
+
+# ARABIC LIGATURE ALEF WITH FATHATAN FINAL FORM: ﴼ --> اً
+\xfd3c اً
+
+# ARABIC LIGATURE ALEF WITH FATHATAN ISOLATED FORM: ﴽ --> اً
+\xfd3d اً
+
+# ARABIC LIGATURE ALLAH ISOLATED FORM: ﷲ --> الله
+\xfdf2 الله
+
+# ARABIC LIGATURE AKBAR ISOLATED FORM: ﷳ --> اكبر
+\xfdf3 اكبر
+
+# ARABIC LIGATURE SALLALLAHOU ALAYHE WASALLAM: ﷺ --> صلى الله عليه وسلم
+## too long, uncomment if you want it ##\xfdfa صلى الله عليه وسلم
+
+# ARABIC LIGATURE JALLAJALALOUHOU: ﷻ --> جل جلاله
+## too long, uncomment if you want it ##\xfdfb جل جلاله
+
+# RIAL SIGN: ﷼ --> ریال
+\xfdfc ریال
+
+# PRESENTATION FORM FOR VERTICAL COMMA: ︐ --> ,
+\xfe10 \x2c
+
+# PRESENTATION FORM FOR VERTICAL COLON: ︓ --> :
+\xfe13 \x3a
+
+# PRESENTATION FORM FOR VERTICAL SEMICOLON: ︔ --> ;
+\xfe14 \x3b
+
+# PRESENTATION FORM FOR VERTICAL EXCLAMATION MARK: ︕ --> !
+\xfe15 \x21
+
+# PRESENTATION FORM FOR VERTICAL QUESTION MARK: ︖ --> ?
+\xfe16 \x3f
+
+# PRESENTATION FORM FOR VERTICAL HORIZONTAL ELLIPSIS: ︙ --> ...
+\xfe19 ...
+
+# PRESENTATION FORM FOR VERTICAL TWO DOT LEADER: ︰ --> ..
+\xfe30 ..
+
+# PRESENTATION FORM FOR VERTICAL EM DASH: ︱ --> —
+\xfe31 \x2014
+
+# PRESENTATION FORM FOR VERTICAL EN DASH: ︲ --> –
+\xfe32 \x2013
+
+# PRESENTATION FORM FOR VERTICAL LOW LINE: ︳ --> _
+\xfe33 \x5f
+
+# PRESENTATION FORM FOR VERTICAL WAVY LOW LINE: ︴ --> _
+\xfe34 \x5f
+
+# PRESENTATION FORM FOR VERTICAL LEFT PARENTHESIS: ︵ --> (
+\xfe35 \x28
+
+# PRESENTATION FORM FOR VERTICAL RIGHT PARENTHESIS: ︶ --> )
+\xfe36 \x29
+
+# PRESENTATION FORM FOR VERTICAL LEFT CURLY BRACKET: ︷ --> {
+\xfe37 \x7b
+
+# PRESENTATION FORM FOR VERTICAL RIGHT CURLY BRACKET: ︸ --> }
+\xfe38 \x7d
+
+# PRESENTATION FORM FOR VERTICAL LEFT SQUARE BRACKET: ﹇ --> [
+\xfe47 \x5b
+
+# PRESENTATION FORM FOR VERTICAL RIGHT SQUARE BRACKET: ﹈ --> ]
+\xfe48 \x5d
+
+# DASHED LOW LINE: ﹍ --> _
+\xfe4d \x5f
+
+# CENTRELINE LOW LINE: ﹎ --> _
+\xfe4e \x5f
+
+# WAVY LOW LINE: ﹏ --> _
+\xfe4f \x5f
+
+# SMALL COMMA: ﹐ --> ,
+\xfe50 \x2c
+
+# SMALL FULL STOP: ﹒ --> .
+\xfe52 \x2e
+
+# SMALL SEMICOLON: ﹔ --> ;
+\xfe54 \x3b
+
+# SMALL COLON: ﹕ --> :
+\xfe55 \x3a
+
+# SMALL QUESTION MARK: ﹖ --> ?
+\xfe56 \x3f
+
+# SMALL EXCLAMATION MARK: ﹗ --> !
+\xfe57 \x21
+
+# SMALL EM DASH: ﹘ --> —
+\xfe58 \x2014
+
+# SMALL LEFT PARENTHESIS: ﹙ --> (
+\xfe59 \x28
+
+# SMALL RIGHT PARENTHESIS: ﹚ --> )
+\xfe5a \x29
+
+# SMALL LEFT CURLY BRACKET: ﹛ --> {
+\xfe5b \x7b
+
+# SMALL RIGHT CURLY BRACKET: ﹜ --> }
+\xfe5c \x7d
+
+# SMALL NUMBER SIGN: ﹟ --> #
+\xfe5f \x23
+
+# SMALL AMPERSAND: ﹠ --> &
+\xfe60 \x26
+
+# SMALL ASTERISK: ﹡ --> *
+\xfe61 \x2a
+
+# SMALL PLUS SIGN: ﹢ --> +
+\xfe62 \x2b
+
+# SMALL HYPHEN-MINUS: ﹣ --> -
+\xfe63 \x2d
+
+# SMALL LESS-THAN SIGN: ﹤ --> <
+\xfe64 \x3c
+
+# SMALL GREATER-THAN SIGN: ﹥ --> >
+\xfe65 \x3e
+
+# SMALL EQUALS SIGN: ﹦ --> =
+\xfe66 \x3d
+
+# SMALL REVERSE SOLIDUS: ﹨ --> \
+\xfe68 \x5c
+
+# SMALL DOLLAR SIGN: ﹩ --> $
+\xfe69 \x24
+
+# SMALL PERCENT SIGN: ﹪ --> %
+\xfe6a \x25
+
+# SMALL COMMERCIAL AT: ﹫ --> @
+\xfe6b \x40
+
+# ARABIC LETTER ALEF ISOLATED FORM: ﺍ --> ا
+\xfe8d \x627
+
+# ARABIC LETTER ALEF FINAL FORM: ﺎ --> ا
+\xfe8e \x627
+
+# ARABIC LIGATURE LAM WITH ALEF ISOLATED FORM: ﻻ --> لا
+\xfefb لا
+
+# ARABIC LIGATURE LAM WITH ALEF FINAL FORM: ﻼ --> لا
+\xfefc لا
+
+# FULLWIDTH EXCLAMATION MARK: ！ --> !
+\xff01 \x21
+
+# FULLWIDTH QUOTATION MARK: ＂ --> "
+\xff02 \x22
+
+# FULLWIDTH NUMBER SIGN: ＃ --> #
+\xff03 \x23
+
+# FULLWIDTH DOLLAR SIGN: ＄ --> $
+\xff04 \x24
+
+# FULLWIDTH PERCENT SIGN: ％ --> %
+\xff05 \x25
+
+# FULLWIDTH AMPERSAND: ＆ --> &
+\xff06 \x26
+
+# FULLWIDTH APOSTROPHE: ＇ --> '
+\xff07 \x27
+
+# FULLWIDTH LEFT PARENTHESIS: （ --> (
+\xff08 \x28
+
+# FULLWIDTH RIGHT PARENTHESIS: ） --> )
+\xff09 \x29
+
+# FULLWIDTH ASTERISK: ＊ --> *
+\xff0a \x2a
+
+# FULLWIDTH PLUS SIGN: ＋ --> +
+\xff0b \x2b
+
+# FULLWIDTH COMMA: ， --> ,
+\xff0c \x2c
+
+# FULLWIDTH HYPHEN-MINUS: － --> -
+\xff0d \x2d
+
+# FULLWIDTH FULL STOP: ． --> .
+\xff0e \x2e
+
+# FULLWIDTH SOLIDUS: ／ --> /
+\xff0f \x2f
+
+# FULLWIDTH DIGIT ZERO: ０ --> 0
+\xff10 \x30
+
+# FULLWIDTH DIGIT ONE: １ --> 1
+\xff11 \x31
+
+# FULLWIDTH DIGIT TWO: ２ --> 2
+\xff12 \x32
+
+# FULLWIDTH DIGIT THREE: ３ --> 3
+\xff13 \x33
+
+# FULLWIDTH DIGIT FOUR: ４ --> 4
+\xff14 \x34
+
+# FULLWIDTH DIGIT FIVE: ５ --> 5
+\xff15 \x35
+
+# FULLWIDTH DIGIT SIX: ６ --> 6
+\xff16 \x36
+
+# FULLWIDTH DIGIT SEVEN: ７ --> 7
+\xff17 \x37
+
+# FULLWIDTH DIGIT EIGHT: ８ --> 8
+\xff18 \x38
+
+# FULLWIDTH DIGIT NINE: ９ --> 9
+\xff19 \x39
+
+# FULLWIDTH COLON: ： --> :
+\xff1a \x3a
+
+# FULLWIDTH SEMICOLON: ； --> ;
+\xff1b \x3b
+
+# FULLWIDTH LESS-THAN SIGN: ＜ --> <
+\xff1c \x3c
+
+# FULLWIDTH EQUALS SIGN: ＝ --> =
+\xff1d \x3d
+
+# FULLWIDTH GREATER-THAN SIGN: ＞ --> >
+\xff1e \x3e
+
+# FULLWIDTH QUESTION MARK: ？ --> ?
+\xff1f \x3f
+
+# FULLWIDTH COMMERCIAL AT: ＠ --> @
+\xff20 \x40
+
+# FULLWIDTH LATIN CAPITAL LETTER A: Ａ --> A
+\xff21 \x41
+
+# FULLWIDTH LATIN CAPITAL LETTER B: Ｂ --> B
+\xff22 \x42
+
+# FULLWIDTH LATIN CAPITAL LETTER C: Ｃ --> C
+\xff23 \x43
+
+# FULLWIDTH LATIN CAPITAL LETTER D: Ｄ --> D
+\xff24 \x44
+
+# FULLWIDTH LATIN CAPITAL LETTER E: Ｅ --> E
+\xff25 \x45
+
+# FULLWIDTH LATIN CAPITAL LETTER F: Ｆ --> F
+\xff26 \x46
+
+# FULLWIDTH LATIN CAPITAL LETTER G: Ｇ --> G
+\xff27 \x47
+
+# FULLWIDTH LATIN CAPITAL LETTER H: Ｈ --> H
+\xff28 \x48
+
+# FULLWIDTH LATIN CAPITAL LETTER I: Ｉ --> I
+\xff29 \x49
+
+# FULLWIDTH LATIN CAPITAL LETTER J: Ｊ --> J
+\xff2a \x4a
+
+# FULLWIDTH LATIN CAPITAL LETTER K: Ｋ --> K
+\xff2b \x4b
+
+# FULLWIDTH LATIN CAPITAL LETTER L: Ｌ --> L
+\xff2c \x4c
+
+# FULLWIDTH LATIN CAPITAL LETTER M: Ｍ --> M
+\xff2d \x4d
+
+# FULLWIDTH LATIN CAPITAL LETTER N: Ｎ --> N
+\xff2e \x4e
+
+# FULLWIDTH LATIN CAPITAL LETTER O: Ｏ --> O
+\xff2f \x4f
+
+# FULLWIDTH LATIN CAPITAL LETTER P: Ｐ --> P
+\xff30 \x50
+
+# FULLWIDTH LATIN CAPITAL LETTER Q: Ｑ --> Q
+\xff31 \x51
+
+# FULLWIDTH LATIN CAPITAL LETTER R: Ｒ --> R
+\xff32 \x52
+
+# FULLWIDTH LATIN CAPITAL LETTER S: Ｓ --> S
+\xff33 \x53
+
+# FULLWIDTH LATIN CAPITAL LETTER T: Ｔ --> T
+\xff34 \x54
+
+# FULLWIDTH LATIN CAPITAL LETTER U: Ｕ --> U
+\xff35 \x55
+
+# FULLWIDTH LATIN CAPITAL LETTER V: Ｖ --> V
+\xff36 \x56
+
+# FULLWIDTH LATIN CAPITAL LETTER W: Ｗ --> W
+\xff37 \x57
+
+# FULLWIDTH LATIN CAPITAL LETTER X: Ｘ --> X
+\xff38 \x58
+
+# FULLWIDTH LATIN CAPITAL LETTER Y: Ｙ --> Y
+\xff39 \x59
+
+# FULLWIDTH LATIN CAPITAL LETTER Z: Ｚ --> Z
+\xff3a \x5a
+
+# FULLWIDTH LEFT SQUARE BRACKET: ［ --> [
+\xff3b \x5b
+
+# FULLWIDTH REVERSE SOLIDUS: ＼ --> \
+\xff3c \x5c
+
+# FULLWIDTH RIGHT SQUARE BRACKET: ］ --> ]
+\xff3d \x5d
+
+# FULLWIDTH LOW LINE: ＿ --> _
+\xff3f \x5f
+
+# FULLWIDTH GRAVE ACCENT: ｀ --> `
+\xff40 \x60
+
+# FULLWIDTH LATIN SMALL LETTER A: ａ --> a
+\xff41 \x61
+
+# FULLWIDTH LATIN SMALL LETTER B: ｂ --> b
+\xff42 \x62
+
+# FULLWIDTH LATIN SMALL LETTER C: ｃ --> c
+\xff43 \x63
+
+# FULLWIDTH LATIN SMALL LETTER D: ｄ --> d
+\xff44 \x64
+
+# FULLWIDTH LATIN SMALL LETTER E: ｅ --> e
+\xff45 \x65
+
+# FULLWIDTH LATIN SMALL LETTER F: ｆ --> f
+\xff46 \x66
+
+# FULLWIDTH LATIN SMALL LETTER G: ｇ --> g
+\xff47 \x67
+
+# FULLWIDTH LATIN SMALL LETTER H: ｈ --> h
+\xff48 \x68
+
+# FULLWIDTH LATIN SMALL LETTER I: ｉ --> i
+\xff49 \x69
+
+# FULLWIDTH LATIN SMALL LETTER J: ｊ --> j
+\xff4a \x6a
+
+# FULLWIDTH LATIN SMALL LETTER K: ｋ --> k
+\xff4b \x6b
+
+# FULLWIDTH LATIN SMALL LETTER L: ｌ --> l
+\xff4c \x6c
+
+# FULLWIDTH LATIN SMALL LETTER M: ｍ --> m
+\xff4d \x6d
+
+# FULLWIDTH LATIN SMALL LETTER N: ｎ --> n
+\xff4e \x6e
+
+# FULLWIDTH LATIN SMALL LETTER O: ｏ --> o
+\xff4f \x6f
+
+# FULLWIDTH LATIN SMALL LETTER P: ｐ --> p
+\xff50 \x70
+
+# FULLWIDTH LATIN SMALL LETTER Q: ｑ --> q
+\xff51 \x71
+
+# FULLWIDTH LATIN SMALL LETTER R: ｒ --> r
+\xff52 \x72
+
+# FULLWIDTH LATIN SMALL LETTER S: ｓ --> s
+\xff53 \x73
+
+# FULLWIDTH LATIN SMALL LETTER T: ｔ --> t
+\xff54 \x74
+
+# FULLWIDTH LATIN SMALL LETTER U: ｕ --> u
+\xff55 \x75
+
+# FULLWIDTH LATIN SMALL LETTER V: ｖ --> v
+\xff56 \x76
+
+# FULLWIDTH LATIN SMALL LETTER W: ｗ --> w
+\xff57 \x77
+
+# FULLWIDTH LATIN SMALL LETTER X: ｘ --> x
+\xff58 \x78
+
+# FULLWIDTH LATIN SMALL LETTER Y: ｙ --> y
+\xff59 \x79
+
+# FULLWIDTH LATIN SMALL LETTER Z: ｚ --> z
+\xff5a \x7a
+
+# FULLWIDTH LEFT CURLY BRACKET: ｛ --> {
+\xff5b \x7b
+
+# FULLWIDTH VERTICAL LINE: ｜ --> |
+\xff5c \x7c
+
+# FULLWIDTH RIGHT CURLY BRACKET: ｝ --> }
+\xff5d \x7d
+
+# FULLWIDTH TILDE: ～ --> ~
+\xff5e \x7e
+
+# FULLWIDTH POUND SIGN: ￡ --> £
+\xffe1 \xa3
+
+# MATHEMATICAL BOLD CAPITAL A: 𝐀 --> A
+\x1d400 \x41
+
+# MATHEMATICAL BOLD CAPITAL B: 𝐁 --> B
+\x1d401 \x42
+
+# MATHEMATICAL BOLD CAPITAL C: 𝐂 --> C
+\x1d402 \x43
+
+# MATHEMATICAL BOLD CAPITAL D: 𝐃 --> D
+\x1d403 \x44
+
+# MATHEMATICAL BOLD CAPITAL E: 𝐄 --> E
+\x1d404 \x45
+
+# MATHEMATICAL BOLD CAPITAL F: 𝐅 --> F
+\x1d405 \x46
+
+# MATHEMATICAL BOLD CAPITAL G: 𝐆 --> G
+\x1d406 \x47
+
+# MATHEMATICAL BOLD CAPITAL H: 𝐇 --> H
+\x1d407 \x48
+
+# MATHEMATICAL BOLD CAPITAL I: 𝐈 --> I
+\x1d408 \x49
+
+# MATHEMATICAL BOLD CAPITAL J: 𝐉 --> J
+\x1d409 \x4a
+
+# MATHEMATICAL BOLD CAPITAL K: 𝐊 --> K
+\x1d40a \x4b
+
+# MATHEMATICAL BOLD CAPITAL L: 𝐋 --> L
+\x1d40b \x4c
+
+# MATHEMATICAL BOLD CAPITAL M: 𝐌 --> M
+\x1d40c \x4d
+
+# MATHEMATICAL BOLD CAPITAL N: 𝐍 --> N
+\x1d40d \x4e
+
+# MATHEMATICAL BOLD CAPITAL O: 𝐎 --> O
+\x1d40e \x4f
+
+# MATHEMATICAL BOLD CAPITAL P: 𝐏 --> P
+\x1d40f \x50
+
+# MATHEMATICAL BOLD CAPITAL Q: 𝐐 --> Q
+\x1d410 \x51
+
+# MATHEMATICAL BOLD CAPITAL R: 𝐑 --> R
+\x1d411 \x52
+
+# MATHEMATICAL BOLD CAPITAL S: 𝐒 --> S
+\x1d412 \x53
+
+# MATHEMATICAL BOLD CAPITAL T: 𝐓 --> T
+\x1d413 \x54
+
+# MATHEMATICAL BOLD CAPITAL U: 𝐔 --> U
+\x1d414 \x55
+
+# MATHEMATICAL BOLD CAPITAL V: 𝐕 --> V
+\x1d415 \x56
+
+# MATHEMATICAL BOLD CAPITAL W: 𝐖 --> W
+\x1d416 \x57
+
+# MATHEMATICAL BOLD CAPITAL X: 𝐗 --> X
+\x1d417 \x58
+
+# MATHEMATICAL BOLD CAPITAL Y: 𝐘 --> Y
+\x1d418 \x59
+
+# MATHEMATICAL BOLD CAPITAL Z: 𝐙 --> Z
+\x1d419 \x5a
+
+# MATHEMATICAL BOLD SMALL A: 𝐚 --> a
+\x1d41a \x61
+
+# MATHEMATICAL BOLD SMALL B: 𝐛 --> b
+\x1d41b \x62
+
+# MATHEMATICAL BOLD SMALL C: 𝐜 --> c
+\x1d41c \x63
+
+# MATHEMATICAL BOLD SMALL D: 𝐝 --> d
+\x1d41d \x64
+
+# MATHEMATICAL BOLD SMALL E: 𝐞 --> e
+\x1d41e \x65
+
+# MATHEMATICAL BOLD SMALL F: 𝐟 --> f
+\x1d41f \x66
+
+# MATHEMATICAL BOLD SMALL G: 𝐠 --> g
+\x1d420 \x67
+
+# MATHEMATICAL BOLD SMALL H: 𝐡 --> h
+\x1d421 \x68
+
+# MATHEMATICAL BOLD SMALL I: 𝐢 --> i
+\x1d422 \x69
+
+# MATHEMATICAL BOLD SMALL J: 𝐣 --> j
+\x1d423 \x6a
+
+# MATHEMATICAL BOLD SMALL K: 𝐤 --> k
+\x1d424 \x6b
+
+# MATHEMATICAL BOLD SMALL L: 𝐥 --> l
+\x1d425 \x6c
+
+# MATHEMATICAL BOLD SMALL M: 𝐦 --> m
+\x1d426 \x6d
+
+# MATHEMATICAL BOLD SMALL N: 𝐧 --> n
+\x1d427 \x6e
+
+# MATHEMATICAL BOLD SMALL O: 𝐨 --> o
+\x1d428 \x6f
+
+# MATHEMATICAL BOLD SMALL P: 𝐩 --> p
+\x1d429 \x70
+
+# MATHEMATICAL BOLD SMALL Q: 𝐪 --> q
+\x1d42a \x71
+
+# MATHEMATICAL BOLD SMALL R: 𝐫 --> r
+\x1d42b \x72
+
+# MATHEMATICAL BOLD SMALL S: 𝐬 --> s
+\x1d42c \x73
+
+# MATHEMATICAL BOLD SMALL T: 𝐭 --> t
+\x1d42d \x74
+
+# MATHEMATICAL BOLD SMALL U: 𝐮 --> u
+\x1d42e \x75
+
+# MATHEMATICAL BOLD SMALL V: 𝐯 --> v
+\x1d42f \x76
+
+# MATHEMATICAL BOLD SMALL W: 𝐰 --> w
+\x1d430 \x77
+
+# MATHEMATICAL BOLD SMALL X: 𝐱 --> x
+\x1d431 \x78
+
+# MATHEMATICAL BOLD SMALL Y: 𝐲 --> y
+\x1d432 \x79
+
+# MATHEMATICAL BOLD SMALL Z: 𝐳 --> z
+\x1d433 \x7a
+
+# MATHEMATICAL ITALIC CAPITAL A: 𝐴 --> A
+\x1d434 \x41
+
+# MATHEMATICAL ITALIC CAPITAL B: 𝐵 --> B
+\x1d435 \x42
+
+# MATHEMATICAL ITALIC CAPITAL C: 𝐶 --> C
+\x1d436 \x43
+
+# MATHEMATICAL ITALIC CAPITAL D: 𝐷 --> D
+\x1d437 \x44
+
+# MATHEMATICAL ITALIC CAPITAL E: 𝐸 --> E
+\x1d438 \x45
+
+# MATHEMATICAL ITALIC CAPITAL F: 𝐹 --> F
+\x1d439 \x46
+
+# MATHEMATICAL ITALIC CAPITAL G: 𝐺 --> G
+\x1d43a \x47
+
+# MATHEMATICAL ITALIC CAPITAL H: 𝐻 --> H
+\x1d43b \x48
+
+# MATHEMATICAL ITALIC CAPITAL I: 𝐼 --> I
+\x1d43c \x49
+
+# MATHEMATICAL ITALIC CAPITAL J: 𝐽 --> J
+\x1d43d \x4a
+
+# MATHEMATICAL ITALIC CAPITAL K: 𝐾 --> K
+\x1d43e \x4b
+
+# MATHEMATICAL ITALIC CAPITAL L: 𝐿 --> L
+\x1d43f \x4c
+
+# MATHEMATICAL ITALIC CAPITAL M: 𝑀 --> M
+\x1d440 \x4d
+
+# MATHEMATICAL ITALIC CAPITAL N: 𝑁 --> N
+\x1d441 \x4e
+
+# MATHEMATICAL ITALIC CAPITAL O: 𝑂 --> O
+\x1d442 \x4f
+
+# MATHEMATICAL ITALIC CAPITAL P: 𝑃 --> P
+\x1d443 \x50
+
+# MATHEMATICAL ITALIC CAPITAL Q: 𝑄 --> Q
+\x1d444 \x51
+
+# MATHEMATICAL ITALIC CAPITAL R: 𝑅 --> R
+\x1d445 \x52
+
+# MATHEMATICAL ITALIC CAPITAL S: 𝑆 --> S
+\x1d446 \x53
+
+# MATHEMATICAL ITALIC CAPITAL T: 𝑇 --> T
+\x1d447 \x54
+
+# MATHEMATICAL ITALIC CAPITAL U: 𝑈 --> U
+\x1d448 \x55
+
+# MATHEMATICAL ITALIC CAPITAL V: 𝑉 --> V
+\x1d449 \x56
+
+# MATHEMATICAL ITALIC CAPITAL W: 𝑊 --> W
+\x1d44a \x57
+
+# MATHEMATICAL ITALIC CAPITAL X: 𝑋 --> X
+\x1d44b \x58
+
+# MATHEMATICAL ITALIC CAPITAL Y: 𝑌 --> Y
+\x1d44c \x59
+
+# MATHEMATICAL ITALIC CAPITAL Z: 𝑍 --> Z
+\x1d44d \x5a
+
+# MATHEMATICAL ITALIC SMALL A: 𝑎 --> a
+\x1d44e \x61
+
+# MATHEMATICAL ITALIC SMALL B: 𝑏 --> b
+\x1d44f \x62
+
+# MATHEMATICAL ITALIC SMALL C: 𝑐 --> c
+\x1d450 \x63
+
+# MATHEMATICAL ITALIC SMALL D: 𝑑 --> d
+\x1d451 \x64
+
+# MATHEMATICAL ITALIC SMALL E: 𝑒 --> e
+\x1d452 \x65
+
+# MATHEMATICAL ITALIC SMALL F: 𝑓 --> f
+\x1d453 \x66
+
+# MATHEMATICAL ITALIC SMALL G: 𝑔 --> g
+\x1d454 \x67
+
+# MATHEMATICAL ITALIC SMALL I: 𝑖 --> i
+\x1d456 \x69
+
+# MATHEMATICAL ITALIC SMALL J: 𝑗 --> j
+\x1d457 \x6a
+
+# MATHEMATICAL ITALIC SMALL K: 𝑘 --> k
+\x1d458 \x6b
+
+# MATHEMATICAL ITALIC SMALL L: 𝑙 --> l
+\x1d459 \x6c
+
+# MATHEMATICAL ITALIC SMALL M: 𝑚 --> m
+\x1d45a \x6d
+
+# MATHEMATICAL ITALIC SMALL N: 𝑛 --> n
+\x1d45b \x6e
+
+# MATHEMATICAL ITALIC SMALL O: 𝑜 --> o
+\x1d45c \x6f
+
+# MATHEMATICAL ITALIC SMALL P: 𝑝 --> p
+\x1d45d \x70
+
+# MATHEMATICAL ITALIC SMALL Q: 𝑞 --> q
+\x1d45e \x71
+
+# MATHEMATICAL ITALIC SMALL R: 𝑟 --> r
+\x1d45f \x72
+
+# MATHEMATICAL ITALIC SMALL S: 𝑠 --> s
+\x1d460 \x73
+
+# MATHEMATICAL ITALIC SMALL T: 𝑡 --> t
+\x1d461 \x74
+
+# MATHEMATICAL ITALIC SMALL U: 𝑢 --> u
+\x1d462 \x75
+
+# MATHEMATICAL ITALIC SMALL V: 𝑣 --> v
+\x1d463 \x76
+
+# MATHEMATICAL ITALIC SMALL W: 𝑤 --> w
+\x1d464 \x77
+
+# MATHEMATICAL ITALIC SMALL X: 𝑥 --> x
+\x1d465 \x78
+
+# MATHEMATICAL ITALIC SMALL Y: 𝑦 --> y
+\x1d466 \x79
+
+# MATHEMATICAL ITALIC SMALL Z: 𝑧 --> z
+\x1d467 \x7a
+
+# MATHEMATICAL BOLD ITALIC CAPITAL A: 𝑨 --> A
+\x1d468 \x41
+
+# MATHEMATICAL BOLD ITALIC CAPITAL B: 𝑩 --> B
+\x1d469 \x42
+
+# MATHEMATICAL BOLD ITALIC CAPITAL C: 𝑪 --> C
+\x1d46a \x43
+
+# MATHEMATICAL BOLD ITALIC CAPITAL D: 𝑫 --> D
+\x1d46b \x44
+
+# MATHEMATICAL BOLD ITALIC CAPITAL E: 𝑬 --> E
+\x1d46c \x45
+
+# MATHEMATICAL BOLD ITALIC CAPITAL F: 𝑭 --> F
+\x1d46d \x46
+
+# MATHEMATICAL BOLD ITALIC CAPITAL G: 𝑮 --> G
+\x1d46e \x47
+
+# MATHEMATICAL BOLD ITALIC CAPITAL H: 𝑯 --> H
+\x1d46f \x48
+
+# MATHEMATICAL BOLD ITALIC CAPITAL I: 𝑰 --> I
+\x1d470 \x49
+
+# MATHEMATICAL BOLD ITALIC CAPITAL J: 𝑱 --> J
+\x1d471 \x4a
+
+# MATHEMATICAL BOLD ITALIC CAPITAL K: 𝑲 --> K
+\x1d472 \x4b
+
+# MATHEMATICAL BOLD ITALIC CAPITAL L: 𝑳 --> L
+\x1d473 \x4c
+
+# MATHEMATICAL BOLD ITALIC CAPITAL M: 𝑴 --> M
+\x1d474 \x4d
+
+# MATHEMATICAL BOLD ITALIC CAPITAL N: 𝑵 --> N
+\x1d475 \x4e
+
+# MATHEMATICAL BOLD ITALIC CAPITAL O: 𝑶 --> O
+\x1d476 \x4f
+
+# MATHEMATICAL BOLD ITALIC CAPITAL P: 𝑷 --> P
+\x1d477 \x50
+
+# MATHEMATICAL BOLD ITALIC CAPITAL Q: 𝑸 --> Q
+\x1d478 \x51
+
+# MATHEMATICAL BOLD ITALIC CAPITAL R: 𝑹 --> R
+\x1d479 \x52
+
+# MATHEMATICAL BOLD ITALIC CAPITAL S: 𝑺 --> S
+\x1d47a \x53
+
+# MATHEMATICAL BOLD ITALIC CAPITAL T: 𝑻 --> T
+\x1d47b \x54
+
+# MATHEMATICAL BOLD ITALIC CAPITAL U: 𝑼 --> U
+\x1d47c \x55
+
+# MATHEMATICAL BOLD ITALIC CAPITAL V: 𝑽 --> V
+\x1d47d \x56
+
+# MATHEMATICAL BOLD ITALIC CAPITAL W: 𝑾 --> W
+\x1d47e \x57
+
+# MATHEMATICAL BOLD ITALIC CAPITAL X: 𝑿 --> X
+\x1d47f \x58
+
+# MATHEMATICAL BOLD ITALIC CAPITAL Y: 𝒀 --> Y
+\x1d480 \x59
+
+# MATHEMATICAL BOLD ITALIC CAPITAL Z: 𝒁 --> Z
+\x1d481 \x5a
+
+# MATHEMATICAL BOLD ITALIC SMALL A: 𝒂 --> a
+\x1d482 \x61
+
+# MATHEMATICAL BOLD ITALIC SMALL B: 𝒃 --> b
+\x1d483 \x62
+
+# MATHEMATICAL BOLD ITALIC SMALL C: 𝒄 --> c
+\x1d484 \x63
+
+# MATHEMATICAL BOLD ITALIC SMALL D: 𝒅 --> d
+\x1d485 \x64
+
+# MATHEMATICAL BOLD ITALIC SMALL E: 𝒆 --> e
+\x1d486 \x65
+
+# MATHEMATICAL BOLD ITALIC SMALL F: 𝒇 --> f
+\x1d487 \x66
+
+# MATHEMATICAL BOLD ITALIC SMALL G: 𝒈 --> g
+\x1d488 \x67
+
+# MATHEMATICAL BOLD ITALIC SMALL H: 𝒉 --> h
+\x1d489 \x68
+
+# MATHEMATICAL BOLD ITALIC SMALL I: 𝒊 --> i
+\x1d48a \x69
+
+# MATHEMATICAL BOLD ITALIC SMALL J: 𝒋 --> j
+\x1d48b \x6a
+
+# MATHEMATICAL BOLD ITALIC SMALL K: 𝒌 --> k
+\x1d48c \x6b
+
+# MATHEMATICAL BOLD ITALIC SMALL L: 𝒍 --> l
+\x1d48d \x6c
+
+# MATHEMATICAL BOLD ITALIC SMALL M: 𝒎 --> m
+\x1d48e \x6d
+
+# MATHEMATICAL BOLD ITALIC SMALL N: 𝒏 --> n
+\x1d48f \x6e
+
+# MATHEMATICAL BOLD ITALIC SMALL O: 𝒐 --> o
+\x1d490 \x6f
+
+# MATHEMATICAL BOLD ITALIC SMALL P: 𝒑 --> p
+\x1d491 \x70
+
+# MATHEMATICAL BOLD ITALIC SMALL Q: 𝒒 --> q
+\x1d492 \x71
+
+# MATHEMATICAL BOLD ITALIC SMALL R: 𝒓 --> r
+\x1d493 \x72
+
+# MATHEMATICAL BOLD ITALIC SMALL S: 𝒔 --> s
+\x1d494 \x73
+
+# MATHEMATICAL BOLD ITALIC SMALL T: 𝒕 --> t
+\x1d495 \x74
+
+# MATHEMATICAL BOLD ITALIC SMALL U: 𝒖 --> u
+\x1d496 \x75
+
+# MATHEMATICAL BOLD ITALIC SMALL V: 𝒗 --> v
+\x1d497 \x76
+
+# MATHEMATICAL BOLD ITALIC SMALL W: 𝒘 --> w
+\x1d498 \x77
+
+# MATHEMATICAL BOLD ITALIC SMALL X: 𝒙 --> x
+\x1d499 \x78
+
+# MATHEMATICAL BOLD ITALIC SMALL Y: 𝒚 --> y
+\x1d49a \x79
+
+# MATHEMATICAL BOLD ITALIC SMALL Z: 𝒛 --> z
+\x1d49b \x7a
+
+# MATHEMATICAL SCRIPT CAPITAL A: 𝒜 --> A
+\x1d49c \x41
+
+# MATHEMATICAL SCRIPT CAPITAL C: 𝒞 --> C
+\x1d49e \x43
+
+# MATHEMATICAL SCRIPT CAPITAL D: 𝒟 --> D
+\x1d49f \x44
+
+# MATHEMATICAL SCRIPT CAPITAL G: 𝒢 --> G
+\x1d4a2 \x47
+
+# MATHEMATICAL SCRIPT CAPITAL J: 𝒥 --> J
+\x1d4a5 \x4a
+
+# MATHEMATICAL SCRIPT CAPITAL K: 𝒦 --> K
+\x1d4a6 \x4b
+
+# MATHEMATICAL SCRIPT CAPITAL N: 𝒩 --> N
+\x1d4a9 \x4e
+
+# MATHEMATICAL SCRIPT CAPITAL O: 𝒪 --> O
+\x1d4aa \x4f
+
+# MATHEMATICAL SCRIPT CAPITAL P: 𝒫 --> P
+\x1d4ab \x50
+
+# MATHEMATICAL SCRIPT CAPITAL Q: 𝒬 --> Q
+\x1d4ac \x51
+
+# MATHEMATICAL SCRIPT CAPITAL S: 𝒮 --> S
+\x1d4ae \x53
+
+# MATHEMATICAL SCRIPT CAPITAL T: 𝒯 --> T
+\x1d4af \x54
+
+# MATHEMATICAL SCRIPT CAPITAL U: 𝒰 --> U
+\x1d4b0 \x55
+
+# MATHEMATICAL SCRIPT CAPITAL V: 𝒱 --> V
+\x1d4b1 \x56
+
+# MATHEMATICAL SCRIPT CAPITAL W: 𝒲 --> W
+\x1d4b2 \x57
+
+# MATHEMATICAL SCRIPT CAPITAL X: 𝒳 --> X
+\x1d4b3 \x58
+
+# MATHEMATICAL SCRIPT CAPITAL Y: 𝒴 --> Y
+\x1d4b4 \x59
+
+# MATHEMATICAL SCRIPT CAPITAL Z: 𝒵 --> Z
+\x1d4b5 \x5a
+
+# MATHEMATICAL SCRIPT SMALL A: 𝒶 --> a
+\x1d4b6 \x61
+
+# MATHEMATICAL SCRIPT SMALL B: 𝒷 --> b
+\x1d4b7 \x62
+
+# MATHEMATICAL SCRIPT SMALL C: 𝒸 --> c
+\x1d4b8 \x63
+
+# MATHEMATICAL SCRIPT SMALL D: 𝒹 --> d
+\x1d4b9 \x64
+
+# MATHEMATICAL SCRIPT SMALL F: 𝒻 --> f
+\x1d4bb \x66
+
+# MATHEMATICAL SCRIPT SMALL H: 𝒽 --> h
+\x1d4bd \x68
+
+# MATHEMATICAL SCRIPT SMALL I: 𝒾 --> i
+\x1d4be \x69
+
+# MATHEMATICAL SCRIPT SMALL J: 𝒿 --> j
+\x1d4bf \x6a
+
+# MATHEMATICAL SCRIPT SMALL K: 𝓀 --> k
+\x1d4c0 \x6b
+
+# MATHEMATICAL SCRIPT SMALL L: 𝓁 --> l
+\x1d4c1 \x6c
+
+# MATHEMATICAL SCRIPT SMALL M: 𝓂 --> m
+\x1d4c2 \x6d
+
+# MATHEMATICAL SCRIPT SMALL N: 𝓃 --> n
+\x1d4c3 \x6e
+
+# MATHEMATICAL SCRIPT SMALL P: 𝓅 --> p
+\x1d4c5 \x70
+
+# MATHEMATICAL SCRIPT SMALL Q: 𝓆 --> q
+\x1d4c6 \x71
+
+# MATHEMATICAL SCRIPT SMALL R: 𝓇 --> r
+\x1d4c7 \x72
+
+# MATHEMATICAL SCRIPT SMALL S: 𝓈 --> s
+\x1d4c8 \x73
+
+# MATHEMATICAL SCRIPT SMALL T: 𝓉 --> t
+\x1d4c9 \x74
+
+# MATHEMATICAL SCRIPT SMALL U: 𝓊 --> u
+\x1d4ca \x75
+
+# MATHEMATICAL SCRIPT SMALL V: 𝓋 --> v
+\x1d4cb \x76
+
+# MATHEMATICAL SCRIPT SMALL W: 𝓌 --> w
+\x1d4cc \x77
+
+# MATHEMATICAL SCRIPT SMALL X: 𝓍 --> x
+\x1d4cd \x78
+
+# MATHEMATICAL SCRIPT SMALL Y: 𝓎 --> y
+\x1d4ce \x79
+
+# MATHEMATICAL SCRIPT SMALL Z: 𝓏 --> z
+\x1d4cf \x7a
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL A: 𝓐 --> A
+\x1d4d0 \x41
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL B: 𝓑 --> B
+\x1d4d1 \x42
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL C: 𝓒 --> C
+\x1d4d2 \x43
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL D: 𝓓 --> D
+\x1d4d3 \x44
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL E: 𝓔 --> E
+\x1d4d4 \x45
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL F: 𝓕 --> F
+\x1d4d5 \x46
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL G: 𝓖 --> G
+\x1d4d6 \x47
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL H: 𝓗 --> H
+\x1d4d7 \x48
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL I: 𝓘 --> I
+\x1d4d8 \x49
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL J: 𝓙 --> J
+\x1d4d9 \x4a
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL K: 𝓚 --> K
+\x1d4da \x4b
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL L: 𝓛 --> L
+\x1d4db \x4c
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL M: 𝓜 --> M
+\x1d4dc \x4d
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL N: 𝓝 --> N
+\x1d4dd \x4e
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL O: 𝓞 --> O
+\x1d4de \x4f
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL P: 𝓟 --> P
+\x1d4df \x50
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL Q: 𝓠 --> Q
+\x1d4e0 \x51
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL R: 𝓡 --> R
+\x1d4e1 \x52
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL S: 𝓢 --> S
+\x1d4e2 \x53
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL T: 𝓣 --> T
+\x1d4e3 \x54
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL U: 𝓤 --> U
+\x1d4e4 \x55
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL V: 𝓥 --> V
+\x1d4e5 \x56
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL W: 𝓦 --> W
+\x1d4e6 \x57
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL X: 𝓧 --> X
+\x1d4e7 \x58
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL Y: 𝓨 --> Y
+\x1d4e8 \x59
+
+# MATHEMATICAL BOLD SCRIPT CAPITAL Z: 𝓩 --> Z
+\x1d4e9 \x5a
+
+# MATHEMATICAL BOLD SCRIPT SMALL A: 𝓪 --> a
+\x1d4ea \x61
+
+# MATHEMATICAL BOLD SCRIPT SMALL B: 𝓫 --> b
+\x1d4eb \x62
+
+# MATHEMATICAL BOLD SCRIPT SMALL C: 𝓬 --> c
+\x1d4ec \x63
+
+# MATHEMATICAL BOLD SCRIPT SMALL D: 𝓭 --> d
+\x1d4ed \x64
+
+# MATHEMATICAL BOLD SCRIPT SMALL E: 𝓮 --> e
+\x1d4ee \x65
+
+# MATHEMATICAL BOLD SCRIPT SMALL F: 𝓯 --> f
+\x1d4ef \x66
+
+# MATHEMATICAL BOLD SCRIPT SMALL G: 𝓰 --> g
+\x1d4f0 \x67
+
+# MATHEMATICAL BOLD SCRIPT SMALL H: 𝓱 --> h
+\x1d4f1 \x68
+
+# MATHEMATICAL BOLD SCRIPT SMALL I: 𝓲 --> i
+\x1d4f2 \x69
+
+# MATHEMATICAL BOLD SCRIPT SMALL J: 𝓳 --> j
+\x1d4f3 \x6a
+
+# MATHEMATICAL BOLD SCRIPT SMALL K: 𝓴 --> k
+\x1d4f4 \x6b
+
+# MATHEMATICAL BOLD SCRIPT SMALL L: 𝓵 --> l
+\x1d4f5 \x6c
+
+# MATHEMATICAL BOLD SCRIPT SMALL M: 𝓶 --> m
+\x1d4f6 \x6d
+
+# MATHEMATICAL BOLD SCRIPT SMALL N: 𝓷 --> n
+\x1d4f7 \x6e
+
+# MATHEMATICAL BOLD SCRIPT SMALL O: 𝓸 --> o
+\x1d4f8 \x6f
+
+# MATHEMATICAL BOLD SCRIPT SMALL P: 𝓹 --> p
+\x1d4f9 \x70
+
+# MATHEMATICAL BOLD SCRIPT SMALL Q: 𝓺 --> q
+\x1d4fa \x71
+
+# MATHEMATICAL BOLD SCRIPT SMALL R: 𝓻 --> r
+\x1d4fb \x72
+
+# MATHEMATICAL BOLD SCRIPT SMALL S: 𝓼 --> s
+\x1d4fc \x73
+
+# MATHEMATICAL BOLD SCRIPT SMALL T: 𝓽 --> t
+\x1d4fd \x74
+
+# MATHEMATICAL BOLD SCRIPT SMALL U: 𝓾 --> u
+\x1d4fe \x75
+
+# MATHEMATICAL BOLD SCRIPT SMALL V: 𝓿 --> v
+\x1d4ff \x76
+
+# MATHEMATICAL BOLD SCRIPT SMALL W: 𝔀 --> w
+\x1d500 \x77
+
+# MATHEMATICAL BOLD SCRIPT SMALL X: 𝔁 --> x
+\x1d501 \x78
+
+# MATHEMATICAL BOLD SCRIPT SMALL Y: 𝔂 --> y
+\x1d502 \x79
+
+# MATHEMATICAL BOLD SCRIPT SMALL Z: 𝔃 --> z
+\x1d503 \x7a
+
+# MATHEMATICAL FRAKTUR CAPITAL A: 𝔄 --> A
+\x1d504 \x41
+
+# MATHEMATICAL FRAKTUR CAPITAL B: 𝔅 --> B
+\x1d505 \x42
+
+# MATHEMATICAL FRAKTUR CAPITAL D: 𝔇 --> D
+\x1d507 \x44
+
+# MATHEMATICAL FRAKTUR CAPITAL E: 𝔈 --> E
+\x1d508 \x45
+
+# MATHEMATICAL FRAKTUR CAPITAL F: 𝔉 --> F
+\x1d509 \x46
+
+# MATHEMATICAL FRAKTUR CAPITAL G: 𝔊 --> G
+\x1d50a \x47
+
+# MATHEMATICAL FRAKTUR CAPITAL J: 𝔍 --> J
+\x1d50d \x4a
+
+# MATHEMATICAL FRAKTUR CAPITAL K: 𝔎 --> K
+\x1d50e \x4b
+
+# MATHEMATICAL FRAKTUR CAPITAL L: 𝔏 --> L
+\x1d50f \x4c
+
+# MATHEMATICAL FRAKTUR CAPITAL M: 𝔐 --> M
+\x1d510 \x4d
+
+# MATHEMATICAL FRAKTUR CAPITAL N: 𝔑 --> N
+\x1d511 \x4e
+
+# MATHEMATICAL FRAKTUR CAPITAL O: 𝔒 --> O
+\x1d512 \x4f
+
+# MATHEMATICAL FRAKTUR CAPITAL P: 𝔓 --> P
+\x1d513 \x50
+
+# MATHEMATICAL FRAKTUR CAPITAL Q: 𝔔 --> Q
+\x1d514 \x51
+
+# MATHEMATICAL FRAKTUR CAPITAL S: 𝔖 --> S
+\x1d516 \x53
+
+# MATHEMATICAL FRAKTUR CAPITAL T: 𝔗 --> T
+\x1d517 \x54
+
+# MATHEMATICAL FRAKTUR CAPITAL U: 𝔘 --> U
+\x1d518 \x55
+
+# MATHEMATICAL FRAKTUR CAPITAL V: 𝔙 --> V
+\x1d519 \x56
+
+# MATHEMATICAL FRAKTUR CAPITAL W: 𝔚 --> W
+\x1d51a \x57
+
+# MATHEMATICAL FRAKTUR CAPITAL X: 𝔛 --> X
+\x1d51b \x58
+
+# MATHEMATICAL FRAKTUR CAPITAL Y: 𝔜 --> Y
+\x1d51c \x59
+
+# MATHEMATICAL FRAKTUR SMALL A: 𝔞 --> a
+\x1d51e \x61
+
+# MATHEMATICAL FRAKTUR SMALL B: 𝔟 --> b
+\x1d51f \x62
+
+# MATHEMATICAL FRAKTUR SMALL C: 𝔠 --> c
+\x1d520 \x63
+
+# MATHEMATICAL FRAKTUR SMALL D: 𝔡 --> d
+\x1d521 \x64
+
+# MATHEMATICAL FRAKTUR SMALL E: 𝔢 --> e
+\x1d522 \x65
+
+# MATHEMATICAL FRAKTUR SMALL F: 𝔣 --> f
+\x1d523 \x66
+
+# MATHEMATICAL FRAKTUR SMALL G: 𝔤 --> g
+\x1d524 \x67
+
+# MATHEMATICAL FRAKTUR SMALL H: 𝔥 --> h
+\x1d525 \x68
+
+# MATHEMATICAL FRAKTUR SMALL I: 𝔦 --> i
+\x1d526 \x69
+
+# MATHEMATICAL FRAKTUR SMALL J: 𝔧 --> j
+\x1d527 \x6a
+
+# MATHEMATICAL FRAKTUR SMALL K: 𝔨 --> k
+\x1d528 \x6b
+
+# MATHEMATICAL FRAKTUR SMALL L: 𝔩 --> l
+\x1d529 \x6c
+
+# MATHEMATICAL FRAKTUR SMALL M: 𝔪 --> m
+\x1d52a \x6d
+
+# MATHEMATICAL FRAKTUR SMALL N: 𝔫 --> n
+\x1d52b \x6e
+
+# MATHEMATICAL FRAKTUR SMALL O: 𝔬 --> o
+\x1d52c \x6f
+
+# MATHEMATICAL FRAKTUR SMALL P: 𝔭 --> p
+\x1d52d \x70
+
+# MATHEMATICAL FRAKTUR SMALL Q: 𝔮 --> q
+\x1d52e \x71
+
+# MATHEMATICAL FRAKTUR SMALL R: 𝔯 --> r
+\x1d52f \x72
+
+# MATHEMATICAL FRAKTUR SMALL S: 𝔰 --> s
+\x1d530 \x73
+
+# MATHEMATICAL FRAKTUR SMALL T: 𝔱 --> t
+\x1d531 \x74
+
+# MATHEMATICAL FRAKTUR SMALL U: 𝔲 --> u
+\x1d532 \x75
+
+# MATHEMATICAL FRAKTUR SMALL V: 𝔳 --> v
+\x1d533 \x76
+
+# MATHEMATICAL FRAKTUR SMALL W: 𝔴 --> w
+\x1d534 \x77
+
+# MATHEMATICAL FRAKTUR SMALL X: 𝔵 --> x
+\x1d535 \x78
+
+# MATHEMATICAL FRAKTUR SMALL Y: 𝔶 --> y
+\x1d536 \x79
+
+# MATHEMATICAL FRAKTUR SMALL Z: 𝔷 --> z
+\x1d537 \x7a
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL A: 𝔸 --> A
+\x1d538 \x41
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL B: 𝔹 --> B
+\x1d539 \x42
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL D: 𝔻 --> D
+\x1d53b \x44
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL E: 𝔼 --> E
+\x1d53c \x45
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL F: 𝔽 --> F
+\x1d53d \x46
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL G: 𝔾 --> G
+\x1d53e \x47
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL I: 𝕀 --> I
+\x1d540 \x49
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL J: 𝕁 --> J
+\x1d541 \x4a
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL K: 𝕂 --> K
+\x1d542 \x4b
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL L: 𝕃 --> L
+\x1d543 \x4c
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL M: 𝕄 --> M
+\x1d544 \x4d
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL O: 𝕆 --> O
+\x1d546 \x4f
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL S: 𝕊 --> S
+\x1d54a \x53
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL T: 𝕋 --> T
+\x1d54b \x54
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL U: 𝕌 --> U
+\x1d54c \x55
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL V: 𝕍 --> V
+\x1d54d \x56
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL W: 𝕎 --> W
+\x1d54e \x57
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL X: 𝕏 --> X
+\x1d54f \x58
+
+# MATHEMATICAL DOUBLE-STRUCK CAPITAL Y: 𝕐 --> Y
+\x1d550 \x59
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL A: 𝕒 --> a
+\x1d552 \x61
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL B: 𝕓 --> b
+\x1d553 \x62
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL C: 𝕔 --> c
+\x1d554 \x63
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL D: 𝕕 --> d
+\x1d555 \x64
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL E: 𝕖 --> e
+\x1d556 \x65
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL F: 𝕗 --> f
+\x1d557 \x66
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL G: 𝕘 --> g
+\x1d558 \x67
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL H: 𝕙 --> h
+\x1d559 \x68
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL I: 𝕚 --> i
+\x1d55a \x69
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL J: 𝕛 --> j
+\x1d55b \x6a
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL K: 𝕜 --> k
+\x1d55c \x6b
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL L: 𝕝 --> l
+\x1d55d \x6c
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL M: 𝕞 --> m
+\x1d55e \x6d
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL N: 𝕟 --> n
+\x1d55f \x6e
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL O: 𝕠 --> o
+\x1d560 \x6f
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL P: 𝕡 --> p
+\x1d561 \x70
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL Q: 𝕢 --> q
+\x1d562 \x71
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL R: 𝕣 --> r
+\x1d563 \x72
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL S: 𝕤 --> s
+\x1d564 \x73
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL T: 𝕥 --> t
+\x1d565 \x74
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL U: 𝕦 --> u
+\x1d566 \x75
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL V: 𝕧 --> v
+\x1d567 \x76
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL W: 𝕨 --> w
+\x1d568 \x77
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL X: 𝕩 --> x
+\x1d569 \x78
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL Y: 𝕪 --> y
+\x1d56a \x79
+
+# MATHEMATICAL DOUBLE-STRUCK SMALL Z: 𝕫 --> z
+\x1d56b \x7a
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL A: 𝕬 --> A
+\x1d56c \x41
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL B: 𝕭 --> B
+\x1d56d \x42
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL C: 𝕮 --> C
+\x1d56e \x43
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL D: 𝕯 --> D
+\x1d56f \x44
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL E: 𝕰 --> E
+\x1d570 \x45
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL F: 𝕱 --> F
+\x1d571 \x46
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL G: 𝕲 --> G
+\x1d572 \x47
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL H: 𝕳 --> H
+\x1d573 \x48
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL I: 𝕴 --> I
+\x1d574 \x49
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL J: 𝕵 --> J
+\x1d575 \x4a
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL K: 𝕶 --> K
+\x1d576 \x4b
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL L: 𝕷 --> L
+\x1d577 \x4c
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL M: 𝕸 --> M
+\x1d578 \x4d
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL N: 𝕹 --> N
+\x1d579 \x4e
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL O: 𝕺 --> O
+\x1d57a \x4f
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL P: 𝕻 --> P
+\x1d57b \x50
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL Q: 𝕼 --> Q
+\x1d57c \x51
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL R: 𝕽 --> R
+\x1d57d \x52
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL S: 𝕾 --> S
+\x1d57e \x53
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL T: 𝕿 --> T
+\x1d57f \x54
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL U: 𝖀 --> U
+\x1d580 \x55
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL V: 𝖁 --> V
+\x1d581 \x56
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL W: 𝖂 --> W
+\x1d582 \x57
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL X: 𝖃 --> X
+\x1d583 \x58
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL Y: 𝖄 --> Y
+\x1d584 \x59
+
+# MATHEMATICAL BOLD FRAKTUR CAPITAL Z: 𝖅 --> Z
+\x1d585 \x5a
+
+# MATHEMATICAL BOLD FRAKTUR SMALL A: 𝖆 --> a
+\x1d586 \x61
+
+# MATHEMATICAL BOLD FRAKTUR SMALL B: 𝖇 --> b
+\x1d587 \x62
+
+# MATHEMATICAL BOLD FRAKTUR SMALL C: 𝖈 --> c
+\x1d588 \x63
+
+# MATHEMATICAL BOLD FRAKTUR SMALL D: 𝖉 --> d
+\x1d589 \x64
+
+# MATHEMATICAL BOLD FRAKTUR SMALL E: 𝖊 --> e
+\x1d58a \x65
+
+# MATHEMATICAL BOLD FRAKTUR SMALL F: 𝖋 --> f
+\x1d58b \x66
+
+# MATHEMATICAL BOLD FRAKTUR SMALL G: 𝖌 --> g
+\x1d58c \x67
+
+# MATHEMATICAL BOLD FRAKTUR SMALL H: 𝖍 --> h
+\x1d58d \x68
+
+# MATHEMATICAL BOLD FRAKTUR SMALL I: 𝖎 --> i
+\x1d58e \x69
+
+# MATHEMATICAL BOLD FRAKTUR SMALL J: 𝖏 --> j
+\x1d58f \x6a
+
+# MATHEMATICAL BOLD FRAKTUR SMALL K: 𝖐 --> k
+\x1d590 \x6b
+
+# MATHEMATICAL BOLD FRAKTUR SMALL L: 𝖑 --> l
+\x1d591 \x6c
+
+# MATHEMATICAL BOLD FRAKTUR SMALL M: 𝖒 --> m
+\x1d592 \x6d
+
+# MATHEMATICAL BOLD FRAKTUR SMALL N: 𝖓 --> n
+\x1d593 \x6e
+
+# MATHEMATICAL BOLD FRAKTUR SMALL O: 𝖔 --> o
+\x1d594 \x6f
+
+# MATHEMATICAL BOLD FRAKTUR SMALL P: 𝖕 --> p
+\x1d595 \x70
+
+# MATHEMATICAL BOLD FRAKTUR SMALL Q: 𝖖 --> q
+\x1d596 \x71
+
+# MATHEMATICAL BOLD FRAKTUR SMALL R: 𝖗 --> r
+\x1d597 \x72
+
+# MATHEMATICAL BOLD FRAKTUR SMALL S: 𝖘 --> s
+\x1d598 \x73
+
+# MATHEMATICAL BOLD FRAKTUR SMALL T: 𝖙 --> t
+\x1d599 \x74
+
+# MATHEMATICAL BOLD FRAKTUR SMALL U: 𝖚 --> u
+\x1d59a \x75
+
+# MATHEMATICAL BOLD FRAKTUR SMALL V: 𝖛 --> v
+\x1d59b \x76
+
+# MATHEMATICAL BOLD FRAKTUR SMALL W: 𝖜 --> w
+\x1d59c \x77
+
+# MATHEMATICAL BOLD FRAKTUR SMALL X: 𝖝 --> x
+\x1d59d \x78
+
+# MATHEMATICAL BOLD FRAKTUR SMALL Y: 𝖞 --> y
+\x1d59e \x79
+
+# MATHEMATICAL BOLD FRAKTUR SMALL Z: 𝖟 --> z
+\x1d59f \x7a
+
+# MATHEMATICAL SANS-SERIF CAPITAL A: 𝖠 --> A
+\x1d5a0 \x41
+
+# MATHEMATICAL SANS-SERIF CAPITAL B: 𝖡 --> B
+\x1d5a1 \x42
+
+# MATHEMATICAL SANS-SERIF CAPITAL C: 𝖢 --> C
+\x1d5a2 \x43
+
+# MATHEMATICAL SANS-SERIF CAPITAL D: 𝖣 --> D
+\x1d5a3 \x44
+
+# MATHEMATICAL SANS-SERIF CAPITAL E: 𝖤 --> E
+\x1d5a4 \x45
+
+# MATHEMATICAL SANS-SERIF CAPITAL F: 𝖥 --> F
+\x1d5a5 \x46
+
+# MATHEMATICAL SANS-SERIF CAPITAL G: 𝖦 --> G
+\x1d5a6 \x47
+
+# MATHEMATICAL SANS-SERIF CAPITAL H: 𝖧 --> H
+\x1d5a7 \x48
+
+# MATHEMATICAL SANS-SERIF CAPITAL I: 𝖨 --> I
+\x1d5a8 \x49
+
+# MATHEMATICAL SANS-SERIF CAPITAL J: 𝖩 --> J
+\x1d5a9 \x4a
+
+# MATHEMATICAL SANS-SERIF CAPITAL K: 𝖪 --> K
+\x1d5aa \x4b
+
+# MATHEMATICAL SANS-SERIF CAPITAL L: 𝖫 --> L
+\x1d5ab \x4c
+
+# MATHEMATICAL SANS-SERIF CAPITAL M: 𝖬 --> M
+\x1d5ac \x4d
+
+# MATHEMATICAL SANS-SERIF CAPITAL N: 𝖭 --> N
+\x1d5ad \x4e
+
+# MATHEMATICAL SANS-SERIF CAPITAL O: 𝖮 --> O
+\x1d5ae \x4f
+
+# MATHEMATICAL SANS-SERIF CAPITAL P: 𝖯 --> P
+\x1d5af \x50
+
+# MATHEMATICAL SANS-SERIF CAPITAL Q: 𝖰 --> Q
+\x1d5b0 \x51
+
+# MATHEMATICAL SANS-SERIF CAPITAL R: 𝖱 --> R
+\x1d5b1 \x52
+
+# MATHEMATICAL SANS-SERIF CAPITAL S: 𝖲 --> S
+\x1d5b2 \x53
+
+# MATHEMATICAL SANS-SERIF CAPITAL T: 𝖳 --> T
+\x1d5b3 \x54
+
+# MATHEMATICAL SANS-SERIF CAPITAL U: 𝖴 --> U
+\x1d5b4 \x55
+
+# MATHEMATICAL SANS-SERIF CAPITAL V: 𝖵 --> V
+\x1d5b5 \x56
+
+# MATHEMATICAL SANS-SERIF CAPITAL W: 𝖶 --> W
+\x1d5b6 \x57
+
+# MATHEMATICAL SANS-SERIF CAPITAL X: 𝖷 --> X
+\x1d5b7 \x58
+
+# MATHEMATICAL SANS-SERIF CAPITAL Y: 𝖸 --> Y
+\x1d5b8 \x59
+
+# MATHEMATICAL SANS-SERIF CAPITAL Z: 𝖹 --> Z
+\x1d5b9 \x5a
+
+# MATHEMATICAL SANS-SERIF SMALL A: 𝖺 --> a
+\x1d5ba \x61
+
+# MATHEMATICAL SANS-SERIF SMALL B: 𝖻 --> b
+\x1d5bb \x62
+
+# MATHEMATICAL SANS-SERIF SMALL C: 𝖼 --> c
+\x1d5bc \x63
+
+# MATHEMATICAL SANS-SERIF SMALL D: 𝖽 --> d
+\x1d5bd \x64
+
+# MATHEMATICAL SANS-SERIF SMALL E: 𝖾 --> e
+\x1d5be \x65
+
+# MATHEMATICAL SANS-SERIF SMALL F: 𝖿 --> f
+\x1d5bf \x66
+
+# MATHEMATICAL SANS-SERIF SMALL G: 𝗀 --> g
+\x1d5c0 \x67
+
+# MATHEMATICAL SANS-SERIF SMALL H: 𝗁 --> h
+\x1d5c1 \x68
+
+# MATHEMATICAL SANS-SERIF SMALL I: 𝗂 --> i
+\x1d5c2 \x69
+
+# MATHEMATICAL SANS-SERIF SMALL J: 𝗃 --> j
+\x1d5c3 \x6a
+
+# MATHEMATICAL SANS-SERIF SMALL K: 𝗄 --> k
+\x1d5c4 \x6b
+
+# MATHEMATICAL SANS-SERIF SMALL L: 𝗅 --> l
+\x1d5c5 \x6c
+
+# MATHEMATICAL SANS-SERIF SMALL M: 𝗆 --> m
+\x1d5c6 \x6d
+
+# MATHEMATICAL SANS-SERIF SMALL N: 𝗇 --> n
+\x1d5c7 \x6e
+
+# MATHEMATICAL SANS-SERIF SMALL O: 𝗈 --> o
+\x1d5c8 \x6f
+
+# MATHEMATICAL SANS-SERIF SMALL P: 𝗉 --> p
+\x1d5c9 \x70
+
+# MATHEMATICAL SANS-SERIF SMALL Q: 𝗊 --> q
+\x1d5ca \x71
+
+# MATHEMATICAL SANS-SERIF SMALL R: 𝗋 --> r
+\x1d5cb \x72
+
+# MATHEMATICAL SANS-SERIF SMALL S: 𝗌 --> s
+\x1d5cc \x73
+
+# MATHEMATICAL SANS-SERIF SMALL T: 𝗍 --> t
+\x1d5cd \x74
+
+# MATHEMATICAL SANS-SERIF SMALL U: 𝗎 --> u
+\x1d5ce \x75
+
+# MATHEMATICAL SANS-SERIF SMALL V: 𝗏 --> v
+\x1d5cf \x76
+
+# MATHEMATICAL SANS-SERIF SMALL W: 𝗐 --> w
+\x1d5d0 \x77
+
+# MATHEMATICAL SANS-SERIF SMALL X: 𝗑 --> x
+\x1d5d1 \x78
+
+# MATHEMATICAL SANS-SERIF SMALL Y: 𝗒 --> y
+\x1d5d2 \x79
+
+# MATHEMATICAL SANS-SERIF SMALL Z: 𝗓 --> z
+\x1d5d3 \x7a
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL A: 𝗔 --> A
+\x1d5d4 \x41
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL B: 𝗕 --> B
+\x1d5d5 \x42
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL C: 𝗖 --> C
+\x1d5d6 \x43
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL D: 𝗗 --> D
+\x1d5d7 \x44
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL E: 𝗘 --> E
+\x1d5d8 \x45
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL F: 𝗙 --> F
+\x1d5d9 \x46
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL G: 𝗚 --> G
+\x1d5da \x47
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL H: 𝗛 --> H
+\x1d5db \x48
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL I: 𝗜 --> I
+\x1d5dc \x49
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL J: 𝗝 --> J
+\x1d5dd \x4a
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL K: 𝗞 --> K
+\x1d5de \x4b
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL L: 𝗟 --> L
+\x1d5df \x4c
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL M: 𝗠 --> M
+\x1d5e0 \x4d
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL N: 𝗡 --> N
+\x1d5e1 \x4e
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL O: 𝗢 --> O
+\x1d5e2 \x4f
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL P: 𝗣 --> P
+\x1d5e3 \x50
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL Q: 𝗤 --> Q
+\x1d5e4 \x51
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL R: 𝗥 --> R
+\x1d5e5 \x52
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL S: 𝗦 --> S
+\x1d5e6 \x53
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL T: 𝗧 --> T
+\x1d5e7 \x54
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL U: 𝗨 --> U
+\x1d5e8 \x55
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL V: 𝗩 --> V
+\x1d5e9 \x56
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL W: 𝗪 --> W
+\x1d5ea \x57
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL X: 𝗫 --> X
+\x1d5eb \x58
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL Y: 𝗬 --> Y
+\x1d5ec \x59
+
+# MATHEMATICAL SANS-SERIF BOLD CAPITAL Z: 𝗭 --> Z
+\x1d5ed \x5a
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL A: 𝗮 --> a
+\x1d5ee \x61
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL B: 𝗯 --> b
+\x1d5ef \x62
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL C: 𝗰 --> c
+\x1d5f0 \x63
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL D: 𝗱 --> d
+\x1d5f1 \x64
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL E: 𝗲 --> e
+\x1d5f2 \x65
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL F: 𝗳 --> f
+\x1d5f3 \x66
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL G: 𝗴 --> g
+\x1d5f4 \x67
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL H: 𝗵 --> h
+\x1d5f5 \x68
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL I: 𝗶 --> i
+\x1d5f6 \x69
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL J: 𝗷 --> j
+\x1d5f7 \x6a
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL K: 𝗸 --> k
+\x1d5f8 \x6b
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL L: 𝗹 --> l
+\x1d5f9 \x6c
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL M: 𝗺 --> m
+\x1d5fa \x6d
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL N: 𝗻 --> n
+\x1d5fb \x6e
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL O: 𝗼 --> o
+\x1d5fc \x6f
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL P: 𝗽 --> p
+\x1d5fd \x70
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL Q: 𝗾 --> q
+\x1d5fe \x71
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL R: 𝗿 --> r
+\x1d5ff \x72
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL S: 𝘀 --> s
+\x1d600 \x73
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL T: 𝘁 --> t
+\x1d601 \x74
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL U: 𝘂 --> u
+\x1d602 \x75
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL V: 𝘃 --> v
+\x1d603 \x76
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL W: 𝘄 --> w
+\x1d604 \x77
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL X: 𝘅 --> x
+\x1d605 \x78
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL Y: 𝘆 --> y
+\x1d606 \x79
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL Z: 𝘇 --> z
+\x1d607 \x7a
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL A: 𝘈 --> A
+\x1d608 \x41
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL B: 𝘉 --> B
+\x1d609 \x42
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL C: 𝘊 --> C
+\x1d60a \x43
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL D: 𝘋 --> D
+\x1d60b \x44
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL E: 𝘌 --> E
+\x1d60c \x45
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL F: 𝘍 --> F
+\x1d60d \x46
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL G: 𝘎 --> G
+\x1d60e \x47
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL H: 𝘏 --> H
+\x1d60f \x48
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL I: 𝘐 --> I
+\x1d610 \x49
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL J: 𝘑 --> J
+\x1d611 \x4a
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL K: 𝘒 --> K
+\x1d612 \x4b
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL L: 𝘓 --> L
+\x1d613 \x4c
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL M: 𝘔 --> M
+\x1d614 \x4d
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL N: 𝘕 --> N
+\x1d615 \x4e
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL O: 𝘖 --> O
+\x1d616 \x4f
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL P: 𝘗 --> P
+\x1d617 \x50
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL Q: 𝘘 --> Q
+\x1d618 \x51
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL R: 𝘙 --> R
+\x1d619 \x52
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL S: 𝘚 --> S
+\x1d61a \x53
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL T: 𝘛 --> T
+\x1d61b \x54
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL U: 𝘜 --> U
+\x1d61c \x55
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL V: 𝘝 --> V
+\x1d61d \x56
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL W: 𝘞 --> W
+\x1d61e \x57
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL X: 𝘟 --> X
+\x1d61f \x58
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL Y: 𝘠 --> Y
+\x1d620 \x59
+
+# MATHEMATICAL SANS-SERIF ITALIC CAPITAL Z: 𝘡 --> Z
+\x1d621 \x5a
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL A: 𝘢 --> a
+\x1d622 \x61
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL B: 𝘣 --> b
+\x1d623 \x62
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL C: 𝘤 --> c
+\x1d624 \x63
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL D: 𝘥 --> d
+\x1d625 \x64
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL E: 𝘦 --> e
+\x1d626 \x65
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL F: 𝘧 --> f
+\x1d627 \x66
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL G: 𝘨 --> g
+\x1d628 \x67
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL H: 𝘩 --> h
+\x1d629 \x68
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL I: 𝘪 --> i
+\x1d62a \x69
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL J: 𝘫 --> j
+\x1d62b \x6a
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL K: 𝘬 --> k
+\x1d62c \x6b
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL L: 𝘭 --> l
+\x1d62d \x6c
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL M: 𝘮 --> m
+\x1d62e \x6d
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL N: 𝘯 --> n
+\x1d62f \x6e
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL O: 𝘰 --> o
+\x1d630 \x6f
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL P: 𝘱 --> p
+\x1d631 \x70
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL Q: 𝘲 --> q
+\x1d632 \x71
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL R: 𝘳 --> r
+\x1d633 \x72
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL S: 𝘴 --> s
+\x1d634 \x73
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL T: 𝘵 --> t
+\x1d635 \x74
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL U: 𝘶 --> u
+\x1d636 \x75
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL V: 𝘷 --> v
+\x1d637 \x76
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL W: 𝘸 --> w
+\x1d638 \x77
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL X: 𝘹 --> x
+\x1d639 \x78
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL Y: 𝘺 --> y
+\x1d63a \x79
+
+# MATHEMATICAL SANS-SERIF ITALIC SMALL Z: 𝘻 --> z
+\x1d63b \x7a
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL A: 𝘼 --> A
+\x1d63c \x41
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL B: 𝘽 --> B
+\x1d63d \x42
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL C: 𝘾 --> C
+\x1d63e \x43
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL D: 𝘿 --> D
+\x1d63f \x44
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL E: 𝙀 --> E
+\x1d640 \x45
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL F: 𝙁 --> F
+\x1d641 \x46
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL G: 𝙂 --> G
+\x1d642 \x47
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL H: 𝙃 --> H
+\x1d643 \x48
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL I: 𝙄 --> I
+\x1d644 \x49
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL J: 𝙅 --> J
+\x1d645 \x4a
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL K: 𝙆 --> K
+\x1d646 \x4b
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL L: 𝙇 --> L
+\x1d647 \x4c
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL M: 𝙈 --> M
+\x1d648 \x4d
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL N: 𝙉 --> N
+\x1d649 \x4e
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL O: 𝙊 --> O
+\x1d64a \x4f
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL P: 𝙋 --> P
+\x1d64b \x50
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL Q: 𝙌 --> Q
+\x1d64c \x51
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL R: 𝙍 --> R
+\x1d64d \x52
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL S: 𝙎 --> S
+\x1d64e \x53
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL T: 𝙏 --> T
+\x1d64f \x54
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL U: 𝙐 --> U
+\x1d650 \x55
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL V: 𝙑 --> V
+\x1d651 \x56
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL W: 𝙒 --> W
+\x1d652 \x57
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL X: 𝙓 --> X
+\x1d653 \x58
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL Y: 𝙔 --> Y
+\x1d654 \x59
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL Z: 𝙕 --> Z
+\x1d655 \x5a
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL A: 𝙖 --> a
+\x1d656 \x61
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL B: 𝙗 --> b
+\x1d657 \x62
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL C: 𝙘 --> c
+\x1d658 \x63
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL D: 𝙙 --> d
+\x1d659 \x64
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL E: 𝙚 --> e
+\x1d65a \x65
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL F: 𝙛 --> f
+\x1d65b \x66
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL G: 𝙜 --> g
+\x1d65c \x67
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL H: 𝙝 --> h
+\x1d65d \x68
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL I: 𝙞 --> i
+\x1d65e \x69
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL J: 𝙟 --> j
+\x1d65f \x6a
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL K: 𝙠 --> k
+\x1d660 \x6b
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL L: 𝙡 --> l
+\x1d661 \x6c
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL M: 𝙢 --> m
+\x1d662 \x6d
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL N: 𝙣 --> n
+\x1d663 \x6e
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL O: 𝙤 --> o
+\x1d664 \x6f
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL P: 𝙥 --> p
+\x1d665 \x70
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL Q: 𝙦 --> q
+\x1d666 \x71
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL R: 𝙧 --> r
+\x1d667 \x72
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL S: 𝙨 --> s
+\x1d668 \x73
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL T: 𝙩 --> t
+\x1d669 \x74
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL U: 𝙪 --> u
+\x1d66a \x75
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL V: 𝙫 --> v
+\x1d66b \x76
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL W: 𝙬 --> w
+\x1d66c \x77
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL X: 𝙭 --> x
+\x1d66d \x78
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL Y: 𝙮 --> y
+\x1d66e \x79
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL Z: 𝙯 --> z
+\x1d66f \x7a
+
+# MATHEMATICAL MONOSPACE CAPITAL A: 𝙰 --> A
+\x1d670 \x41
+
+# MATHEMATICAL MONOSPACE CAPITAL B: 𝙱 --> B
+\x1d671 \x42
+
+# MATHEMATICAL MONOSPACE CAPITAL C: 𝙲 --> C
+\x1d672 \x43
+
+# MATHEMATICAL MONOSPACE CAPITAL D: 𝙳 --> D
+\x1d673 \x44
+
+# MATHEMATICAL MONOSPACE CAPITAL E: 𝙴 --> E
+\x1d674 \x45
+
+# MATHEMATICAL MONOSPACE CAPITAL F: 𝙵 --> F
+\x1d675 \x46
+
+# MATHEMATICAL MONOSPACE CAPITAL G: 𝙶 --> G
+\x1d676 \x47
+
+# MATHEMATICAL MONOSPACE CAPITAL H: 𝙷 --> H
+\x1d677 \x48
+
+# MATHEMATICAL MONOSPACE CAPITAL I: 𝙸 --> I
+\x1d678 \x49
+
+# MATHEMATICAL MONOSPACE CAPITAL J: 𝙹 --> J
+\x1d679 \x4a
+
+# MATHEMATICAL MONOSPACE CAPITAL K: 𝙺 --> K
+\x1d67a \x4b
+
+# MATHEMATICAL MONOSPACE CAPITAL L: 𝙻 --> L
+\x1d67b \x4c
+
+# MATHEMATICAL MONOSPACE CAPITAL M: 𝙼 --> M
+\x1d67c \x4d
+
+# MATHEMATICAL MONOSPACE CAPITAL N: 𝙽 --> N
+\x1d67d \x4e
+
+# MATHEMATICAL MONOSPACE CAPITAL O: 𝙾 --> O
+\x1d67e \x4f
+
+# MATHEMATICAL MONOSPACE CAPITAL P: 𝙿 --> P
+\x1d67f \x50
+
+# MATHEMATICAL MONOSPACE CAPITAL Q: 𝚀 --> Q
+\x1d680 \x51
+
+# MATHEMATICAL MONOSPACE CAPITAL R: 𝚁 --> R
+\x1d681 \x52
+
+# MATHEMATICAL MONOSPACE CAPITAL S: 𝚂 --> S
+\x1d682 \x53
+
+# MATHEMATICAL MONOSPACE CAPITAL T: 𝚃 --> T
+\x1d683 \x54
+
+# MATHEMATICAL MONOSPACE CAPITAL U: 𝚄 --> U
+\x1d684 \x55
+
+# MATHEMATICAL MONOSPACE CAPITAL V: 𝚅 --> V
+\x1d685 \x56
+
+# MATHEMATICAL MONOSPACE CAPITAL W: 𝚆 --> W
+\x1d686 \x57
+
+# MATHEMATICAL MONOSPACE CAPITAL X: 𝚇 --> X
+\x1d687 \x58
+
+# MATHEMATICAL MONOSPACE CAPITAL Y: 𝚈 --> Y
+\x1d688 \x59
+
+# MATHEMATICAL MONOSPACE CAPITAL Z: 𝚉 --> Z
+\x1d689 \x5a
+
+# MATHEMATICAL MONOSPACE SMALL A: 𝚊 --> a
+\x1d68a \x61
+
+# MATHEMATICAL MONOSPACE SMALL B: 𝚋 --> b
+\x1d68b \x62
+
+# MATHEMATICAL MONOSPACE SMALL C: 𝚌 --> c
+\x1d68c \x63
+
+# MATHEMATICAL MONOSPACE SMALL D: 𝚍 --> d
+\x1d68d \x64
+
+# MATHEMATICAL MONOSPACE SMALL E: 𝚎 --> e
+\x1d68e \x65
+
+# MATHEMATICAL MONOSPACE SMALL F: 𝚏 --> f
+\x1d68f \x66
+
+# MATHEMATICAL MONOSPACE SMALL G: 𝚐 --> g
+\x1d690 \x67
+
+# MATHEMATICAL MONOSPACE SMALL H: 𝚑 --> h
+\x1d691 \x68
+
+# MATHEMATICAL MONOSPACE SMALL I: 𝚒 --> i
+\x1d692 \x69
+
+# MATHEMATICAL MONOSPACE SMALL J: 𝚓 --> j
+\x1d693 \x6a
+
+# MATHEMATICAL MONOSPACE SMALL K: 𝚔 --> k
+\x1d694 \x6b
+
+# MATHEMATICAL MONOSPACE SMALL L: 𝚕 --> l
+\x1d695 \x6c
+
+# MATHEMATICAL MONOSPACE SMALL M: 𝚖 --> m
+\x1d696 \x6d
+
+# MATHEMATICAL MONOSPACE SMALL N: 𝚗 --> n
+\x1d697 \x6e
+
+# MATHEMATICAL MONOSPACE SMALL O: 𝚘 --> o
+\x1d698 \x6f
+
+# MATHEMATICAL MONOSPACE SMALL P: 𝚙 --> p
+\x1d699 \x70
+
+# MATHEMATICAL MONOSPACE SMALL Q: 𝚚 --> q
+\x1d69a \x71
+
+# MATHEMATICAL MONOSPACE SMALL R: 𝚛 --> r
+\x1d69b \x72
+
+# MATHEMATICAL MONOSPACE SMALL S: 𝚜 --> s
+\x1d69c \x73
+
+# MATHEMATICAL MONOSPACE SMALL T: 𝚝 --> t
+\x1d69d \x74
+
+# MATHEMATICAL MONOSPACE SMALL U: 𝚞 --> u
+\x1d69e \x75
+
+# MATHEMATICAL MONOSPACE SMALL V: 𝚟 --> v
+\x1d69f \x76
+
+# MATHEMATICAL MONOSPACE SMALL W: 𝚠 --> w
+\x1d6a0 \x77
+
+# MATHEMATICAL MONOSPACE SMALL X: 𝚡 --> x
+\x1d6a1 \x78
+
+# MATHEMATICAL MONOSPACE SMALL Y: 𝚢 --> y
+\x1d6a2 \x79
+
+# MATHEMATICAL MONOSPACE SMALL Z: 𝚣 --> z
+\x1d6a3 \x7a
+
+# MATHEMATICAL ITALIC SMALL DOTLESS I: 𝚤 --> ı
+\x1d6a4 \x131
+
+# MATHEMATICAL BOLD SMALL ALPHA: 𝛂 --> α
+\x1d6c2 \x3b1
+
+# MATHEMATICAL BOLD SMALL IOTA: 𝛊 --> ι
+\x1d6ca \x3b9
+
+# MATHEMATICAL BOLD SMALL OMICRON: 𝛐 --> ο
+\x1d6d0 \x3bf
+
+# MATHEMATICAL ITALIC SMALL ALPHA: 𝛼 --> α
+\x1d6fc \x3b1
+
+# MATHEMATICAL ITALIC SMALL IOTA: 𝜄 --> ι
+\x1d704 \x3b9
+
+# MATHEMATICAL ITALIC SMALL OMICRON: 𝜊 --> ο
+\x1d70a \x3bf
+
+# MATHEMATICAL BOLD ITALIC SMALL ALPHA: 𝜶 --> α
+\x1d736 \x3b1
+
+# MATHEMATICAL BOLD ITALIC SMALL IOTA: 𝜾 --> ι
+\x1d73e \x3b9
+
+# MATHEMATICAL BOLD ITALIC SMALL OMICRON: 𝝄 --> ο
+\x1d744 \x3bf
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL ALPHA: 𝝰 --> α
+\x1d770 \x3b1
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL IOTA: 𝝸 --> ι
+\x1d778 \x3b9
+
+# MATHEMATICAL SANS-SERIF BOLD SMALL OMICRON: 𝝾 --> ο
+\x1d77e \x3bf
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL ALPHA: 𝞪 --> α
+\x1d7aa \x3b1
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL IOTA: 𝞲 --> ι
+\x1d7b2 \x3b9
+
+# MATHEMATICAL SANS-SERIF BOLD ITALIC SMALL OMICRON: 𝞸 --> ο
+\x1d7b8 \x3bf
+
+# MATHEMATICAL BOLD DIGIT ZERO: 𝟎 --> 0
+\x1d7ce \x30
+
+# MATHEMATICAL BOLD DIGIT ONE: 𝟏 --> 1
+\x1d7cf \x31
+
+# MATHEMATICAL BOLD DIGIT TWO: 𝟐 --> 2
+\x1d7d0 \x32
+
+# MATHEMATICAL BOLD DIGIT THREE: 𝟑 --> 3
+\x1d7d1 \x33
+
+# MATHEMATICAL BOLD DIGIT FOUR: 𝟒 --> 4
+\x1d7d2 \x34
+
+# MATHEMATICAL BOLD DIGIT FIVE: 𝟓 --> 5
+\x1d7d3 \x35
+
+# MATHEMATICAL BOLD DIGIT SIX: 𝟔 --> 6
+\x1d7d4 \x36
+
+# MATHEMATICAL BOLD DIGIT SEVEN: 𝟕 --> 7
+\x1d7d5 \x37
+
+# MATHEMATICAL BOLD DIGIT EIGHT: 𝟖 --> 8
+\x1d7d6 \x38
+
+# MATHEMATICAL BOLD DIGIT NINE: 𝟗 --> 9
+\x1d7d7 \x39
+
+# MATHEMATICAL DOUBLE-STRUCK DIGIT ZERO: 𝟘 --> 0
+\x1d7d8 \x30
+
+# MATHEMATICAL DOUBLE-STRUCK DIGIT ONE: 𝟙 --> 1
+\x1d7d9 \x31
+
+# MATHEMATICAL DOUBLE-STRUCK DIGIT TWO: 𝟚 --> 2
+\x1d7da \x32
+
+# MATHEMATICAL DOUBLE-STRUCK DIGIT THREE: 𝟛 --> 3
+\x1d7db \x33
+
+# MATHEMATICAL DOUBLE-STRUCK DIGIT FOUR: 𝟜 --> 4
+\x1d7dc \x34
+
+# MATHEMATICAL DOUBLE-STRUCK DIGIT FIVE: 𝟝 --> 5
+\x1d7dd \x35
+
+# MATHEMATICAL DOUBLE-STRUCK DIGIT SIX: 𝟞 --> 6
+\x1d7de \x36
+
+# MATHEMATICAL DOUBLE-STRUCK DIGIT SEVEN: 𝟟 --> 7
+\x1d7df \x37
+
+# MATHEMATICAL DOUBLE-STRUCK DIGIT EIGHT: 𝟠 --> 8
+\x1d7e0 \x38
+
+# MATHEMATICAL DOUBLE-STRUCK DIGIT NINE: 𝟡 --> 9
+\x1d7e1 \x39
+
+# MATHEMATICAL SANS-SERIF DIGIT ZERO: 𝟢 --> 0
+\x1d7e2 \x30
+
+# MATHEMATICAL SANS-SERIF DIGIT ONE: 𝟣 --> 1
+\x1d7e3 \x31
+
+# MATHEMATICAL SANS-SERIF DIGIT TWO: 𝟤 --> 2
+\x1d7e4 \x32
+
+# MATHEMATICAL SANS-SERIF DIGIT THREE: 𝟥 --> 3
+\x1d7e5 \x33
+
+# MATHEMATICAL SANS-SERIF DIGIT FOUR: 𝟦 --> 4
+\x1d7e6 \x34
+
+# MATHEMATICAL SANS-SERIF DIGIT FIVE: 𝟧 --> 5
+\x1d7e7 \x35
+
+# MATHEMATICAL SANS-SERIF DIGIT SIX: 𝟨 --> 6
+\x1d7e8 \x36
+
+# MATHEMATICAL SANS-SERIF DIGIT SEVEN: 𝟩 --> 7
+\x1d7e9 \x37
+
+# MATHEMATICAL SANS-SERIF DIGIT EIGHT: 𝟪 --> 8
+\x1d7ea \x38
+
+# MATHEMATICAL SANS-SERIF DIGIT NINE: 𝟫 --> 9
+\x1d7eb \x39
+
+# MATHEMATICAL SANS-SERIF BOLD DIGIT ZERO: 𝟬 --> 0
+\x1d7ec \x30
+
+# MATHEMATICAL SANS-SERIF BOLD DIGIT ONE: 𝟭 --> 1
+\x1d7ed \x31
+
+# MATHEMATICAL SANS-SERIF BOLD DIGIT TWO: 𝟮 --> 2
+\x1d7ee \x32
+
+# MATHEMATICAL SANS-SERIF BOLD DIGIT THREE: 𝟯 --> 3
+\x1d7ef \x33
+
+# MATHEMATICAL SANS-SERIF BOLD DIGIT FOUR: 𝟰 --> 4
+\x1d7f0 \x34
+
+# MATHEMATICAL SANS-SERIF BOLD DIGIT FIVE: 𝟱 --> 5
+\x1d7f1 \x35
+
+# MATHEMATICAL SANS-SERIF BOLD DIGIT SIX: 𝟲 --> 6
+\x1d7f2 \x36
+
+# MATHEMATICAL SANS-SERIF BOLD DIGIT SEVEN: 𝟳 --> 7
+\x1d7f3 \x37
+
+# MATHEMATICAL SANS-SERIF BOLD DIGIT EIGHT: 𝟴 --> 8
+\x1d7f4 \x38
+
+# MATHEMATICAL SANS-SERIF BOLD DIGIT NINE: 𝟵 --> 9
+\x1d7f5 \x39
+
+# MATHEMATICAL MONOSPACE DIGIT ZERO: 𝟶 --> 0
+\x1d7f6 \x30
+
+# MATHEMATICAL MONOSPACE DIGIT ONE: 𝟷 --> 1
+\x1d7f7 \x31
+
+# MATHEMATICAL MONOSPACE DIGIT TWO: 𝟸 --> 2
+\x1d7f8 \x32
+
+# MATHEMATICAL MONOSPACE DIGIT THREE: 𝟹 --> 3
+\x1d7f9 \x33
+
+# MATHEMATICAL MONOSPACE DIGIT FOUR: 𝟺 --> 4
+\x1d7fa \x34
+
+# MATHEMATICAL MONOSPACE DIGIT FIVE: 𝟻 --> 5
+\x1d7fb \x35
+
+# MATHEMATICAL MONOSPACE DIGIT SIX: 𝟼 --> 6
+\x1d7fc \x36
+
+# MATHEMATICAL MONOSPACE DIGIT SEVEN: 𝟽 --> 7
+\x1d7fd \x37
+
+# MATHEMATICAL MONOSPACE DIGIT EIGHT: 𝟾 --> 8
+\x1d7fe \x38
+
+# MATHEMATICAL MONOSPACE DIGIT NINE: 𝟿 --> 9
+\x1d7ff \x39
+
+# ARABIC MATHEMATICAL ALEF: 𞸀 --> ا
+\x1ee00 \x627
+
+# ARABIC MATHEMATICAL LOOPED ALEF: 𞺀 --> ا
+\x1ee80 \x627
+
+# DIGIT ZERO FULL STOP: 🄀 --> 0.
+\x1f100 0.
+
+# DIGIT ZERO COMMA: 🄁 --> 0,
+\x1f101 0,
+
+# DIGIT ONE COMMA: 🄂 --> 1,
+\x1f102 1,
+
+# DIGIT TWO COMMA: 🄃 --> 2,
+\x1f103 2,
+
+# DIGIT THREE COMMA: 🄄 --> 3,
+\x1f104 3,
+
+# DIGIT FOUR COMMA: 🄅 --> 4,
+\x1f105 4,
+
+# DIGIT FIVE COMMA: 🄆 --> 5,
+\x1f106 5,
+
+# DIGIT SIX COMMA: 🄇 --> 6,
+\x1f107 6,
+
+# DIGIT SEVEN COMMA: 🄈 --> 7,
+\x1f108 7,
+
+# DIGIT EIGHT COMMA: 🄉 --> 8,
+\x1f109 8,
+
+# DIGIT NINE COMMA: 🄊 --> 9,
+\x1f10a 9,
+
+# PARENTHESIZED LATIN CAPITAL LETTER A: 🄐 --> (A)
+\x1f110 (A)
+
+# PARENTHESIZED LATIN CAPITAL LETTER B: 🄑 --> (B)
+\x1f111 (B)
+
+# PARENTHESIZED LATIN CAPITAL LETTER C: 🄒 --> (C)
+\x1f112 (C)
+
+# PARENTHESIZED LATIN CAPITAL LETTER D: 🄓 --> (D)
+\x1f113 (D)
+
+# PARENTHESIZED LATIN CAPITAL LETTER E: 🄔 --> (E)
+\x1f114 (E)
+
+# PARENTHESIZED LATIN CAPITAL LETTER F: 🄕 --> (F)
+\x1f115 (F)
+
+# PARENTHESIZED LATIN CAPITAL LETTER G: 🄖 --> (G)
+\x1f116 (G)
+
+# PARENTHESIZED LATIN CAPITAL LETTER H: 🄗 --> (H)
+\x1f117 (H)
+
+# PARENTHESIZED LATIN CAPITAL LETTER I: 🄘 --> (I)
+\x1f118 (I)
+
+# PARENTHESIZED LATIN CAPITAL LETTER J: 🄙 --> (J)
+\x1f119 (J)
+
+# PARENTHESIZED LATIN CAPITAL LETTER K: 🄚 --> (K)
+\x1f11a (K)
+
+# PARENTHESIZED LATIN CAPITAL LETTER L: 🄛 --> (L)
+\x1f11b (L)
+
+# PARENTHESIZED LATIN CAPITAL LETTER M: 🄜 --> (M)
+\x1f11c (M)
+
+# PARENTHESIZED LATIN CAPITAL LETTER N: 🄝 --> (N)
+\x1f11d (N)
+
+# PARENTHESIZED LATIN CAPITAL LETTER O: 🄞 --> (O)
+\x1f11e (O)
+
+# PARENTHESIZED LATIN CAPITAL LETTER P: 🄟 --> (P)
+\x1f11f (P)
+
+# PARENTHESIZED LATIN CAPITAL LETTER Q: 🄠 --> (Q)
+\x1f120 (Q)
+
+# PARENTHESIZED LATIN CAPITAL LETTER R: 🄡 --> (R)
+\x1f121 (R)
+
+# PARENTHESIZED LATIN CAPITAL LETTER S: 🄢 --> (S)
+\x1f122 (S)
+
+# PARENTHESIZED LATIN CAPITAL LETTER T: 🄣 --> (T)
+\x1f123 (T)
+
+# PARENTHESIZED LATIN CAPITAL LETTER U: 🄤 --> (U)
+\x1f124 (U)
+
+# PARENTHESIZED LATIN CAPITAL LETTER V: 🄥 --> (V)
+\x1f125 (V)
+
+# PARENTHESIZED LATIN CAPITAL LETTER W: 🄦 --> (W)
+\x1f126 (W)
+
+# PARENTHESIZED LATIN CAPITAL LETTER X: 🄧 --> (X)
+\x1f127 (X)
+
+# PARENTHESIZED LATIN CAPITAL LETTER Y: 🄨 --> (Y)
+\x1f128 (Y)
+
+# PARENTHESIZED LATIN CAPITAL LETTER Z: 🄩 --> (Z)
+\x1f129 (Z)
+
+# TORTOISE SHELL BRACKETED LATIN CAPITAL LETTER S: 🄪 --> 〔S〕
+\x1f12a 〔S〕
+
+# CIRCLED ITALIC LATIN CAPITAL LETTER C: 🄫 --> C
+\x1f12b \x43
+
+# CIRCLED ITALIC LATIN CAPITAL LETTER R: 🄬 --> R
+\x1f12c \x52
+
+# CIRCLED CD: 🄭 --> CD
+\x1f12d CD
+
+# CIRCLED WZ: 🄮 --> WZ
+\x1f12e WZ
+
+# SQUARED LATIN CAPITAL LETTER A: 🄰 --> A
+\x1f130 \x41
+
+# SQUARED LATIN CAPITAL LETTER B: 🄱 --> B
+\x1f131 \x42
+
+# SQUARED LATIN CAPITAL LETTER C: 🄲 --> C
+\x1f132 \x43
+
+# SQUARED LATIN CAPITAL LETTER D: 🄳 --> D
+\x1f133 \x44
+
+# SQUARED LATIN CAPITAL LETTER E: 🄴 --> E
+\x1f134 \x45
+
+# SQUARED LATIN CAPITAL LETTER F: 🄵 --> F
+\x1f135 \x46
+
+# SQUARED LATIN CAPITAL LETTER G: 🄶 --> G
+\x1f136 \x47
+
+# SQUARED LATIN CAPITAL LETTER H: 🄷 --> H
+\x1f137 \x48
+
+# SQUARED LATIN CAPITAL LETTER I: 🄸 --> I
+\x1f138 \x49
+
+# SQUARED LATIN CAPITAL LETTER J: 🄹 --> J
+\x1f139 \x4a
+
+# SQUARED LATIN CAPITAL LETTER K: 🄺 --> K
+\x1f13a \x4b
+
+# SQUARED LATIN CAPITAL LETTER L: 🄻 --> L
+\x1f13b \x4c
+
+# SQUARED LATIN CAPITAL LETTER M: 🄼 --> M
+\x1f13c \x4d
+
+# SQUARED LATIN CAPITAL LETTER N: 🄽 --> N
+\x1f13d \x4e
+
+# SQUARED LATIN CAPITAL LETTER O: 🄾 --> O
+\x1f13e \x4f
+
+# SQUARED LATIN CAPITAL LETTER P: 🄿 --> P
+\x1f13f \x50
+
+# SQUARED LATIN CAPITAL LETTER Q: 🅀 --> Q
+\x1f140 \x51
+
+# SQUARED LATIN CAPITAL LETTER R: 🅁 --> R
+\x1f141 \x52
+
+# SQUARED LATIN CAPITAL LETTER S: 🅂 --> S
+\x1f142 \x53
+
+# SQUARED LATIN CAPITAL LETTER T: 🅃 --> T
+\x1f143 \x54
+
+# SQUARED LATIN CAPITAL LETTER U: 🅄 --> U
+\x1f144 \x55
+
+# SQUARED LATIN CAPITAL LETTER V: 🅅 --> V
+\x1f145 \x56
+
+# SQUARED LATIN CAPITAL LETTER W: 🅆 --> W
+\x1f146 \x57
+
+# SQUARED LATIN CAPITAL LETTER X: 🅇 --> X
+\x1f147 \x58
+
+# SQUARED LATIN CAPITAL LETTER Y: 🅈 --> Y
+\x1f148 \x59
+
+# SQUARED LATIN CAPITAL LETTER Z: 🅉 --> Z
+\x1f149 \x5a
+
+# SQUARED HV: 🅊 --> HV
+\x1f14a HV
+
+# SQUARED MV: 🅋 --> MV
+\x1f14b MV
+
+# SQUARED SD: 🅌 --> SD
+\x1f14c SD
+
+# SQUARED SS: 🅍 --> SS
+\x1f14d SS
+
+# SQUARED PPV: 🅎 --> PPV
+\x1f14e PPV
+
+# SQUARED WC: 🅏 --> WC
+\x1f14f WC
+
+# RAISED MC SIGN: 🅪 --> MC
+\x1f16a MC
+
+# RAISED MD SIGN: 🅫 --> MD
+\x1f16b MD
+
+# SQUARE DJ: 🆐 --> DJ
+\x1f190 DJ
+
