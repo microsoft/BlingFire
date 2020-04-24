@@ -80,14 +80,14 @@ int __cdecl main (int argc, char ** argv)
 
         // tests
 
-        void* hModel = (*g_LoadModelPtr)("bert_base_tok.bin");
+        void* hModel = (*g_LoadModelPtr)("xlnet.bin");
 
         const int MaxIdCount = 128;
         int Ids [MaxIdCount];
         int Starts [MaxIdCount];
         int Ends [MaxIdCount];
 
-        std::string in1 ("Sergei Alonichau I saw a girl with a telescope.");
+        std::string in1 ("1 ½ fruit per day .");
 
         int IdCount = (*g_TextToIdsPtr)(hModel, in1.c_str(), in1.length(), Ids, MaxIdCount, 100);
         for(int i = 0; i < IdCount; ++i) {
