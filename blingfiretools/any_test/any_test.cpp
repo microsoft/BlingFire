@@ -80,22 +80,22 @@ int __cdecl main (int argc, char ** argv)
 
         // tests
 
-        void* hModel = (*g_LoadModelPtr)("xlnet.bin");
+        void* hModel = (*g_LoadModelPtr)("bpe_example.bin");
 
         const int MaxIdCount = 128;
         int Ids [MaxIdCount];
         int Starts [MaxIdCount];
         int Ends [MaxIdCount];
 
-        std::string in1 ("1 ½ fruit per day .");
+        std::string in1 ("Sergei AAlonichau");
 
-        int IdCount = (*g_TextToIdsPtr)(hModel, in1.c_str(), in1.length(), Ids, MaxIdCount, 100);
+        int IdCount = (*g_TextToIdsPtr)(hModel, in1.c_str(), in1.length(), Ids, MaxIdCount, 3);
         for(int i = 0; i < IdCount; ++i) {
             std::cout << Ids[i] << ' ';
         }
         std::cout << std::endl;
 
-        IdCount = (*g_TextToIdsWithOffsetsPtr)(hModel, in1.c_str(), in1.length(), Ids, Starts, Ends, MaxIdCount, 100);
+        IdCount = (*g_TextToIdsWithOffsetsPtr)(hModel, in1.c_str(), in1.length(), Ids, Starts, Ends, MaxIdCount, 3);
         for(int i = 0; i < IdCount; ++i) {
             std::cout << Ids[i] << ' ';
         }

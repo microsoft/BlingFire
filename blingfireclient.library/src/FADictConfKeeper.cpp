@@ -32,7 +32,8 @@ FADictConfKeeper::FADictConfKeeper () :
     m_IgnoreCase (false),
     m_NoTrUse (true),
     m_Direction (FAFsmConst::DIR_L2R),
-    m_pCharMap (NULL)
+    m_pCharMap (NULL),
+    m_TokAlgo (FAFsmConst::TOKENIZE_DEFAULT)
 {}
 
 
@@ -79,6 +80,16 @@ void FADictConfKeeper::Init (const int * pValues, const int Size)
 
             LogAssert (FAFsmConst::DIR_L2R == m_Direction || \
                 FAFsmConst::DIR_R2L == m_Direction);
+
+            break;
+        }
+        case FAFsmConst::PARAM_TOKENIZATION_TYPE:
+        {
+            m_TokAlgo = pValues [++i];
+
+            LogAssert (FAFsmConst::TOKENIZE_DEFAULT == m_TokAlgo || \
+                    FAFsmConst::TOKENIZE_UNIGRAM_LM == m_TokAlgo || \
+                    FAFsmConst::TOKENIZE_BPE == m_TokAlgo);
 
             break;
         }
@@ -294,7 +305,13 @@ const int FADictConfKeeper::GetDirection () const
     return m_Direction;
 }
 
+
 const FAMultiMapCA * FADictConfKeeper::GetCharMap () const
 {
     return m_pCharMap;
+}
+
+const int FADictConfKeeper::GetTokAlgo () const
+{
+    return m_TokAlgo;
 }

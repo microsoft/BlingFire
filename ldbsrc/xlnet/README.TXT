@@ -40,3 +40,15 @@ most of the disparities are due to sentence piece treating some Unicode control 
 Bling Fire treats them all as a space.
 
 
+
+Measure perf:
+
+> time -p cat input.utf8 | python ../scripts/test_sp.py -m spiece.model -s 1 
+real 218.04
+user 217.69
+sys 1.19
+> time -p cat input.utf8 | python ../scripts/test_bling.py -m xlnet.bin  -s 1 
+real 101.53
+user 101.33
+sys 1.42
+

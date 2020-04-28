@@ -11,6 +11,7 @@ parser.add_argument("-m", "--model", default="./xlnet.bin", help="bin file with 
 parser.add_argument("-p", "--piece", default=None, help="optional sentence piece model file, if specified is used for comparison only")
 parser.add_argument("-k", "--nfkc", default=False, help="enables external NFKC normalization")
 parser.add_argument("-c", "--nfc", default=False, help="enables external NFC normalization")
+parser.add_argument("-u", "--unk", default=0, help="Unknown token ID, default 0")
 parser.add_argument("-s", "--no-output", default=False, help="No output, False by default")
 parser.add_argument("-n", "--no-process", default=False, help="No process, False by default")
 args = parser.parse_args()
@@ -24,12 +25,15 @@ if args.piece != None:
 
 h = load_model(args.model)
 
+
 def find_first_different(ids1, ids2):
     for i in range(0, min(len(ids1), len(ids2))):
         if ids1[i] != ids2[i]:
             return i
     return -1
 
+
+unk = int(args.unk)
 
 for line in sys.stdin:
 
@@ -47,7 +51,7 @@ for line in sys.stdin:
 
         # does normalization if model has it, tokenization and returns ids and offsets for UTF-8 text
         utf8_s = line.encode("utf-8")
-        ids, starts, ends = utf8text_to_ids_with_offsets(h, utf8_s, 128, 0, True)
+        ids, starts, ends = utf8text_to_ids_with_offsets(h, utf8_s, 128, unk, True)
 
         # see if the output is disabled
         if not args.no_output:
