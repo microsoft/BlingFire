@@ -7,6 +7,7 @@
 #include "FALexTools_t.h"
 #include "FADictConfKeeper.h"
 #include "FATokenSegmentationTools_1best_t.h"
+#include "FATokenSegmentationTools_1best_bpe_t.h"
 
 #include <algorithm>
 #include <vector>
@@ -58,9 +59,14 @@ struct FAModelData
     FATokenSegmentationTools_1best_t < int > m_SegEngine;
     bool m_hasSeg;
 
+    // BPE runtime, it uses the m_DictConf for data
+    FATokenSegmentationTools_1best_bpe_t < int > m_SegEngineBpe;
+    bool m_isBpe;
+
     FAModelData ():
         m_hasWbd (false),
-        m_hasSeg (false)
+        m_hasSeg (false),
+        m_isBpe (false)
     {}
 };
 
@@ -751,8 +757,17 @@ void* LoadModel(const char * pszLdbFileName)
         // initialize dict configuration
         pNewModelData->m_DictConf.SetLDB (&(pNewModelData->m_Ldb));
         pNewModelData->m_DictConf.Init (pValues, iSize);
+
+        // check if this is a Unigram LM or BPE model
+        pNewModelData->m_isBpe = FAFsmConst::TOKENIZE_BPE == pNewModelData->m_DictConf.GetTokAlgo();
+
         // initialize the segmentation engine
-        pNewModelData->m_SegEngine.SetConf(&pNewModelData->m_DictConf);
+        if (pNewModelData->m_isBpe)
+        {
+            pNewModelData->m_SegEngineBpe.SetConf(&pNewModelData->m_DictConf);
+        } else {
+            pNewModelData->m_SegEngine.SetConf(&pNewModelData->m_DictConf);
+        }
     }
 
     return (void*) pNewModelData;
@@ -1149,7 +1164,11 @@ const int TextToIdsWithOffsets_sp(
     const int WbdResMaxSize = BuffSize * 3;
     std::vector< int > WbdResults(WbdResMaxSize);
     int * pWbdResults = WbdResults.data ();
-    const int WbdOutSize = pModelData->m_SegEngine.Process (pBuff, BuffSize, pWbdResults, WbdResMaxSize, 0);
+
+    // use either unigram lm or bpe runtime
+    const int WbdOutSize = pModelData->m_isBpe ? 
+        pModelData->m_SegEngineBpe.Process (pBuff, BuffSize, pWbdResults, WbdResMaxSize, UnkId) :
+        pModelData->m_SegEngine.Process (pBuff, BuffSize, pWbdResults, WbdResMaxSize, UnkId);
     if (WbdOutSize > WbdResMaxSize || 0 != WbdOutSize % 3) {
         return 0;
     }

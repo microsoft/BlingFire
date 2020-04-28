@@ -248,6 +248,17 @@ void SetupConfParams ()
 
     // requires a CRC32-like check for the LDB file to pass
     g_parser.AddParam ("verify-ldb-bin", FAFsmConst::PARAM_VERIFY_LDB_BIN);
+
+    // tokenization algo runtime
+    g_parser.AddStrParam ("tokalgo", FAFsmConst::PARAM_TOKENIZATION_TYPE,
+                          "falex", FAFsmConst::TOKENIZE_DEFAULT);
+    g_parser.AddStrParam ("tokalgo", FAFsmConst::PARAM_TOKENIZATION_TYPE,
+                          "wordpiece", FAFsmConst::TOKENIZE_WORDPIECE);
+    g_parser.AddStrParam ("tokalgo", FAFsmConst::PARAM_TOKENIZATION_TYPE,
+                          "unilm", FAFsmConst::TOKENIZE_UNIGRAM_LM);
+    g_parser.AddStrParam ("tokalgo", FAFsmConst::PARAM_TOKENIZATION_TYPE,
+                          "bpe", FAFsmConst::TOKENIZE_BPE);
+
 }
 
 

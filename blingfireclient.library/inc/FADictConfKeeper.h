@@ -54,6 +54,7 @@ public:
     const bool GetNoTrUse () const;
     const int GetDirection () const;
     const FAMultiMapCA * GetCharMap () const;
+    const int GetTokAlgo () const;
 
 private:
     // input LDB
@@ -75,6 +76,8 @@ private:
     bool m_NoTrUse;
     int m_Direction;
     FAMultiMap_pack_fixed * m_pCharMap;
+    // indicates what runtime algo to use with these data
+    int m_TokAlgo;
 };
 
 #endif
