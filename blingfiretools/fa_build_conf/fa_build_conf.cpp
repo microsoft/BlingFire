@@ -258,6 +258,8 @@ void SetupConfParams ()
                           "unilm", FAFsmConst::TOKENIZE_UNIGRAM_LM);
     g_parser.AddStrParam ("tokalgo", FAFsmConst::PARAM_TOKENIZATION_TYPE,
                           "bpe", FAFsmConst::TOKENIZE_BPE);
+    g_parser.AddStrParam ("tokalgo", FAFsmConst::PARAM_TOKENIZATION_TYPE,
+                          "bpe-opt", FAFsmConst::TOKENIZE_BPE_OPT);
 
 }
 

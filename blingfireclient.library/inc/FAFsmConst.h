@@ -395,6 +395,8 @@ public:
         TOKENIZE_WORDPIECE = 1,
         TOKENIZE_UNIGRAM_LM = 2,
         TOKENIZE_BPE = 3,
+        TOKENIZE_BPE_OPT = 4,     // optimized version of the BPE, prefers a single token match over
+                                  //  subtoken, assumes tokens are delimited with U+x2581 
         TOKENIZE_COUNT,
     };
 

@@ -21,3 +21,19 @@ make -f Makefile.gnu lang=bpe_example all
 2052515 input.utf8
 
 99.8% parity
+
+
+
+Now let's measure performance and compare it to the sentencepiece library:
+
+> time -p cat input.utf8 | python ../scripts/test_bling.py -m bpe_example.bin -s 1 
+real 125.22
+user 124.99
+sys 1.74
+
+> time -p cat input.utf8 | python ../scripts/test_sp.py -m m.model -s 1 
+real 262.10
+user 261.50
+sys 1.68
+
+As you can see Bling Fire BPE (optimized) runs ~2x faster than the sentence piece library.

@@ -759,7 +759,8 @@ void* LoadModel(const char * pszLdbFileName)
         pNewModelData->m_DictConf.Init (pValues, iSize);
 
         // check if this is a Unigram LM or BPE model
-        pNewModelData->m_isBpe = FAFsmConst::TOKENIZE_BPE == pNewModelData->m_DictConf.GetTokAlgo();
+        pNewModelData->m_isBpe = FAFsmConst::TOKENIZE_BPE == pNewModelData->m_DictConf.GetTokAlgo()
+            || FAFsmConst::TOKENIZE_BPE_OPT == pNewModelData->m_DictConf.GetTokAlgo();
 
         // initialize the segmentation engine
         if (pNewModelData->m_isBpe)

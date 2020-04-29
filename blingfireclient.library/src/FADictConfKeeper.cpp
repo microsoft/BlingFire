@@ -87,9 +87,8 @@ void FADictConfKeeper::Init (const int * pValues, const int Size)
         {
             m_TokAlgo = pValues [++i];
 
-            LogAssert (FAFsmConst::TOKENIZE_DEFAULT == m_TokAlgo || \
-                    FAFsmConst::TOKENIZE_UNIGRAM_LM == m_TokAlgo || \
-                    FAFsmConst::TOKENIZE_BPE == m_TokAlgo);
+            LogAssert (FAFsmConst::TOKENIZE_DEFAULT <= m_TokAlgo && \
+                    FAFsmConst::TOKENIZE_COUNT > m_TokAlgo);
 
             break;
         }
