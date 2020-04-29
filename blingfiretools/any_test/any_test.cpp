@@ -87,7 +87,7 @@ int __cdecl main (int argc, char ** argv)
         int Starts [MaxIdCount];
         int Ends [MaxIdCount];
 
-        std::string in1 ("Sergei AAlonichau");
+        std::string in1 ("Sergei AAlonichau I saw a girl with a telescope.");
 
         int IdCount = (*g_TextToIdsPtr)(hModel, in1.c_str(), in1.length(), Ids, MaxIdCount, 3);
         for(int i = 0; i < IdCount; ++i) {

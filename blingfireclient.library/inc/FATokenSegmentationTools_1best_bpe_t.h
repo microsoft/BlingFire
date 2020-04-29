@@ -53,6 +53,7 @@ private:
     const FAMealyDfaCA * m_pMealy;
     const FAArrayCA * m_pK2I;     // note this is an identify since we don't have duplicate ID's
     const FAMultiMapCA * m_pI2Info;
+    bool m_fFastBpe;
 
     // to keep track of arc data (note we use ID as a score for BPE since it follows strict ordering)
     struct _TArc {
@@ -85,7 +86,8 @@ FATokenSegmentationTools_1best_bpe_t < Ty >::
         m_pDfa (NULL),
         m_pMealy (NULL),
         m_pK2I (NULL),
-        m_pI2Info (NULL)
+        m_pI2Info (NULL),
+        m_fFastBpe (false)
 {}
 
 
@@ -96,6 +98,10 @@ void FATokenSegmentationTools_1best_bpe_t < Ty >::
     LogAssert (pConf);
     LogAssert(FAFsmConst::TYPE_MEALY_DFA == pConf->GetFsmType());
 
+    // allows to use optimizations such as:
+    //  1. whole word will be always prefered over the pieces
+    m_fFastBpe = FAFsmConst::TOKENIZE_BPE_OPT == pConf->GetTokAlgo ();
+
     m_pDfa = pConf->GetRsDfa ();
     m_pMealy = pConf->GetMphMealy ();
     m_pK2I = pConf->GetK2I ();
@@ -103,6 +109,9 @@ void FATokenSegmentationTools_1best_bpe_t < Ty >::
 
     LogAssert(0 < m_pK2I->GetCount ());
 }
+
+// SENTENCE PIECE DELIMITER, used if m_fFastBpe is enabled
+#define __FASpDelimiter__ 0x2581
 
 
 template < class Ty >
@@ -138,6 +147,11 @@ const int FATokenSegmentationTools_1best_bpe_t < Ty >::
         int Ow = 0;
         bool TokenUnknown = true;
 
+        // three variables below are used if m_fFastBpe
+        const bool fTokenStart = __FASpDelimiter__ == pIn [start];
+        const size_t ArcCountAtStart = arcs.size ();
+        int startFastForward = start;
+
         // go as deep as we can from the start position
         for (int i = start; i < InSize; ++i) {
 
@@ -163,8 +177,27 @@ const int FATokenSegmentationTools_1best_bpe_t < Ty >::
                 // get the ID
                 const int id = pValues [0];
 
-                // add the arc
-                arcs.push_back(_TArc(start, i, id));
+                // see if the optimization should be applied
+                const bool fApplyOpt = m_fFastBpe && fTokenStart && \
+                        ((i < InSize - 1) ? __FASpDelimiter__ == pIn [i + 1] : true) && \
+                        ArcCountAtStart < arcs.size ();
+
+                // always add the arc if optimization is off
+                if (!fApplyOpt)
+                {
+                    // add the arc
+                    arcs.push_back(_TArc(start, i, id));
+
+                } else {
+
+                    // remove all intermediate arcs, if the whole token arc is found
+                    //  Note: this does not prevent to have arcs *larger* than one token
+                    arcs [ArcCountAtStart] = _TArc(start, i, id); 
+                    arcs.resize (ArcCountAtStart + 1); // resize deletes elements from the end
+                    startFastForward = i;
+                }
+
+                // the token is not an unknown
                 TokenUnknown = false;
             }
 
@@ -182,6 +215,10 @@ const int FATokenSegmentationTools_1best_bpe_t < Ty >::
                 // add a new unknown arc
                 arcs.push_back(_TArc(start, start, UnkId));
             }
+        }
+
+        if (m_fFastBpe) {
+            start = startFastForward; // and +1 will be added by the for loop
         }
 
     } // for(int start = 0; start < InSize; ++start) ...
@@ -217,7 +254,7 @@ const int FATokenSegmentationTools_1best_bpe_t < Ty >::
 
     // all UnkId's
     int * pIds = pTos + InSize;
-    for(size_t i = 0; i < InSize; ++i) {
+    for(int i = 0; i < InSize; ++i) {
         pIds [i] = UnkId;
     }
 
