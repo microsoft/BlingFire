@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="blingfire",
-    version="0.1.0",
+    version="0.1.1",
     author="Bling",
     author_email="bling@microsoft.com",
     description="Python wrapper of lightening fast Finite State machine and REgular expression manipulation library.",
