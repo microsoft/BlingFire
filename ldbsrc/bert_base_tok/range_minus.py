@@ -45,6 +45,7 @@ def parse_range(s):
             i += numLen
         else:
             # TODO: add parsing for other cases
+            raise ValueError("Non hex number or range encountered, Cannot parse range, 2: %s" % s)
             i += 1
 
     if start != -1:
