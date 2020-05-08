@@ -1209,11 +1209,29 @@ void Process (const char * pLineStr, const int LineLen)
                     g_OutChainBuffer,
                     TagCount
                 );
+
                 std::cout << ' ';
                 ::FAPrintArray (
                     std::cout,
                     g_OutChainBuffer + TagCount,
                     TagCount
+                );
+
+                std::cout << " as floats: ";
+                ::FAPrintArray (
+                    std::cout,
+                    (const float *)(g_OutChainBuffer + TagCount),
+                    TagCount
+                );
+
+                std::cout << " as hex int32: ";
+                ::FAPrintChain (
+                    std::cout,
+                    g_OutChainBuffer + TagCount,
+                    TagCount,
+                    FAFsmConst::DIR_L2R,
+                    8,
+                    true
                 );
 
             } else {
