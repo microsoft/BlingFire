@@ -582,6 +582,70 @@ const int TextToWords(const char * pInUtf8Str, int InUtf8StrByteCount, char * pO
 }
 
 
+//
+// This function is like TextToWords, but it only normalizes consequtive spaces, it is not as flexble
+//  as TextToWords as it cannot take a tokenization and normalization rules, but it does space normalization
+//  and srinking multiple spaces to one faster.
+//
+// Input:  UTF-8 string of one sentence or paragraph or document
+//         space character to use, default is __FASpDelimiter__ (U+x2581)
+// Output: Size in bytes of the output string and UTF-8 string of ' ' delimited words, if the return size <= MaxOutUtf8StrByteCount
+//
+// Notes:
+//  The return value is -1 in case of an error (make sure your input is a valid UTF-8, BOM is not required)
+//  
+extern "C"
+const int NormalizeSpaces(const char * pInUtf8Str, int InUtf8StrByteCount, char * pOutUtf8Str, const int MaxOutUtf8StrByteCount, const int uSpace = __FASpDelimiter__)
+{
+    // we can get weird results if this is not true
+    DebugLogAssert(__FAIsWhiteSpace__(uSpace));
+
+    if (0 == InUtf8StrByteCount) {
+        return -1;
+    }
+
+    // allocate buffer for UTF-32, sentence breaking results, word-breaking results
+    std::vector< int > utf32input(InUtf8StrByteCount);
+    int * pBuff = utf32input.data();
+    if (NULL == pBuff) {
+        return -1;
+    }
+
+    // convert input to UTF-32
+    int MaxBuffSize = ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff, InUtf8StrByteCount);
+    if (MaxBuffSize <= 0 || MaxBuffSize > InUtf8StrByteCount) {
+        return -1;
+    }
+
+    int i = 0; // index for reading
+    int j = 0; // index for writing
+    while (i < MaxBuffSize) {
+
+        const int Ci = pBuff[i++];
+
+        // check if the Ci is not a space
+        if (!__FAIsWhiteSpace__(Ci)) {
+            // copy it
+            pBuff[j++] = Ci;
+        // if Ci is a space, check if the previous character was not a sapce
+        } else if (0 < j && uSpace != pBuff[j - 1]) {
+            // copy normalized space
+            pBuff[j++] = uSpace;
+        }
+    } // of while ...
+
+    MaxBuffSize = j;
+
+    // convert UTF-32 back to UTF-8
+    const int StrOutSize = ::FAArrayToStrUtf8(pBuff, MaxBuffSize, pOutUtf8Str, MaxOutUtf8StrByteCount);
+    if (0 <= StrOutSize && StrOutSize < MaxOutUtf8StrByteCount) {
+        pOutUtf8Str [StrOutSize] = 0;
+    }
+
+    return StrOutSize;
+}
+
+
 // This function implements the fasttext hashing function
 inline const uint32_t GetHash(const char * str, size_t strLen)
 {

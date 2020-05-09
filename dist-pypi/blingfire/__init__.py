@@ -62,6 +62,26 @@ def text_to_sentences_with_model(h, s):
     return o_bytes.value.decode('utf-8')
 
 
+def normalize_spaces(s, uSpace = 0x20):
+
+    # get the UTF-8 bytes
+    s_bytes = s.encode("utf-8")
+
+    # allocate the output buffer
+    o_bytes = create_string_buffer(len(s_bytes) * 3)
+    o_bytes_count = len(o_bytes)
+
+    # normalize spaces
+    o_len = blingfire.NormalizeSpaces(c_char_p(s_bytes), c_int(len(s_bytes)), byref(o_bytes), c_int(o_bytes_count), c_int(uSpace))
+
+    # check if no error has happened
+    if -1 == o_len or o_len > o_bytes_count:
+        return ''
+
+    # compute the unicode string from the UTF-8 bytes
+    return o_bytes.value.decode('utf-8')
+
+
 def text_to_words(s):
 
     # get the UTF-8 bytes
@@ -71,7 +91,7 @@ def text_to_words(s):
     o_bytes = create_string_buffer(len(s_bytes) * 3)
     o_bytes_count = len(o_bytes)
 
-    # identify paragraphs
+    # identify words
     o_len = blingfire.TextToWords(c_char_p(s_bytes), c_int(len(s_bytes)), byref(o_bytes), c_int(o_bytes_count))
 
     # check if no error has happened

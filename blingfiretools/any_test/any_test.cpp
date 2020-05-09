@@ -23,6 +23,9 @@ const char * __PROG__ = "";
 typedef void* (__cdecl* _TLoadModelPtr)(const char *);
 _TLoadModelPtr g_LoadModelPtr = NULL;
 
+typedef const int (__cdecl* _TNormalizeSpacesPtr)(const char * , int , char * , const int , const int);
+_TNormalizeSpacesPtr g_NormalizeSpacesPtr = NULL;
+
 typedef const int (__cdecl* _TTextToIdsPtr)(void*, const char*, int, int32_t*,const int, const int);
 _TTextToIdsPtr g_TextToIdsPtr = NULL;
 
@@ -59,6 +62,12 @@ int __cdecl main (int argc, char ** argv)
             std::cerr << "ERROR: Cannot get address of LoadModel function" << std::endl;
             return false;
         }
+        g_NormalizeSpacesPtr = (_TNormalizeSpacesPtr) dlsym(g_Module, "NormalizeSpaces");
+        if (NULL == g_NormalizeSpacesPtr)
+        {
+            std::cerr << "ERROR: Cannot get address of NormalizeSpaces function" << std::endl;
+            return false;
+        }
         g_TextToIdsPtr = (_TTextToIdsPtr) dlsym(g_Module, "TextToIds");
         if (NULL == g_TextToIdsPtr)
         {
@@ -80,14 +89,17 @@ int __cdecl main (int argc, char ** argv)
 
         // tests
 
-        void* hModel = (*g_LoadModelPtr)("bpe_example.bin");
+        void* hModel = (*g_LoadModelPtr)("laser100k.bin");
 
         const int MaxIdCount = 128;
         int Ids [MaxIdCount];
         int Starts [MaxIdCount];
         int Ends [MaxIdCount];
 
-        std::string in1 ("Sergei AAlonichau I saw a girl with a telescope.");
+        std::string in1 ("Ein psychologisches Profil der Gegenwartskultur. ");
+
+        char norm_out [FALimits::MaxWordLen];
+        const int norm_len = (*g_NormalizeSpacesPtr)(in1.c_str(), in1.length(), norm_out, FALimits::MaxWordLen, 0x20);
 
         int IdCount = (*g_TextToIdsPtr)(hModel, in1.c_str(), in1.length(), Ids, MaxIdCount, 3);
         for(int i = 0; i < IdCount; ++i) {

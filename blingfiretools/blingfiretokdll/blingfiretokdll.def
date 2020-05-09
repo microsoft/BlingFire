@@ -20,3 +20,5 @@ EXPORTS
     TextToIdsWithOffsets_sp
     TextToIdsWithOffsets_wp
     TextToIdsWithOffsets
+    NormalizeSpaces
+
