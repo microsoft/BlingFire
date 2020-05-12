@@ -1,4 +1,4 @@
-1. Download LASER corpus, extract only unique sentences, sample 30M-50M of them.
+1. Download WikiMatrix [1] corpus, extract only unique sentences, sample 30M-50M of them.
 
 
 2. Normalize the spaces in sentences, since we will use "identity" as normalization
@@ -47,3 +47,8 @@
   real 34.98
   user 34.64
   sys 0.42
+
+
+
+
+[1] Holger Schwenk, Vishrav Chaudhary, Shuo Sun, Hongyu Gong and Paco Guzman, WikiMatrix: Mining 135M Parallel Sentences in 1620 Language Pairs from Wikipedia arXiv, July 11 2019.
