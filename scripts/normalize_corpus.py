@@ -1,5 +1,6 @@
 import sys
 import argparse
+import unicodedata
 from blingfire import *
 
 sys.stdin.reconfigure(encoding='utf-8')
