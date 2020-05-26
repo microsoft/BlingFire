@@ -7,7 +7,15 @@ Hi, we are a team at Microsoft called Bling (Beyond Language Understanding), we 
 
 ## Bling Fire Tokenizer
 
-Bling Fire Tokenizer is a tokenizer designed for fast-speed and quality tokenization of Natural Language text. 
+Bling Fire Tokenizer provides state of the art performance for Natural Language text tokenization. Bling Fire supports four tokenization algorithms:
+
+1. Pattern-based tokenization
+2. [WordPiece](https://arxiv.org/pdf/1609.08144.pdf) tokenization
+3. [SentencePiece Unigram LM](https://github.com/google/sentencepiece)
+4. [SentencePiece BPE](https://github.com/google/sentencepiece)
+
+
+
 
 The default model follows the tokenization logic of NLTK, except hyphenated words are split and a few errors are fixed. We also support arbitrary models with normalization and sub-token extraction like in BERT tokenizer. The tokenizer high level API designed in a way that it requires minimal or no configuration, or initialization, or additional files and is friendly for use from languages like Python, Perl, C#, Java, etc.
 
