@@ -52,7 +52,7 @@ Comparing Bling Fire with other popular NLP libraries, Bling Fire shows **10X fa
 | SpaCy      | 8.653                                 |
 | NLTK       | 17.821                                |
 
-See more at [benchmark wiki](https://github.com/Microsoft/BlingFire/wiki/Benchmark-Guide)
+See more at [benchmark wiki](https://github.com/Microsoft/BlingFire/wiki/Benchmark-Guide) and this [Bing Blog Post](https://blogs.bing.com/Developers-Blog/2019-04/bling-fire-tokenizer-released-to-open-source).
 
 ## Getting Started
 
