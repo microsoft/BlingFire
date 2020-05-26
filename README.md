@@ -22,7 +22,7 @@ We provide 4 compiled models for BERT base/large, BERT base/large cased, BERT Ch
 | bert_chinese.bin       | BERT Chinese                                |
 | bert_multi_cased.bin       | BERT Multi Lingual Cased                                |
 
-Oh yes, it is also fast. We did a comparison of Bling Fire with tokenizers from Hugging Face, [Bling Fire runs 4-5 times faster than Hugging Face Tokenizers](https://github.com/Microsoft/BlingFire/wiki/Comparing-performance-of-Bling-Fire-and-Hugging-Face-Tokenizers). So if real-time inference is what you are doing and you need low latency solution then you have to try Bling Fire!
+Oh yes, it is also fast. We did a comparison of Bling Fire with tokenizers from Hugging Face, [Bling Fire runs 4-5 times faster than Hugging Face Tokenizers](https://github.com/Microsoft/BlingFire/wiki/Comparing-performance-of-Bling-Fire-and-Hugging-Face-Tokenizers), see also [Bing Blog Post](https://blogs.bing.com/Developers-Blog/march-2020/Bling-FIRE-Tokenizer-for-BERT). So if real-time inference is what you are doing and you need low latency solution then you have to try Bling Fire!
 
 ## Bling Fire vs NLTK Output
 
