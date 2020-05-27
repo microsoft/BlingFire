@@ -43,7 +43,7 @@ Oh yes, it is also the fastest! We did a comparison of Bling Fire with tokenizer
 So if low latency inference is what you need then you have to try Bling Fire!
 
 
-## API Description
+## Python API Description
 
 If you simply want to use it in Python, you can install the latest release using [pip](https://pypi.org/project/pip/):
 
@@ -167,7 +167,7 @@ If you want to create your own tokenization or any other finite-state model, you
 Note: please read the documents above in the order before creating your own model. If you have any questions please start an Issue in Github.
 
 
-## Support for other languages
+## Support for other programming languages
 1. [Rust wrapper](https://github.com/reinfer/blingfire-rs)
 2. [Ruby wrapper](https://github.com/ankane/blingfire)
 
