@@ -11,8 +11,8 @@ Bling Fire Tokenizer provides state of the art performance for Natural Language 
 
 1. Pattern-based tokenization
 2. [WordPiece](https://arxiv.org/pdf/1609.08144.pdf) tokenization
-3. [SentencePiece Unigram LM](https://github.com/google/sentencepiece)
-4. [SentencePiece BPE](https://github.com/google/sentencepiece)
+3. [SentencePiece](https://github.com/google/sentencepiece) Unigram LM
+4. [SentencePiece](https://github.com/google/sentencepiece) BPE
 
 Bling Fire provides uniform interface for working with all four algorithms so there is no difference for the client whether to use tokenizer for XLM, BERT or your own custom model.
 
