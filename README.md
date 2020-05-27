@@ -155,12 +155,14 @@ Model Freed
 
 
 
-## To create your own finite-state models
+## How to create your own models
 
 If you want to create your own tokenization or any other finite-state model, you need to compile the C++ tools first. Then use these tools to compile linugusitc resources from human readble format into binary finite-state machines.
 
-1. [This Document](https://github.com/Microsoft/BlingFire/wiki/How-to-change-linguistic-resources) is an introduction into compilation of the C++ code and linguistic resources.
+1. [Setup your environment, once.](https://github.com/Microsoft/BlingFire/wiki/How-to-change-linguistic-resources) You need to do this step once, it compiles retail version of the tools and adds the build directory to the PATH.
 2. [Adding BERT-like tokenization model](https://github.com/Microsoft/BlingFire/wiki/How-to-add-a-new-BERT-tokenizer-model) is describing how to add new tokenization model similar to BERT.
+3. [How to add a new Unigram LM model.](https://github.com/microsoft/BlingFire/blob/master/ldbsrc/xlnet/README.TXT)
+4. [How to add a new BPE model.](https://github.com/microsoft/BlingFire/blob/master/ldbsrc/bpe_example/README.TXT)
 
 ## Support for other languages
 1. [Rust wrapper](https://github.com/reinfer/blingfire-rs)
