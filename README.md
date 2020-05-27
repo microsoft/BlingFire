@@ -14,12 +14,13 @@ Bling Fire Tokenizer provides state of the art performance for Natural Language 
 3. [SentencePiece Unigram LM](https://github.com/google/sentencepiece)
 4. [SentencePiece BPE](https://github.com/google/sentencepiece)
 
+Bling Fire provides uniform interface for working with all four algorithms so there is no difference for the client whether to use tokenizer for XLM, BERT or your own custom model.
 
+Model files describe the algorithms they are built for and are loaded on demand from external file. There are also two default models for NLTK-style tokenization and sentence breaking, which does not need to be loaded. The default tokenization model follows logic of NLTK, except hyphenated words are split and a few "errors" are fixed. 
 
+Normalization can be added to each model, but is optional. 
 
-The default model follows the tokenization logic of NLTK, except hyphenated words are split and a few errors are fixed. We also support arbitrary models with normalization and sub-token extraction like in BERT tokenizer. The tokenizer high level API designed in a way that it requires minimal or no configuration, or initialization, or additional files and is friendly for use from languages like Python, Perl, C#, Java, etc.
-
-The default model is built in and does not need a file to load.
+Bling Fire Tokenizer high level API designed in a way that it requires minimal or no configuration, or initialization, or additional files and is friendly for use from languages like Python, Ruby, Rust, C#, etc.
 
 We provide 4 compiled models for BERT base/large, BERT base/large cased, BERT Chinese and BERT Multilinugual Cased.  
 
