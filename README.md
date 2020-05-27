@@ -42,37 +42,8 @@ Oh yes, it is also the fastest! We did a comparison of Bling Fire with tokenizer
 
 So if low latency inference is what you need then you have to try Bling Fire!
 
-## Bling Fire vs NLTK Output
 
-**NLTK:** <pre>The South <b>Florida/Miami</b> area has previously hosted the event 10 times .
-Names such as French , ( De ) Roche , Devereux , <b>D'Arcy</b> , Treacy and Lacy are particularly common in the southeast of Ireland .
-Marconi 's European experiments in July <b>1899—Marconi</b> may have transmitted the letter S ( <b>dot/dot/dot</b> ) in a naval demonstration
-In the confirmation window , click <b>OK.</b> Review the FMT Real - time Report ES .
-Go to C : <b>\Users\Public\Documents\hyper - v\Virtual hard disks\ </b> and delete <b>MSIT_Win10.VHDX</b> .
-… and an agency / vendor company are regulated by the country <b>' s</b> civil code ; labor relationships between a …
-</pre>
-
-**FIRE:** <pre>The South <b>Florida / Miami</b> area has previously hosted the event 10 times .
-Names such as French , ( De ) Roche , Devereux , <b>D' Arcy</b> , Treacy and Lacy are particularly common in the southeast of Ireland .
-Marconi 's European experiments in July <b>1899 — Marconi</b> may have transmitted the letter S ( <b>dot / dot / dot</b> ) in a naval demonstration
-In the confirmation window , click <b>OK .</b> Review the FMT Real - time Report ES .
-Go to C : <b>\ Users \ Public \ Documents \ hyper - v \ Virtual hard disks \ </b> and delete <b>MSIT_Win10 . VHDX</b> .
-… and an agency / vendor company are regulated by the country <b>'s</b> civil code ; labor relationships between a …
-</pre>
-
-## Benchmarking of a default model
-
-Comparing Bling Fire with other popular NLP libraries, Bling Fire shows **10X faster** speed in tokenization task
-
-| System   | Avg Run Time (Second Per 10,000 Passages) |
-|------------|---------------------------------------|
-| Bling Fire | 0.823                                 |
-| SpaCy      | 8.653                                 |
-| NLTK       | 17.821                                |
-
-See more at [benchmark wiki](https://github.com/Microsoft/BlingFire/wiki/Benchmark-Guide) and this [Bing Blog Post](https://blogs.bing.com/Developers-Blog/2019-04/bling-fire-tokenizer-released-to-open-source).
-
-## Getting Started
+## API Description
 
 If you simply want to use it in Python, you can install the latest release using [pip](https://pypi.org/project/pip/):
 
