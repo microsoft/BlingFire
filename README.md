@@ -164,6 +164,9 @@ If you want to create your own tokenization or any other finite-state model, you
 3. [How to add a new Unigram LM model.](https://github.com/microsoft/BlingFire/blob/master/ldbsrc/xlnet/README.TXT)
 4. [How to add a new BPE model.](https://github.com/microsoft/BlingFire/blob/master/ldbsrc/bpe_example/README.TXT)
 
+Note: please read the documents above in the order before creating your own model. If you have any questions please start an Issue in Github.
+
+
 ## Support for other languages
 1. [Rust wrapper](https://github.com/reinfer/blingfire-rs)
 2. [Ruby wrapper](https://github.com/ankane/blingfire)
