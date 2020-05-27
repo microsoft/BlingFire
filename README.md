@@ -5,7 +5,7 @@
 
 Hi, we are a team at Microsoft called Bling (Beyond Language Understanding), we help Bing be smarter. Here we wanted to share with all of you our **FI**nite State machine and **RE**gular expression manipulation library (**FIRE**). We use Fire for many linguistic operations inside Bing such as Tokenization, Multi-word expression matching, Unknown word-guessing, Stemming / Lemmatization just to mention a few.
 
-## Bling Fire Tokenizer
+## Bling Fire Tokenizer Overview
 
 Bling Fire Tokenizer provides state of the art performance for Natural Language text tokenization. Bling Fire supports four tokenization algorithms:
 
@@ -22,16 +22,25 @@ Normalization can be added to each model, but is optional.
 
 Bling Fire Tokenizer high level API designed in a way that it requires minimal or no configuration, or initialization, or additional files and is friendly for use from languages like Python, Ruby, Rust, C#, etc.
 
-We provide 4 compiled models for BERT base/large, BERT base/large cased, BERT Chinese and BERT Multilinugual Cased.  
+We have precompiled some popular models and listed with the source code reference below:
 
-| File Name   | Models it should be used for |
-|------------|---------------------------------------|
-| bert_base_tok.bin | BERT Base/Large                                 |
-| bert_base_cased_tok.bin      | BERT Base/Large Cased                                 |
-| bert_chinese.bin       | BERT Chinese                                |
-| bert_multi_cased.bin       | BERT Multi Lingual Cased                                |
+| File Name   | Models it should be used for | Algorithm | Source Code |
+|------------|---------------------------------------|----|----|
+| wbd.bin | Default Tokenization Model    | Pattern-based | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/wbd) | 
+| sbd.bin | Default model for Sentence breaking    | Pattern-based | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/sbd) | 
+| bert_base_tok.bin | BERT Base/Large                                 | WordPiece | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/bert_base_tok) |
+| bert_base_cased_tok.bin      | BERT Base/Large Cased                                 | WordPiece | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/bert_base_cased_tok) | 
+| bert_chinese.bin       | BERT Chinese                                | WordPiece | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/bert_chinese) | 
+| bert_multi_cased.bin       | BERT Multi Lingual Cased                                | WordPiece | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/bert_multi_cased) | 
+| xlnet.bin | XLNET Tokenization Model    | Unigram LM | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/xlnet) | 
+| xlnet_nonorm.bin | XLNET Tokenization Model /wo normalization    | Unigram LM | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/xlnet_nonorm) | 
+| bpe_example.bin | A model to test BPE tokenization    | BPE | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/bpe_example) | 
+| laser100k.bin | Trained on balanced by language WikiMatrix corpus of 80+ languages | Unigram LM | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/laser100k) | 
 
-Oh yes, it is also fast. We did a comparison of Bling Fire with tokenizers from Hugging Face, [Bling Fire runs 4-5 times faster than Hugging Face Tokenizers](https://github.com/Microsoft/BlingFire/wiki/Comparing-performance-of-Bling-Fire-and-Hugging-Face-Tokenizers), see also [Bing Blog Post](https://blogs.bing.com/Developers-Blog/march-2020/Bling-FIRE-Tokenizer-for-BERT). So if real-time inference is what you are doing and you need low latency solution then you have to try Bling Fire!
+
+Oh yes, it is also the fastest! We did a comparison of Bling Fire with tokenizers from Hugging Face, [Bling Fire runs 4-5 times faster than Hugging Face Tokenizers](https://github.com/Microsoft/BlingFire/wiki/Comparing-performance-of-Bling-Fire-and-Hugging-Face-Tokenizers), see also [Bing Blog Post](https://blogs.bing.com/Developers-Blog/march-2020/Bling-FIRE-Tokenizer-for-BERT). We did comparison of Bling Fire Unigram LM and BPE implementaion to the same one in [SentencePiece](https://github.com/google/sentencepiece) library and our implementation is ~2x faster. Not to mention our default models are 10x faster than the same functionality from [SpaCy](https://github.com/explosion/spaCy).
+
+So if low latency inference is what you need then you have to try Bling Fire!
 
 ## Bling Fire vs NLTK Output
 
