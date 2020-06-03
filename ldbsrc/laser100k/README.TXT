@@ -8,7 +8,7 @@
 
 3. Learn the unigram lm model from the corpus:
 
-  spm_train --input=normalized_corpus.txt --model_prefix=laser_100k --vocab_size=100000 --character_coverage=0.9999 --model_type=unigram --normalization_rule_name=identity --num_threads=10 --input_sentence_size=10000000 --shuffle_input_sentence=true
+  spm_train --input=normalized_corpus.txt --model_prefix=laser_100k --vocab_size=100000 --character_coverage=0.9999 --model_type=unigram --normalization_rule_name=identity --num_threads=10 --input_sentence_size=50000000 --shuffle_input_sentence=true
 
 
 4.  Create pos.dict.utf8.zip :
@@ -34,6 +34,8 @@
 
   cat output.txt | awk '/INPUT:/' | wc -l 
   720826
+
+  This indicates 99.999% parity with sentence piece model.
 
 
 8. Measure the perf:
