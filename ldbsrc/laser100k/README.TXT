@@ -49,6 +49,17 @@
   sys 0.42
 
 
+9. Play with it from command line:
+BlingFire/ldbsrc$ echo "I saw a girl with a telescope. Я видел девушку с телескопом." | python ../scripts/test_bling_with_offsets.py -m ldb/laser100k.bin  
+INPUT:
+I saw a girl with a telescope. Я видел девушку с телескопом.
+IDS:
+[  109    29   425    13  8710    66  1087    13 83595     9     3
+  4784  1667  5847 42701 17019   887   178 87510   299     3]
+TOKENS FROM OFFSETS:
+[I] [ sa] [w] [ a] [ gir] [l] [ with] [ a] [ telescop] [e] [.] [ Я] [ ви] [дел] [ дев] [уш] [ку] [ с] [ телескоп] [ом] [.] 
+
+
 
 
 [1] Holger Schwenk, Vishrav Chaudhary, Shuo Sun, Hongyu Gong and Paco Guzman, WikiMatrix: Mining 135M Parallel Sentences in 1620 Language Pairs from Wikipedia arXiv, July 11 2019.
