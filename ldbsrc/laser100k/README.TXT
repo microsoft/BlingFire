@@ -50,6 +50,7 @@
 
 
 9. Play with it from command line:
+
 BlingFire/ldbsrc$ echo "I saw a girl with a telescope. Я видел девушку с телескопом." | python ../scripts/test_bling_with_offsets.py -m ldb/laser100k.bin  
 INPUT:
 I saw a girl with a telescope. Я видел девушку с телескопом.
