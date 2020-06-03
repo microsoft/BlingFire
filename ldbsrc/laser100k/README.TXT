@@ -60,7 +60,17 @@ IDS:
 TOKENS FROM OFFSETS:
 [I] [ sa] [w] [ a] [ gir] [l] [ with] [ a] [ telescop] [e] [.] [ Я] [ ви] [дел] [ дев] [уш] [ку] [ с] [ телескоп] [ом] [.] 
 
+BlingFire/ldbsrc$ echo "I saw a girl with a telescope. Я видел девушку с телескопом." | python ../scripts/test_bling_with_offsets.py -m ldb/laser250k.bin  
+INPUT:
+I saw a girl with a telescope. Я видел девушку с телескопом.
+IDS:
+[    93  50326     12  53290    803     12 140741     10      3   3624
+ 120881 147968     83    175  90465    310      3]
+TOKENS FROM OFFSETS:
+[I] [ saw] [ a] [ girl] [ with] [ a] [ telescop] [e] [.] [ Я] [ видел] [ девушк] [у] [ с] [ телескоп] [ом] [.] 
 
 
+
+Links:
 
 [1] Holger Schwenk, Vishrav Chaudhary, Shuo Sun, Hongyu Gong and Paco Guzman, WikiMatrix: Mining 135M Parallel Sentences in 1620 Language Pairs from Wikipedia arXiv, July 11 2019.
