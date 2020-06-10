@@ -1,4 +1,4 @@
-    #include "FAConfig.h"
+#include "FAConfig.h"
 #include "FALimits.h"
 #include "FAUtf8Utils.h"
 #include "FAImageDump.h"
