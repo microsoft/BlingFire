@@ -1,0 +1,19 @@
+#
+# LDB for sentence piece tokenizer
+#
+# Note: compilation options for ldb file
+# 
+
+OUTPUT = laser500k.bin
+
+opt_build_pos_dict = --input-enc=UTF-8 --type=mph --raw --tagset=$(srcdir)/tagset.txt --float-nums
+
+# add --dst-size=4 to opt_pack_dict_fsm if data are too big
+opt_pack_dict_fsm = --alg=triv --type=mealy-dfa
+opt_pack_dict_k2i = --alg=triv --type=arr --force-flat
+opt_pack_dict_i2t = --alg=fixed --type=mmap
+
+resources = \
+	$(tmpdir)/pos.dict.fsm.$(mode).dump \
+	$(tmpdir)/pos.dict.k2i.$(mode).dump \
+	$(tmpdir)/pos.dict.i2t.$(mode).dump \

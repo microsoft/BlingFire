@@ -96,7 +96,7 @@ int __cdecl main (int argc, char ** argv)
         int Starts [MaxIdCount];
         int Ends [MaxIdCount];
 
-        std::string in1 ("Ein psychologisches Profil der Gegenwartskultur. ");
+        std::string in1 ("performance report‍‍‍‍‍‍‍‍\xe2\x80\x8d\xe2\x80\x8d\xe2\x80\x8d");
 
         char norm_out [FALimits::MaxWordLen];
         const int norm_len = (*g_NormalizeSpacesPtr)(in1.c_str(), in1.length(), norm_out, FALimits::MaxWordLen, 0x20);
