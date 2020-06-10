@@ -1,4 +1,4 @@
-#include "FAConfig.h"
+    #include "FAConfig.h"
 #include "FALimits.h"
 #include "FAUtf8Utils.h"
 #include "FAImageDump.h"
@@ -108,10 +108,10 @@ void InitializeWbdSbd()
 // SENTENCE PIECE DELIMITER
 #define __FASpDelimiter__ 0x2581
 
-// WHITESPACE [\x0004-\x0020\x007F-\x009F\x00A0\x2000-\x200B\x200E\x200F\x202F\x205F\x2060\x2420\x2424\x3000\xFEFF]
+// WHITESPACE [\x0004-\x0020\x007F-\x009F\x00A0\x2000-\x200F\x202F\x205F\x2060\x2420\x2424\x3000\xFEFF]
 #define __FAIsWhiteSpace__(C) ( \
-        (C <= 0x20 || (C >= 0x7f && C <= 0xa0) || (C >= 0x2000 && C <= 0x200c) || \
-        C == 0x200e || C == 0x200f || C == 0x202f || C == 0x205f || C == 0x2060 || C == 0x2420 || \
+        (C <=  0x20 || C == 0xa0   || (C >= 0x2000 && C <= 0x200f) || \
+        C == 0x202f || C == 0x205f || C == 0x2060 || C == 0x2420 || \
         C == 0x2424 || C == 0x3000 || C == 0xfeff) \
     )
 
@@ -633,6 +633,11 @@ const int NormalizeSpaces(const char * pInUtf8Str, int InUtf8StrByteCount, char 
             pBuff[j++] = uSpace;
         }
     } // of while ...
+
+    // trim the final space if there was no content characters after
+    if (1 < j && pBuff[j - 1] == uSpace) {
+        j--;
+    }
 
     MaxBuffSize = j;
 
@@ -1221,6 +1226,11 @@ const int TextToIdsWithOffsets_sp(
         i++;
 
     } // of while ...
+
+    // trim the final space if there was no content characters after
+    if (1 < j && pBuff[j - 1] == __FASpDelimiter__) {
+        j--;
+    }
 
     // adjust the length
     BuffSize = j;
