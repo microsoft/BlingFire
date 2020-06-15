@@ -20,7 +20,7 @@ Model files describe the algorithms they are built for and are loaded on demand 
 
 Normalization can be added to each model, but is optional. 
 
-Diffrences between algorithms are summarized ![here](/microsoft/BlingFire/blob/master/doc/Bling_Fire_Tokenizer_Algorithms.pdf).
+Diffrences between algorithms are summarized ![here](https://github.com/microsoft/BlingFire/blob/master/doc/Bling_Fire_Tokenizer_Algorithms.pdf).
 
 Bling Fire Tokenizer high level API designed in a way that it requires minimal or no configuration, or initialization, or additional files and is friendly for use from languages like Python, Ruby, Rust, C#, etc.
 
