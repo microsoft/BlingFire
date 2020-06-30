@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>BlingFire</RootNamespace>
     <Authors>Sergei Alonichau</Authors>
     <Company>Microsoft</Company>
@@ -25,17 +25,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="blingfiretokdll.dll" Pack="true" PackagePath="lib\netcoreapp2.1" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="blingfiretokdll.dll" Pack="true" PackagePath="lib\netcoreapp3.1" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="libblingfiretokdll.dylib" Pack="true" PackagePath="lib\netcoreapp2.1" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="libblingfiretokdll.dylib" Pack="true" PackagePath="lib\netcoreapp3.1" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="libblingfiretokdll.so" Pack="true" PackagePath="lib\netcoreapp2.1" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="libblingfiretokdll.so" Pack="true" PackagePath="lib\netcoreapp3.1" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="*.bin" Pack="true" PackagePath="lib\netcoreapp2.1" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="*.bin" Pack="true" PackagePath="lib\netcoreapp3.1" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
