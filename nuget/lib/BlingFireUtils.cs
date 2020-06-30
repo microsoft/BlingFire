@@ -10,14 +10,7 @@ namespace BlingFire
 {
     public static class BlingFireUtils
     {
-
-#if Linux 
-        private const string BlingFireTokDllName = "libblingfiretokdll.so";
-#elif OSX 
-        private const string BlingFireTokDllName = "libblingfiretokdll.dylib";
-#else
-        private const string BlingFireTokDllName = "blingfiretokdll.dll";
-#endif
+        private const string BlingFireTokDllName = "blingfiretokdll";
 
         [DllImport(BlingFireTokDllName)]
         public static extern Int32 GetBlingFireTokVersion();
