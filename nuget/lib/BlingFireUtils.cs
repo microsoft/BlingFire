@@ -16,7 +16,12 @@ namespace BlingFire
         public static extern Int32 GetBlingFireTokVersion();
 
         [DllImport(BlingFireTokDllName)]
-        public static extern UInt64 LoadModel(byte[] InUtf8Str);
+        public static extern UInt64 LoadModel(byte[] modelName);
+
+        public static UInt64 LoadModel(string modelName)
+        {
+            return LoadModel(System.Text.Encoding.UTF8.GetBytes(modelName));
+        }
 
         [DllImport(BlingFireTokDllName)]
         public static extern int FreeModel(UInt64 model);
@@ -32,7 +37,8 @@ namespace BlingFire
             Int32 actualLength = TextToSentences(paraBytes, (Int32)paraBytes.Length, outputBytes, MaxLength);
             if (0 < actualLength - 1 && actualLength <= MaxLength)
             {
-                string sentencesStr = Encoding.UTF8.GetString(SubArray(outputBytes, 0, actualLength - 1));
+                Array.Resize(ref outputBytes, actualLength);
+                string sentencesStr = Encoding.UTF8.GetString(outputBytes);
                 var sentences = sentencesStr.Split(_justNewLineChar, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var s in sentences)
                 {
@@ -59,7 +65,8 @@ namespace BlingFire
             Int32 actualLength = TextToSentencesWithOffsets(paraBytes, (Int32)paraBytes.Length, outputBytes, startOffsets, endOffsets, MaxLength);
             if (0 < actualLength - 1 && actualLength <= MaxLength)
             {
-                string sentencesStr = Encoding.UTF8.GetString(SubArray(outputBytes, 0, actualLength - 1));
+                Array.Resize(ref outputBytes, actualLength);
+                string sentencesStr = Encoding.UTF8.GetString(outputBytes);
                 var sentences = sentencesStr.Split(_justNewLineChar, StringSplitOptions.RemoveEmptyEntries);
                 for (int i = 0; i < sentences.Length; ++i)
                 {
@@ -80,7 +87,8 @@ namespace BlingFire
             Int32 actualLength = TextToWords(paraBytes, (Int32)paraBytes.Length, outputBytes, MaxLength);
             if (0 < actualLength - 1 && actualLength <= MaxLength)
             {
-                string wordsStr = Encoding.UTF8.GetString(SubArray(outputBytes, 0, actualLength - 1));
+                Array.Resize(ref outputBytes, actualLength);
+                string wordsStr = Encoding.UTF8.GetString(outputBytes);
                 var words = wordsStr.Split(_justSpaceChar, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var w in words)
                 {
@@ -102,7 +110,8 @@ namespace BlingFire
             Int32 actualLength = TextToWordsWithOffsets(paraBytes, (Int32)paraBytes.Length, outputBytes, startOffsets, endOffsets, MaxLength);
             if (0 < actualLength - 1 && actualLength <= MaxLength)
             {
-                string wordsStr = Encoding.UTF8.GetString(SubArray(outputBytes, 0, actualLength - 1));
+                Array.Resize(ref outputBytes, actualLength);
+                string wordsStr = Encoding.UTF8.GetString(outputBytes);
                 var words = wordsStr.Split(_justSpaceChar, StringSplitOptions.RemoveEmptyEntries);
                 for (int i = 0; i < words.Length; ++i)
                 {
@@ -111,12 +120,6 @@ namespace BlingFire
             }
         }
 
-        private static T[] SubArray<T>(this T[] data, int index, int length)
-        {
-            T[] result = new T[length];
-            Array.Copy(data, index, result, 0, length);
-            return result;
-        }
 
         //
         // expose Bling Fire interfaces
@@ -129,33 +132,49 @@ namespace BlingFire
         public static extern Int32 TextToWords([MarshalAs(UnmanagedType.LPArray)] byte[] InUtf8Str, Int32 InUtf8StrLen, byte[] OutBuff, Int32 MaxBuffSize);
 
         [DllImport(BlingFireTokDllName)]
+        public static extern Int32 TextToSentencesWithModel([MarshalAs(UnmanagedType.LPArray)] byte[] InUtf8Str, Int32 InUtf8StrLen, byte[] OutBuff, Int32 MaxBuffSize, UInt64 model);
+
+        [DllImport(BlingFireTokDllName)]
+        public static extern Int32 TextToWordsWithModel([MarshalAs(UnmanagedType.LPArray)] byte[] InUtf8Str, Int32 InUtf8StrLen, byte[] OutBuff, Int32 MaxBuffSize, UInt64 model);
+
+        [DllImport(BlingFireTokDllName)]
         public static extern Int32 TextToSentencesWithOffsets([MarshalAs(UnmanagedType.LPArray)] byte[] InUtf8Str, Int32 InUtf8StrLen, byte[] OutBuff, int[] StartOffsets, int[] EndOffsets, Int32 MaxBuffSize);
 
         [DllImport(BlingFireTokDllName)]
         public static extern Int32 TextToWordsWithOffsets([MarshalAs(UnmanagedType.LPArray)] byte[] InUtf8Str, Int32 InUtf8StrLen, byte[] OutBuff, int[] StartOffsets, int[] EndOffsets, Int32 MaxBuffSize);
 
         [DllImport(BlingFireTokDllName)]
+        public static extern Int32 TextToSentencesWithOffsetsWithModel([MarshalAs(UnmanagedType.LPArray)] byte[] InUtf8Str, Int32 InUtf8StrLen, byte[] OutBuff, int[] StartOffsets, int[] EndOffsets, Int32 MaxBuffSize, UInt64 model);
+
+        [DllImport(BlingFireTokDllName)]
+        public static extern Int32 TextToWordsWithOffsetsWithModel([MarshalAs(UnmanagedType.LPArray)] byte[] InUtf8Str, Int32 InUtf8StrLen, byte[] OutBuff, int[] StartOffsets, int[] EndOffsets, Int32 MaxBuffSize, UInt64 model);
+
+
+        [DllImport(BlingFireTokDllName)]
         public static extern int TextToIds(
                 UInt64 model,
-                IntPtr InUtf8Str,
-                int InUtf8StrLen,
-                IntPtr TokenIds,
-                int MaxBuffSize,
+                [MarshalAs(UnmanagedType.LPArray)] byte[] InUtf8Str,
+                Int32 InUtf8StrLen,
+                int[] TokenIds,
+                Int32 MaxBuffSize,
                 int UnkId
             );
 
         [DllImport(BlingFireTokDllName)]
         public static extern int TextToIdsWithOffsets(
                 UInt64 model,
-                IntPtr InUtf8Str,
-                int InUtf8StrLen,
-                IntPtr TokenIds,
-                IntPtr StartOffsets,
-                IntPtr EndOffsets,
-                int MaxBuffSize,
+                [MarshalAs(UnmanagedType.LPArray)] byte[] InUtf8Str,
+                Int32 InUtf8StrLen,
+                int[] TokenIds,
+                int[] StartOffsets,
+                int[] EndOffsets,
+                Int32 MaxBuffSize,
                 int UnkId
             );
  
+        [DllImport(BlingFireTokDllName)]
+        public static extern Int32 NormalizeSpaces([MarshalAs(UnmanagedType.LPArray)] byte[] InUtf8Str, Int32 InUtf8StrLen, byte[] OutBuff, Int32 MaxBuffSize, Int32 utf32SpaceCode);
+
         private static char[] _justNewLineChar = new char[] { '\n' };
         private static char[] _justSpaceChar = new char[] { ' ' };
 
