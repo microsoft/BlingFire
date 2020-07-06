@@ -10,7 +10,7 @@ To test C# code use the following commands:
 1. cd BlingFire/nuget/test
 2. dotnet run -- BlingUtilsTest
 
-This will compile and run the small test program, you should see something like this in the output:
+This will compile and run the small [test program](https://github.com/microsoft/BlingFire/blob/master/nuget/test/Program.cs), you should see something like this in the output:
 ```
 Start C# test...
 Bling Fire version: 6001
