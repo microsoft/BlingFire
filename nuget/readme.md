@@ -1,14 +1,15 @@
 # Bling Fire Nuget package for C#
 
-Note: this is still work in progress, we might have to change file names, locations and APIs.
-
 This folder contains nuget package sources for the Bling Fire Tokenizer wrapper code. It also includes native DLLs and binary files.
+
+To provide better experience on the target platform, we include wrapper code as a source rather than as a compiled assembly. When wrapper code is compiled on Linux and runs on Linux the DllImport directive knows to search for lib...so rathen then for a dll. The wrapper code is very small and hardly there is any advantage in having a separate assembly for it.
 
 To test C# code use the following commands:
 
 0. one time install dotnet framework, see this link for Linux: https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
 1. cd BlingFire/nuget/test
 2. dotnet run -- BlingUtilsTest
+
 
 This will compile and run the small [test program](https://github.com/microsoft/BlingFire/blob/master/nuget/test/Program.cs), you should see something like this in the output:
 ```
@@ -40,4 +41,34 @@ return length: 49
 tokens from offsets: ['Auto'/4396 'pho'/22014 'bia'/9166 ','/4 ' also'/2843 ' called'/35839 ' mono'/22460 'pho'/22014 'bia'/9166 ','/4 ' is'/83 'olo'/7537 'pho'/22014 'bia'/9166 ','/4 ' or'/707 ' '/6 'eremo'/102835 'pho'/22014 'bia'/9166 ','/4 ' is'/83 ' the'/70 ' specific'/29458 ' pho'/53073 'bia'/9166 ' of'/111 ' '/6 'isolation'/219488 '.'/5 ' I'/87 ' saw'/24124 ' a'/10 ' girl'/23040 ' with'/678 ' a'/10 ' tele'/5501 'scope'/70820 '.'/5 ' Я'/1509 ' увидел'/79132 ' дев'/29513 'у'/105 'шку'/46009 ' с'/135 ' теле'/18293 'скоп'/41333 'ом'/419 '.'/5 ]
 Test Complete
 ```
+Note: In Windows console default encoding is set to something old so only ascii symbols will be printed, but this is a display issue. You can manually set it to use UTF-8 if you want proper output.
 
+After changes were made to the nuget package, to create a new NuGet package run from the lib folder:
+```
+dotnet pack --configuration Release
+```
+
+Upload to nuget.org.
+
+To publish to GitHub (optional) use the following command:
+```
+dotnet nuget push "bin/Release/BlingFire.x.y.z.nupkg" --source "github"
+```
+
+
+When you publish to GitHub the lib directory should contain nuget.config file with the valid token for package writing:
+```
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <packageSources>
+        <clear />
+        <add key="github" value="https://nuget.pkg.github.com/microsoft/index.json" />
+    </packageSources>
+    <packageSourceCredentials>
+        <github>
+            <add key="Username" value="xyz" />
+            <add key="ClearTextPassword" value="0123456789" />
+        </github>
+    </packageSourceCredentials>
+</configuration>
+```
