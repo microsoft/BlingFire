@@ -60,15 +60,15 @@ namespace BlingUtilsTest
 
 
             // load BERT base tokenization model
-            var h1 = BlingFireUtils.LoadModel("../lib/bert_base_tok.bin");
+            var h1 = BlingFireUtils.LoadModel("./bin/Debug/netcoreapp3.1/bert_base_tok.bin");
             Console.WriteLine(String.Format("Model handle: {0}", h1));
 
             // load XLNET tokenization model
-            var h2 = BlingFireUtils.LoadModel("../lib/xlnet.bin");
+            var h2 = BlingFireUtils.LoadModel("./bin/Debug/netcoreapp3.1/xlnet.bin");
             Console.WriteLine(String.Format("Model handle: {0}", h2));
 
             // load XLM Roberta tokenization model
-            var h3 = BlingFireUtils.LoadModel("../lib/xlm_roberta_base.bin");
+            var h3 = BlingFireUtils.LoadModel("./bin/Debug/netcoreapp3.1/xlm_roberta_base.bin");
             Console.WriteLine(String.Format("Model handle: {0}", h3));
 
             // allocate space for ids
