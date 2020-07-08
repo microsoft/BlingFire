@@ -203,7 +203,7 @@ See this project for more C# examples: https://github.com/microsoft/BlingFire/tr
 
 ### 6. Example of reaching 99% accuracy for language detection
 
-[This document](/link) describes how to improve FastText language detection model with Bling Fire and achive 99% accuracy in language detection task for 365 languages.
+[This document](/link) describes how to improve [FastText](https://fasttext.cc/) language detection model with Bling Fire and achive 99% accuracy in language detection task for 365 languages.
 
 
 ## How to create your own models
