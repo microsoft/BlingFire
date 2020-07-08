@@ -55,7 +55,7 @@ If you simply want to use it in Python, you can install the latest release using
 
 
 ## Examples
-### 1. Python example, simple tokenizer with default model:
+### 1. Python example, pattern-based tokenizer with a default model:
 ```python
 from blingfire import *
 text = 'This is the Bling-Fire tokenizer'
@@ -69,7 +69,7 @@ This is the Bling - Fire tokenizer
 ```
 
 
-### 2. Python example, load a custom model for a simple tokenizer: 
+### 2. Python example, load a custom model for a pattern-based tokenizer: 
 
 ```python
 from blingfire import *
@@ -95,7 +95,7 @@ This is the Bling - Fire tokenizer . 2007年9月日历表_2007年9月农历阳�
 ```
 
 
-### 3. Python example, calling BERT BASE tokenizer compiled as one finite-state machine
+### 3. Python example, calling BERT BASE tokenizer
 On one thread, it works 14x faster than orignal BERT tokenizer written in Python. Given this code is written in C++ it can be called from multiple threads without blocking on global interpreter lock thus achiving higher speed-ups for batch mode.
 
 ```python
@@ -136,10 +136,68 @@ Model Handle: 2854016629088
 Model Freed
 ```
 
-### 4. Example of using Bling Fire in your text classification task
+
+### 4. C# Example, calling XLM Roberta (Unigram LM) tokenizer and getting ids and offsets
+```csharp
+using System;
+using BlingFire;
+
+namespace BlingUtilsTest
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // load XLM Roberta tokenization model
+            var h = BlingFireUtils.LoadModel("./xlm_roberta_base.bin");
+
+
+            // input string
+            string input = "Autophobia, also called monophobia, isolophobia, or eremophobia, is the specific phobia of isolation. I saw a girl with a telescope. Я увидел девушку с телескопом.";
+            // get its UTF8 representation
+            byte[] inBytes = System.Text.Encoding.UTF8.GetBytes(input);
+
+
+            // allocate space for ids and offsets
+            int[] Ids =  new int[128];
+            int[] Starts =  new int[128];
+            int[] Ends =  new int[128];
+
+            // tokenize with loaded XLM Roberta tokenization and output ids and start and end offsets
+            outputCount = BlingFireUtils.TextToIdsWithOffsets(h, inBytes, inBytes.Length, Ids, Starts, Ends, Ids.Length, 0);
+            Console.WriteLine(String.Format("return length: {0}", outputCount));
+            if (outputCount >= 0)
+            {
+                Console.Write("tokens from offsets: [");
+                for(int i = 0; i < outputCount; ++i)
+                {
+                    int startOffset = Starts[i];
+                    int surfaceLen = Ends[i] - Starts[i] + 1;
+
+                    string token = System.Text.Encoding.UTF8.GetString(new ArraySegment<byte>(inBytes, startOffset, surfaceLen));
+                    Console.Write(String.Format("'{0}'/{1} ", token, Ids[i]));
+                }
+                Console.WriteLine("]");
+            }
+
+            // free loaded models
+            BlingFireUtils.FreeModel(h);
+        }
+    }
+}
+```
+
+This code will print the following output:
+```
+return length: 49
+tokens from offsets: ['Auto'/4396 'pho'/22014 'bia'/9166 ','/4 ' also'/2843 ' called'/35839 ' mono'/22460 'pho'/22014 'bia'/9166 ','/4 ' is'/83 'olo'/7537 'pho'/22014 'bia'/9166 ','/4 ' or'/707 ' '/6 'eremo'/102835 'pho'/22014 'bia'/9166 ','/4 ' is'/83 ' the'/70 ' specific'/29458 ' pho'/53073 'bia'/9166 ' of'/111 ' '/6 'isolation'/219488 '.'/5 ' I'/87 ' saw'/24124 ' a'/10 ' girl'/23040 ' with'/678 ' a'/10 ' tele'/5501 'scope'/70820 '.'/5 ' Я'/1509 ' увидел'/79132 ' дев'/29513 'у'/105 'шку'/46009 ' с'/135 ' теле'/18293 'скоп'/41333 'ом'/419 '.'/5 ]
+```
+
+### 5. Example of making a difference with using Bling Fire default tokenizer in a classification task
 
 [This notebook](/doc/Bling%20Fire%20Tokenizer%20Demo.ipynb) demonstrates how Bling Fire tokenizer helps in Stack Overflow posts classification problem.
 
+### 6. Example of reaching 99% accuracy for language detection for 365 languages using Bling Fire and FastText
 
 
 ## How to create your own models
