@@ -138,6 +138,9 @@ Model Freed
 
 
 ### 4. C# Example, calling XLM Roberta tokenizer and getting ids and offsets
+
+Let's load XLM Roberta model and tokenize a string, for each token let's get ID and offsets in the original text.
+
 ```csharp
 using System;
 using BlingFire;
@@ -186,12 +189,13 @@ namespace BlingUtilsTest
     }
 }
 ```
-
 This code will print the following output:
 ```
 return length: 49
 tokens from offsets: ['Auto'/4396 'pho'/22014 'bia'/9166 ','/4 ' also'/2843 ' called'/35839 ' mono'/22460 'pho'/22014 'bia'/9166 ','/4 ' is'/83 'olo'/7537 'pho'/22014 'bia'/9166 ','/4 ' or'/707 ' '/6 'eremo'/102835 'pho'/22014 'bia'/9166 ','/4 ' is'/83 ' the'/70 ' specific'/29458 ' pho'/53073 'bia'/9166 ' of'/111 ' '/6 'isolation'/219488 '.'/5 ' I'/87 ' saw'/24124 ' a'/10 ' girl'/23040 ' with'/678 ' a'/10 ' tele'/5501 'scope'/70820 '.'/5 ' Я'/1509 ' увидел'/79132 ' дев'/29513 'у'/105 'шку'/46009 ' с'/135 ' теле'/18293 'скоп'/41333 'ом'/419 '.'/5 ]
 ```
+See this project for more C# examples: https://github.com/microsoft/BlingFire/tree/master/nuget/test .
+ 
 
 ### 5. Example of making a difference with using Bling Fire default tokenizer in a classification task
 
