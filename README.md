@@ -20,7 +20,7 @@ Model files describe the algorithms they are built for and are loaded on demand 
 
 Normalization can be added to each model, but is optional. 
 
-Diffrences between algorithms are summarized ![here](https://github.com/microsoft/BlingFire/blob/master/doc/Bling_Fire_Tokenizer_Algorithms.pdf).
+Diffrences between algorithms are [summarized here](https://github.com/microsoft/BlingFire/blob/master/doc/Bling_Fire_Tokenizer_Algorithms.pdf).
 
 Bling Fire Tokenizer high level API designed in a way that it requires minimal or no configuration, or initialization, or additional files and is friendly for use from languages like Python, Ruby, Rust, C#, etc.
 
@@ -75,7 +75,6 @@ This is the Bling - Fire tokenizer
 from blingfire import *
 
 # load a custom model from file
-# h = load_model(os.path.join(os.path.dirname(blingfire.__file__), "wbd_chuni.bin"))
 h = load_model("./wbd_chuni.bin")
 
 text = 'This is the Bling-Fire tokenizer. 2007年9月日历表_2007年9月农历阳历一览表-万年历'
@@ -114,10 +113,6 @@ print(s)
 ids = blingfire.text_to_ids(h, s, 128, 100)  # sequence length: 128, oov id: 100
 print(ids)                                   # returns a numpy array of length 128 (padded or trimmed)
 
-print(s+s)
-ids = blingfire.text_to_ids(h, s+s, 128, 100)
-print(ids)
-
 # free the model at the end
 blingfire.free_model(h)
 print("Model Freed")
@@ -137,18 +132,6 @@ Model Handle: 2854016629088
      0     0     0     0     0     0     0     0     0     0     0     0
      0     0     0     0     0     0     0     0     0     0     0     0
      0     0     0     0     0     0     0     0     0     0     0     0
-     0     0     0     0     0     0     0     0]
-Эpple pie. How do I renew my virtual smart card?: /Microsoft IT/ 'virtual' smart card certificates for DirectAccess are valid for one year. In order to get to microsoft.com we need to type pi@1.2.1.2.Эpple pie. How do I renew my virtual smart card?: /Microsoft IT/ 'virtual' smart card certificates for DirectAccess are valid for one year. In order to get to microsoft.com we need to type pi@1.2.1.2.
-[ 1208  9397  2571 11345  1012  2129  2079  1045 20687  2026  7484  6047
-  4003  1029  1024  1013  7513  2009  1013  1005  7484  1005  6047  4003
- 17987  2005  3622  6305  9623  2015  2024  9398  2005  2028  2095  1012
-  1999  2344  2000  2131  2000  7513  1012  4012  2057  2342  2000  2828
- 14255  1030  1015  1012  1016  1012  1015  1012  1016  1012  1208  9397
-  2571 11345  1012  2129  2079  1045 20687  2026  7484  6047  4003  1029
-  1024  1013  7513  2009  1013  1005  7484  1005  6047  4003 17987  2005
-  3622  6305  9623  2015  2024  9398  2005  2028  2095  1012  1999  2344
-  2000  2131  2000  7513  1012  4012  2057  2342  2000  2828 14255  1030
-  1015  1012  1016  1012  1015  1012  1016  1012     0     0     0     0
      0     0     0     0     0     0     0     0]
 Model Freed
 ```
