@@ -55,7 +55,7 @@ If you simply want to use it in Python, you can install the latest release using
 
 
 ## Examples
-### 1. Python example, pattern-based tokenizer with a default model:
+### 1. Python example, using default pattern-based tokenizer:
 ```python
 from blingfire import *
 text = 'This is the Bling-Fire tokenizer'
@@ -137,7 +137,7 @@ Model Freed
 ```
 
 
-### 4. C# Example, calling XLM Roberta (Unigram LM) tokenizer and getting ids and offsets
+### 4. C# Example, calling XLM Roberta tokenizer and getting ids and offsets
 ```csharp
 using System;
 using BlingFire;
@@ -197,7 +197,9 @@ tokens from offsets: ['Auto'/4396 'pho'/22014 'bia'/9166 ','/4 ' also'/2843 ' ca
 
 [This notebook](/doc/Bling%20Fire%20Tokenizer%20Demo.ipynb) demonstrates how Bling Fire tokenizer helps in Stack Overflow posts classification problem.
 
-### 6. Example of reaching 99% accuracy for language detection for 365 languages using Bling Fire and FastText
+### 6. Example of reaching 99% accuracy for language detection
+
+[This document](/link) describes how to improve FastText language detection model with Bling Fire and achive 99% accuracy in language detection task for 365 languages.
 
 
 ## How to create your own models
