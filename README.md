@@ -137,7 +137,7 @@ Model Freed
 ```
 
 
-### 4. C# Example, calling XLM Roberta tokenizer and getting ids and offsets
+### 4. C# example, calling XLM Roberta tokenizer and getting ids and offsets
 
 Let's load XLM Roberta model and tokenize a string, for each token let's get ID and offsets in the original text.
 
