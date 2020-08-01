@@ -77,6 +77,9 @@
 #define HANDLE void*
 #endif
 
+#include <stdint.h>
+
+/* because we have stdint.h 
 #ifndef __int32
 #define __int32 int32_t
 #endif
@@ -96,6 +99,8 @@
 #ifndef uint8_t
 #define uint8_t u_int8_t
 #endif
+*/
+
 
 #ifndef __fallthrough
 #define __fallthrough
