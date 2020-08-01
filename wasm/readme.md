@@ -33,6 +33,7 @@ Note: we have tesed this on Linux only, however after compiled it suppose to wor
 2. add word "export" without qoutes to generated blingfire.js
 
 
+## To Test
 ### Start a simple Python based web server:
 
 1. make http.server
