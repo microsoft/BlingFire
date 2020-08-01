@@ -782,20 +782,15 @@ const int TextToHashes(const char * pInUtf8Str, int InUtf8StrByteCount, int32_t 
 
 
 //
-// Loads a model and return a handle.
-// Returns 0 in case of an error.
+// Helper, sets up pNewModelData object with model data from memory
+// Returns 0 in case of an error otherwise initialized pNewModelData object is returned
 //
 extern "C"
-void* LoadModel(const char * pszLdbFileName)
+void* SetModelData(FAModelData * pNewModelData, const unsigned char * pImgBytes)
 {
-    FAModelData * pNewModelData = new FAModelData();
     if (NULL == pNewModelData) {
         return 0;
     }
-
-    // load the bin file
-    pNewModelData->m_Img.Load (pszLdbFileName);
-    const unsigned char * pImgBytes = pNewModelData->m_Img.GetImageDump ();
     if (NULL == pImgBytes) {
         return 0;
     }
@@ -841,6 +836,52 @@ void* LoadModel(const char * pszLdbFileName)
     }
 
     return (void*) pNewModelData;
+}
+
+
+//
+// Same as LoadModel except a model is created from a memory pointer
+// Returns 0 in case of an error
+//
+extern "C"
+void* SetModel(const unsigned char * pImgBytes, int ModelByteCount)
+{
+    FAModelData * pNewModelData = new FAModelData();
+    if (NULL == pNewModelData) {
+        return 0;
+    }
+
+    // load the bin file
+    if (NULL == pImgBytes || 0 == ModelByteCount) {
+        return 0;
+    }
+
+    // return the initialized model handle
+    return SetModelData(pNewModelData, pImgBytes);
+}
+
+
+//
+// Loads a model and return a handle.
+// Returns 0 in case of an error.
+//
+extern "C"
+void* LoadModel(const char * pszLdbFileName)
+{
+    FAModelData * pNewModelData = new FAModelData();
+    if (NULL == pNewModelData) {
+        return 0;
+    }
+
+    // load the bin file
+    pNewModelData->m_Img.Load (pszLdbFileName);
+    const unsigned char * pImgBytes = pNewModelData->m_Img.GetImageDump ();
+    if (NULL == pImgBytes) {
+        return 0;
+    }
+
+    // return the initialized model handle
+    return SetModelData(pNewModelData, pImgBytes);
 }
 
 

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Example of Using Bling Fire WebAssembly</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+<script type="module">
+
+import { GetVersion, TextToWords, TextToSentences, LoadModel, FreeModel, TextToIds } from './blingfire_wrapper.js';
+
+$(document).ready(function() {
+
+  var text = "I saw a girl with a telescope. Я видел девушку с телескопом.";
+
+  $("#btn1").click(function () {
+    console.log("Version: " + GetVersion());
+  });
+
+  $("#btn2").click(function () {
+    console.log(TextToWords(text));
+  });
+
+  $("#btn3").click(function () {
+    console.log(TextToSentences(text));
+  });
+
+  var modelHandle1 = null;
+
+  $("#btn4").click(function () {
+    if(modelHandle1 == null) {
+      (async function () {
+        modelHandle1 = await LoadModel("./laser100k.bin");
+        console.log("Model handle: " + modelHandle1);
+      })();
+    }
+  });
+
+  $("#btn5").click(function () {
+    if(modelHandle1 != null) {
+      FreeModel(modelHandle1);
+      modelHandle1 = null;
+      console.log("Model Freed!");
+    }
+  });
+
+  $("#btn6").click(function () {
+    if(modelHandle1 != null) {
+      console.log(TextToIds(modelHandle1, text, 128));
+    } else {
+      console.log("Load the model first!");
+    }
+  });
+
+});
+
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+  <h2>See Console output for different APIs:</h2>
+  <button type="button" class="btn btn-primary" id="btn1">GetBlingFireTokVersion</button>
+  <button type="button" class="btn btn-secondary" id="btn2">TextToWords</button>
+  <button type="button" class="btn btn-secondary" id="btn3">TextToSentences</button>
+  <button type="button" class="btn btn-secondary" id="btn4">LoadModel</button>
+  <button type="button" class="btn btn-secondary" id="btn5">FreeModel</button>
+  <button type="button" class="btn btn-secondary" id="btn6">TextToIds</button>
+</div>
+
+</body>
+</html>

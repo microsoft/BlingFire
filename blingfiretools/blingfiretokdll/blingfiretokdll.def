@@ -21,4 +21,4 @@ EXPORTS
     TextToIdsWithOffsets_wp
     TextToIdsWithOffsets
     NormalizeSpaces
-
+    SetModel
