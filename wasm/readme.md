@@ -67,7 +67,9 @@ Model Freed!
 Load the model first!
 
 
-To integrate into your web page you need three files:
+## To integrate
+
+To integrate into a client web page and use in a browser you need three files:
 
 1. blingfire.js            -- generated JS from Emscripten, contains some useful and not useful helper function and glue code
 2. blingfire.wasm          -- compiled WASM of Blig Fire
