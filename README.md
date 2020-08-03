@@ -22,7 +22,7 @@ Normalization can be added to each model, but is optional.
 
 Diffrences between algorithms are [summarized here](https://github.com/microsoft/BlingFire/blob/master/doc/Bling_Fire_Tokenizer_Algorithms.pdf).
 
-Bling Fire Tokenizer high level API designed in a way that it requires minimal or no configuration, or initialization, or additional files and is friendly for use from languages like Python, Ruby, Rust, C#, etc.
+Bling Fire Tokenizer high level API designed in a way that it requires minimal or no configuration, or initialization, or additional files and is friendly for use from languages like Python, Ruby, Rust, C#, JavaScript (via WASM), etc.
 
 We have precompiled some popular models and listed with the source code reference below:
 
@@ -196,12 +196,57 @@ tokens from offsets: ['Auto'/4396 'pho'/22014 'bia'/9166 ','/4 ' also'/2843 ' ca
 ```
 See this project for more C# examples: https://github.com/microsoft/BlingFire/tree/master/nuget/test .
  
+### 5. JavaScript example, fetching and loading model file, using the model to compute ids
 
-### 5. Example of making a difference with using Bling Fire default tokenizer in a classification task
+The goal of integration with JavaScript is ability to run the code in a browser with ML frameworks like TensorFlow.js and FastText web assembly.
+
+Note: this work is still in progress, we are likely to make some changes/improvements there.
+
+```javascript
+import { GetVersion, TextToWords, TextToSentences, LoadModel, FreeModel, TextToIds } from './blingfire_wrapper.js';
+
+$(document).ready(function() {
+
+  var text = "I saw a girl with a telescope. Я видел девушку с телескопом.";
+
+  var modelHandle1 = null;
+
+  $("#btn4").click(function () {
+    if(modelHandle1 == null) {
+      (async function () {
+        modelHandle1 = await LoadModel("./bert_base_tok.bin");
+        console.log("Model handle: " + modelHandle1);
+      })();
+    }
+  });
+
+  $("#btn5").click(function () {
+    if(modelHandle1 != null) {
+      FreeModel(modelHandle1);
+      modelHandle1 = null;
+      console.log("Model Freed!");
+    }
+  });
+
+  $("#btn6").click(function () {
+    if(modelHandle1 != null) {
+      console.log(TextToIds(modelHandle1, text, 128));
+    } else {
+      console.log("Load the model first!");
+    }
+  });
+
+});
+```
+
+Full example code can be found [here](https://github.com/microsoft/BlingFire/blob/master/wasm/example.html). Details of the API are described in the [wasm](https://github.com/microsoft/BlingFire/tree/master/wasm) folder.
+
+
+### 6. Example of making a difference with using Bling Fire default tokenizer in a classification task
 
 [This notebook](/doc/Bling%20Fire%20Tokenizer%20Demo.ipynb) demonstrates how Bling Fire tokenizer helps in Stack Overflow posts classification problem.
 
-### 6. Example of reaching 99% accuracy for language detection
+### 7. Example of reaching 99% accuracy for language detection
 
 [This document](https://github.com/microsoft/BlingFire/wiki/How-to-train-better-language-detection-with-Bling-Fire-and-FastText) describes how to improve [FastText](https://fasttext.cc/) language detection model with Bling Fire and achive 99% accuracy in language detection task for 365 languages.
 
