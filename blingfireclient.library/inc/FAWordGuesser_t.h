@@ -17,6 +17,9 @@
 #include "FALimits.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// Word Guesser class
 ///
@@ -199,7 +202,7 @@ inline const int FAWordGuesser_t< Ty >::
     if (m_IgnoreCase) {
         for (int i = 0 ; i < WordSize; ++i) {
             const int InSymbol = (int) pIn [i] ;
-            const int OutSymbol = ::FAUtf32ToLower (InSymbol) ;
+            const int OutSymbol = FAUtf32ToLower (InSymbol) ;
             TmpBuff [i] = (Ty) OutSymbol ;
         }
         pIn = TmpBuff;
@@ -207,7 +210,7 @@ inline const int FAWordGuesser_t< Ty >::
     // normalize characters
     if (m_pCharMap) {
         // in-place is fine
-        InSize = ::FANormalizeWord (pIn, InSize, TmpBuff, TmpBuffSize, m_pCharMap);
+        InSize = FANormalizeWord (pIn, InSize, TmpBuff, TmpBuffSize, m_pCharMap);
         pIn = TmpBuff;
     }
     // apply transformation, if needed
@@ -364,6 +367,8 @@ exit_default:
     } else {
         return -1;
     }
+}
+
 }
 
 #endif

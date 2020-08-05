@@ -11,6 +11,9 @@
 #include "FAArrayCA.h"
 #include "FADictInterpreter_t.h"
 
+namespace BlingFire
+{
+
 ///
 /// Assigns a digitial value to the input chain acording the tag dictionary
 /// and SetId --> Ow map.
@@ -115,5 +118,6 @@ const int FADigitizer_dct_t< Ty >::Process (const int SetId) const
     }
 }
 
+}
 
 #endif

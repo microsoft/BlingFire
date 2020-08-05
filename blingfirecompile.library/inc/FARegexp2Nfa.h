@@ -18,6 +18,9 @@
 #include "FARegexpLexer_char.h"
 #include "FARegexpLexer_wre.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FANfaCreator_base;
 
@@ -97,5 +100,7 @@ private:
 
     FATrBr2Symbol m_trbr2iw;
 };
+
+}
 
 #endif

@@ -11,6 +11,9 @@
 #include "FARSNfa_wo_ro.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FARSDfaA;
 class FAAllocatorA;
 
@@ -59,5 +62,7 @@ private:
     // DFA's alphabet size
     int m_IwsCount;
 };
+
+}
 
 #endif

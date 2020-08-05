@@ -12,6 +12,9 @@
 #include "FATopoSort_t.h"
 #include "FADfaTopoGraph.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSDfaA;
 class FAState2OwsA;
@@ -62,5 +65,7 @@ private:
     FAArray_cont_t < int > m_ows;
 
 };
+
+}
 
 #endif

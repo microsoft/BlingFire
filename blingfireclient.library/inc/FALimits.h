@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAFsmConst.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class defines global limits for input and output of all modules.
 /// 
@@ -43,5 +46,7 @@ public:
         MaxGram = 4,               // Maximum ngram order
     };
 };
+
+}
 
 #endif

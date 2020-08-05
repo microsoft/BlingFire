@@ -9,6 +9,9 @@
 #include "FAUtils.h"
 #include "FAException.h"
 
+namespace BlingFire
+{
+
 
 FAIwOwSuffArr2Patterns::FAIwOwSuffArr2Patterns (FAAllocatorA * pAlloc) :
     m_MinPatLen (DefMinPatLen),
@@ -311,10 +314,10 @@ inline void FAIwOwSuffArr2Patterns::
         m_ows.push_back (Ow);
     }
 
-    const int NewIwsCount = ::FASortUniq (m_iws.begin (), m_iws.end ());
+    const int NewIwsCount = FASortUniq (m_iws.begin (), m_iws.end ());
     m_iws.resize (NewIwsCount);
 
-    const int NewOwsCount = ::FASortUniq (m_ows.begin (), m_ows.end ());
+    const int NewOwsCount = FASortUniq (m_ows.begin (), m_ows.end ());
     m_ows.resize (NewOwsCount);
 }
 
@@ -485,4 +488,6 @@ void FAIwOwSuffArr2Patterns::Process ()
 
 void FAIwOwSuffArr2Patterns::PutPattern (const int *, const int, const int)
 {}
+
+}
 

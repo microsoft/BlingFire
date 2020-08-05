@@ -33,6 +33,8 @@
 #include <string>
 #include <iomanip>
 
+using namespace BlingFire;
+
 const char * __PROG__ = "";
 
 bool g_no_output = false;

@@ -18,6 +18,9 @@
 #include "FANfa2Dfa_t.h"
 #include "FADfa2MinDfa_hg_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -53,5 +56,7 @@ private:
     FADfa2MinDfa_hg_t < FARSDfa_wo_ro, FARSDfa_ro > m_dfa2mindfa;
     FARSDfa_ro m_min_dfa;
 };
+
+}
 
 #endif

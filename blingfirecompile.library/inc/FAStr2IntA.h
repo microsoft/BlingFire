@@ -9,6 +9,8 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
 
 class FAStr2IntA {
 
@@ -32,5 +34,7 @@ public:
                            const int Size,
                            const int Value) = 0;
 };
+
+}
 
 #endif

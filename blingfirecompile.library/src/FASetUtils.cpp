@@ -9,6 +9,9 @@
 #include "FASetUtils.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FASetUtils::FASetUtils (FAAllocatorA * pAlloc) :
     m_pAlloc (pAlloc)
@@ -89,8 +92,8 @@ void FASetUtils::Difference (const int * pSet1, const int Size1, const int Res1,
   DebugLogAssert (Res2 < GetResCount ());
 
   // pSet1 and pSet2 have to be sorted and uniqed
-  DebugLogAssert (true == ::FAIsSortUniqed (pSet1, Size1));
-  DebugLogAssert (true == ::FAIsSortUniqed (pSet2, Size2));
+  DebugLogAssert (true == FAIsSortUniqed (pSet1, Size1));
+  DebugLogAssert (true == FAIsSortUniqed (pSet2, Size2));
 
   // keeps Set1 - Set2
   FAArray_cont_t < int > * pRes1 = m_results [Res1];
@@ -147,8 +150,8 @@ void FASetUtils::Intersect (const int * pSet1, const int Size1,
   DebugLogAssert (Res < GetResCount ());
 
   // pSet1 and pSet2 have to be sorted and uniqed
-  DebugLogAssert (true == ::FAIsSortUniqed (pSet1, Size1));
-  DebugLogAssert (true == ::FAIsSortUniqed (pSet2, Size2));
+  DebugLogAssert (true == FAIsSortUniqed (pSet1, Size1));
+  DebugLogAssert (true == FAIsSortUniqed (pSet2, Size2));
 
   // keeps Set1 & Set2
   FAArray_cont_t < int > * pRes3 = m_results [Res];
@@ -194,8 +197,8 @@ void FASetUtils::
   const int Size2 = pSet2Arr->size ();
 
   // pSet1 and pSet2 have to be sorted and uniqed
-  DebugLogAssert (true == ::FAIsSortUniqed (pSet1, Size1));
-  DebugLogAssert (true == ::FAIsSortUniqed (pSet2, Size2));
+  DebugLogAssert (true == FAIsSortUniqed (pSet1, Size1));
+  DebugLogAssert (true == FAIsSortUniqed (pSet2, Size2));
 
   int i = 0;
   int j = 0;
@@ -236,8 +239,8 @@ void FASetUtils::Union (const int * pSet1, const int Size1,
 {
   DebugLogAssert (Res < GetResCount ());
   // pSet1 and pSet2 have to be sorted and uniq !!!
-  DebugLogAssert (true == ::FAIsSortUniqed (pSet1, Size1));
-  DebugLogAssert (true == ::FAIsSortUniqed (pSet2, Size2));
+  DebugLogAssert (true == FAIsSortUniqed (pSet1, Size1));
+  DebugLogAssert (true == FAIsSortUniqed (pSet2, Size2));
 
   FAArray_cont_t < int > * pRes3 = m_results [Res];
   DebugLogAssert (pRes3);
@@ -293,7 +296,7 @@ void FASetUtils::Union (const int * pSet1, const int Size1,
 void FASetUtils::SelfUnion (const int * pSet1, const int Size1, const int Res)
 {
   DebugLogAssert (Res < GetResCount ());
-  DebugLogAssert (true == ::FAIsSortUniqed (pSet1, Size1));
+  DebugLogAssert (true == FAIsSortUniqed (pSet1, Size1));
 
   FAArray_cont_t < int > * pSet2Arr = m_results [Res];
   DebugLogAssert (pSet2Arr);
@@ -386,7 +389,7 @@ void FASetUtils::UnionN (const int ** pSetArray,
     }
   }
 
-  const int NewSize = ::FASortUniq (pRes->begin (), pRes->end ());
+  const int NewSize = FASortUniq (pRes->begin (), pRes->end ());
   pRes->resize (NewSize);
 }
 
@@ -494,10 +497,12 @@ void FASetUtils::PrepareRes (const int Res)
 
       int * pBegin = pRes->begin ();
 
-      if (false == ::FAIsSortUniqed (pBegin, Size)) {
+      if (false == FAIsSortUniqed (pBegin, Size)) {
 
-          const int NewSize = ::FASortUniq (pBegin, pBegin + Size);
+          const int NewSize = FASortUniq (pBegin, pBegin + Size);
           pRes->resize (NewSize);
       }
   }
+}
+
 }

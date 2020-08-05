@@ -11,6 +11,9 @@
 #include "FAArray_cont_t.h"
 #include "FAChain2Num_hash.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -89,5 +92,7 @@ private:
         MinDiffSize = 10000,
     };
 };
+
+}
 
 #endif

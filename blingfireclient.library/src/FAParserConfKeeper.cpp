@@ -15,6 +15,8 @@
 #include "FAMultiMap_pack.h"
 #include "FARSDfaCA.h"
 
+namespace BlingFire
+{
 
 FAParserConfKeeper::FAParserConfKeeper () :
     m_pWre (NULL),
@@ -369,4 +371,6 @@ const unsigned int FAParserConfKeeper::GetFnIniStates (const int ** ppFn2Ini) co
     LogAssert (ppFn2Ini);
     *ppFn2Ini = m_pFn2Ini;
     return m_Fn2IniSize;
+}
+
 }

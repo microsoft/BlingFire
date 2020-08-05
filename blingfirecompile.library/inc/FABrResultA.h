@@ -10,6 +10,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 ///
 /// Interface for setting up results of extracting brackets
 ///
@@ -20,5 +23,7 @@ public:
     // adds new result
     virtual void AddRes (const int BrId, const int From, const int To) = 0;
 };
+
+}
 
 #endif

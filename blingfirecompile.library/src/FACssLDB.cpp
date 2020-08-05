@@ -9,6 +9,9 @@
 #include "FACssLDB.h"
 #include "FAFsmConst.h"
 
+namespace BlingFire
+{
+
 
 FACssLDB::FACssLDB (FAAllocatorA * pAlloc) :
     FALDB (),
@@ -131,4 +134,6 @@ const FAGlobalConfKeeper * FACssLDB::GetGlobalConf () const
         return NULL;
     }
     return & m_global;
+}
+
 }

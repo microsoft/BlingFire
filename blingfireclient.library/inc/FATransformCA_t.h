@@ -10,6 +10,8 @@
 #include "FAConfig.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
 
 template < class Ty >
 class FATransformCA_t {
@@ -22,5 +24,7 @@ public:
             const int MaxOutSize
         ) const = 0;
 };
+
+}
 
 #endif

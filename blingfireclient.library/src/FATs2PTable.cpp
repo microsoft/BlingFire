@@ -9,6 +9,8 @@
 #include "FATs2PTable.h"
 #include "FATsConfKeeper.h"
 
+namespace BlingFire
+{
 
 FATs2PTable::FATs2PTable () :
     m_pInt2Prob (NULL),
@@ -107,4 +109,6 @@ void FATs2PTable::SetConf (const FATsConfKeeper * pConf)
             m_pInt2Prob [i] = LogProb;
         }
     }
+}
+
 }

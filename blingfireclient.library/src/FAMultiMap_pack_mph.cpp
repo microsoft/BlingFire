@@ -10,6 +10,8 @@
 #include "FAFsmConst.h"
 #include "FAUtils_cl.h"
 
+namespace BlingFire
+{
 
 FAMultiMap_pack_mph::FAMultiMap_pack_mph () :
     m_MaxChainSize (-1),
@@ -34,7 +36,7 @@ void FAMultiMap_pack_mph::SetImage (const unsigned char * pDump)
 
         m_dfa.SetImage (pDump  + Offset);
         m_ow2iw.SetImage (pDump + Offset);
-        LogAssert (::FAIsValidDfa (&m_dfa));
+        LogAssert (FAIsValidDfa (&m_dfa));
 
         m_mph.SetRsDfa (&m_dfa);
         m_mph.SetOw2Iw (&m_ow2iw);
@@ -86,4 +88,6 @@ const int FAMultiMap_pack_mph::
     } // of if (FAFsmConst::DIR_R2L == m_Direction) ...
 
     return Count;
+}
+
 }

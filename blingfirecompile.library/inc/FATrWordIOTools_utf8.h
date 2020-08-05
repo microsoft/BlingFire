@@ -9,6 +9,9 @@
 #include "FAConfig.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 class FAMultiMapCA;
 
 ///
@@ -59,5 +62,7 @@ public:
             const int MaxOutSize
         );
 };
+
+}
 
 #endif

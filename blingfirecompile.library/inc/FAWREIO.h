@@ -10,6 +10,9 @@
 
 #include <iostream>
 
+namespace BlingFire
+{
+
 class FAWREConfA;
 
 ///
@@ -27,5 +30,6 @@ void FAReadWre (std::istream & is, FAWREConfA * pWRE);
 ///
 void FASaveWre (std::ostream & os, const FAWREConfA * pWRE);
 
+}
 
 #endif

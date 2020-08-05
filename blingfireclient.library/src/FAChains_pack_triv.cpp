@@ -8,6 +8,8 @@
 #include "FAConfig.h"
 #include "FAChains_pack_triv.h"
 
+namespace BlingFire
+{
 
 FAChains_pack_triv::FAChains_pack_triv () : 
     m_pImage (NULL),
@@ -27,3 +29,4 @@ void FAChains_pack_triv::SetImage (const unsigned char * pImage)
     }
 }
 
+}

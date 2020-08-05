@@ -8,6 +8,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FAArrayCA;
 class FAState2OwCA;
 class FAState2OwsCA;
@@ -47,5 +50,7 @@ public:
     /// returns TrBr map, NULL if does not exist
     virtual const FAMultiMapCA * GetTrBrMap () const = 0;
 };
+
+}
 
 #endif

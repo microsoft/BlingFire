@@ -8,6 +8,9 @@
 #include "FAUtf32Utils.h"
 
 
+namespace BlingFire
+{
+
 extern const int ** toupper_root [];
 extern const int ** tolower_root [];
 
@@ -171,3 +174,4 @@ const bool FAUtf32IsUpper (const int Symbol)
     }
 }
 
+}

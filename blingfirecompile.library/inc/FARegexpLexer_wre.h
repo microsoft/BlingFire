@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FARegexpLexer_triv.h"
 
+namespace BlingFire
+{
+
 ///
 /// The lexer assumes that the input is the combination of the following:
 ///
@@ -82,5 +85,7 @@ private:
   unsigned int m_char2info [AsciiSize];
 
 };
+
+}
 
 #endif

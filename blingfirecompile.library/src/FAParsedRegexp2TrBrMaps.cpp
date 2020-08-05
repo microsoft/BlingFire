@@ -16,6 +16,9 @@
 
 #include <algorithm>
 
+namespace BlingFire
+{
+
 
 FAParsedRegexp2TrBrMaps::TTrBrOffsetCmp::TTrBrOffsetCmp (
         const FARegexpTree * pRegexpTree
@@ -151,7 +154,7 @@ void FAParsedRegexp2TrBrMaps::BuildStartMap ()
             const int * pSet;
             const int Size = m_pRegexpFuncs->GetFirstPos (i, &pSet);
             DebugLogAssert (0 < Size && pSet);
-            DebugLogAssert (::FAIsSortUniqed (pSet, Size));
+            DebugLogAssert (FAIsSortUniqed (pSet, Size));
 
             for (int j = 0; j < Size; ++j) {
 
@@ -163,7 +166,7 @@ void FAParsedRegexp2TrBrMaps::BuildStartMap ()
         }
     } // of for ...
 
-    const int NewSize = ::FASortUniq (m_pos_arr.begin (), m_pos_arr.end ());
+    const int NewSize = FASortUniq (m_pos_arr.begin (), m_pos_arr.end ());
 
     for (i = 0; i < NewSize; ++i) {
 
@@ -221,7 +224,7 @@ void FAParsedRegexp2TrBrMaps::BuildEndMap ()
             // get last function values
             SetSize = m_pRegexpFuncs->GetLastPos (i, &pSet);
             DebugLogAssert (0 < SetSize && pSet);
-            DebugLogAssert (::FAIsSortUniqed (pSet, SetSize));
+            DebugLogAssert (FAIsSortUniqed (pSet, SetSize));
 
             for (j = 0; j < SetSize; ++j) {
 
@@ -231,24 +234,24 @@ void FAParsedRegexp2TrBrMaps::BuildEndMap ()
                 const int FollowSize = 
                     m_pRegexpFuncs->GetFollowPos (LastPos, &pFollowSet);
                 DebugLogAssert (0 < FollowSize && pFollowSet);
-                DebugLogAssert (::FAIsSortUniqed (pFollowSet, FollowSize));
+                DebugLogAssert (FAIsSortUniqed (pFollowSet, FollowSize));
 
                 m_sets.SelfUnion (pFollowSet, FollowSize, SpecSetId);
             }
 
             SetSize = m_pRegexpFuncs->GetFirstPos (i, &pSet);
             DebugLogAssert (0 < SetSize && pSet);
-            DebugLogAssert (::FAIsSortUniqed (pSet, SetSize));
+            DebugLogAssert (FAIsSortUniqed (pSet, SetSize));
             int NegSetMin = pSet [0];
 
             SetSize = m_pRegexpFuncs->GetLastPos (i, &pSet);
             DebugLogAssert (0 < SetSize && pSet);
-            DebugLogAssert (::FAIsSortUniqed (pSet, SetSize));
+            DebugLogAssert (FAIsSortUniqed (pSet, SetSize));
             int NegSetMax = pSet [SetSize - 1];
 
             SetSize = m_sets.GetRes (&pSet, SpecSetId);
             DebugLogAssert (0 < SetSize && pSet);
-            DebugLogAssert (::FAIsSortUniqed (pSet, SetSize));
+            DebugLogAssert (FAIsSortUniqed (pSet, SetSize));
 
             for (j = 0; j < SetSize; ++j) {
 
@@ -285,7 +288,7 @@ void FAParsedRegexp2TrBrMaps::BuildEndMap ()
         } // of if (-1 != TrBr) ...
     } // of for ...
 
-    const int NewSize = ::FASortUniq (m_pos_arr.begin (), m_pos_arr.end ());
+    const int NewSize = FASortUniq (m_pos_arr.begin (), m_pos_arr.end ());
 
     for (i = 0; i < NewSize; ++i) {
 
@@ -295,4 +298,6 @@ void FAParsedRegexp2TrBrMaps::BuildEndMap ()
         m_pEndTrBr->Set (Pos, pSet, SetSize);
         m_sets.SetRes (NULL, 0, Pos);
     }
+}
+
 }

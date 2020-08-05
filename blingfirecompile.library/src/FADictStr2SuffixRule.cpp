@@ -15,6 +15,9 @@
 #include <sstream>
 #include <string>
 
+namespace BlingFire
+{
+
 
 FADictStr2SuffixRule::
     FADictStr2SuffixRule (FAAllocatorA * pAlloc) :
@@ -204,7 +207,7 @@ inline void FADictStr2SuffixRule::ToLower ()
 
     if (pTmpTo == m_pTo) {
 
-        ::FAUtf32StrLower (pTmpTo, m_ToLen);
+        FAUtf32StrLower (pTmpTo, m_ToLen);
 
     } else {
 
@@ -212,7 +215,7 @@ inline void FADictStr2SuffixRule::ToLower ()
 
         for (int i = 0; i < m_ToLen; ++i) {
             const int Symbol = m_pTo [i];
-            pTmpTo [i] = ::FAUtf32ToLower (Symbol);
+            pTmpTo [i] = FAUtf32ToLower (Symbol);
         }
         m_pTo = pTmpTo;
     }
@@ -222,7 +225,7 @@ inline void FADictStr2SuffixRule::ToLower ()
 
     if (pTmpFrom == m_pFrom) {
 
-        ::FAUtf32StrLower (pTmpFrom, m_FromLen);
+        FAUtf32StrLower (pTmpFrom, m_FromLen);
 
     } else {
 
@@ -230,7 +233,7 @@ inline void FADictStr2SuffixRule::ToLower ()
 
         for (int i = 0; i < m_FromLen; ++i) {
             const int Symbol = m_pFrom [i];
-            pTmpFrom [i] = ::FAUtf32ToLower (Symbol);
+            pTmpFrom [i] = FAUtf32ToLower (Symbol);
         }
         m_pFrom = pTmpFrom;
     }
@@ -244,7 +247,7 @@ inline void FADictStr2SuffixRule::MapChars ()
     int * pTmpTo = m_tmp_to.begin ();
 
     // in-place allowed
-    const int NewLen1 = ::FANormalizeWord (m_pTo, m_ToLen, \
+    const int NewLen1 = FANormalizeWord (m_pTo, m_ToLen, \
         pTmpTo, m_tmp_to.size (), m_pCharMap);
 
     // normalization results into an empty string
@@ -255,7 +258,7 @@ inline void FADictStr2SuffixRule::MapChars ()
     int * pTmpFrom = m_tmp_from.begin ();
 
     // in-place allowed
-    const int NewLen2 = ::FANormalizeWord (m_pFrom, m_FromLen, \
+    const int NewLen2 = FANormalizeWord (m_pFrom, m_FromLen, \
         pTmpFrom, m_tmp_from.size (), m_pCharMap);
 
     // normalization results into an empty string
@@ -475,5 +478,7 @@ const int FADictStr2SuffixRule::
 
     *pOutStr = m_out_buff.begin ();
     return m_out_buff.size ();
+}
+
 }
 

@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FAMap_std.h"
 
+namespace BlingFire
+{
+
 
 FAMap_std::FAMap_std ()
 {}
@@ -82,5 +85,7 @@ void FAMap_std::Remove (const int Key)
 void FAMap_std::Clear ()
 {
     m_map.clear ();
+}
+
 }
 

@@ -11,6 +11,9 @@
 #include "FAState2OwsA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FARSDfa2PerfHash::FARSDfa2PerfHash (FAAllocatorA * pAlloc) :
     m_pDfa (NULL),
@@ -71,7 +74,7 @@ inline bool FARSDfa2PerfHash::IsFinal (const int State) const
 {
     DebugLogAssert (0 < m_FinalCount && m_pFinals);
 
-    return -1 != ::FAFind_log (m_pFinals, m_FinalCount, State);
+    return -1 != FAFind_log (m_pFinals, m_FinalCount, State);
 }
 
 
@@ -85,7 +88,7 @@ void FARSDfa2PerfHash::CalcCds ()
     const int * pIws;
     const int IwCount = m_pDfa->GetIWs (&pIws);
     DebugLogAssert (0 < IwCount && pIws);
-    DebugLogAssert (::FAIsSortUniqed (pIws, IwCount));
+    DebugLogAssert (FAIsSortUniqed (pIws, IwCount));
 
     // traverse states in the reverse topological order
     const int * pOrder;
@@ -142,4 +145,6 @@ void FARSDfa2PerfHash::Process ()
     Prepare ();
     TopoSort ();
     CalcCds ();
+}
+
 }

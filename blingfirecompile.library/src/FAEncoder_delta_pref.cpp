@@ -9,6 +9,9 @@
 #include "FAEncoder_delta_pref.h"
 #include "FAEncodeUtils.h"
 
+namespace BlingFire
+{
+
 
 const int FAEncoder_delta_pref::GetMaxBytes () const
 {
@@ -40,5 +43,7 @@ const int FAEncoder_delta_pref::Encode (const int * pChain,
   }
 
   return int (pOut - pOutBuffer);
+}
+
 }
 

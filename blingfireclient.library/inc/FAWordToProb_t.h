@@ -17,6 +17,9 @@
 #include "FALimits.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// Word --> Probability Guesser
 ///
@@ -267,6 +270,8 @@ const float FAWordToProb_t< Ty >::GetProb (const Ty * pWordStr, const int WordSi
 
         return float (DefUnfoundProb);
     }
+}
+
 }
 
 #endif

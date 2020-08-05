@@ -16,6 +16,9 @@
 #include "FAHyphConfKeeper_packaged.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// Core hyphenator run-time interpreter.
 ///
@@ -163,7 +166,7 @@ const int FAHyphInterpreter_core_t< Ty >::
     if (m_IgnoreCase) {
         for (i = 0 ; i < InSize; ++i) {
             const int InSymbol = (int) pIn [i] ;
-            pIn2 [i + 1] = (Ty) ::FAUtf32ToLower (InSymbol) ;
+            pIn2 [i + 1] = (Ty) FAUtf32ToLower (InSymbol) ;
         }
     } else {
         memcpy (pIn2 + 1, pIn, sizeof (Ty) * InSize);
@@ -261,6 +264,8 @@ const int FAHyphInterpreter_core_t< Ty >::
 
     // aut-off the output for the right anchor, even if it's there
     return InSize;
+}
+
 }
 
 #endif

@@ -21,6 +21,9 @@
 #include "FADigitizer_dct_t.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 ///
 /// WRE based parser runtime, allows to do bottom-up and top-down parsing.
 /// 
@@ -621,6 +624,8 @@ const int FAWreLexTools_t< Ty >::Process ()
     }
 
     return OutSize;
+}
+
 }
 
 #endif

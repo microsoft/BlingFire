@@ -14,6 +14,9 @@
 #include "FAUtf8Utils.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSNfaCA;
 
@@ -544,6 +547,8 @@ const int FASubstInterpretTools_t< Ty >::
             Process_reverse (pBegin, InSize + 4, pOut, MaxOutSize);
         return OutSize;
     }
+}
+
 }
 
 #endif

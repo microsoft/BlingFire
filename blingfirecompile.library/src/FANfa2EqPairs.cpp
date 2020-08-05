@@ -9,6 +9,9 @@
 #include "FANfa2EqPairs.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FANfa2EqPairs::FANfa2EqPairs (FAAllocatorA * pAlloc) :
     m_pNfa (NULL),
@@ -84,7 +87,7 @@ void FANfa2EqPairs::
     if (1 < Count) {
 
         DebugLogAssert (pOldStates);
-        DebugLogAssert (::FAIsSortUniqed (pOldStates, Count));
+        DebugLogAssert (FAIsSortUniqed (pOldStates, Count));
 
         for (int i = 0; i < Count; ++i) {
 
@@ -146,3 +149,5 @@ void FANfa2EqPairs::TDfaStub::
 void FANfa2EqPairs::TDfaStub::
     Prepare ()
 {}
+
+}

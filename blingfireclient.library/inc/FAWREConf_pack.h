@@ -10,6 +10,9 @@
 #include "FAWREConfCA.h"
 #include "FASetImageA.h"
 
+namespace BlingFire
+{
+
 class FAArray_pack;
 class FAMultiMap_pack;
 class FAState2Ow_pack_triv;
@@ -64,5 +67,7 @@ private:
     FAMultiMap_pack * m_pTrBr;
 
 };
+
+}
 
 #endif

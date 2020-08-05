@@ -11,6 +11,9 @@
 
 #include <iostream>
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FATaggedTextA;
 class FATaggedTextCA;
@@ -62,5 +65,7 @@ private:
     const FATagSet * m_pTagSet;
     bool m_NoPosTags;
 };
+
+}
 
 #endif

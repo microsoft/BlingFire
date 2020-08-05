@@ -10,6 +10,9 @@
 #include "FARegexpTree.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FARegexpTree2PosEqs::FARegexpTree2PosEqs (FAAllocatorA * pAlloc) :
     m_pTree (NULL),
@@ -187,7 +190,7 @@ void FARegexpTree2PosEqs::BuildEqClasses ()
 
         FindEqPos (NodeId);
 
-        const int Count = ::FASortUniq (m_eq_pos.begin (), m_eq_pos.end ());
+        const int Count = FASortUniq (m_eq_pos.begin (), m_eq_pos.end ());
         m_eq_pos.resize (Count);
 
         if (1 < Count) {
@@ -213,4 +216,6 @@ void FARegexpTree2PosEqs::Process ()
     CalcNode2Pos ();
     TopoSort ();
     BuildEqClasses ();
+}
+
 }

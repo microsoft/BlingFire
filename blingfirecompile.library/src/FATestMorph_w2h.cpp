@@ -14,6 +14,9 @@
 #include <string>
 #include <algorithm>
 
+namespace BlingFire
+{
+
 
 FATestMorph_w2h::FATestMorph_w2h (FAAllocatorA * pAlloc) :
     FATestMorph (pAlloc),
@@ -123,14 +126,16 @@ void FATestMorph_w2h::Test (const char * pLineStr, const int LineLen)
         }
 
         // print the word
-        ::FAPrintWord (*pDbgOs, m_ChainBuffer, ChainSize);
+        FAPrintWord (*pDbgOs, m_ChainBuffer, ChainSize);
         // print the expected results
         (*pDbgOs) << '\t' << std::string (pLineStr, LineLen) << '\t';
         // process the input (again)
         m_pHyph->Process (m_ChainBuffer, ChainSize, \
             m_OutChainBuffer, MaxChainSize, m_UseAltW2H);
         // print the hyphenator's output 
-        ::FAPrintHyphWord (*pDbgOs, m_ChainBuffer, m_OutChainBuffer, ChainSize);
+        FAPrintHyphWord (*pDbgOs, m_ChainBuffer, m_OutChainBuffer, ChainSize);
         (*pDbgOs) << '\n';
     }
+}
+
 }

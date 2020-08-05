@@ -17,6 +17,9 @@
 #include "FASuffixInterpretTools_t.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -372,6 +375,8 @@ const int FAHyphInterpreter_t< Ty >::
         return InSize;
 
     } // of if (FAFsmConst::HYPH_TYPE_CORE == m_HyphType) ...
+}
+
 }
 
 #endif

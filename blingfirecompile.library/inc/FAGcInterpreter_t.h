@@ -19,6 +19,9 @@
 #include "FAResolveMatchA.h"
 #include "FAState2OwsCA.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -542,6 +545,8 @@ void FAGcInterpreter_t< Ty >::Process ()
     Prepare ();
     Process_int ();
     Clear ();
+}
+
 }
 
 #endif

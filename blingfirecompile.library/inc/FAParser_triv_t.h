@@ -11,6 +11,9 @@
 #include "FAParser_base_t.h"
 #include "FAState2OwsCA.h"
 
+namespace BlingFire
+{
+
 ///
 /// This parser does not allows nestings at single pass, if there are
 /// conflicts it prefers left-most longest constituent, if there are more
@@ -309,6 +312,8 @@ const bool FAParser_triv_t< Ty >::ApplyResults ()
     }
 
     return ResFound;
+}
+
 }
 
 #endif

@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FALDB;
 class FARSDfa_pack_triv;
 class FAState2Ow_pack_triv;
@@ -72,5 +75,7 @@ private:
         DefMaxNoHyphLen = 5,
     };
 };
+
+}
 
 #endif

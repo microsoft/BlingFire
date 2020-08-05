@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FALDB;
 class FARSDfa_pack_triv;
 class FAMealyDfa_pack_triv;
@@ -79,5 +82,7 @@ private:
     // indicates what runtime algo to use with these data
     int m_TokAlgo;
 };
+
+}
 
 #endif

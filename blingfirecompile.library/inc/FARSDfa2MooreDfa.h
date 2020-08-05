@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSDfaA;
 class FAState2OwA;
@@ -71,5 +74,7 @@ private:
     const int * m_pAlphabet;
     int m_AlphabetSize;
 };
+
+}
 
 #endif

@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAActionsArrayA.h"
 
+namespace BlingFire
+{
+
 ///
 /// Implementation based on static array.
 ///
@@ -28,5 +31,7 @@ private:
     const FAActionsA ** m_pActsArr;
     const int m_Count;
 };
+
+}
 
 #endif

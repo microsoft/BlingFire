@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 ///
 /// client-side interface for Rabin-Scott NFA
 ///
@@ -30,5 +33,7 @@ public:
             const int MaxCount
         ) const = 0;
 };
+
+}
 
 #endif

@@ -10,6 +10,8 @@
 #include "FARSDfaA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
 
 FATypesNfaList2TypeNfa::FATypesNfaList2TypeNfa (FAAllocatorA * pAlloc) :
     m_CurrTypeIw (0),
@@ -149,7 +151,7 @@ void FATypesNfaList2TypeNfa::
     DebugLogAssert (-1 != pNfa->GetMaxState ());
 
     /// copy pNfa --> m_nfa
-    ::FACopyNfa (&m_nfa, pNfa);
+    FACopyNfa (&m_nfa, pNfa);
 
     /// retrieve data type
     const int TypeIw = GetType (pTypeStr);
@@ -172,7 +174,7 @@ void FATypesNfaList2TypeNfa::
     DebugLogAssert (-1 != pDfa->GetMaxState ());
 
     /// copy pNfa --> m_nfa
-    ::FACopyDfa2Nfa (&m_nfa, pDfa);
+    FACopyDfa2Nfa (&m_nfa, pDfa);
 
     /// retrieve data type
     const int TypeIw = GetType (pTypeStr);
@@ -203,4 +205,6 @@ void FATypesNfaList2TypeNfa::Process ()
     m_eremoval.Process ();
 
     FATypesNfaList2TypeNfa::Clear_a ();
+}
+
 }

@@ -12,6 +12,8 @@
 
 #include <map>
 
+namespace BlingFire
+{
 
 class FAMap_std : public FAMapA {
 
@@ -39,5 +41,7 @@ private:
     std::map < int, int > m_map;
 
 };
+
+}
 
 #endif

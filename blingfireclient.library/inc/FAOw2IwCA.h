@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 ///
 /// Returns input weight and destination state for the given output weight 
 /// and source state.
@@ -30,5 +33,7 @@ public:
             int * pOw2
         ) const = 0;
 };
+
+}
 
 #endif

@@ -14,6 +14,9 @@
 #include <string>
 #include <algorithm>
 
+namespace BlingFire
+{
+
 
 FAFsmRenum::FAFsmRenum (FAAllocatorA * pAlloc) :
     m_DeadState (FAFsmConst::NFA_DEAD_STATE),
@@ -559,4 +562,6 @@ void FAFsmRenum::Process (std::ostream * pOs, std::istream * pIs)
 
         Clear ();
     }
+}
+
 }

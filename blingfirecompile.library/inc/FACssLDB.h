@@ -14,6 +14,9 @@
 #include "FAWreRulesConfKeeper.h"
 #include "FAGlobalConfKeeper_packaged.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 
@@ -70,5 +73,7 @@ private:
     bool m_fCssRules;
     bool m_fGlobal;
 };
+
+}
 
 #endif

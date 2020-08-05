@@ -10,6 +10,9 @@
 #include "FAException.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FAWRERules2TokenNfa::FAWRERules2TokenNfa (FAAllocatorA * pAlloc) :
     m_Type (FAFsmConst::WRE_TYPE_RS),
@@ -106,7 +109,7 @@ void FAWRERules2TokenNfa::AddRule (const char * pWRE, const int Length)
     m_simplify.Clear ();
     const FARSNfaA * pNfa = m_rule_nfa.GetNfa ();
 
-    FAAssert (::FAIsValidNfa (pNfa), FAMsg::InternalError);
+    FAAssert (FAIsValidNfa (pNfa), FAMsg::InternalError);
 
     /// add NFA, e.g. ENFA := ENFA | NFA
 
@@ -136,4 +139,6 @@ const FARSNfaA * FAWRERules2TokenNfa::GetTokenNfa () const
         const FARSNfaA * pNfa = m_rule_nfa.GetNfa ();
         return pNfa;
     }
+}
+
 }

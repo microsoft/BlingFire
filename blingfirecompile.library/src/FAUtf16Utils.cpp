@@ -8,6 +8,8 @@
 #include "FAConfig.h"
 #include "FAUtf16Utils.h"
 
+namespace BlingFire
+{
 
 inline static int NormalizeWord (int Word, bool fBE)
 {
@@ -85,7 +87,7 @@ const int FAStrUtf16ToArray (
     int i = 0;
     while (pStr < pEnd && pArray < pArrayEnd) {
 
-        pStr = ::FAUtf16ToInt (pStr, pArray, fBE);
+        pStr = FAUtf16ToInt (pStr, pArray, fBE);
 
         if (NULL == pStr) {
             // invalid input sequence
@@ -150,7 +152,7 @@ const int FAArrayToStrUtf16 (
         const int Symbol = pArray [i];
 
         const int CurrSize = (const int) (ptr - pStr);
-        ptr = ::FAIntToUtf16 (Symbol, ptr, MaxStrSize - CurrSize, fBE);
+        ptr = FAIntToUtf16 (Symbol, ptr, MaxStrSize - CurrSize, fBE);
 
         if (NULL == ptr) {
             // invalid input sequence
@@ -196,5 +198,7 @@ const bool FAIsUtf16BeEnc (const char * pEncName)
     }
 
     return IsUtf16Be;
+}
+
 }
 

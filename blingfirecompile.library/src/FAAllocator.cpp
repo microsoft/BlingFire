@@ -13,6 +13,9 @@
 #include <iostream>
 #endif
 
+namespace BlingFire
+{
+
 
 FAAllocator::FAAllocator ()
 {}
@@ -157,3 +160,5 @@ void FAAllocator::PrintLeaks (std::ostream & os) const
 
 
 #endif // _DEBUG_MEMORY
+
+}

@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -40,5 +43,7 @@ private:
     /// stack for path compression
     FAArray_cont_t < int > m_stack;
 };
+
+}
 
 #endif

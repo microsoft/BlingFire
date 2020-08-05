@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 ///
 /// General interface for Key -> Val map M.
 ///
@@ -32,5 +35,7 @@ public:
   virtual void Remove (const int Key) = 0;
 
 };
+
+}
 
 #endif

@@ -12,6 +12,8 @@
 #include "FAUtf32Utils.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
 
 ///
 /// This is transformation detects if the first letter is capital, then it
@@ -113,5 +115,6 @@ void FATransform_capital_t< Ty >::
     m_Delim = Delim;
 }
 
+}
 
 #endif

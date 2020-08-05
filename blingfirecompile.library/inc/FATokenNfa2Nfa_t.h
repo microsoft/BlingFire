@@ -14,6 +14,9 @@
 #include "FASetUtils.h"
 #include "FAFsmConst.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class substitutes TokenNums (Iws) of input automaton with
 ///  Ows of corresponding digitizer.
@@ -510,5 +513,6 @@ void FATokenNfa2Nfa_t< NFA >::Process ()
     m_pOutNfa->Prepare ();
 }
 
+}
 
 #endif

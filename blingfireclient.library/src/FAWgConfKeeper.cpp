@@ -15,6 +15,8 @@
 #include "FAMultiMap_pack_fixed.h"
 #include "FAUtils_cl.h"
 
+namespace BlingFire
+{
 
 FAWgConfKeeper::FAWgConfKeeper () :
     m_pDfa (NULL),
@@ -268,4 +270,6 @@ const int FAWgConfKeeper::GetEosTag () const
 const int FAWgConfKeeper::GetOrder () const
 {
     return m_Order;
+}
+
 }

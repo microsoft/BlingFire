@@ -11,6 +11,9 @@
 #include "FAUtils.h"
 #include "FAException.h"
 
+namespace BlingFire
+{
+
 
 FARegexpLexer_char::FARegexpLexer_char () :
     m_UseUtf8 (false)
@@ -66,7 +69,7 @@ const int FARegexpLexer_char::FindToken (const int Pos, int * pLength) const
             while (isdigit ((unsigned char) c)) {
                 length++;
                 if (Pos + length == m_Length) {
-                    ::FASyntaxError (m_pRegexp, m_Length, Pos, \
+                    FASyntaxError (m_pRegexp, m_Length, Pos, \
                         "Wrong place for extracting bracket.");
                     throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
                 }
@@ -119,7 +122,7 @@ const int FARegexpLexer_char::FindToken (const int Pos, int * pLength) const
                 in_spec_range = false;
             // withing the chracter class
             } else if (in_spec_range && ! isalpha ((unsigned char) c)) {
-                ::FASyntaxError (m_pRegexp, m_Length, Pos, \
+                FASyntaxError (m_pRegexp, m_Length, Pos, \
                     "Bad character class name.");
                 throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
             }
@@ -130,7 +133,7 @@ const int FARegexpLexer_char::FindToken (const int Pos, int * pLength) const
         }
         // did not find the closing ]
         if (Pos + length == m_Length) {
-            ::FASyntaxError (m_pRegexp, m_Length, Pos, \
+            FASyntaxError (m_pRegexp, m_Length, Pos, \
                 "Missing closing bracket for the character range.");
             throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
         }
@@ -147,10 +150,10 @@ const int FARegexpLexer_char::FindToken (const int Pos, int * pLength) const
 
         if (m_UseUtf8) {
 
-            *pLength = ::FAUtf8Size (m_pRegexp + Pos);
+            *pLength = FAUtf8Size (m_pRegexp + Pos);
 
             if (0 >= *pLength) {
-                ::FASyntaxError (m_pRegexp, m_Length, Pos, \
+                FASyntaxError (m_pRegexp, m_Length, Pos, \
                     "Bad UTF-8 character.");
                 throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
             }
@@ -162,4 +165,6 @@ const int FARegexpLexer_char::FindToken (const int Pos, int * pLength) const
 
         return FARegexpTree::TYPE_SYMBOL;
     }
+}
+
 }

@@ -18,6 +18,9 @@
 #include <vector>
 #include <stdio.h>
 
+namespace BlingFire
+{
+
 ///
 /// Splits input sequence into segments using BPE algorithm.
 ///
@@ -305,6 +308,8 @@ const int FATokenSegmentationTools_1best_bpe_t < Ty >::
     }
 
     return ActualOutSize;
+}
+
 }
 
 #endif

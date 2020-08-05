@@ -20,6 +20,9 @@
 #include <iostream>
 #include <string>
 
+namespace BlingFire
+{
+
 
 void FAPrintWre (std::ostream & os, const FAWREConfA * pWRE)
 {
@@ -57,7 +60,7 @@ void FAPrintWre (std::ostream & os, const FAWREConfA * pWRE)
 
     pWRE->GetTxtDigititizer (&pDfa, &pState2Ow);
     if (pDfa && pState2Ow) {
-        FAAssert (::FAIsValidDfa (pDfa), FAMsg::InternalError);
+        FAAssert (FAIsValidDfa (pDfa), FAMsg::InternalError);
         os << "txt-digitizer\n";
         FsmIo.Print (os, pDfa, pState2Ow);
     }
@@ -71,7 +74,7 @@ void FAPrintWre (std::ostream & os, const FAWREConfA * pWRE)
     /// print out rules automaton
 
     pWRE->GetDfa1 (&pDfa);
-    FAAssert (pDfa && ::FAIsValidDfa (pDfa), FAMsg::InternalError);
+    FAAssert (pDfa && FAIsValidDfa (pDfa), FAMsg::InternalError);
     os << "rules1\n";
 
     if (FAFsmConst::WRE_TYPE_RS == WreType) {
@@ -103,12 +106,12 @@ void FAPrintWre (std::ostream & os, const FAWREConfA * pWRE)
         pWRE->GetTrBrMap (&pTrBr);
 
         if (pDfa && pSigma) {
-            FAAssert (::FAIsValidDfa (pDfa), FAMsg::InternalError);
+            FAAssert (FAIsValidDfa (pDfa), FAMsg::InternalError);
             os << "rules2\n";
             FsmIo.Print (os, pDfa, pSigma);
         }
         if (pTrBr) {
-            FAAssert (!::FAIsEmpty (pTrBr), FAMsg::InternalError);
+            FAAssert (!FAIsEmpty (pTrBr), FAMsg::InternalError);
             os << "trbr\n";
             MapIo.Print (os, pTrBr);
         }
@@ -249,3 +252,4 @@ void FASaveWre (std::ostream & os, const FAWREConfA * pWRE)
     os.write ((const char *)pDump, DumpSize);
 }
 
+}

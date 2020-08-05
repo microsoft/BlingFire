@@ -8,6 +8,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FARSDfaCA;
 class FATaggedTextA;
 class FATaggedTextCA;
@@ -43,5 +46,7 @@ private:
     int m_MweDelim;
     bool m_IgnoreCase;
 };
+
+}
 
 #endif

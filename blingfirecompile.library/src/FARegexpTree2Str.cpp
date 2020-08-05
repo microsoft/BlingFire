@@ -10,6 +10,9 @@
 #include "FARegexpTree.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FARegexpTree2Str::FARegexpTree2Str (FAAllocatorA * pAlloc) :
     m_pRegexp (NULL),
@@ -49,7 +52,7 @@ void FARegexpTree2Str::PutNode (const int NodeId)
         DebugLogAssert (0 <= Offset && Offset < m_Length);
         DebugLogAssert (0 <= Length && Offset + Length <= m_Length);
 
-        if (::FAIsEscaped (Offset, m_pRegexp, m_Length)) {
+        if (FAIsEscaped (Offset, m_pRegexp, m_Length)) {
             m_RegexpText.push_back ('\\');
         }
 
@@ -207,4 +210,6 @@ const char * FARegexpTree2Str::Process (const int NodeId)
     m_RegexpText.push_back (0);
 
     return m_RegexpText.begin ();
+}
+
 }

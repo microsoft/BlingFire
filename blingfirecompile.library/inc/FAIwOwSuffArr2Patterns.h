@@ -11,6 +11,9 @@
 #include "FARSDfa_dynamic_t.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -103,5 +106,7 @@ private:
         DefMinPatLen = 3,
     };
 };
+
+}
 
 #endif

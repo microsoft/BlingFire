@@ -12,6 +12,9 @@
 #include "FAArray_cont_t.h"
 #include "FAChain2Num_hash.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FATagSet;
 
@@ -71,5 +74,7 @@ private:
     FAChain2Num_hash m_data2tag;
     const FATagSet * m_pTagSet;
 };
+
+}
 
 #endif

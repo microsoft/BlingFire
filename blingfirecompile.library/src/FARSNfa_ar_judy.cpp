@@ -12,6 +12,9 @@
 #include "FAFsmConst.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FARSNfa_ar_judy::FARSNfa_ar_judy (FAAllocatorA * pAlloc) :
   m_IwCount (0),
@@ -176,9 +179,9 @@ void FARSNfa_ar_judy::Prepare ()
     pBegin = pIwsArray->begin ();
     Size = pIwsArray->size ();
 
-    if (false == ::FAIsSortUniqed (pBegin, Size)) {
+    if (false == FAIsSortUniqed (pBegin, Size)) {
 
-        Size = ::FASortUniq (pBegin, pBegin + Size);
+        Size = FASortUniq (pBegin, pBegin + Size);
         pIwsArray->resize (Size, 0);
     }
 
@@ -193,18 +196,18 @@ void FARSNfa_ar_judy::Prepare ()
   pBegin = m_finals.begin ();
   Size = m_finals.size ();
 
-  if (false == ::FAIsSortUniqed (pBegin, Size)) {
+  if (false == FAIsSortUniqed (pBegin, Size)) {
 
-      Size = ::FASortUniq (pBegin, pBegin + Size);
+      Size = FASortUniq (pBegin, pBegin + Size);
       m_finals.resize (Size, 0);
   }
 
   pBegin = m_initials.begin ();
   Size = m_initials.size ();
 
-  if (false == ::FAIsSortUniqed (pBegin, Size)) {
+  if (false == FAIsSortUniqed (pBegin, Size)) {
 
-      Size = ::FASortUniq (pBegin, pBegin + Size);
+      Size = FASortUniq (pBegin, pBegin + Size);
       m_initials.resize (Size, 0);
   }
 }
@@ -224,7 +227,7 @@ const int FARSNfa_ar_judy::GetInitials (const int ** ppStates) const
 
   *ppStates = m_initials.begin ();
 
-  DebugLogAssert (true == ::FAIsSorted (*ppStates, InitialStates));
+  DebugLogAssert (true == FAIsSorted (*ppStates, InitialStates));
 
   return InitialStates;
 }
@@ -239,7 +242,7 @@ const bool FARSNfa_ar_judy::IsFinal (const int State) const
 
   } else {
 
-    return -1 != ::FAFind_log (m_finals.begin (), m_finals.size (), State);
+    return -1 != FAFind_log (m_finals.begin (), m_finals.size (), State);
   }
 }
 
@@ -264,7 +267,7 @@ const bool FARSNfa_ar_judy::IsFinal (const int * pStates, const int Size) const
 
         const int State = pStates [i];
 
-        if (-1 != ::FAFind_log (pFinals, Finals, State)) {
+        if (-1 != FAFind_log (pFinals, Finals, State)) {
             return true;
         }
     }
@@ -288,7 +291,7 @@ const int FARSNfa_ar_judy::GetFinals (const int ** ppStates) const
 
   *ppStates = m_finals.begin ();
 
-  DebugLogAssert (true == ::FAIsSorted (*ppStates, FinalStates));
+  DebugLogAssert (true == FAIsSorted (*ppStates, FinalStates));
 
   return FinalStates;
 }
@@ -315,7 +318,7 @@ const int FARSNfa_ar_judy::GetIWs (const int State,
 
   const FAArray_cont_t < int > * pIws = m_state2iws [State];
   DebugLogAssert (pIws);
-///  DebugLogAssert (true == ::FAIsSorted (pIws->begin (), pIws->size ()));
+///  DebugLogAssert (true == FAIsSorted (pIws->begin (), pIws->size ()));
 
   *ppIws = pIws->begin ();
   return pIws->size ();
@@ -345,7 +348,7 @@ const int FARSNfa_ar_judy::
 #ifndef NDEBUG
     if (-1 != DstStates) {
 
-    DebugLogAssert (true == ::FAIsSorted (*ppIwDstStates, DstStates));
+    DebugLogAssert (true == FAIsSorted (*ppIwDstStates, DstStates));
     }
 #endif
 
@@ -376,7 +379,7 @@ const int FARSNfa_ar_judy::
 
 #ifndef NDEBUG
     if (-1 != DstStates) {
-    DebugLogAssert (::FAIsSortUniqed (pIwDstStates, DstStates));
+    DebugLogAssert (FAIsSortUniqed (pIwDstStates, DstStates));
     }
 #endif
 
@@ -437,7 +440,7 @@ void FARSNfa_ar_judy::SetTransition (const int FromState,
 
         DebugLogAssert (pDstStates);
         DebugLogAssert (0 < DstStatesCount);
-        DebugLogAssert (true == ::FAIsSorted (pDstStates, DstStatesCount));
+        DebugLogAssert (true == FAIsSorted (pDstStates, DstStatesCount));
 
         // adjust m_state_iw2dsts map
         DebugLogAssert (0 <= FromState && \
@@ -509,9 +512,9 @@ void FARSNfa_ar_judy::PrepareState (const int State)
   FAArray_cont_t < int > * pIws = m_state2iws [State];
   DebugLogAssert (pIws);
 
-  if (false == ::FAIsSortUniqed (pIws->begin (), pIws->size ())) {
+  if (false == FAIsSortUniqed (pIws->begin (), pIws->size ())) {
 
-    const int IwsNewSize = ::FASortUniq (pIws->begin (), pIws->end ());
+    const int IwsNewSize = FASortUniq (pIws->begin (), pIws->end ());
     pIws->resize (IwsNewSize, 0);
   }
 }
@@ -521,7 +524,7 @@ void FARSNfa_ar_judy::SetInitials (const int * pStates, const int StateCount)
 {
   DebugLogAssert (pStates);
   DebugLogAssert (StateCount);
-  DebugLogAssert (true == ::FAIsSorted (pStates, StateCount));
+  DebugLogAssert (true == FAIsSorted (pStates, StateCount));
 
   m_initials.resize (StateCount, 0);
 
@@ -535,7 +538,7 @@ void FARSNfa_ar_judy::SetInitials (const int * pStates, const int StateCount)
 void FARSNfa_ar_judy::SetFinals (const int * pStates, const int StateCount)
 {
   DebugLogAssert (0 < StateCount && pStates);
-  DebugLogAssert (true == ::FAIsSorted (pStates, StateCount));
+  DebugLogAssert (true == FAIsSorted (pStates, StateCount));
 
   if (0 < StateCount) {
     m_finals.resize (StateCount, 0);
@@ -558,5 +561,7 @@ void FARSNfa_ar_judy::SetFinals (const int * pStates, const int StateCount)
       }
     }
   }
+}
+
 }
 

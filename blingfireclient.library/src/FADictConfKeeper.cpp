@@ -17,6 +17,8 @@
 #include "FAMultiMap_pack_mph.h"
 #include "FAMultiMap_pack_fixed.h"
 
+namespace BlingFire
+{
 
 FADictConfKeeper::FADictConfKeeper () :
     m_pLDB (NULL),
@@ -313,4 +315,6 @@ const FAMultiMapCA * FADictConfKeeper::GetCharMap () const
 const int FADictConfKeeper::GetTokAlgo () const
 {
     return m_TokAlgo;
+}
+
 }

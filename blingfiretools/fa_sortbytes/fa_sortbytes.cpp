@@ -9,6 +9,8 @@
 #include "FASecurity.h"
 
 
+using namespace BlingFire;
+
 class SortBytes {
 
 protected:

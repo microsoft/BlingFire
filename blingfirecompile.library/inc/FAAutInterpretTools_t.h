@@ -15,6 +15,9 @@
 #include "FASetUtils.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 template < class Ty >
 class FAAutInterpretTools_t {
 
@@ -318,6 +321,8 @@ void FAAutInterpretTools_t< Ty >::
             pOwsPtrs [i] = NULL;
         }
     }
+}
+
 }
 
 #endif

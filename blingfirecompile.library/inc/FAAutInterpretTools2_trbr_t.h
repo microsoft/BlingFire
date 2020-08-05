@@ -16,6 +16,9 @@
 #include "FAArray_cont_t.h"
 #include "FALimits.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 
@@ -419,5 +422,6 @@ const bool FAAutInterpretTools2_trbr_t< Ty >::
     return true;
 }
 
+}
 
 #endif

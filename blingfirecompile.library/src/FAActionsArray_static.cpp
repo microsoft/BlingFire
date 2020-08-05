@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FAActionsArray_static.h"
 
+namespace BlingFire
+{
+
 
 FAActionsArray_static::
     FAActionsArray_static (const FAActionsA ** pActsArr, const int Count) :
@@ -32,4 +35,6 @@ const FAActionsA * FAActionsArray_static::GetStage (const int Num) const
         return m_pActsArr [Num];
     else
         return NULL;
+}
+
 }

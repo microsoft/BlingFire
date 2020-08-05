@@ -11,6 +11,9 @@
 #include "FAFsmConst.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FARSDfa_ar_judy::FARSDfa_ar_judy (FAAllocatorA * pAlloc) :
     m_MaxIw (-1),
@@ -170,7 +173,7 @@ void FARSDfa_ar_judy::SetFinals (const int * pStates, const int Size)
 void FARSDfa_ar_judy::SetIWs (const int * pIws, const int IwsCount)
 {
     DebugLogAssert (0 < IwsCount && pIws);
-    DebugLogAssert (::FAIsSorted (pIws, IwsCount));
+    DebugLogAssert (FAIsSorted (pIws, IwsCount));
 
     m_MaxIw = pIws [IwsCount - 1];
 
@@ -249,10 +252,10 @@ void FARSDfa_ar_judy::Prepare ()
 {
     int NewSize;
 
-    NewSize = ::FASortUniq (m_alphabet.begin (), m_alphabet.end ());
+    NewSize = FASortUniq (m_alphabet.begin (), m_alphabet.end ());
     m_alphabet.resize (NewSize, 0);
 
-    NewSize = ::FASortUniq (m_finals.begin (), m_finals.end ());
+    NewSize = FASortUniq (m_finals.begin (), m_finals.end ());
     m_finals.resize (NewSize, 0);
 }
 
@@ -329,4 +332,6 @@ const int FARSDfa_ar_judy::GetDest (const int State, const int Iw) const
         return *pDst;
     else
         return -1;
+}
+
 }

@@ -17,6 +17,9 @@
 #include "FASecurity.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 ///
 /// Suffix rules interpreter. Converts Word, Word/Tag or Word/TagFrom/TagTo
 /// to whatever rules for. See FASuffixRules2Chains.h for syntax description.
@@ -648,6 +651,8 @@ const int FASuffixInterpretToolsConst_t< Ty >::
     }
 
     return -1;
+}
+
 }
 
 #endif

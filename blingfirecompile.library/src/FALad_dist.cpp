@@ -13,6 +13,9 @@
 #include "FAUtf8Utils.h"
 #include "FAUtils_cl.h"
 
+namespace BlingFire
+{
+
 
 FALad_dist::FALad_dist () :
     m_MaxTag (0),
@@ -332,7 +335,7 @@ const int FALad_dist::
 {
     DebugLogAssert (pMap && pScorer);
     DebugLogAssert (pLangs && 0 < LangCount);
-    DebugLogAssert (::FAIsSortUniqed (pLangs, LangCount));
+    DebugLogAssert (FAIsSortUniqed (pLangs, LangCount));
 
     const int * pTags;
     const float * pScores;
@@ -412,7 +415,7 @@ const int FALad_dist::
             continue;
         }
 
-        if (-1 == ::FAFind_log (pLangs, LangCount, Tag)) {
+        if (-1 == FAFind_log (pLangs, LangCount, Tag)) {
             continue;
         }
 
@@ -523,6 +526,8 @@ const int FALad_dist::GetScores (const float ** ppScores, const int ** ppCounts)
     *ppCounts = m_pCounts;
 
     return m_MaxTag + 1;
+}
+
 }
 
 #endif

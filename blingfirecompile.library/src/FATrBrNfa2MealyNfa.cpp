@@ -13,6 +13,9 @@
 #include "FAChain2NumA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FATrBrNfa2MealyNfa::FATrBrNfa2MealyNfa (FAAllocatorA * pAlloc) :
     m_pInNfa (NULL),
@@ -172,7 +175,7 @@ inline void FATrBrNfa2MealyNfa::BuildEpsilonMealy ()
 
         if (0 < OldSize) {
 
-            const int NewSize = ::FASortUniq (m_tmp.begin (), m_tmp.end ());
+            const int NewSize = FASortUniq (m_tmp.begin (), m_tmp.end ());
             m_tmp.resize (NewSize);
 
             const int * pEpsDsts = m_tmp.begin ();
@@ -304,5 +307,7 @@ void FATrBrNfa2MealyNfa::Process ()
     RemapOws ();
 
     Clear ();
+}
+
 }
 

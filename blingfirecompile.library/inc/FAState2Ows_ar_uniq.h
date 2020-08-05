@@ -11,6 +11,9 @@
 #include "FAState2OwsA.h"
 #include "FAMultiMap_ar_uniq.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -37,5 +40,7 @@ private:
     /// maps State to Ows
     FAMultiMap_ar_uniq m_state2ows;
 };
+
+}
 
 #endif

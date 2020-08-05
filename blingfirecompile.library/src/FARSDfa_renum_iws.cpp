@@ -10,6 +10,9 @@
 #include "FAUtils.h"
 #include "FALimits.h"
 
+namespace BlingFire
+{
+
 
 FARSDfa_renum_iws::FARSDfa_renum_iws (FAAllocatorA * pAlloc) :
     m_pDfa (NULL),
@@ -70,7 +73,7 @@ void FARSDfa_renum_iws::Prepare ()
 
     } // of while (NULL != pOldIw) ...
 
-    const int NewSize = ::FASortUniq (m_iws.begin (), m_iws.end ());
+    const int NewSize = FASortUniq (m_iws.begin (), m_iws.end ());
     m_iws.resize (NewSize);
 }
 
@@ -199,4 +202,6 @@ void FARSDfa_renum_iws::SetTransition (const int /*FromState*/,
 {
     // not implemented
     DebugLogAssert (0);
+}
+
 }

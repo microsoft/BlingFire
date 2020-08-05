@@ -8,6 +8,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FABrResultCA;
 
 ///
@@ -25,5 +28,7 @@ public:
         void * pContext = NULL      // context to be modified
     ) const = 0;
 };
+
+}
 
 #endif

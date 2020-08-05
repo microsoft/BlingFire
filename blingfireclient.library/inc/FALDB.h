@@ -12,6 +12,9 @@
 #include "FAMultiMap_pack.h"
 #include "FALimits.h"
 
+namespace BlingFire
+{
+
 ///
 /// Base class for keeping linguistic resources.
 ///
@@ -61,5 +64,7 @@ protected:
     int m_DumpCount;
 
 };
+
+}
 
 #endif

@@ -14,6 +14,8 @@
 #include "FAMealyDfa_pack_triv.h"
 #include "FARSDfa_pack_triv.h"
 
+namespace BlingFire
+{
 
 FAWREConf_pack::FAWREConf_pack () :
     m_WreType (0),
@@ -237,3 +239,4 @@ const FAMultiMapCA * FAWREConf_pack::GetTrBrMap () const
     return m_pTrBr;
 }
 
+}

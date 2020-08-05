@@ -11,6 +11,9 @@
 #include "FAArray_cont_t.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -47,5 +50,7 @@ private:
     enum { DefTmpBuffSize = 1024 };
 
 };
+
+}
 
 #endif

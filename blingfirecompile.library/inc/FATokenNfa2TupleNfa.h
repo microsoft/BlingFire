@@ -15,6 +15,9 @@
 #include "FARSNfa_ro.h"
 #include "FARSNfa_wo_ro.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FAMultiMapA;
 class FATagSet;
@@ -85,5 +88,6 @@ private:
     FARSNfa_ro m_DctNfa;
 };
 
+}
 
 #endif

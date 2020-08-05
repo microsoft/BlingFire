@@ -9,6 +9,9 @@
 #include "FAFsmConst.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FARegexpReverse::FARegexpReverse (FAAllocatorA * pAlloc) :
     m_LeftBr (FARegexpTree::TYPE_LBR, -1, 0),
@@ -86,7 +89,7 @@ void FARegexpReverse::PutError ()
     if ((unsigned int) TokenIdx < m_tokens.size ())
         ErrorOffset = m_tokens [TokenIdx].GetOffset ();
 
-    ::FASyntaxError (m_pRegexp, m_Length, ErrorOffset, "Syntax error in regular expression");
+    FASyntaxError (m_pRegexp, m_Length, ErrorOffset, "Syntax error in regular expression");
 }
 
 
@@ -149,4 +152,6 @@ const char * FARegexpReverse::GetRegexp () const
 const FARegexpTree * FARegexpReverse::GetRegexpTree () const
 {
     return & m_tree;
+}
+
 }

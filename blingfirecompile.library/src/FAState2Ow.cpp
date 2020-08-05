@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FAState2Ow.h"
 
+namespace BlingFire
+{
+
 
 FAState2Ow::FAState2Ow (FAAllocatorA * /*pAlloc*/)
 {}
@@ -42,4 +45,6 @@ void FAState2Ow::SetOw (const int State, const int Ow)
 void FAState2Ow::Clear ()
 {
     m_state2ow.Clear ();
+}
+
 }

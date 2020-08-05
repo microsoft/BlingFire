@@ -11,6 +11,9 @@
 #include "FALimits.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FAIsDotNfa::FAIsDotNfa (FAAllocatorA * pAlloc) :
     m_pNfa (NULL),
@@ -50,7 +53,7 @@ void FAIsDotNfa::SetExpIws (const int * pExpIws, const int ExpCount)
 {
     if (-1 != ExpCount) {
 
-        DebugLogAssert (0 == ExpCount || ::FAIsSortUniqed (pExpIws, ExpCount));
+        DebugLogAssert (0 == ExpCount || FAIsSortUniqed (pExpIws, ExpCount));
 
         m_AlphabetSize = ExpCount;
         m_pAlphabet = pExpIws;
@@ -178,4 +181,6 @@ const bool FAIsDotNfa::Process ()
     } // for (int State = 0; State <= MaxState; ...
 
     return true;
+}
+
 }

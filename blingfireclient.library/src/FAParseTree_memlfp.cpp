@@ -10,6 +10,8 @@
 #include "FAConfig.h"
 #include "FAParseTree_memlfp.h"
 
+namespace BlingFire
+{
 
 FAParseTree_memlfp::FAParseTree_memlfp (CMemLfpManager * pMemMgr)
 {
@@ -203,4 +205,7 @@ const int FAParseTree_memlfp::GetLabel (const int Node) const
     const FANodeData & NodeData = m_i2n [Node];
     return NodeData.m_Label;
 }
+
+}
+
 #endif

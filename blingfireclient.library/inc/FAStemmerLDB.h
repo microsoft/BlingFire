@@ -12,6 +12,9 @@
 #include "FAWftConfKeeper.h"
 #include "FAW2PConfKeeper.h"
 
+namespace BlingFire
+{
+
 ///
 /// Keeps all the resources needed for the stemmer.
 ///
@@ -54,5 +57,7 @@ private:
     bool m_fB2WT;
     bool m_fW2P;
 };
+
+}
 
 #endif

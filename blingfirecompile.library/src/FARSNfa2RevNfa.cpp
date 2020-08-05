@@ -12,6 +12,9 @@
 #include "FAFsmConst.h"
 #include "FASetUtils.h"
 
+namespace BlingFire
+{
+
 
 FARSNfa2RevNfa::FARSNfa2RevNfa (FAAllocatorA * pAlloc) :
   m_pInNfa (NULL),
@@ -244,7 +247,7 @@ void FARSNfa2RevNfa::RevAny ()
             // Step 3. bulid transitions to the dead state
 
             // calc State's Iws set (remove duplicates and sort Iws)
-            const int NewSize = ::FASortUniq (m_iws.begin (), m_iws.end ());
+            const int NewSize = FASortUniq (m_iws.begin (), m_iws.end ());
             m_iws.resize (NewSize);
 
             // calc the difference : pAlphabet - m_iws
@@ -286,4 +289,6 @@ void FARSNfa2RevNfa::Process ()
     }
 
     FARSNfa2RevNfa::Clear ();
+}
+
 }

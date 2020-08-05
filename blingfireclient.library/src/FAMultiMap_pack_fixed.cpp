@@ -9,6 +9,8 @@
 #include "FAMultiMap_pack_fixed.h"
 #include "FAEncodeUtils.h"
 
+namespace BlingFire
+{
 
 FAMultiMap_pack_fixed::FAMultiMap_pack_fixed () :
     m_pData (NULL),
@@ -157,4 +159,6 @@ const int FAMultiMap_pack_fixed::
     }
 
     return -1;
+}
+
 }

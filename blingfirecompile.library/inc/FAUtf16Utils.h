@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 /// Converts UTF-16LE/BE symbol into int (UTF-32LE),
 /// returns new pointer in the multi byte sequence,
 /// NULL if the sequence is not a valid UTF-16LE/BE string
@@ -58,5 +61,7 @@ const bool FAIsUtf16LeEnc (const char * pEncName);
 
 /// returns true if pEncName is a valid UTF-16BE encoding name
 const bool FAIsUtf16BeEnc (const char * pEncName);
+
+}
 
 #endif

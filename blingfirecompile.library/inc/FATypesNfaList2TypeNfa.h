@@ -14,6 +14,9 @@
 #include "FAChain2Num_judy.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FARSDfaA;
 class FAAllocatorA;
 
@@ -76,5 +79,7 @@ private:
     /// temporary states/chain container
     FAArray_cont_t < int > m_arr;
 };
+
+}
 
 #endif

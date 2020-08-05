@@ -21,6 +21,9 @@
 #include "FATsConfKeeper.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// Keeps morphology resources. (The object is safe to share among threads,
 //  after initialization). Every GetXXXConf returns NULL if corresponding
@@ -625,5 +628,6 @@ const FAWftConfKeeper * FAMorphLDB_t< Ty >::GetW2VConf () const
     return & m_w2v;
 }
 
+}
 
 #endif

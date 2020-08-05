@@ -29,6 +29,9 @@
 #include "FADictInterpreter_t.h"
 #include "FABitArray.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -170,5 +173,7 @@ private:
     /// if the types are initialilly non-intersecting then mapping is one to one
     FAMultiMap_judy m_type2ows;
 };
+
+}
 
 #endif

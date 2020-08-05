@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FAException.h"
 
+namespace BlingFire
+{
+
 
 FAException::FAException (
         const char * pSourceName, 
@@ -52,4 +55,6 @@ const char * FAException::GetSourceName () const
 const int FAException::GetSourceLine () const
 {
     return m_SourceLine;
+}
+
 }

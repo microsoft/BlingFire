@@ -15,6 +15,9 @@
 #include "FAFsmConst.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FAWRETokens2Dicts::FAWRETokens2Dicts (FAAllocatorA * pAlloc) :
     m_pToken2Num (NULL),
@@ -115,7 +118,7 @@ void FAWRETokens2Dicts::Process ()
         }
 
         const int NewSize = \
-            ::FASortUniq (m_pos_tags.begin (), m_pos_tags.end ());
+            FASortUniq (m_pos_tags.begin (), m_pos_tags.end ());
         FAAssert (NewSize == Count, FAMsg::InternalError);
 
         if (0 < Count) {
@@ -127,7 +130,7 @@ void FAWRETokens2Dicts::Process ()
     if (m_pTagSet2) {
 
         const int NewSize = \
-            ::FASortUniq (m_dict_tags.begin (), m_dict_tags.end ());
+            FASortUniq (m_dict_tags.begin (), m_dict_tags.end ());
         m_dict_tags.resize (NewSize);
 
         if (0 < NewSize) {
@@ -576,7 +579,7 @@ void FAWRETokens2Dicts::ProcessCurrDicts (const int TokenNum)
             const int Tag = m_pTagSet2->Str2Tag (pTagText, TagTextLen);
 
             if (0 > Tag) {
-                ::FASyntaxError (pTagText, TagTextLen, 0, "Unknown dictionary tag.");
+                FASyntaxError (pTagText, TagTextLen, 0, "Unknown dictionary tag.");
                 throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
             }
 
@@ -633,7 +636,7 @@ void FAWRETokens2Dicts::ProcessCurrTags  (const int TokenNum)
         const int Tag = m_pTagSet->Str2Tag (pTagText, TagTextLen);
 
         if (0 > Tag) {
-            ::FASyntaxError (pTagText, TagTextLen, 0, "Unknown POS tag.");
+            FASyntaxError (pTagText, TagTextLen, 0, "Unknown POS tag.");
             throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
         }
 
@@ -757,3 +760,4 @@ void FAWRETokens2Dicts::
 void FAWRETokens2Dicts::PutDone ()
 {}
 
+}

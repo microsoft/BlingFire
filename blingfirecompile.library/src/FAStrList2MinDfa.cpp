@@ -8,6 +8,9 @@
 #include "FAStrList2MinDfa.h"
 #include "FAException.h"
 
+namespace BlingFire
+{
+
 
 FAStrList2MinDfa::FAStrList2MinDfa (FAAllocatorA * pAlloc) :
     m_pStrList (NULL),
@@ -97,3 +100,5 @@ const FARSDfaA * FAStrList2MinDfa::GetRsDfa () const
     return pDfa;
 }
 
+
+}

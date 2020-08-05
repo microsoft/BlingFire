@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAMealyNfaCA.h"
 
+namespace BlingFire
+{
+
 ///
 /// FSM-compile-time interafece for Mealy NFA sigma function.
 ///
@@ -33,5 +36,7 @@ public:
   virtual void Clear () = 0;
 
 };
+
+}
 
 #endif

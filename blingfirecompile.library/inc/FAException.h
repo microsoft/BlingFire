@@ -11,6 +11,9 @@
 #include "FALimits.h"
 #include "FAMsg.h"
 
+namespace BlingFire
+{
+
 ///
 /// Base class for all FA* exceptions
 ///
@@ -45,6 +48,7 @@ private:
     char m_ErrMsg [FALimits::MaxWordSize + 1];
 };
 
+}
 
 /// throws an exception if (X) is false
 #define FAAssert(X, M) \

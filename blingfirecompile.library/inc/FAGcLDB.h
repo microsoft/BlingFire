@@ -11,6 +11,9 @@
 #include "FALDB.h"
 #include "FAWREConf_pack.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -39,5 +42,7 @@ private:
     /// rule count
     int m_Count;
 };
+
+}
 
 #endif

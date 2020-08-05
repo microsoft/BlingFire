@@ -10,6 +10,9 @@
 #include "FARSNfaA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FASplitStates::FASplitStates (FAAllocatorA * pAlloc) :
     m_pNfa (NULL),
@@ -65,7 +68,7 @@ void FASplitStates::SetS2C (const int * pS2C, const int Size)
 inline const int FASplitStates::GetDstId (const int * pDsts, const int Dsts)
 {
     DebugLogAssert (0 < Dsts && pDsts);
-    DebugLogAssert (::FAIsSortUniqed (pDsts, Dsts));
+    DebugLogAssert (FAIsSortUniqed (pDsts, Dsts));
 
     // remap destination set into color set
 
@@ -83,7 +86,7 @@ inline const int FASplitStates::GetDstId (const int * pDsts, const int Dsts)
     }
 
     const int NewSize = \
-        ::FASortUniq (m_tmp.begin (), m_tmp.end ());
+        FASortUniq (m_tmp.begin (), m_tmp.end ());
     m_tmp.resize (NewSize);
     DebugLogAssert (0 < NewSize);
 
@@ -106,12 +109,12 @@ void FASplitStates::Process ()
 
     int DstsId;
 
-    ::FAGetAlphabet (m_pNfa, &m_alphabet);
+    FAGetAlphabet (m_pNfa, &m_alphabet);
 
     const int * pIws = m_alphabet.begin ();
     const int IwCount = m_alphabet.size ();
     DebugLogAssert (0 < IwCount && pIws);
-    DebugLogAssert (::FAIsSortUniqed (pIws, IwCount));
+    DebugLogAssert (FAIsSortUniqed (pIws, IwCount));
 
     DebugLogAssert (m_Size <= m_pNfa->GetMaxState () + 1);
     const int StateCount = m_Size;
@@ -161,4 +164,6 @@ void FASplitStates::Process ()
 const int FASplitStates::GetS2C (const int ** ppS2C)
 {
     return m_split_sets.GetClasses (ppS2C);
+}
+
 }

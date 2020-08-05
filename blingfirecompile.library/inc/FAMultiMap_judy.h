@@ -14,6 +14,9 @@
 #include "FAHeap_t.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 /// Judy-based implementation of the FAMultiMapA
@@ -66,5 +69,7 @@ private:
     /// maximum size of the array asociated with the key
     int m_MaxCount;
 };
+
+}
 
 #endif

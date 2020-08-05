@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FANfaCreator_base.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FAChain2NumA;
 
@@ -43,5 +46,7 @@ private:
     /// the base value for all token identifers
     int m_BaseIw;
 };
+
+}
 
 #endif

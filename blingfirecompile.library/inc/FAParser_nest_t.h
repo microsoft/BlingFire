@@ -14,6 +14,8 @@
 
 #include <algorithm>
 
+namespace BlingFire
+{
 
 ///
 /// This parser allows nested results with different constituent names to be 
@@ -129,5 +131,6 @@ const bool FAParser_nest_t< Ty >::ApplyResults ()
     return 0 != Count;
 }
 
+}
 
 #endif

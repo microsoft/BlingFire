@@ -17,6 +17,9 @@
 #include "FASetUtils.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 
@@ -272,7 +275,7 @@ const bool FAAutInterpretTools_fnfa_t< Ty >::
 
         // make it to be a valid set
         if (2 < DstSetSize) {
-            DstSetSize = ::FASortUniq (pDstSet, pDstSet + DstSetSize);
+            DstSetSize = FASortUniq (pDstSet, pDstSet + DstSetSize);
         }
 
         // make iteration thru the pDstSet and collect all the reactions
@@ -357,7 +360,7 @@ void FAAutInterpretTools_fnfa_t< Ty >::
 
         // make it to be a valid set
         if (2 < DstSetSize) {
-            DstSetSize = ::FASortUniq (pDstSet, pDstSet + DstSetSize);
+            DstSetSize = FASortUniq (pDstSet, pDstSet + DstSetSize);
         }
         if (0 == (i + 1) % m_TupleSize) {
             // make iteration thru the pDstSet and collect all the reactions
@@ -375,6 +378,8 @@ void FAAutInterpretTools_fnfa_t< Ty >::
         DstSetSize = 1;
 
     } // of for (i = 0;
+}
+
 }
 
 #endif

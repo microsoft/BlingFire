@@ -12,6 +12,9 @@
 #include "FAState2OwCA.h"
 #include "FAUtf32Utils.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -211,6 +214,8 @@ const int FADigitizer_t< Ty >::Process (const Ty * pChain,  const int Size) cons
         return Ow;
     else
         return m_AnyOw;
+}
+
 }
 
 #endif

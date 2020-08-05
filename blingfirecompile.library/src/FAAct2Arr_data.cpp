@@ -11,6 +11,9 @@
 #include "FAStringTokenizer.h"
 #include "FAException.h"
 
+namespace BlingFire
+{
+
 
 FAAct2Arr_data::FAAct2Arr_data (FAAllocatorA * pAlloc) : 
     m_pTagSet (NULL)
@@ -149,4 +152,6 @@ const int FAAct2Arr_data::GetDataCount () const
 const int FAAct2Arr_data::GetData (const int Idx, const int ** ppData) const
 {
     return m_data2tag.GetChain (Idx, ppData);
+}
+
 }

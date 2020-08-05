@@ -9,6 +9,9 @@
 
 #include <algorithm>
 
+namespace BlingFire
+{
+
 
 FAChains2MinDfa::_TChainCmp::_TChainCmp (FAArray_t < int > * pD) : 
     m_pD (pD)
@@ -130,4 +133,6 @@ void FAChains2MinDfa::Process ()
 const FARSDfaA * FAChains2MinDfa::GetRsDfa () const
 {
     return & m_chains2dfa;
+}
+
 }

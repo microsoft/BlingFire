@@ -11,6 +11,8 @@
 #include "FAFsmConst.h"
 #include "FAUtils_cl.h"
 
+namespace BlingFire
+{
 
 FAOw2Iw_pack_triv::FAOw2Iw_pack_triv () :
     m_pAutImage (NULL),
@@ -262,3 +264,4 @@ const int FAOw2Iw_pack_triv::
     }; // of switch (TrType)
 }
 
+}

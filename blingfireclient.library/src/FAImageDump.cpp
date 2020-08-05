@@ -8,6 +8,8 @@
 #include "FAConfig.h"
 #include "FAImageDump.h"
 
+namespace BlingFire
+{
 
 FAImageDump::FAImageDump () :
     m_pImageDump (NULL),
@@ -159,4 +161,6 @@ void FAImageDump::SetImageDump (const unsigned char * pImageDump)
 const unsigned char * FAImageDump::GetImageDump () const
 {
     return m_pImageDump;
+}
+
 }

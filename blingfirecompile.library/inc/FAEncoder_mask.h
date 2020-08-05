@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAEncoderA.h"
 
+namespace BlingFire
+{
+
 /// Does the following:
 /// 1. Recodes zero-bytes with two non-zero byte sequences
 
@@ -27,5 +30,7 @@ private:
   enum { MAX_BYTES_PER_INT = sizeof (int) * 2 };
 
 };
+
+}
 
 #endif

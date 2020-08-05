@@ -11,6 +11,9 @@
 #include "FAFsmConst.h"
 #include "FAArrayCA.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FATsConfKeeper;
 
@@ -121,6 +124,8 @@ inline const float FATs2PTable::
 
         return m_pInt2Prob [PrbIdx];
     }
+}
+
 }
 
 #endif

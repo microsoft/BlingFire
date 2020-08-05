@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 ///
 /// Run-time interface for MealyDfa automaton reaction.
 ///
@@ -25,5 +28,7 @@ public:
         ) const = 0;
 
 };
+
+}
 
 #endif

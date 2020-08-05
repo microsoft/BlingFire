@@ -10,6 +10,8 @@
 #include "FAConfig.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
 
 class FAAllocatorA;
 
@@ -90,5 +92,7 @@ private:
     int m_MaxGap;
     enum { DefaultMaxGap = 50 };
 };
+
+}
 
 #endif

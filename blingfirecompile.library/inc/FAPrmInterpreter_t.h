@@ -19,6 +19,9 @@
 #include "FAUtils_cl.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// PRM run-time interpreter.
 ///
@@ -939,6 +942,8 @@ const int FAPrmInterpreter_t< Ty >::
     } else {
         return OutSize;
     }
+}
+
 }
 
 #endif

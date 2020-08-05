@@ -11,6 +11,8 @@
 #include "FAUtils_cl.h"
 #include "FAFsmConst.h"
 
+namespace BlingFire
+{
 
 FAMealyDfa_pack_triv::FAMealyDfa_pack_triv () :
     m_pAutImage (NULL),
@@ -111,7 +113,7 @@ const int FAMealyDfa_pack_triv::
             pCurrPtr += sizeof (char);
             // find outgoing transition index, if any
             const unsigned char * pIws = pCurrPtr;
-            Idx = ::FAFind_log (pIws, DstCount, (unsigned char) Iw);
+            Idx = FAFind_log (pIws, DstCount, (unsigned char) Iw);
             // skip Iws array
             pCurrPtr += (DstCount * sizeof (char));
 
@@ -127,7 +129,7 @@ const int FAMealyDfa_pack_triv::
             pCurrPtr += sizeof (short);
             // find outgoing transition index, if any
             const unsigned short * pIws = (const unsigned short*) pCurrPtr;
-            Idx = ::FAFind_log (pIws, DstCount, (unsigned short) Iw);
+            Idx = FAFind_log (pIws, DstCount, (unsigned short) Iw);
             // skip Iws array
             pCurrPtr += (DstCount * sizeof (short));
 
@@ -140,7 +142,7 @@ const int FAMealyDfa_pack_triv::
             pCurrPtr += sizeof (int);
             // find outgoing transition index, if any
             const unsigned int * pIws = (const unsigned int *) pCurrPtr;
-            Idx = ::FAFind_log (pIws, DstCount, (unsigned int) Iw);
+            Idx = FAFind_log (pIws, DstCount, (unsigned int) Iw);
             // skip Iws array
             pCurrPtr += (DstCount * sizeof (int));
         }
@@ -239,4 +241,6 @@ const int FAMealyDfa_pack_triv::
     }
 
     return DestState;
+}
+
 }

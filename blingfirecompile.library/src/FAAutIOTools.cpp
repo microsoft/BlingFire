@@ -20,6 +20,9 @@
 
 #include <string>
 
+namespace BlingFire
+{
+
 
 FAAutIOTools::FAAutIOTools (FAAllocatorA * pAlloc) : 
     m_pAlloc (pAlloc)
@@ -276,7 +279,7 @@ void FAAutIOTools::
 
             if (0 < m_dst.size ()) {
                 // make sure the destination states are sorted
-                const int NewSize = ::FASortUniq (m_dst.begin (), m_dst.end ());
+                const int NewSize = FASortUniq (m_dst.begin (), m_dst.end ());
                 m_dst.resize (NewSize);
                 // add transition
                 pNFA->SetTransition (prev_from, prev_n, m_dst.begin (), m_dst.size ());
@@ -294,7 +297,7 @@ void FAAutIOTools::
     // check whether there is something in m_dst
     if (0 < m_dst.size ()) {
         // make sure the destination states are sorted
-        const int NewSize = ::FASortUniq (m_dst.begin (), m_dst.end ());
+        const int NewSize = FASortUniq (m_dst.begin (), m_dst.end ());
         m_dst.resize (NewSize);
         // add transition
         pNFA->SetTransition (from, n, m_dst.begin (), m_dst.size ());
@@ -303,8 +306,8 @@ void FAAutIOTools::
     int * pBegin = m_initials.begin ();
     int * pEnd = m_initials.end ();
 
-    if (false == ::FAIsSortUniqed (pBegin, int (pEnd - pBegin))) {
-        const int NewSize = ::FASortUniq (pBegin, pEnd);
+    if (false == FAIsSortUniqed (pBegin, int (pEnd - pBegin))) {
+        const int NewSize = FASortUniq (pBegin, pEnd);
         m_initials.resize (NewSize);
     }
     FAAssert (0 < m_initials.size (), FAMsg::IOError);
@@ -313,8 +316,8 @@ void FAAutIOTools::
     pBegin = m_finals.begin ();
     pEnd = m_finals.end ();
 
-    if (false == ::FAIsSortUniqed (pBegin, int (pEnd - pBegin))) {
-        const int NewSize = ::FASortUniq (pBegin, pEnd);
+    if (false == FAIsSortUniqed (pBegin, int (pEnd - pBegin))) {
+        const int NewSize = FASortUniq (pBegin, pEnd);
         m_finals.resize (NewSize);
     }
     FAAssert (0 < m_finals.size (), FAMsg::IOError);
@@ -326,7 +329,7 @@ void FAAutIOTools::
     if (pOws)
         pOws->Prepare ();
 
-    if (!::FAIsValidNfa (pNFA)) {
+    if (!FAIsValidNfa (pNFA)) {
         throw FAException (FAMsg::ObjectIsNotReady, __FILE__, __LINE__);
     }
 }
@@ -487,9 +490,9 @@ void FAAutIOTools::
   int * pBegin = m_finals.begin ();
   int * pEnd = m_finals.end ();
 
-  if (false == ::FAIsSortUniqed (pBegin, int (pEnd - pBegin))) {
+  if (false == FAIsSortUniqed (pBegin, int (pEnd - pBegin))) {
 
-    const int NewSize = ::FASortUniq (pBegin, pEnd);
+    const int NewSize = FASortUniq (pBegin, pEnd);
     m_finals.resize (NewSize);
   }
 
@@ -502,7 +505,7 @@ void FAAutIOTools::
     pOws->Prepare ();
   }
 
-  if (!::FAIsValidDfa (pDFA)) {
+  if (!FAIsValidDfa (pDFA)) {
     throw FAException (FAMsg::ObjectIsNotReady, __FILE__, __LINE__);
   }
 }
@@ -710,4 +713,6 @@ void FAAutIOTools::
     Print (std::ostream& os, const FARSDfaA * pDFA, const FAMealyDfaA * pOws)
 {
     FAAutIOTools::PrintDfaCommon (os, pDFA, pOws);
+}
+
 }

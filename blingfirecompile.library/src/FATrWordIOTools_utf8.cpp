@@ -13,6 +13,9 @@
 #include "FAMultiMapCA.h"
 #include "FAUtf8Utils.h"
 
+namespace BlingFire
+{
+
 
 static inline const int FATrStr2Ow (const int * pStr, const int Len)
 {
@@ -108,7 +111,7 @@ const int FATrWordIOTools_utf8::
     const int MaxSize = 2 * FALimits::MaxWordLen;
     int Chain [MaxSize];
 
-    const int ChainSize = ::FAStrUtf8ToArray (pStr, StrLen, Chain, MaxSize);
+    const int ChainSize = FAStrUtf8ToArray (pStr, StrLen, Chain, MaxSize);
 
     if (0 >= ChainSize || ChainSize > MaxSize) {
         throw FAException (FAMsg::IOError, __FILE__, __LINE__);
@@ -153,7 +156,7 @@ const int FATrWordIOTools_utf8::
 
             // ignore-case
             if (IgnoreCase) {
-                C = ::FAUtf32ToLower (C);
+                C = FAUtf32ToLower (C);
             }
             // charmap normalization
             if (pCharMap) {
@@ -204,7 +207,7 @@ const int FATrWordIOTools_utf8::
         const int Iw = pIws [i];
 
         // copy input symbol out
-        pEnd = ::FAIntToUtf8 (Iw, pOut + OutSize, MaxOutSize - OutSize);
+        pEnd = FAIntToUtf8 (Iw, pOut + OutSize, MaxOutSize - OutSize);
         FAAssert (NULL != pEnd, FAMsg::IOError);
         OutSize = (int) (pEnd - pOut);
 
@@ -222,7 +225,7 @@ const int FATrWordIOTools_utf8::
 
         // decode an optional character
         const int Ch = Ow >> 4;
-        pEnd = ::FAIntToUtf8 (Ch, ChStr, FAUtf8Const::MAX_CHAR_SIZE);
+        pEnd = FAIntToUtf8 (Ch, ChStr, FAUtf8Const::MAX_CHAR_SIZE);
         FAAssert (NULL != pEnd, FAMsg::IOError);
         ChStrLen = (int) (pEnd - ChStr);
 
@@ -292,4 +295,6 @@ const int FATrWordIOTools_utf8::
     } // for (int i = 0; ...
 
     return OutSize;
+}
+
 }

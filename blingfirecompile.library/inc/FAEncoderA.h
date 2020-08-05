@@ -9,6 +9,8 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
 
 class FAEncoderA {
 
@@ -21,5 +23,7 @@ public:
                             const int Size,
                             unsigned char * pOutBuffer) const = 0;
 };
+
+}
 
 #endif

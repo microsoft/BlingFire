@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FARSDfaCA.h"
 
+namespace BlingFire
+{
+
 ///
 /// Common interface for Rabin-Scott Dfa.
 ///
@@ -68,5 +71,7 @@ public:
   virtual void Clear () = 0;
 
 };
+
+}
 
 #endif

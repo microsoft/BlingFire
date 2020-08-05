@@ -16,6 +16,9 @@
 
 #include <string>
 
+namespace BlingFire
+{
+
 
 FATestMorph_w2t::FATestMorph_w2t (FAAllocatorA * pAlloc) :
     FATestMorph (pAlloc),
@@ -63,7 +66,7 @@ void FATestMorph_w2t::Test (const char * pLineStr, const int LineLen)
 
     // convert UTF-8 input word into array of integers (UTF-32)
     const int ChainSize = \
-        ::FAStrUtf8ToArray (
+        FAStrUtf8ToArray (
             pTmpStr, 
             TmpStrLen, 
             m_ChainBuffer, 
@@ -80,7 +83,7 @@ void FATestMorph_w2t::Test (const char * pLineStr, const int LineLen)
 
     // make input in the lower case, if needed
     if (m_IgnoreCase) {
-        ::FAUtf32StrLower (m_ChainBuffer, ChainSize);
+        FAUtf32StrLower (m_ChainBuffer, ChainSize);
     }
 
     int InTagCount = 0;
@@ -109,7 +112,7 @@ void FATestMorph_w2t::Test (const char * pLineStr, const int LineLen)
     }
     // make them sorted and uniqued
     InTagCount = \
-        ::FASortUniq (m_OutChain2Buffer, m_OutChain2Buffer + InTagCount);
+        FASortUniq (m_OutChain2Buffer, m_OutChain2Buffer + InTagCount);
 
     // generate a set of tags with word-guesser
     const int * pOutTags = NULL;
@@ -130,7 +133,7 @@ void FATestMorph_w2t::Test (const char * pLineStr, const int LineLen)
             m_OutChainBuffer [i] = pOutTags [i];
         }
         OutTagCount = \
-            ::FASortUniq (m_OutChainBuffer, m_OutChainBuffer + OutTagCount);
+            FASortUniq (m_OutChainBuffer, m_OutChainBuffer + OutTagCount);
 
     } else if (-1 == OutTagCount) {
         OutTagCount = 0;
@@ -158,13 +161,15 @@ void FATestMorph_w2t::Test (const char * pLineStr, const int LineLen)
         }
 
         // print the word
-        ::FAPrintWordList (*pDbgOs, m_ChainBuffer, ChainSize);
+        FAPrintWordList (*pDbgOs, m_ChainBuffer, ChainSize);
         (*pDbgOs) << '\t';
         // print the output tags
-        ::FAPrintTagList (*pDbgOs, m_pTagSet, m_OutChainBuffer, OutTagCount);
+        FAPrintTagList (*pDbgOs, m_pTagSet, m_OutChainBuffer, OutTagCount);
         (*pDbgOs) << "\tvs\t";
         // print the expected tags
-        ::FAPrintTagList (*pDbgOs, m_pTagSet, m_OutChain2Buffer, InTagCount);
+        FAPrintTagList (*pDbgOs, m_pTagSet, m_OutChain2Buffer, InTagCount);
         (*pDbgOs) << '\n';
     }
+}
+
 }

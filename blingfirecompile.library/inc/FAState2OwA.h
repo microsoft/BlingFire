@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAState2OwCA.h"
 
+namespace BlingFire
+{
+
 ///
 /// Additional interface for Moore DFAs
 ///
@@ -22,5 +25,7 @@ public:
     virtual void SetOw (const int State, const int Ow) = 0;
 
 };
+
+}
 
 #endif

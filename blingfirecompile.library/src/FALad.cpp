@@ -11,6 +11,9 @@
 #include "FAUtf8Utils.h"
 #include "FAUtils_cl.h"
 
+namespace BlingFire
+{
+
 
 FALad::FALad () :
     m_MaxTag (0),
@@ -157,7 +160,7 @@ inline const int FALad::
         }
 
         // see if the language is amoung allowed
-        if (-1 == ::FAFind_log (pLangs, LangCount, Tag)) {
+        if (-1 == FAFind_log (pLangs, LangCount, Tag)) {
             continue;
         }
 
@@ -201,7 +204,7 @@ void FALad::ScoreText (const char * pText, size_t TextSize)
     while (pBegin < pEnd && CharCount++ <= m_MaxCount) {
 
         // get next UTF-32 character
-        pBegin = ::FAUtf8ToInt (pBegin, pEnd, &C);
+        pBegin = FAUtf8ToInt (pBegin, pEnd, &C);
         LogAssert (pBegin);
 
         // normalize a character, only 1 to 1 mapping is allowed
@@ -264,7 +267,7 @@ inline const bool FALad::HasJunk (const int * pIn, const int Size) const
 inline const bool FALad::HasUpper (const int * pIn, const int Size) const
 {
     for (int i = 0; i < Size; ++i) {
-        if (::FAUtf32IsUpper (pIn [i])) {
+        if (FAUtf32IsUpper (pIn [i])) {
             return true;
         }
     }
@@ -486,4 +489,6 @@ const int FALad::GetScores (const float ** ppScores, const int ** ppCounts) cons
     *ppCounts = m_pCounts;
     *ppScores = m_pScores;
     return m_MaxTag + 1;
+}
+
 }

@@ -9,6 +9,9 @@
 #include "FARegexpTreeTopoGraph.h"
 #include "FARegexpTree.h"
 
+namespace BlingFire
+{
+
 
 FARegexpTreeTopoGraph::FARegexpTreeTopoGraph (const FARegexpTree * pTree)
 {
@@ -52,4 +55,6 @@ const int FARegexpTreeTopoGraph::GetDstNodes (
     }
 
     return Count;
+}
+
 }

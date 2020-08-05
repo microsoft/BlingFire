@@ -13,6 +13,9 @@
 #include "FASetUtils.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 ///
 /// This algorithm tries to calculate minimal coloring such that no
 /// two adjacent vertices have the same color.
@@ -105,7 +108,7 @@ void FAColorGraph_t< _TGraph >::Prepare ()
     const int * pVs;
     const int Count = m_pG->GetVertices (&pVs);
     DebugLogAssert (0 < Count && pVs);
-    DebugLogAssert (::FAIsSortUniqed (pVs, Count));
+    DebugLogAssert (FAIsSortUniqed (pVs, Count));
     DebugLogAssert (0 <= *pVs);
 
     m_c2adj.SetResCount (Count);
@@ -146,9 +149,9 @@ const int FAColorGraph_t< _TGraph >::FindColor (const int V) const
 
         const int * pAdj;
         const int Count = m_c2adj.GetRes (&pAdj, c);
-        DebugLogAssert (::FAIsSortUniqed (pAdj, Count));
+        DebugLogAssert (FAIsSortUniqed (pAdj, Count));
 
-        if (-1 == ::FAFind_log (pAdj, Count, V)) {
+        if (-1 == FAFind_log (pAdj, Count, V)) {
             return c;
         }
     }
@@ -169,7 +172,7 @@ void FAColorGraph_t< _TGraph >::AddNewColor (const int V)
 
     if (0 < Count) {
 
-        DebugLogAssert (::FAIsSortUniqed (pAdj, Count));
+        DebugLogAssert (FAIsSortUniqed (pAdj, Count));
         m_c2adj.SetRes (pAdj, Count, m_MaxColor);
 
     } else {
@@ -192,7 +195,7 @@ void FAColorGraph_t< _TGraph >::AddToColor (const int C, const int V)
 
     if (0 < Count) {
 
-        DebugLogAssert (::FAIsSortUniqed (pAdj, Count));
+        DebugLogAssert (FAIsSortUniqed (pAdj, Count));
         m_c2adj.SelfUnion (pAdj, Count, C);
     }
 }
@@ -241,6 +244,8 @@ const int FAColorGraph_t< _TGraph >::GetColorMap (const int ** ppV2C) const
 
     *ppV2C = m_v2c.begin ();
     return m_v2c.size ();
+}
+
 }
 
 #endif

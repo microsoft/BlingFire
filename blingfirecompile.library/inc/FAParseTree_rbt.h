@@ -11,6 +11,9 @@
 #include "FAParseTreeA.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FATaggedTextCA;
 class FATaggedTextA;
@@ -65,5 +68,7 @@ private:
     /// maps From -> Tag, by default into m_pIn->GetTag (From)
     FAArray_cont_t < int > m_From2Tag;
 };
+
+}
 
 #endif

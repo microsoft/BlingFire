@@ -10,6 +10,8 @@
 #include "FAArray_pack.h"
 #include "FAEncodeUtils.h"
 
+namespace BlingFire
+{
 
 FAArray_pack::FAArray_pack () :
     m_M (0),
@@ -94,4 +96,6 @@ const int FAArray_pack::GetAt (const int Idx) const
 const int FAArray_pack::GetCount () const
 {
     return m_Count;
+}
+
 }

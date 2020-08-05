@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FALDB;
 class FARSDfa_pack_triv;
 class FAState2Ow_pack_triv;
@@ -56,5 +59,7 @@ private:
     float m_MinProbVal;
     float m_MaxProbVal;
 };
+
+}
 
 #endif

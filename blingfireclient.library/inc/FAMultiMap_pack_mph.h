@@ -15,6 +15,9 @@
 #include "FAMphInterpretTools_t.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class interprets dump created by FAMultiMapPack_mph.
 ///
@@ -51,5 +54,7 @@ private:
     FAMphInterpretTools_t < int > m_mph;
 
 };
+
+}
 
 #endif

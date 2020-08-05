@@ -14,6 +14,9 @@
 #include <map>
 #endif
 
+namespace BlingFire
+{
+
 ///
 /// FAFAAllocatorA implementation see FAAllocatorA.h for details.
 ///
@@ -76,6 +79,8 @@ private:
 #endif // _DEBUG_MEMORY
 
 };
+
+}
 
 #ifndef _DEBUG_MEMORY
 #define FAPrintLeaks(A, S)

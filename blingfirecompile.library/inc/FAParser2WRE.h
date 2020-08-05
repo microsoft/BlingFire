@@ -19,6 +19,9 @@
 #include <set>
 #include <map>
 
+namespace BlingFire
+{
+
 class FAAllocatorA ;
 class FAAct2ArrA ;
 
@@ -202,5 +205,7 @@ private:
         DefMaxActSize = 100,
     };
 };
+
+}
 
 #endif

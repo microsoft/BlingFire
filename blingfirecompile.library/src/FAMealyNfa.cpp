@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FAMealyNfa.h"
 
+namespace BlingFire
+{
+
 
 FAMealyNfa::FAMealyNfa (FAAllocatorA * pAlloc)
 {
@@ -62,3 +65,5 @@ void FAMealyNfa::Clear ()
 
 void FAMealyNfa::Prepare ()
 {}
+
+}

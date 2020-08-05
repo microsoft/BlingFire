@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FANfaCreator_digit.h"
 
+namespace BlingFire
+{
+
 
 FANfaCreator_digit::FANfaCreator_digit (FAAllocatorA * pAlloc) :
     FANfaCreator_base (pAlloc)
@@ -30,4 +33,6 @@ void FANfaCreator_digit::SetTransition (const int FromState,
     const int Iw = atoi (&m_pRegexp [LabelOffset]);
 
     m_tmp_nfa.SetTransition (FromState, Iw, ToState);
+}
+
 }

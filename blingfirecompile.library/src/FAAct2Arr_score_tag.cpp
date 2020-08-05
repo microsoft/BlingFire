@@ -10,6 +10,9 @@
 #include "FATagSet.h"
 #include "FAException.h"
 
+namespace BlingFire
+{
+
 
 FAAct2Arr_score_tag::FAAct2Arr_score_tag (FAAllocatorA * pAlloc) : 
     m_pTagSet (NULL)
@@ -117,4 +120,6 @@ const int FAAct2Arr_score_tag::
 
     *ppArr = m_arr.begin ();
     return m_arr.size ();
+}
+
 }

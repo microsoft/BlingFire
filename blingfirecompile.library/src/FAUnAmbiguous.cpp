@@ -12,6 +12,8 @@
 #include "FALessA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
 
 FAUnAmbiguous::FAUnAmbiguous (FAAllocatorA * pAlloc) :
     m_pLess (NULL),
@@ -130,9 +132,9 @@ inline const bool FAUnAmbiguous::IsInitial (const int State) const
     const int * pInitials;
     const int Count = m_pInNfa->GetInitials (&pInitials);
     DebugLogAssert (0 < Count && pInitials);
-    DebugLogAssert (::FAIsSortUniqed (pInitials, Count));
+    DebugLogAssert (FAIsSortUniqed (pInitials, Count));
 
-    return -1 != ::FAFind_log (pInitials, Count, State);
+    return -1 != FAFind_log (pInitials, Count, State);
 }
 
 
@@ -141,9 +143,9 @@ inline const bool FAUnAmbiguous::IsFinal (const int State) const
     const int * pFinals;
     const int Count = m_pInNfa->GetFinals (&pFinals);
     DebugLogAssert (0 < Count && pFinals);
-    DebugLogAssert (::FAIsSortUniqed (pFinals, Count));
+    DebugLogAssert (FAIsSortUniqed (pFinals, Count));
 
-    return -1 != ::FAFind_log (pFinals, Count, State);
+    return -1 != FAFind_log (pFinals, Count, State);
 }
 
 
@@ -206,7 +208,7 @@ const bool FAUnAmbiguous::
         }
     }
 
-    const int NewSize = ::FASortUniq (m_xs.begin () + 1, m_xs.end ());
+    const int NewSize = FASortUniq (m_xs.begin () + 1, m_xs.end ());
     m_xs.resize (NewSize + 1);
 
     return true;
@@ -215,13 +217,13 @@ const bool FAUnAmbiguous::
 
 void FAUnAmbiguous::PrepareOutNfa ()
 {
-    const int IniCount = ::FASortUniq (m_initials.begin (), m_initials.end ());
+    const int IniCount = FASortUniq (m_initials.begin (), m_initials.end ());
     m_initials.resize (IniCount);
     DebugLogAssert (0 < IniCount);
 
     m_OutNfa.SetInitials (m_initials.begin (), IniCount);
 
-    const int FinCount = ::FASortUniq (m_finals.begin (), m_finals.end ());
+    const int FinCount = FASortUniq (m_finals.begin (), m_finals.end ());
     m_finals.resize (FinCount);
     DebugLogAssert (0 < FinCount);
 
@@ -331,4 +333,6 @@ void FAUnAmbiguous::Process ()
     Prepare ();
     CreateOutNfa ();
     RmUnreach ();
+}
+
 }

@@ -14,6 +14,9 @@
 
 #include <iostream>
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -115,5 +118,7 @@ protected:
         ERR_DIFFERENT,
     };
 };
+
+}
 
 #endif

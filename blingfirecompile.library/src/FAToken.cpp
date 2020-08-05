@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FAToken.h"
 
+namespace BlingFire
+{
+
 
 FAToken::FAToken () :
   m_type (-1),
@@ -49,5 +52,7 @@ const int FAToken::GetLength () const
 void FAToken::SetLength (const int Length)
 {
   m_length = Length;
+}
+
 }
 

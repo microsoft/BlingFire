@@ -16,6 +16,9 @@
 
 #include <string>
 
+namespace BlingFire
+{
+
 
 FANfaCreator_char::FANfaCreator_char (FAAllocatorA * pAlloc) :
     FANfaCreator_base (pAlloc),
@@ -35,7 +38,7 @@ void FANfaCreator_char::SetEncodingName (const char * pEncStr)
 
     if (pEncStr) {
         m_recode.SetEncodingName (pEncStr);
-        m_IsUtf8 = ::FAIsUtf8Enc (pEncStr);
+        m_IsUtf8 = FAIsUtf8Enc (pEncStr);
     }
 }
 
@@ -45,7 +48,7 @@ inline const bool FANfaCreator_char::IsEscaped (const int Pos) const
     DebugLogAssert (m_pRegexp);
     DebugLogAssert (0 <= Pos && m_ReLength > Pos);
 
-    return ::FAIsEscaped (Pos, m_pRegexp, m_ReLength);
+    return FAIsEscaped (Pos, m_pRegexp, m_ReLength);
 }
 
 
@@ -113,7 +116,7 @@ const int FANfaCreator_char::
             } else if (0 == strncmp ("graph", pName, Len)) {
                 return IW_GRAPH;
             } else {
-                ::FASyntaxError (pStr, StrLen, 0, "Unsupported character range name.");
+                FASyntaxError (pStr, StrLen, 0, "Unsupported character range name.");
                 throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
             }
         }
@@ -168,7 +171,7 @@ const int FANfaCreator_char::
             length++;
         }
         if (m_IsUtf8) {
-            length += ::FAUtf8Size (pStr);
+            length += FAUtf8Size (pStr);
         } else {
             length++;
         }
@@ -176,7 +179,7 @@ const int FANfaCreator_char::
         const int Count = m_recode.Process (pStr, length, &Iw, 1);
 
         if (1 != Count) {
-            ::FASyntaxError (pStr, StrLen, 0, \
+            FASyntaxError (pStr, StrLen, 0, \
                 "Cannot make convertion from specified encoding.");
             throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
         }
@@ -350,7 +353,7 @@ void FANfaCreator_char::ParseRange (const char * pStr, const int Length)
 
             // check whether interval is not too big or too small
             if (0 > Iw2 - Iw || DefMaxRange < Iw2 - Iw) {
-                ::FASyntaxError (pBegin, Length, int (pStr - pBegin), \
+                FASyntaxError (pBegin, Length, int (pStr - pBegin), \
                     "Invalid chracter range.");
                 throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
             }
@@ -368,7 +371,7 @@ void FANfaCreator_char::ParseRange (const char * pStr, const int Length)
     int Count = m_iws.size ();
 
     if (1 < Count) {
-        const int NewSize = ::FASortUniq (m_iws.begin (), m_iws.end ());
+        const int NewSize = FASortUniq (m_iws.begin (), m_iws.end ());
         m_iws.resize (NewSize);
     }
 }
@@ -422,7 +425,7 @@ void FANfaCreator_char::
         const int Count = m_iws.size ();
 
         if (0 >= Count) {
-            ::FASyntaxError (m_pRegexp, m_ReLength, LabelOffset, \
+            FASyntaxError (m_pRegexp, m_ReLength, LabelOffset, \
                 "Empty character range.");
             throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
         }
@@ -458,10 +461,12 @@ void FANfaCreator_char::
         const int Count = m_recode.Process (pStr, LabelLength, &Iw, 1);
 
         if (-1 == Count) {
-            ::FASyntaxError (m_pRegexp, m_ReLength, LabelOffset, "Cannot make convertion from specified encoding.");
+            FASyntaxError (m_pRegexp, m_ReLength, LabelOffset, "Cannot make convertion from specified encoding.");
             throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
         }
     }
 
     m_tmp_nfa.SetTransition (FromState, Iw, ToState);
+}
+
 }

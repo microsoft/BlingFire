@@ -15,6 +15,9 @@
 #include "FAArray_cont_t.h"
 #include "FAMultiMap_judy.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSNfaA;
 
@@ -74,5 +77,7 @@ private:
     FAArray_cont_t < int > m_tmp2;
     FAArray_cont_t < int > m_alphabet;
 };
+
+}
 
 #endif

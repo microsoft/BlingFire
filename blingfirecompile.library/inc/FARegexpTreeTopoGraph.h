@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 class FARegexpTree;
 
 ///
@@ -30,5 +33,7 @@ public:
 private:
     const FARegexpTree * m_pTree;
 };
+
+}
 
 #endif

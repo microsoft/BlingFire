@@ -9,6 +9,9 @@
 #include "FAFsmConst.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FARSNfa_ro::FARSNfa_ro (FAAllocatorA * pAlloc) :
     m_MaxState (-1),
@@ -66,7 +69,7 @@ const bool FARSNfa_ro::IsFinal (const int State) const
     const int * pFinals = m_finals.begin ();
     const int Count = m_finals.size ();
 
-    return -1 != ::FAFind_log (pFinals, Count, State);
+    return -1 != FAFind_log (pFinals, Count, State);
 }
 
 
@@ -79,7 +82,7 @@ const bool FARSNfa_ro::IsFinal (const int * pStates, const int Count) const
 
         const int State = pStates [i];
 
-        if (-1 != ::FAFind_log (pFinals, FinalCount, State)) {
+        if (-1 != FAFind_log (pFinals, FinalCount, State)) {
             return true;
         }
     }
@@ -91,7 +94,7 @@ const bool FARSNfa_ro::IsFinal (const int * pStates, const int Count) const
 const int FARSNfa_ro::GetIWs (const int State, const int ** ppIws) const
 {
     const int Count = m_delta.GetIWs (State, ppIws);
-    DebugLogAssert (0 > Count || ::FAIsSortUniqed (*ppIws, Count));
+    DebugLogAssert (0 > Count || FAIsSortUniqed (*ppIws, Count));
     return Count;
 }
 
@@ -104,7 +107,7 @@ const int FARSNfa_ro::
         ) const
 {
     const int Count = m_delta.GetDest (State, Iw, ppIwDstStates);
-    DebugLogAssert (0 > Count || ::FAIsSortUniqed (*ppIwDstStates, Count));
+    DebugLogAssert (0 > Count || FAIsSortUniqed (*ppIwDstStates, Count));
     return Count;
 }
 
@@ -159,7 +162,7 @@ void FARSNfa_ro::
     DebugLogAssert (-1 == m_delta.GetDest (State, Iw, &pTmp));
 #endif
 
-    DebugLogAssert (0 < Count && ::FAIsSortUniqed (pDstStates, Count));
+    DebugLogAssert (0 < Count && FAIsSortUniqed (pDstStates, Count));
 
     // do not add DeadState into the destination states
     if (FAFsmConst::NFA_DEAD_STATE != pDstStates [0]) {
@@ -175,7 +178,7 @@ void FARSNfa_ro::
 
 void FARSNfa_ro::SetInitials (const int * pStates, const int Count)
 {
-    DebugLogAssert (0 <= Count && ::FAIsSortUniqed (pStates, Count));
+    DebugLogAssert (0 <= Count && FAIsSortUniqed (pStates, Count));
 
     m_initials.resize (Count);
 
@@ -188,7 +191,7 @@ void FARSNfa_ro::SetInitials (const int * pStates, const int Count)
 
 void FARSNfa_ro::SetFinals (const int * pStates, const int Count)
 {
-    DebugLogAssert (0 <= Count && ::FAIsSortUniqed (pStates, Count));
+    DebugLogAssert (0 <= Count && FAIsSortUniqed (pStates, Count));
 
     m_finals.resize (Count);
 
@@ -222,5 +225,7 @@ void FARSNfa_ro::SetTransition (const int, const int, const int)
 {
     /// not implemented for this class
     DebugLogAssert (0);
+}
+
 }
 

@@ -11,6 +11,9 @@
 #include "FARSNfa_ar_judy.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSNfaA;
 
@@ -72,5 +75,7 @@ private:
     /// number of nfas added
     int m_NfaCount;
 };
+
+}
 
 #endif

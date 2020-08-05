@@ -13,6 +13,9 @@
 #include "FAException.h"
 
 
+namespace BlingFire
+{
+
 FAWREConfPack::FAWREConfPack (FAAllocatorA * pAlloc) :
     m_pWre (NULL),
     m_pack_txt_dig (pAlloc),
@@ -84,7 +87,7 @@ const int FAWREConfPack::BuildDumps ()
         m_conf [FAFsmConst::WRE_CONF_TXT_DIG] = Size;
 
         FAAssert (pDfa && pState2Ow, FAMsg::InternalError);
-        FAAssert (::FAIsValidDfa (pDfa), FAMsg::InternalError);
+        FAAssert (FAIsValidDfa (pDfa), FAMsg::InternalError);
         m_pack_txt_dig.SetDfa (pDfa);
         m_pack_txt_dig.SetState2Ow (pState2Ow);
         m_pack_txt_dig.SetUseIwIA (true);
@@ -117,7 +120,7 @@ const int FAWREConfPack::BuildDumps ()
     m_pWre->GetDfa1 (&pDfa);
 
     if (pDfa) {
-        FAAssert (::FAIsValidDfa (pDfa), FAMsg::InternalError);
+        FAAssert (FAIsValidDfa (pDfa), FAMsg::InternalError);
         m_conf [FAFsmConst::WRE_CONF_FSM1] = Size;
 
         if (FAFsmConst::WRE_TYPE_RS == WreType) {
@@ -180,7 +183,7 @@ const int FAWREConfPack::BuildDumps ()
         m_pWre->GetTrBrMap (&pTrBr);
 
         if (pDfa && pSigma) {
-            FAAssert (::FAIsValidDfa (pDfa), FAMsg::InternalError);
+            FAAssert (FAIsValidDfa (pDfa), FAMsg::InternalError);
             m_conf [FAFsmConst::WRE_CONF_FSM2] = Size;
 
             m_pack_fsm2.SetDfa (pDfa);
@@ -194,7 +197,7 @@ const int FAWREConfPack::BuildDumps ()
             Size += TmpSize;
         }
         if (pTrBr) {
-            FAAssert (!::FAIsEmpty (pTrBr), FAMsg::InternalError);
+            FAAssert (!FAIsEmpty (pTrBr), FAMsg::InternalError);
             m_conf [FAFsmConst::WRE_CONF_TRBR] = Size;
 
             m_pack_trbr.SetMultiMap (pTrBr);
@@ -260,4 +263,6 @@ void FAWREConfPack::Process ()
         memcpy (pOut, pTmpDump, TmpSize);
         pOut += TmpSize;
     }
+}
+
 }

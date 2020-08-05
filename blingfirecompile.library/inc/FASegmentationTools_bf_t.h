@@ -14,6 +14,9 @@
 #include "FALimits.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// Splits input sequence into known segments of the maximum length.
 ///
@@ -326,7 +329,7 @@ const int FASegmentationTools_bf_t < Ty >::
         m_pIn = TmpBuff;
         for (int i = 0 ; i < InSize; ++i) {
             const int InSymbol = (int) pIn [i] ;
-            const int OutSymbol = ::FAUtf32ToLower (InSymbol) ;
+            const int OutSymbol = FAUtf32ToLower (InSymbol) ;
             TmpBuff [i] = (Ty) OutSymbol ;
         }
     }
@@ -384,6 +387,8 @@ const int FASegmentationTools_bf_t < Ty >::
 
     DebugLogAssert (QP < InSize + 1);
     return -1;
+}
+
 }
 
 #endif

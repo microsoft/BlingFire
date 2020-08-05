@@ -11,6 +11,9 @@
 #include "FAAct2ArrA.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FATagSet;
 
@@ -41,5 +44,7 @@ private:
     FAArray_cont_t < int > m_arr;
     const FATagSet * m_pTagSet;
 };
+
+}
 
 #endif

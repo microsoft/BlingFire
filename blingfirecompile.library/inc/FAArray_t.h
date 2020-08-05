@@ -12,6 +12,8 @@
 #include "FAException.h"
 #include "FALimits.h"
 
+namespace BlingFire
+{
 
 /// non-contiguous array, but has fewer than FAArray_cont_t relocations
 
@@ -259,5 +261,7 @@ class FAArray_t {
   FAAllocatorA * m_pAlloc;
 
 };
+
+}
 
 #endif

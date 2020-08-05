@@ -13,6 +13,9 @@
 #include "FARSNfaA.h"
 #include "FAState2OwsA.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -69,5 +72,6 @@ private:
     FAChain2Num_hash m_pairs;
 };
 
+}
 
 #endif

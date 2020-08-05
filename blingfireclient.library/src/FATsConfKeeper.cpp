@@ -11,6 +11,8 @@
 #include "FALDB.h"
 #include "FAArray_pack.h"
 
+namespace BlingFire
+{
 
 FATsConfKeeper::FATsConfKeeper () :
     m_pLDB (NULL),
@@ -138,3 +140,4 @@ const int FATsConfKeeper::GetMaxTag () const
     return m_MaxTag;
 }
 
+}

@@ -17,6 +17,9 @@
 #include "FALimits.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// Lexical analyzer runtime. 
 ///
@@ -257,7 +260,7 @@ const int FALexTools_t< Ty >::
                 Iw = DefSubIw;
             }
             if (m_IgnoreCase) {
-                Iw = ::FAUtf32ToLower (Iw);
+                Iw = FAUtf32ToLower (Iw);
             }
             Dst = m_pDfa->GetDest (State, Iw);
             if (-1 == Dst) {
@@ -452,6 +455,8 @@ const int FALexTools_t< Ty >::
 
     // the function tag is unknown
     return -1;
+}
+
 }
 
 #endif

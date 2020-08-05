@@ -10,6 +10,8 @@
 #include "FAEncodeUtils.h"
 #include "FAFsmConst.h"
 
+namespace BlingFire
+{
 
 FAState2Ows_pack_triv::FAState2Ows_pack_triv () :
     m_pAutImage (NULL),
@@ -173,3 +175,4 @@ const int FAState2Ows_pack_triv::GetMaxOwsCount () const
     return m_UnpackOws.GetMaxCount ();
 }
 
+}

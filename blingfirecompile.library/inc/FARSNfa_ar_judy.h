@@ -12,6 +12,9 @@
 #include "FAArray_t.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAMultiMap_judy;
 class FAAllocatorA;
 
@@ -101,5 +104,7 @@ private:
 
     FAAllocatorA * m_pAlloc;
 };
+
+}
 
 #endif

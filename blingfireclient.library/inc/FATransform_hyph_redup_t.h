@@ -11,6 +11,8 @@
 #include "FATransformCA_t.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
 
 ///
 /// This class transforms hyphenated reduplication in the beginning of 
@@ -193,6 +195,8 @@ inline const bool FATransform_hyph_redup_t< Ty >::
     }
 
     return true;
+}
+
 }
 
 #endif

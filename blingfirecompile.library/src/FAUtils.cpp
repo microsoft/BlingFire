@@ -24,6 +24,9 @@
 #include <fstream>
 
 
+namespace BlingFire
+{
+
 
 void FASyntaxError (const char * pBuffer, 
                     const int BuffLength, 
@@ -350,7 +353,7 @@ void FAGetAlphabet (const FARSNfaA * pNfa, FAArray_cont_t <int> * pA)
         }
 
         const int NewAlphSize = \
-            ::FASortUniq (pA->begin (), pA->end ());
+            FASortUniq (pA->begin (), pA->end ());
         pA->resize (NewAlphSize);
     }
 }
@@ -446,7 +449,7 @@ void FACopyDfa2Nfa (FARSNfaA * pDstNfa, const FARSDfaA * pSrcDfa)
 void FACopyNfa2Dfa (FARSDfaA * pDstDfa, const FARSNfaA * pSrcNfa)
 {
     DebugLogAssert (pDstDfa && pSrcNfa);
-    DebugLogAssert (::FAIsDfa (pSrcNfa));
+    DebugLogAssert (FAIsDfa (pSrcNfa));
 
     pDstDfa->Clear ();
 
@@ -508,7 +511,7 @@ void FARemapRsFsmIws (
 {
     DebugLogAssert (pOldDfa && pNewDfa && pOld2New);
     DebugLogAssert (pOldDfa != pNewDfa);
-    DebugLogAssert (::FAIsValidDfa (pOldDfa));
+    DebugLogAssert (FAIsValidDfa (pOldDfa));
 
     pNewDfa->Clear ();
 
@@ -611,7 +614,7 @@ void FARemapMealySigma1 (
     )
 {
     DebugLogAssert (pOldDfa && pOldSigma && pNewSigma && pOld2New);
-    DebugLogAssert (::FAIsValidDfa (pOldDfa));
+    DebugLogAssert (FAIsValidDfa (pOldDfa));
 
     const int * pIws;
     const int Iws = pOldDfa->GetIWs (&pIws);
@@ -649,7 +652,7 @@ void FARemapMealySigma2 (
     )
 {
     DebugLogAssert (pOldDfa && pOldSigma && pNewSigma && pOld2New);
-    DebugLogAssert (::FAIsValidDfa (pOldDfa));
+    DebugLogAssert (FAIsValidDfa (pOldDfa));
 
     const int * pIws;
     const int Iws = pOldDfa->GetIWs (&pIws);
@@ -684,7 +687,7 @@ void FARemapMealySigma2 (
     )
 {
     DebugLogAssert (pOldNfa && pOldSigma && pNewSigma && pOld2New);
-    DebugLogAssert (::FAIsValidNfa (pOldNfa));
+    DebugLogAssert (FAIsValidNfa (pOldNfa));
 
     const int MaxState = pOldNfa->GetMaxState ();
 
@@ -814,4 +817,6 @@ const int FAReadHexChain (
     }
 
     return OutSize;
+}
+
 }

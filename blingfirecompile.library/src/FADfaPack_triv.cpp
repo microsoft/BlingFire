@@ -18,6 +18,9 @@
 
 #include <algorithm>
 
+namespace BlingFire
+{
+
 
 FADfaPack_triv::FADfaPack_triv (FAAllocatorA * pAlloc) :
     m_pDfa (NULL),
@@ -285,7 +288,7 @@ const unsigned int FADfaPack_triv::GetIwSize () const
     DebugLogAssert (m_iws.size () == m_dsts.size ());
 
     const int DstCount = m_iws.size ();
-    DebugLogAssert (::FAIsSortUniqed (m_iws.begin (), DstCount));
+    DebugLogAssert (FAIsSortUniqed (m_iws.begin (), DstCount));
 
     if (0 < DstCount) {
 
@@ -309,7 +312,7 @@ const unsigned int FADfaPack_triv::
     const int DstCount = m_dsts.size ();
     DebugLogAssert (0 < DstCount);
     DebugLogAssert ((unsigned int) DstCount == m_iws.size ());
-    DebugLogAssert (::FAIsSortUniqed (m_iws.begin (), DstCount));
+    DebugLogAssert (FAIsSortUniqed (m_iws.begin (), DstCount));
 
     const int IwBase = m_iws [0];
     const int IwMax = m_iws [DstCount - 1];
@@ -363,7 +366,7 @@ const unsigned int FADfaPack_triv::
     const int DstCount = m_dsts.size ();
     DebugLogAssert (0 < DstCount);
     DebugLogAssert ((unsigned int) DstCount == m_iws.size ());
-    DebugLogAssert (::FAIsSortUniqed (m_iws.begin (), DstCount));
+    DebugLogAssert (FAIsSortUniqed (m_iws.begin (), DstCount));
 
     int PrevIw = m_iws [0];
     int PrevDst = m_dsts [0];
@@ -715,7 +718,7 @@ void FADfaPack_triv::EncodeTrs_iwia (const int IwSize)
     const int DstCount = m_dsts.size ();
     DebugLogAssert (0 < DstCount);
     DebugLogAssert ((unsigned int) DstCount == m_iws.size ());
-    DebugLogAssert (::FAIsSortUniqed (m_iws.begin (), DstCount));
+    DebugLogAssert (FAIsSortUniqed (m_iws.begin (), DstCount));
 
 #ifndef NDEBUG
     const int OffsetBefore = m_LastOffset;
@@ -735,7 +738,7 @@ void FADfaPack_triv::EncodeTrs_iwia (const int IwSize)
     // encode array of Dsts, 0 if there is no corresponding Dst
     for (int Iw = IwBase; Iw <= IwMax; ++Iw) {
 
-        const int Idx = ::FAFind_log (pIws, DstCount, Iw);
+        const int Idx = FAFind_log (pIws, DstCount, Iw);
 
         if (-1 != Idx) {
             const int Dst = m_dsts [Idx];
@@ -755,7 +758,7 @@ void FADfaPack_triv::EncodeTrs_range (const int IwSize)
     const int DstCount = m_dsts.size ();
     DebugLogAssert (0 < DstCount);
     DebugLogAssert ((unsigned int) DstCount == m_iws.size ());
-    DebugLogAssert (::FAIsSortUniqed (m_iws.begin (), DstCount));
+    DebugLogAssert (FAIsSortUniqed (m_iws.begin (), DstCount));
 
 #ifndef NDEBUG
     const int OffsetBefore = m_LastOffset;
@@ -920,7 +923,7 @@ void FADfaPack_triv::
 
     for (int Iw = IwBase; Iw <= IwMax; ++Iw) {
 
-        const int Idx = ::FAFind_log (pIws, DstCount, Iw);
+        const int Idx = FAFind_log (pIws, DstCount, Iw);
 
         // remap existing transitions only, the rest was set to 0
         // (0 offsets will represent non-existing transitions)
@@ -1042,7 +1045,7 @@ void FADfaPack_triv::BuildIwMap ()
     const int * pIws;
     const int IwsCount = GetIWs_eq (&pIws);
     DebugLogAssert (0 < IwsCount && pIws && 0 <= *pIws);
-    DebugLogAssert (true == ::FAIsSortUniqed (pIws, IwsCount));
+    DebugLogAssert (true == FAIsSortUniqed (pIws, IwsCount));
 
     const int MaxIw = pIws [IwsCount - 1];
     // m_tmp_arr will map each Iw into its frequency of usage
@@ -1102,7 +1105,7 @@ void FADfaPack_triv::BuildIw2IwDump ()
     const int * pIws;
     const int IwsCount = m_pDfa->GetIWs (&pIws);
     DebugLogAssert (0 < IwsCount && pIws && 0 <= *pIws);
-    DebugLogAssert (true == ::FAIsSortUniqed (pIws, IwsCount));
+    DebugLogAssert (true == FAIsSortUniqed (pIws, IwsCount));
 
     // m_tmp_arr will keep parallel to pIws array of new Iws
     m_tmp_arr.resize (IwsCount);
@@ -1141,7 +1144,7 @@ void FADfaPack_triv::BuildEqs ()
     const int * pIws;
     const int IwCount = m_pDfa->GetIWs (&pIws);
     DebugLogAssert (0 < IwCount && pIws);
-    DebugLogAssert (::FAIsSortUniqed (pIws, IwCount));
+    DebugLogAssert (FAIsSortUniqed (pIws, IwCount));
 
     const int MaxIw = pIws [IwCount - 1];
 
@@ -1188,7 +1191,7 @@ void FADfaPack_triv::PackAlphabet ()
     const int * pIws;
     const int IwsCount = m_pDfa->GetIWs (&pIws);
     DebugLogAssert (0 < IwsCount && pIws);
-    DebugLogAssert (::FAIsSortUniqed (pIws, IwsCount));
+    DebugLogAssert (FAIsSortUniqed (pIws, IwsCount));
 
     int PrevIw = -2;
 
@@ -1423,4 +1426,6 @@ void FADfaPack_triv::Process ()
     StoreIws ();
     StoreStates ();
     StoreOws ();
+}
+
 }

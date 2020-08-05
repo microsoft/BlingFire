@@ -11,6 +11,9 @@
 #include "FAArray_t.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARegexpTree;
 
@@ -116,5 +119,7 @@ class FARegexpTree2Funcs {
   inline void SetSet (_TNode2Set * pArray, const int Idx, const _TSet * pSet);
 
 };
+
+}
 
 #endif

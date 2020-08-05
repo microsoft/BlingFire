@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FASplitSets.h"
 
+namespace BlingFire
+{
+
 
 FASplitSets::FASplitSets (FAAllocatorA * pAlloc) :
     m_size (0)
@@ -122,4 +125,6 @@ const int FASplitSets::GetClasses (const int ** ppC)
     *ppC = m_e2c.begin ();
     const int Size = m_e2c.size ();
     return Size;
+}
+
 }

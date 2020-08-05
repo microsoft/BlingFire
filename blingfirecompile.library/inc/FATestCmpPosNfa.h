@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSNfaCA;
 class FAMultiMapCA;
@@ -68,5 +71,7 @@ private:
     int m_MaxTrBrBegSize;
     int m_MaxTrBrEndSize;
 };
+
+}
 
 #endif

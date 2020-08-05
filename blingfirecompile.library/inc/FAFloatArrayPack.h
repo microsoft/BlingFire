@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -43,5 +46,7 @@ private:
     // the resulting dump
     FAArray_cont_t < unsigned char > m_dump;
 };
+
+}
 
 #endif

@@ -14,6 +14,8 @@
 #include "FAMultiMap_pack_fixed.h"
 #include "FAUtils_cl.h"
 
+namespace BlingFire
+{
 
 FAW2PConfKeeper::FAW2PConfKeeper () :
     m_pLDB (NULL),
@@ -171,4 +173,6 @@ const float FAW2PConfKeeper::GetMinProbVal () const
 const float FAW2PConfKeeper::GetMaxProbVal () const
 {
     return m_MaxProbVal;
+}
+
 }

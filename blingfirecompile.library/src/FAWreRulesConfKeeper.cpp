@@ -14,6 +14,9 @@
 #include "FAWREConf_pack.h"
 #include "FAMultiMap_pack.h"
 
+namespace BlingFire
+{
+
 
 FAWreRulesConfKeeper::FAWreRulesConfKeeper () :
     m_pLDB (NULL),
@@ -136,4 +139,6 @@ const bool FAWreRulesConfKeeper::GetIgnoreCase() const
 const float FAWreRulesConfKeeper::GetMinUniProb () const
 {
     return m_MinUniProb;
+}
+
 }

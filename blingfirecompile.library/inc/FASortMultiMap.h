@@ -9,6 +9,9 @@
 #include "FAConfig.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAMultiMapA;
 class FAAllocatorA;
 
@@ -63,5 +66,7 @@ private:
     FAArray_cont_t < int > m_keys;
     int m_Direction;
 };
+
+}
 
 #endif

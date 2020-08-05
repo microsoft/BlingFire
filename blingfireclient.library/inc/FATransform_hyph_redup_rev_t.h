@@ -11,6 +11,8 @@
 #include "FATransformCA_t.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
 
 ///
 /// This class makes reverse to FATransform_hyph_redup_t transformation.
@@ -152,6 +154,8 @@ inline const int FATransform_hyph_redup_rev_t< Ty >::
     }
 
     return -1;
+}
+
 }
 
 #endif

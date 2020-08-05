@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 ///
 /// Image pointer set up interface for objects represented as memory dumps.
 ///
@@ -19,5 +22,7 @@ public:
     virtual void SetImage (const unsigned char * pImage) = 0;
 
 };
+
+}
 
 #endif

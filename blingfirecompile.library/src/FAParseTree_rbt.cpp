@@ -10,6 +10,9 @@
 #include "FATaggedTextA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FAParseTree_rbt::FAParseTree_rbt (FAAllocatorA * pAlloc) :
     m_pIn (NULL),
@@ -92,7 +95,7 @@ void FAParseTree_rbt::Update ()
 
     // see if the text has not been modified
     if (!m_fChanged) {
-        ::FACopyTaggedText (m_pOut, m_pIn);
+        FACopyTaggedText (m_pOut, m_pIn);
         return;
     }
 
@@ -194,5 +197,7 @@ const int FAParseTree_rbt::GetLabel (const int) const
     // not implemented
     DebugLogAssert (0);
     return -1;
+}
+
 }
 

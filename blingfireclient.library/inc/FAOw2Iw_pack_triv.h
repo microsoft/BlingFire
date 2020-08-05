@@ -12,6 +12,9 @@
 #include "FAOw2IwCA.h"
 #include "FAChains_pack_triv.h"
 
+namespace BlingFire
+{
+
 ///
 /// FAOw2IwCA memory dump based implementation. Can be initialized from
 /// the memory dump created with FADfaPack_triv.
@@ -42,5 +45,7 @@ private:
     // dst size
     int m_DstSize;
 };
+
+}
 
 #endif

@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 ///
 /// This is a common interface for packed read-only arrays.
 ///
@@ -21,5 +24,7 @@ public:
     /// returns number of elementes in the array
     virtual const int GetCount () const = 0;
 };
+
+}
 
 #endif

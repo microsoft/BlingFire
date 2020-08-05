@@ -14,6 +14,9 @@
 #include "FAOffsetTablePack.h"
 #include "FAIwMapPack.h"
 
+namespace BlingFire
+{
+
 class FARSNfaA;
 class FAMultiMapA;
 
@@ -173,5 +176,7 @@ private:
     // keeps global size of TrBrOffset
     int m_SizeOfTrBrOffset;
 };
+
+}
 
 #endif

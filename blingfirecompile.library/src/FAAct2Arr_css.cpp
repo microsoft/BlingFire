@@ -11,6 +11,9 @@
 #include "FATagSet.h"
 #include "FAException.h"
 
+namespace BlingFire
+{
+
 
 FAAct2Arr_css::FAAct2Arr_css (FAAllocatorA * pAlloc) : 
     m_pTagSet (NULL)
@@ -45,7 +48,7 @@ inline const int FAAct2Arr_css::
         } else {
             int C;
             const char * pBegin = pStr + Pos;
-            const char * pEnd = ::FAUtf8ToInt (pBegin, &C);
+            const char * pEnd = FAUtf8ToInt (pBegin, &C);
             /// input encoding is not UTF-8
             FAAssert (pEnd, FAMsg::IOError);
             m_arr.push_back (C);
@@ -183,4 +186,6 @@ const int FAAct2Arr_css::
 
     *ppArr = m_arr.begin ();
     return m_arr.size ();
+}
+
 }

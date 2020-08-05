@@ -11,6 +11,9 @@
 #include "FAUtils.h"
 #include "FARegexpTree.h"
 
+namespace BlingFire
+{
+
 
 FARegexpLexer_triv::FARegexpLexer_triv () :
   m_pRegexp (NULL),
@@ -62,7 +65,7 @@ const bool FARegexpLexer_triv::IsEscaped (const int Pos) const
     DebugLogAssert (m_pRegexp);
     DebugLogAssert (0 <= Pos && m_Length > Pos);
 
-    return ::FAIsEscaped (Pos, m_pRegexp, m_Length);
+    return FAIsEscaped (Pos, m_pRegexp, m_Length);
 }
 
 const bool FARegexpLexer_triv::IsSpecial (const char C) const
@@ -177,5 +180,7 @@ void FARegexpLexer_triv::Process ()
     }
 
   } // of while
+}
+
 }
 

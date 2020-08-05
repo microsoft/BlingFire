@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 ///
 /// client-side interface for Moore automaton reaction
 ///
@@ -21,5 +24,7 @@ public:
     virtual const int GetOw (const int State) const = 0;
 
 };
+
+}
 
 #endif

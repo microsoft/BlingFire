@@ -10,6 +10,9 @@
 #include "FAAllocatorA.h"
 #include "FARegexpTree.h"
 
+namespace BlingFire
+{
+
 
 FARegexpTree2Hash::FARegexpTree2Hash (FAAllocatorA * pAlloc) :
     m_pRegexp (NULL),
@@ -147,6 +150,8 @@ void FARegexpTree2Hash::Process ()
         const int Key = Node2Key (NodeId);
         m_node2key [NodeId] = Key;
     }
+}
+
 }
 
 

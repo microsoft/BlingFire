@@ -13,6 +13,9 @@
 
 #include <string>
 
+namespace BlingFire
+{
+
 
 FAConfParser::FAConfParser (FAAllocatorA * pAlloc) :
     m_pConfIs (NULL),
@@ -103,7 +106,7 @@ const bool FAConfParser::ProcessSection ()
                 std::string ("Unknown section name: ") + \
                 std::string (m_pFirstToken, m_FirstTokenLen);
 
-            ::FASyntaxError (NULL, -1, -1, ErrMsg.c_str ());
+            FASyntaxError (NULL, -1, -1, ErrMsg.c_str ());
             throw FAException (FAMsg::IOError, __FILE__, __LINE__);
         }
 
@@ -210,7 +213,7 @@ const bool FAConfParser::ProcessStrParam ()
                         std::string ("Unknown parameter/value: ") + \
                         std::string (str2.c_str (), str2.length ());
 
-                    ::FASyntaxError (NULL, -1, -1, ErrMsg.c_str ());
+                    FASyntaxError (NULL, -1, -1, ErrMsg.c_str ());
                     throw FAException (FAMsg::IOError, __FILE__, __LINE__);
                 }
 
@@ -277,10 +280,11 @@ void FAConfParser::Process ()
                 std::string ("Unknown syntax in line: ") + \
                 std::string (pLineStr, StrLen);
 
-            ::FASyntaxError (NULL, -1, -1, ErrMsg.c_str ());
+            FASyntaxError (NULL, -1, -1, ErrMsg.c_str ());
             throw FAException (FAMsg::IOError, __FILE__, __LINE__);
         }
 
     } // of while ...
 }
 
+}

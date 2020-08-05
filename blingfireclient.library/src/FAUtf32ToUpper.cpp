@@ -1,5 +1,8 @@
 #include "blingfire-client_src_pch.h"
 
+namespace BlingFire
+{
+
 const int toupper_tmp_l3_0 [] = {
 
       -1,       -1,       -1,       -1, 
@@ -1276,3 +1279,5 @@ toupper_tmp_l2_d, toupper_tmp_l2_d, toupper_tmp_l2_d, toupper_tmp_l2_d,
 toupper_tmp_l2_d, toupper_tmp_l2_d, toupper_tmp_l2_d, toupper_tmp_l2_d, 
 toupper_tmp_l2_d, toupper_tmp_l2_d, toupper_tmp_l2_d, toupper_tmp_l2_d, 
 toupper_tmp_l2_d, toupper_tmp_l2_d, toupper_tmp_l2_d, toupper_tmp_l2_d, };
+
+}

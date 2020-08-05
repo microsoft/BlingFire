@@ -11,6 +11,9 @@
 #include "FATestMorph.h"
 #include "FADictInterpreter_t.h"
 
+namespace BlingFire
+{
+
 class FATagSet;
 
 ///
@@ -36,5 +39,7 @@ private:
     const FADictInterpreter_t < int > * m_pDict;
     const FATagSet * m_pTagSet;
 };
+
+}
 
 #endif

@@ -12,6 +12,9 @@
 #include "FAParseTreeA.h"
 #include "MemLfp.h"
 
+namespace BlingFire
+{
+
 ///
 /// Parsing tree container class.
 ///
@@ -75,6 +78,8 @@ private:
     /// upper level position -> node label (redundant but speeds things up)
     CMemLfpGrowArrayT < int > m_p2l;
 };
+
+}
 
 #endif
 #endif

@@ -19,6 +19,9 @@
 
 #include <algorithm>
 
+namespace BlingFire
+{
+
 //
 // Hopcroft-Gries minimization algorithm, O(|Q|*log(|Q|)) complexity.
 //
@@ -366,8 +369,8 @@ inline void FADfa2MinDfa_hg_t < DFA_in,  DFA_out >::
       const int * pBegin = pSrcSet->begin ();
       const int Size = pSrcSet->size ();
 
-      DebugLogAssert (::FAIsSortUniqed (pBegin, Size));
-      const int Pos = ::FAFind_log (pBegin, Size, src_state);
+      DebugLogAssert (FAIsSortUniqed (pBegin, Size));
+      const int Pos = FAFind_log (pBegin, Size, src_state);
 
       // check whether we have to insert a new element
       if (-1 == Pos) {
@@ -467,7 +470,7 @@ void FADfa2MinDfa_hg_t < DFA_in,  DFA_out >::Prepare ()
     // get the alphabet
     m_AlphabetSize = m_pInDfa->GetIWs (&m_pAlphabet);
     DebugLogAssert (0 < m_AlphabetSize && m_pAlphabet);
-    DebugLogAssert (::FAIsSortUniqed (m_pAlphabet, m_AlphabetSize));
+    DebugLogAssert (FAIsSortUniqed (m_pAlphabet, m_AlphabetSize));
 
     // build back-transitions map
     for (int src_state = 0; src_state < m_state_count; ++src_state) {
@@ -701,7 +704,7 @@ inline void FADfa2MinDfa_hg_t < DFA_in,  DFA_out >::
 
         const int i = m_e2i [state] - ClassFrom;
         int * pClass = m_elements.begin () + ClassFrom;
-        DebugLogAssert (i == ::FAFind_linear (pClass, ClassSize, state));
+        DebugLogAssert (i == FAFind_linear (pClass, ClassSize, state));
 
         const int last_state = pClass [ClassSize - 1];
 
@@ -937,6 +940,8 @@ const int FADfa2MinDfa_hg_t < DFA_in,  DFA_out >::
 {
     const int State = m_elements [m_B_from [state]];
     return State;
+}
+
 }
 
 #endif

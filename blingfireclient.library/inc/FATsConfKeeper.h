@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FALDB;
 class FAArrayCA;
 class FAArray_pack;
@@ -59,5 +62,7 @@ private:
     /// m_FloatArr array size
     int m_FloatArrSize;
 };
+
+}
 
 #endif

@@ -12,6 +12,9 @@
 #include "FAEncodeUtils.h"
 #include "FAUtils_cl.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class interprets dump created by FAIwMapPack
 ///
@@ -65,7 +68,7 @@ inline const int FAIwMap_pack::GetNewIw (const int OldIw) const
     unsigned int NewIw;
 
     const int IntervalIdx = \
-        ::FAFindEqualOrLess_log (m_pArrFromIw, m_IntervalCount, OldIw);
+        FAFindEqualOrLess_log (m_pArrFromIw, m_IntervalCount, OldIw);
 
     // smaller than smallest interval beginning
     if (-1 == IntervalIdx) {
@@ -103,6 +106,8 @@ inline const int FAIwMap_pack::GetNewIw (const int OldIw) const
         return NewIw - 1;
     else
         return -1;
+}
+
 }
 
 #endif

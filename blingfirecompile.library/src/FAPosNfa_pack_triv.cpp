@@ -11,6 +11,9 @@
 #include "FAUtils_cl.h"
 #include "FAException.h"
 
+namespace BlingFire
+{
+
 
 FAPosNfa_pack_triv::FAPosNfa_pack_triv () :
     m_pAutImage (NULL),
@@ -137,7 +140,7 @@ const int FAPosNfa_pack_triv::GetDest (
         }
         // find outgoing transition index, if any
         const unsigned char * pIws = (const unsigned char *) pCurrPtr;
-        Idx = ::FAFind_log (pIws, DstCount, (unsigned char) NewIw);
+        Idx = FAFind_log (pIws, DstCount, (unsigned char) NewIw);
         // skip Iws array
         pCurrPtr += (DstCount * sizeof (char));
 
@@ -156,7 +159,7 @@ const int FAPosNfa_pack_triv::GetDest (
         }
         // find outgoing transition index, if any
         const unsigned short * pIws = (const unsigned short *) pCurrPtr;
-        Idx = ::FAFind_log (pIws, DstCount, (unsigned short) NewIw);
+        Idx = FAFind_log (pIws, DstCount, (unsigned short) NewIw);
         // skip Iws array
         pCurrPtr += (DstCount * sizeof (short));
 
@@ -172,7 +175,7 @@ const int FAPosNfa_pack_triv::GetDest (
         }
         // find outgoing transition index, if any
         const unsigned int * pIws = (const unsigned int *) pCurrPtr;
-        Idx = ::FAFind_log (pIws, DstCount, (unsigned int) NewIw);
+        Idx = FAFind_log (pIws, DstCount, (unsigned int) NewIw);
         // skip Iws array
         pCurrPtr += (DstCount * sizeof (int));
     }
@@ -214,4 +217,6 @@ const int FAPosNfa_pack_triv::GetDest (
 
         return DestSetSize;
     }
+}
+
 }

@@ -8,6 +8,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FATaggedTextCA {
 
 public:
@@ -20,5 +23,7 @@ public:
     // returns offset in the original text, -1 if not specified
     virtual const int GetOffset (const int Num) const = 0;
 };
+
+}
 
 #endif

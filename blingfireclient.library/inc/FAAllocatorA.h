@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 ///
 /// General interface for allocators. _DEBUG_MEMORY should be defined when 
 /// memory usage debugging is needed.
@@ -55,6 +58,7 @@ public:
 
 };
 
+}
 
 #ifndef _DEBUG_MEMORY
 

@@ -12,6 +12,9 @@
 #include "FAException.h"
 #include "FAUtf32Utils.h"
 
+namespace BlingFire
+{
+
 
 FATaggedTextStat::FATaggedTextStat (FAAllocatorA * pAlloc) :
     m_StatMask (FAFsmConst::STAT_TYPE_NONE),
@@ -168,7 +171,7 @@ void FATaggedTextStat::UpdateW (const FATaggedTextCA * pT)
 
         // normalize case, if needed
         if (m_IgnoreCase) {
-            ::FAUtf32StrLower (Chain, Length);
+            FAUtf32StrLower (Chain, Length);
         }
 
         // add chain
@@ -240,7 +243,7 @@ void FATaggedTextStat::UpdateWW (const FATaggedTextCA * pT)
 
         // normalize case, if needed
         if (m_IgnoreCase) {
-            ::FAUtf32StrLower (Chain, Length1 + Length2 + 1);
+            FAUtf32StrLower (Chain, Length1 + Length2 + 1);
         }
 
         // add chain
@@ -324,7 +327,7 @@ void FATaggedTextStat::UpdateWWW (const FATaggedTextCA * pT)
 
         // normalize case, if needed
         if (m_IgnoreCase) {
-            ::FAUtf32StrLower (Chain, Length1 + Length2 + Length3 + 2);
+            FAUtf32StrLower (Chain, Length1 + Length2 + Length3 + 2);
         }
 
         // add chain
@@ -355,7 +358,7 @@ void FATaggedTextStat::UpdateWT (const FATaggedTextCA * pT)
 
         // normalize case, if needed
         if (m_IgnoreCase) {
-            ::FAUtf32StrLower (Chain, Length);
+            FAUtf32StrLower (Chain, Length);
         }
 
         const int Tag = pT->GetTag (i);
@@ -395,7 +398,7 @@ void FATaggedTextStat::UpdateW_T (const FATaggedTextCA * pT)
 
             // normalize the case, if needed
             if (m_IgnoreCase) {
-                ::FAUtf32StrLower (Chain, Length);
+                FAUtf32StrLower (Chain, Length);
             }
         } else {
             Length = m_BosWordLen;
@@ -446,7 +449,7 @@ void FATaggedTextStat::UpdateTW (const FATaggedTextCA * pT)
 
             // normalize the case, if needed
             if (m_IgnoreCase) {
-                ::FAUtf32StrLower (Chain, Length);
+                FAUtf32StrLower (Chain, Length);
             }
         } else {
 
@@ -493,7 +496,7 @@ void FATaggedTextStat::UpdateWTT (const FATaggedTextCA * pT)
 
         // normalize case, if needed
         if (m_IgnoreCase) {
-            ::FAUtf32StrLower (Chain, Length);
+            FAUtf32StrLower (Chain, Length);
         }
 
         // copy tag
@@ -535,7 +538,7 @@ void FATaggedTextStat::UpdateTWT (const FATaggedTextCA * pT)
 
         // normalize case, if needed
         if (m_IgnoreCase) {
-            ::FAUtf32StrLower (Chain, Length);
+            FAUtf32StrLower (Chain, Length);
         }
 
         // copy tag
@@ -622,7 +625,7 @@ void FATaggedTextStat::UpdateWTWT (const FATaggedTextCA * pT)
 
         // normalize case, if needed
         if (m_IgnoreCase) {
-            ::FAUtf32StrLower (Chain, Length1 + Length2 + 1);
+            FAUtf32StrLower (Chain, Length1 + Length2 + 1);
         }
 
         Chain [Length1 + Length2 + 1] = Tag1;
@@ -811,4 +814,6 @@ const FAChain2NumA * FATaggedTextStat::GetStat (const int StatName) const
     }
 
     return NULL;
+}
+
 }

@@ -10,6 +10,8 @@
 #include "FAConfig.h"
 #include "FALessA.h"
 
+namespace BlingFire
+{
 
 class FAMultiMapCA;
 
@@ -45,5 +47,7 @@ private:
 private:
     const FAMultiMapCA * m_pOw2TrBrs;
 };
+
+}
 
 #endif

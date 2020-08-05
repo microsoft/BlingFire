@@ -11,6 +11,9 @@
 #include "FALimits.h"
 #include "FAUtf32Utils.h"
 
+namespace BlingFire
+{
+
 
 FAMergeMwe::FAMergeMwe () :
     m_pDfa (NULL),
@@ -59,7 +62,7 @@ inline const int FAMergeMwe::
             int Symbol = pWord [k];
 
             if (m_IgnoreCase) {
-                Symbol = ::FAUtf32ToLower (Symbol) ;
+                Symbol = FAUtf32ToLower (Symbol) ;
             }
 
             State = m_pDfa->GetDest (State, Symbol);
@@ -148,4 +151,6 @@ void FAMergeMwe::
         pOut->AddWord (pWord, WordLen, Tag, Offset);
 
     } // of for (int i = 0; ...
+}
+
 }

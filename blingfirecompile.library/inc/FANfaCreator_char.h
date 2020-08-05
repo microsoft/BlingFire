@@ -12,6 +12,9 @@
 #include "FAStr2Utf16.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -76,5 +79,7 @@ private:
     };
 
 };
+
+}
 
 #endif

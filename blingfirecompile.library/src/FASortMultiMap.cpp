@@ -11,6 +11,9 @@
 
 #include <algorithm>
 
+namespace BlingFire
+{
+
 
 FASortMultiMap::FASortMultiMap (FAAllocatorA * pAlloc) :
     m_pMap (NULL),
@@ -159,5 +162,7 @@ void FASortMultiMap::Process ()
         DebugLogAssert (FAFsmConst::DIR_R2L == m_Direction);
         std::sort (pBegin, pEnd, _TKeyCmp_r2l (m_pMap));
     }
+}
+
 }
 

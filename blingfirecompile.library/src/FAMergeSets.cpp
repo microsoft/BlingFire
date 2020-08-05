@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FAMergeSets.h"
 
+namespace BlingFire
+{
+
 
 FAMergeSets::FAMergeSets (FAAllocatorA * pAlloc) :
     m_pE2P (NULL)
@@ -88,5 +91,7 @@ void FAMergeSets::Merge (const int e1, const int e2)
             m_pE2P [s2]--;
         }
     }
+}
+
 }
 

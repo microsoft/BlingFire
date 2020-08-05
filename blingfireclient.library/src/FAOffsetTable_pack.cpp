@@ -9,6 +9,8 @@
 #include "FAOffsetTable_pack.h"
 #include "FAEncodeUtils.h"
 
+namespace BlingFire
+{
 
 FAOffsetTable_pack::FAOffsetTable_pack () :
     m_pBase (NULL),
@@ -78,4 +80,6 @@ const unsigned int FAOffsetTable_pack::GetOffset (const int Idx) const
 
         return Base;
     }
+}
+
 }

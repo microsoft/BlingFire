@@ -13,6 +13,9 @@
 #include "FATs2PTable.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 ///
 /// 1-best first order HMM POS tagger.
 ///
@@ -105,5 +108,7 @@ private:
         TAGS_PROBS_DELTA = 1024,
     };
 };
+
+}
 
 #endif

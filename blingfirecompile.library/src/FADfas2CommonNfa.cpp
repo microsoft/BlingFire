@@ -12,6 +12,9 @@
 #include "FARSDfaA.h"
 #include "FAException.h"
 
+namespace BlingFire
+{
+
 
 FADfas2CommonNfa::FADfas2CommonNfa (FAAllocatorA * pAlloc) :
     m_nfa (pAlloc),
@@ -95,7 +98,7 @@ inline void FADfas2CommonNfa::
 
 void FADfas2CommonNfa::AddDfa (const FARSDfaA * pDfa)
 {
-    FAAssert (::FAIsValidDfa (pDfa), FAMsg::InvalidParameters);
+    FAAssert (FAIsValidDfa (pDfa), FAMsg::InvalidParameters);
 
     // the initial state of the common Nfa
     const int Initial = 0;
@@ -143,7 +146,7 @@ void FADfas2CommonNfa::AddDfa (const FARSDfaA * pDfa)
     const int * pFinals;
     const int FinalCount = pDfa->GetFinals (&pFinals);
     DebugLogAssert (0 < FinalCount && pFinals);
-    DebugLogAssert (::FAIsSortUniqed (pFinals, FinalCount));
+    DebugLogAssert (FAIsSortUniqed (pFinals, FinalCount));
 
     for (int i = 0; i < FinalCount; ++i) {
 
@@ -163,7 +166,7 @@ void FADfas2CommonNfa::AddDfa (const FARSDfaA * pDfa)
         }
     } // of for (int i = 0; ...
 
-    const int Size = ::FASortUniq (m_finals.begin (), m_finals.end ());
+    const int Size = FASortUniq (m_finals.begin (), m_finals.end ());
     DebugLogAssert (0 < Size);
     m_finals.resize (Size);
 
@@ -184,3 +187,4 @@ const FARSNfaA * FADfas2CommonNfa::GetCommonNfa () const
     return & m_nfa;
 }
 
+}

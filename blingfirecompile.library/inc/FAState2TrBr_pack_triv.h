@@ -13,6 +13,9 @@
 #include "FAOffsetTable_pack.h"
 #include "FAChains_pack_triv.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class implements FAMultiMapCA interface for the beginning and 
 /// ending triangular bracket maps by interpreting the dump created by 
@@ -54,5 +57,7 @@ private:
     // TrBr values keeper
     FAChains_pack_triv m_trbrs;
 };
+
+}
 
 #endif

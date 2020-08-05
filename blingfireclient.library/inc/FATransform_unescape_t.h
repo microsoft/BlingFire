@@ -11,6 +11,8 @@
 #include "FATransformCA_t.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
 
 ///
 /// This transformer first detects if there are escape sequences.
@@ -239,6 +241,8 @@ inline const Ty * FATransform_unescape_t< Ty >::
     }
 
     return 0;
+}
+
 }
 
 #endif

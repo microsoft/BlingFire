@@ -12,6 +12,9 @@
 #include "FAEncodeUtils.h"
 #include "FAException.h"
 
+namespace BlingFire
+{
+
 
 FAMultiMapPack_fixed::
     FAMultiMapPack_fixed (FAAllocatorA * pAlloc) :
@@ -193,4 +196,6 @@ void FAMultiMapPack_fixed::Process ()
     m_pDump = m_dump.begin ();
 
     FAAssert (int (DumpSize) >= int (pOut - m_pDump), FAMsg::InternalError);
+}
+
 }

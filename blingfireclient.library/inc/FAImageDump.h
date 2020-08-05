@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 ///
 /// Keeps thread sharable data resources
 ///
@@ -47,5 +50,7 @@ private:
     /// true if the memory should be unmapped
     bool m_MustUnmap;
 };
+
+}
 
 #endif

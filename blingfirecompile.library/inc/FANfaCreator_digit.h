@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FANfaCreator_base.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 
@@ -26,5 +29,7 @@ public:
                         const int LabelOffset,
                         const int LabelLength);
 };
+
+}
 
 #endif

@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FATagSet.h"
 
+namespace BlingFire
+{
+
 
 FATagSet::FATagSet (FAAllocatorA * pAlloc) :
     FAStr2Int_hash (pAlloc),
@@ -84,4 +87,6 @@ const int FATagSet::Str2Tag (const char * pStr, const int Size) const
 const int FATagSet::GetMaxTag() const
 {
     return m_iMaxTag;
+}
+
 }

@@ -9,6 +9,9 @@
 #include "FAConfig.h"
 #include "FAWREConfCA.h"
 
+namespace BlingFire
+{
+
 class FARSDfaA;
 class FAState2OwA;
 class FAState2OwsA;
@@ -86,5 +89,7 @@ public:
     virtual void Clear () = 0;
 
 };
+
+}
 
 #endif

@@ -9,6 +9,8 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
 
 class FAToken {
 
@@ -33,5 +35,7 @@ private:
   int m_length;
 
 };
+
+}
 
 #endif

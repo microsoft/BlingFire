@@ -16,6 +16,9 @@
 #include "FAUtf32Utils.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -225,7 +228,7 @@ inline void FANfstLookupTools_t< Ty >::
     if (m_IgnoreCase) {
         for (int i = 0 ; i < m_InSize; ++i) {
             const int InSymbol = (int) m_pIn [i] ;
-            const int OutSymbol = ::FAUtf32ToLower (InSymbol) ;
+            const int OutSymbol = FAUtf32ToLower (InSymbol) ;
             pOut [i] = (Ty) OutSymbol ;
         }
         m_pIn = pOut;
@@ -234,7 +237,7 @@ inline void FANfstLookupTools_t< Ty >::
     // normalize characters
     if (m_pCharMap) {
         // in-place is fine
-        m_InSize = ::FANormalizeWord (m_pIn, m_InSize, \
+        m_InSize = FANormalizeWord (m_pIn, m_InSize, \
             pOut, MaxOutSize, m_pCharMap);
         m_pIn = pOut;
     }
@@ -393,6 +396,8 @@ const int FANfstLookupTools_t < Ty >::
     } // of while (0 < m_StackPtr) ...
 
     return OutSize;
+}
+
 }
 
 #endif

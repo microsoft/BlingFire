@@ -14,6 +14,9 @@
 #include "FAChains_pack_triv.h"
 #include "FAIwMap_pack.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class is able to interpret automaton image stored by FAPosNfaPack_triv
 ///
@@ -50,5 +53,7 @@ private:
     // pointer to the array of the initial states
     const int * m_pInitials;
 };
+
+}
 
 #endif

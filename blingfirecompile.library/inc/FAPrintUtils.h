@@ -11,6 +11,9 @@
 
 #include <iostream>
 
+namespace BlingFire
+{
+
 class FARegexpTree;
 class FARegexpTree2Funcs;
 class FAToken;
@@ -161,5 +164,6 @@ void FAPrintHyphWord (
         const int WordLen
     );
 
+}
 
 #endif

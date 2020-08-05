@@ -9,6 +9,9 @@
 #include "FAConfig.h"
 #include "FAArrayCA.h"
 
+namespace BlingFire
+{
+
 ///
 /// int [] --> FAArrayCA
 ///
@@ -27,5 +30,7 @@ private:
     const int * m_pA;
     int m_Count;
 };
+
+}
 
 #endif

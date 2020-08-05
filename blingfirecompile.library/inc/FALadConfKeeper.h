@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FALDB;
 class FAMultiMapCA;
 class FAMultiMap_pack_fixed;
@@ -66,5 +69,7 @@ private:
     int m_MinScriptTag;
     int m_MaxScriptTag;
 };
+
+}
 
 #endif

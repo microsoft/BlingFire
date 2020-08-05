@@ -23,6 +23,8 @@
 #include <iostream>
 #include <fstream>
 
+using namespace BlingFire;
+
 const char * __PROG__ = "";
 
 FAAllocator g_alloc;

@@ -19,6 +19,9 @@
 #include <sstream>
 #include <iomanip>
 
+namespace BlingFire
+{
+
 
 FAParser2WRE::FAParser2WRE (FAAllocatorA * pAlloc) :
     m_pLeftIs (NULL),
@@ -153,7 +156,7 @@ inline const int FAParser2WRE::GetRootNode () const
     const int RootId = pTree->GetRoot ();
 
     if (-1 == RootId) {
-        ::FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, "fatal error");
+        FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, "fatal error");
         throw FAException (FAMsg::InternalError, __FILE__, __LINE__);
     }
 
@@ -178,7 +181,7 @@ inline const int FAParser2WRE::GetTrBrNode () const
             if (-1 == TrBrNode) {
                 TrBrNode = i;
             } else {
-                ::FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, \
+                FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, \
                     "Multiple triangular brackets are not allowed in parser rules.");
                 throw FAException (FAMsg::InternalError, __FILE__, __LINE__);
             }
@@ -186,7 +189,7 @@ inline const int FAParser2WRE::GetTrBrNode () const
     } // of for (int i = 0; ...
 
     if (-1 == TrBrNode) {
-        ::FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, \
+        FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, \
             "No triangular bracket was found.");
         throw FAException (FAMsg::InternalError, __FILE__, __LINE__);
     }
@@ -206,16 +209,16 @@ void FAParser2WRE::CalcContexts ()
     const int * pFirst;
     const int FirstSize = m_pFuncs->GetFirstPos (RootNode, &pFirst);
 
-    if (0 >= FirstSize || false == ::FAIsSortUniqed (pFirst, FirstSize)) {
-        ::FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, "fatal error");
+    if (0 >= FirstSize || false == FAIsSortUniqed (pFirst, FirstSize)) {
+        FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, "fatal error");
         throw FAException (FAMsg::InternalError, __FILE__, __LINE__);
     }
 
     const int * pLast;
     const int LastSize = m_pFuncs->GetLastPos (RootNode, &pLast);
 
-    if (0 >= LastSize || false == ::FAIsSortUniqed (pLast, LastSize)) {
-        ::FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, "fatal error");
+    if (0 >= LastSize || false == FAIsSortUniqed (pLast, LastSize)) {
+        FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, "fatal error");
         throw FAException (FAMsg::InternalError, __FILE__, __LINE__);
     }
 
@@ -226,8 +229,8 @@ void FAParser2WRE::CalcContexts ()
     const int TrBrFirstSize = m_pFuncs->GetFirstPos (TrBrNode, &pTrBrFirst);
 
     if (0 >= TrBrFirstSize || \
-        false == ::FAIsSortUniqed (pTrBrFirst, TrBrFirstSize)) {
-        ::FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, "fatal error");
+        false == FAIsSortUniqed (pTrBrFirst, TrBrFirstSize)) {
+        FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, "fatal error");
         throw FAException (FAMsg::InternalError, __FILE__, __LINE__);
     }
 
@@ -235,8 +238,8 @@ void FAParser2WRE::CalcContexts ()
     const int TrBrLastSize = m_pFuncs->GetLastPos (TrBrNode, &pTrBrLast);
 
     if (0 >= TrBrLastSize || \
-        false == ::FAIsSortUniqed (pTrBrLast, TrBrLastSize)) {
-        ::FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, "fatal error");
+        false == FAIsSortUniqed (pTrBrLast, TrBrLastSize)) {
+        FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, "fatal error");
         throw FAException (FAMsg::InternalError, __FILE__, __LINE__);
     }
 
@@ -267,7 +270,7 @@ void FAParser2WRE::CalcContexts ()
         }
     }
 
-    const int NewSize = ::FASortUniq (m_tmp2.begin (), m_tmp2.end ());
+    const int NewSize = FASortUniq (m_tmp2.begin (), m_tmp2.end ());
     m_tmp2.resize (NewSize);
     DebugLogAssert (0 < NewSize);
 
@@ -321,8 +324,8 @@ void FAParser2WRE::Validate (
     DebugLogAssert (0 <= Pos && m_pFuncs->GetMaxPos () > Pos);
     DebugLogAssert (0 < Count && pFollow);
 
-    if (0 >= Count || false == ::FAIsSortUniqed (pFollow, Count)) {
-        ::FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, \
+    if (0 >= Count || false == FAIsSortUniqed (pFollow, Count)) {
+        FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, \
             "Empty expressions are not allowed within the brackets.");
         throw FAException (FAMsg::InternalError, __FILE__, __LINE__);
     }
@@ -333,7 +336,7 @@ void FAParser2WRE::Validate (
         DebugLogAssert (0 <= Follow && m_pFuncs->GetMaxPos () >= Follow);
 
         if (Follow <= Pos) {
-            ::FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, \
+            FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, \
                 "Context contains cycles.");
             throw FAException (FAMsg::InternalError, __FILE__, __LINE__);
         }
@@ -354,7 +357,7 @@ void FAParser2WRE::CalcContext_rec (
     DebugLogAssert (0 < ToSize && pTo);
 
     if (DefMaxContext < m_tmp.size ()) {
-        ::FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, "Context is too long.");
+        FASyntaxError (m_pRuleStr, m_RuleStrLen, -1, "Context is too long.");
         throw FAException (FAMsg::InternalError, __FILE__, __LINE__);
     }
 
@@ -363,7 +366,7 @@ void FAParser2WRE::CalcContext_rec (
         const int Pos = pFrom [i];
         DebugLogAssert (0 <= Pos && m_pFuncs->GetMaxPos () >= Pos);
 
-        if (-1 != ::FAFind_log (pTo, ToSize, Pos)) {
+        if (-1 != FAFind_log (pTo, ToSize, Pos)) {
 
             const int Size = m_tmp.size ();
             const int * pTmp = m_tmp.begin ();
@@ -716,7 +719,7 @@ void FAParser2WRE::ProcessLeft ()
             m_RuleNum++;
 
             if ((unsigned int) m_RuleNum >= m_i2a.size ()) {
-                ::FASyntaxError (NULL, 0, -1, \
+                FASyntaxError (NULL, 0, -1, \
                     "Number of rules does not match the number of actions.");
                 throw FAException (FAMsg::InternalError, __FILE__, __LINE__);
             }
@@ -742,7 +745,7 @@ void FAParser2WRE::ProcessLeft ()
 
     // final check
     if ((unsigned int) (m_RuleNum + 1) != m_i2a.size ()) {
-        ::FASyntaxError (NULL, 0, -1, \
+        FASyntaxError (NULL, 0, -1, \
             "Number of rules does not match the number of actions.");
         throw FAException (FAMsg::InternalError, __FILE__, __LINE__);
     }
@@ -911,4 +914,6 @@ void FAParser2WRE::Process ()
     WriteOutput ();
 
     Clear ();
+}
+
 }

@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAEncoderA.h"
 
+namespace BlingFire
+{
+
 /// Does the following:
 /// 1. Calculates delta between next Element of the sequence and the previous.
 /// 2. Makes preffix encoding as FAEncoder_pref class do.
@@ -28,5 +31,7 @@ private:
   enum { MAX_BYTES_PER_INT = 5 };
 
 };
+
+}
 
 #endif

@@ -10,6 +10,9 @@
 #include "FAArray_cont_t.h"
 #include "FANfaDelta_ro.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -92,5 +95,7 @@ private:
     // mode switch
     bool m_IsWo;
 };
+
+}
 
 #endif

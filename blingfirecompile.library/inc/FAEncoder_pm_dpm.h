@@ -10,6 +10,8 @@
 #include "FAConfig.h"
 #include "FAEncoderA.h"
 
+namespace BlingFire
+{
 
 /// Does the following:
 /// 1. Makes prefix-mask encoding for the first element of chain
@@ -34,5 +36,7 @@ private:
   enum { MAX_BYTES_PER_INT = 9 };
 
 };
+
+}
 
 #endif

@@ -12,6 +12,9 @@
 #include "FAMultiMapPack.h"
 #include "FADfaPack_triv.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FAWREConfA;
 
@@ -52,5 +55,7 @@ private:
     FADfaPack_triv m_pack_fsm2;
     FAMultiMapPack m_pack_trbr;
 };
+
+}
 
 #endif

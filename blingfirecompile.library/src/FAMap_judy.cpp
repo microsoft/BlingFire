@@ -10,6 +10,9 @@
 
 #ifdef HAVE_JUDY_LIB
 
+namespace BlingFire
+{
+
 
 FAMap_judy::FAMap_judy () :
   m_map ((Pvoid_t) NULL)
@@ -94,6 +97,8 @@ const int * FAMap_judy::Prev (int * pKey) const
 void FAMap_judy::Remove (const int Key)
 {
   JudyLDel (&m_map, (Word_t) Key, NULL);
+}
+
 }
 
 // of ifdef HAVE_JUDY_LIB

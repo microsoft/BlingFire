@@ -11,6 +11,9 @@
 #include "FAUtils.h"
 #include "FAException.h"
 
+namespace BlingFire
+{
+
 
 FATokenNfa2TupleNfa::FATokenNfa2TupleNfa (FAAllocatorA * pAlloc) :
     m_pTagSet (NULL),
@@ -193,7 +196,7 @@ const bool FATokenNfa2TupleNfa::
         }
     }
 
-    const int NewSize = ::FASortUniq (m_ows.begin (), m_ows.end ());
+    const int NewSize = FASortUniq (m_ows.begin (), m_ows.end ());
     m_ows.resize (NewSize);
 
     m_is_dot.SetNfa (pNfa);
@@ -269,7 +272,7 @@ void FATokenNfa2TupleNfa::Process ()
 
     } else {
         DebugLogAssert (1 == TupleSize && pSingleton);
-        ::FACopyNfa (m_pOutNfa, pSingleton);
+        FACopyNfa (m_pOutNfa, pSingleton);
     }
 
     Clear ();
@@ -279,5 +282,7 @@ void FATokenNfa2TupleNfa::Process ()
 const int FATokenNfa2TupleNfa::GetTokenType () const
 {
     return m_TokenType;
+}
+
 }
 

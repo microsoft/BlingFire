@@ -19,6 +19,9 @@
 
 #include <string>
 
+namespace BlingFire
+{
+
 
 FACorpusIOTools_utf8::FACorpusIOTools_utf8 (FAAllocatorA * pAlloc) :
     m_pAlloc (pAlloc),
@@ -57,7 +60,7 @@ inline static void FAAddWord (
 
     // UTF-8 -> UTF-32
     const int SymbolCount = \
-        ::FAStrUtf8ToArray (pWord, WordLen, Word, FALimits::MaxWordLen);
+        FAStrUtf8ToArray (pWord, WordLen, Word, FALimits::MaxWordLen);
     FAAssert (0 <= SymbolCount && SymbolCount <= FALimits::MaxWordLen, \
         FAMsg::IOError);
 
@@ -176,9 +179,9 @@ void FACorpusIOTools_utf8::
 
         if (false == m_NoPosTags) {
             const int Tag = pS->GetTag (i);
-            ::FAPrintTaggedWord (os, m_pTagSet, pWord, WordLen, Tag);
+            FAPrintTaggedWord (os, m_pTagSet, pWord, WordLen, Tag);
         } else {
-            ::FAPrintWord (os, pWord, WordLen);
+            FAPrintWord (os, pWord, WordLen);
         }
 
     } // of for (int i = 0; ...
@@ -364,9 +367,9 @@ static void PrintSubTree_rec (
 
             if (false == NoPosTags) {
                 const int Tag = pS->GetTag (Label);
-                ::FAPrintTaggedWord (os, pTagSet, pWord, WordLen, Tag);
+                FAPrintTaggedWord (os, pTagSet, pWord, WordLen, Tag);
             } else {
-                ::FAPrintWord (os, pWord, WordLen);
+                FAPrintWord (os, pWord, WordLen);
             }
 
         } else {
@@ -418,3 +421,4 @@ void FACorpusIOTools_utf8::
     os << '\n';
 }
 
+}

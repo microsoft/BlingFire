@@ -21,6 +21,9 @@
 #include "FAUtf32Utils.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// Dictionary run-time interpreter.
 ///
@@ -229,7 +232,7 @@ inline const int FADictInterpreter_t< Ty >::
 
         for (int i = 0 ; i < SrcSize; ++i) {
             const int InSymbol = (int) pSrc [i] ;
-            const int OutSymbol = ::FAUtf32ToLower (InSymbol) ;
+            const int OutSymbol = FAUtf32ToLower (InSymbol) ;
             pOut [i] = (Ty) OutSymbol ;
         }
         pSrc = pOut;
@@ -238,7 +241,7 @@ inline const int FADictInterpreter_t< Ty >::
     // normalize characters
     if (m_pCharMap) {
         // in-place is fine
-        SrcSize = ::FANormalizeWord (pSrc, SrcSize, \
+        SrcSize = FANormalizeWord (pSrc, SrcSize, \
             pOut, MaxOutSize, m_pCharMap);
         pSrc = pOut;
     }
@@ -422,5 +425,6 @@ const int FADictInterpreter_t< Ty >::GetMaxInfoSize () const
     return MaxCount;
 }
 
+}
 
 #endif

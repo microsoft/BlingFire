@@ -9,6 +9,9 @@
 #include "FAFsmConst.h"
 #include "FALadLDB.h"
 
+namespace BlingFire
+{
+
 
 FALadLDB::FALadLDB () :
     FALDB (),
@@ -111,4 +114,6 @@ const FALadConfKeeper * FALadLDB::GetLadConf () const
         return NULL;
     }
     return & m_lad;
+}
+
 }

@@ -9,6 +9,9 @@
 #include "FATestCmpMultiMap.h"
 #include "FAMultiMapCA.h"
 
+namespace BlingFire
+{
+
 
 FATestCmpMultiMap::FATestCmpMultiMap (FAAllocatorA * pAlloc) :
     m_pMMap1 (NULL),
@@ -151,5 +154,7 @@ const bool FATestCmpMultiMap::Process (const int MaxKey)
     }
 
     return true;
+}
+
 }
 

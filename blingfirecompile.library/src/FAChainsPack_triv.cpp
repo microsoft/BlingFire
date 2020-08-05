@@ -13,6 +13,9 @@
 
 #include <algorithm>
 
+namespace BlingFire
+{
+
 
 FAChainsPack_triv::FAChainsPack_triv (FAAllocatorA * pAlloc) :
     m_MaxIdx (-1),
@@ -255,4 +258,6 @@ void FAChainsPack_triv::EncodeValues (const int * pValues, const int Count)
         const int Value = pValues [i];
         EncodeValue (Value);
     }
+}
+
 }

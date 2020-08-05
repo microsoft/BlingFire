@@ -10,6 +10,9 @@
 #include "FAArray_cont_t.h"
 #include "FAChain2Num_hash.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -66,5 +69,7 @@ private:
     /// DstIdx <--> DstSet map, keeps only sets of size > 1
     FAChain2Num_hash m_Sets;
 };
+
+}
 
 #endif

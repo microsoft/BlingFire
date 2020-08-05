@@ -17,6 +17,9 @@
 #include "FADigitizer_t.h"
 #include "FADigitizer_dct_t.h"
 
+namespace BlingFire
+{
+
 class FAState2OwCA;
 class FAAllocatorA;
 
@@ -512,6 +515,8 @@ void FAParser_base_t< Ty >::Process ()
     }
 
     Clear ();
+}
+
 }
 
 #endif

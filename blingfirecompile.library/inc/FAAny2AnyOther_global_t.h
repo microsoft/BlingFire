@@ -12,6 +12,9 @@
 #include "FAUtils.h"
 #include "FALimits.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 
@@ -116,7 +119,7 @@ void FAAny2AnyOther_global_t< NFA_in, NFA_out >::
 
     if (-1 != m_ExpCount) {
 
-        DebugLogAssert (::FAIsSortUniqed (pExpIws, ExpCount));
+        DebugLogAssert (FAIsSortUniqed (pExpIws, ExpCount));
 
         // makes a copy
         m_sets.SetRes (pExpIws, ExpCount, SET_ALPHABET);
@@ -180,7 +183,7 @@ void FAAny2AnyOther_global_t< NFA_in, NFA_out >::
 
     const int * pIws;
     const int IwsCount =  m_pInNfa->GetIWs (State, &pIws);
-    DebugLogAssert (::FAIsSortUniqed (pIws, IwsCount));
+    DebugLogAssert (FAIsSortUniqed (pIws, IwsCount));
 
     for (int i = 0; i < IwsCount; ++i) {
 
@@ -208,7 +211,7 @@ void FAAny2AnyOther_global_t< NFA_in, NFA_out >::
 
     const int * pIws;
     const int IwsCount =  m_pInNfa->GetIWs (State, &pIws);
-    DebugLogAssert (::FAIsSortUniqed (pIws, IwsCount));
+    DebugLogAssert (FAIsSortUniqed (pIws, IwsCount));
 
     const int * pAnyDst;
     const int AnyDstCount = m_pInNfa->GetDest (State, m_AnyIw, &pAnyDst);
@@ -219,7 +222,7 @@ void FAAny2AnyOther_global_t< NFA_in, NFA_out >::
         const int Iw = pAlphabet [i];
 
         // see whether such weight did not exist
-        if (-1 == ::FAFind_log (pIws, IwsCount, Iw)) {
+        if (-1 == FAFind_log (pIws, IwsCount, Iw)) {
 
             m_pOutNfa->SetTransition (State, Iw, pAnyDst, AnyDstCount);
 
@@ -242,7 +245,7 @@ void FAAny2AnyOther_global_t< NFA_in, NFA_out >::
         DebugLogAssert (pIws);
         const int Iw = pIws [i];
 
-        if (-1 == ::FAFind_log (pAlphabet, AlphabetSize, Iw)) {
+        if (-1 == FAFind_log (pAlphabet, AlphabetSize, Iw)) {
 
             const int * pDst;
             const int DstCount = m_pInNfa->GetDest (State, Iw, &pDst);
@@ -323,6 +326,8 @@ void FAAny2AnyOther_global_t< NFA_in, NFA_out >::Process ()
 
     // make it ready to use
     m_pOutNfa->Prepare ();
+}
+
 }
 
 #endif

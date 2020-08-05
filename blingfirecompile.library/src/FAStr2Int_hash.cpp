@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FAStr2Int_hash.h"
 
+namespace BlingFire
+{
+
 
 FAStr2Int_hash::FAStr2Int_hash (FAAllocatorA * pAlloc) :
     m_pAlloc (pAlloc)
@@ -334,4 +337,6 @@ void FAStr2Int_hash::Clear ()
         pSet->Clear ();
     }
     m_csets.resize (0);
+}
+
 }

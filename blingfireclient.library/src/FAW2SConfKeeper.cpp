@@ -13,6 +13,8 @@
 #include "FAState2Ow_pack_triv.h"
 #include "FAUtils_cl.h"
 
+namespace BlingFire
+{
 
 FAW2SConfKeeper::FAW2SConfKeeper () :
     m_pLDB (NULL),
@@ -157,4 +159,6 @@ const int FAW2SConfKeeper::GetDirection () const
 const int FAW2SConfKeeper::GetThreshold () const
 {
     return m_Threshold;
+}
+
 }

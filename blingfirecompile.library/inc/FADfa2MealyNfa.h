@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FARSDfaA;
 class FARSNfaA;
 class FAMealyNfaA;
@@ -41,5 +44,7 @@ private:
     FAArray_cont_t < int > m_stack;
     FAArray_cont_t < int > m_state2state;
 };
+
+}
 
 #endif

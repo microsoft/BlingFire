@@ -11,6 +11,9 @@
 #include "FATransformCA_t.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// Implements a composition of n (up to 4) transformations.
 ///
@@ -132,6 +135,8 @@ const int FATransform_cascade_t< Ty>::
   }
 
   return OutSize;
+}
+
 }
 
 #endif

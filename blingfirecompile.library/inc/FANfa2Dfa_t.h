@@ -20,6 +20,9 @@
 
 #include <algorithm>
 
+namespace BlingFire
+{
+
 ///
 /// This processor builds DFA from NFA.
 ///
@@ -664,7 +667,7 @@ void FANfa2Dfa_t<_TNfa, _TDfa>::add_transitions_any ()
     DebugLogAssert (m_iws.size () == m_dsts.size ());
 
     // find Any Idx
-    const int AnyIdx = ::FAFind_log (m_iws.begin (), m_iws.size (), m_any_iw);
+    const int AnyIdx = FAFind_log (m_iws.begin (), m_iws.size (), m_any_iw);
     DebugLogAssert (-1 != AnyIdx);
 
     // get Any destination state
@@ -820,6 +823,8 @@ void FANfa2Dfa_t<_TNfa, _TDfa>::Process ()
 
     // make it ready to use
     m_dfa->Prepare ();
+}
+
 }
 
 #endif

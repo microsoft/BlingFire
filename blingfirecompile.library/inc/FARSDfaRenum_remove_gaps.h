@@ -11,6 +11,9 @@
 #include "FAArray_cont_t.h"
 #include "FABitArray.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSDfaA;
 
@@ -47,5 +50,7 @@ private:
     int m_MaxNewState;
     FAArray_cont_t < int > m_old2new;
 };
+
+}
 
 #endif

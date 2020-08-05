@@ -16,6 +16,9 @@
 #include "FARegexpLexer_char.h"
 #include "FARegexpLexer_wre.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -70,5 +73,7 @@ private:
     // pointer to simplified regexp
     const char * m_pRevRe;
 };
+
+}
 
 #endif

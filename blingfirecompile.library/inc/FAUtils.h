@@ -15,6 +15,8 @@
 #include "FAMultiMapCA.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
 
 class FARSNfaA;
 class FARSDfaA;
@@ -94,7 +96,7 @@ void FACopyNfa (FARSNfaA * pDstNfa, const FARSNfaA * pSrcNfa);
 /// makes an DFA -> NFA copy
 void FACopyDfa2Nfa (FARSNfaA * pDstNfa, const FARSDfaA * pSrcDfa);
 
-/// makes an NFA -> DFA copy, possible only if ::FAIsDfa(pNfa) is true
+/// makes an NFA -> DFA copy, possible only if FAIsDfa(pNfa) is true
 void FACopyNfa2Dfa (FARSDfaA * pDstDfa, const FARSNfaA * pSrcNfa);
 
 
@@ -187,5 +189,7 @@ const int FAReadHexChain (
         __out_ecount(MaxOutSize) int * pChain, 
         const int MaxChainSize
     );
+
+}
 
 #endif

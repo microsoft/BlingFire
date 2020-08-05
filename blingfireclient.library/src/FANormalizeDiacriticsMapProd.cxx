@@ -35,6 +35,9 @@ END {
 #include <stdint.h>
 #include "blingfire-client_src_pch.h"
 
+namespace BlingFire
+{
+
 const uint16_t g_CharNormalizationMapDiacriticsProd[65536][2] = {
 
 { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, 
@@ -4135,3 +4138,4 @@ const uint16_t g_CharNormalizationMapDiacriticsProd[65536][2] = {
 { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, { 1 , 1 }, 
 };
 
+}

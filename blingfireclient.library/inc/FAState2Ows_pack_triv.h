@@ -12,6 +12,9 @@
 #include "FAState2OwsCA.h"
 #include "FAChains_pack_triv.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class is able to interpret automaton image stored by FAAutPack_triv
 ///
@@ -42,5 +45,7 @@ private:
     // dst size
     int m_DstSize;
 };
+
+}
 
 #endif

@@ -15,6 +15,9 @@
 #include "FAArray_cont_t.h"
 #include "FAMultiMap_judy.h"
 
+namespace BlingFire
+{
+
 class FARSNfaA;
 class FAMealyNfaA;
 
@@ -82,5 +85,7 @@ private:
     /// keeps mapping from Ow -> [Ows]
     FAMultiMap_judy m_ow2trbrs;
 };
+
+}
 
 #endif

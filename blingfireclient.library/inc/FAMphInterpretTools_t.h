@@ -13,6 +13,9 @@
 #include "FAOw2IwCA.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class is a run-time interpreter for automaton-based Minimal Perfect
 /// Hash (MPH). It maps Chain -> Id and Id -> Chain.
@@ -160,6 +163,8 @@ const int FAMphInterpretTools_t< Ty >::
     } else {
         return -1;
     }
+}
+
 }
 
 #endif

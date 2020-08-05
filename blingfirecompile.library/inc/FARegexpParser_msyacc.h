@@ -85,6 +85,9 @@ typedef	YYEXIND_T yyexind_t;
 #define yyerrok ClearErrRecoveryState()
 #define yyclearin YYAPI_TOKENNAME = YYAPI_TOKENNONE
 
+namespace BlingFire
+{
+
 
 class FAToken;
 class FARegexpTree;
@@ -220,5 +223,7 @@ private:
 #endif
 
 };
+
+}
 
 #endif

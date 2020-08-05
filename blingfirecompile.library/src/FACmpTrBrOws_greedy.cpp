@@ -9,6 +9,9 @@
 #include "FACmpTrBrOws_greedy.h"
 #include "FAMultiMapCA.h"
 
+namespace BlingFire
+{
+
 
 FACmpTrBrOws_greedy::FACmpTrBrOws_greedy () :
     m_pOw2TrBrs (NULL)
@@ -100,4 +103,6 @@ const bool FACmpTrBrOws_greedy::Less (const int Val1, const int Val2) const
     }
 
     return false;
+}
+
 }

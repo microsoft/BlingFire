@@ -7,6 +7,9 @@
 #include "FAConfig.h"
 #include "FAArray_p2ca.h"
 
+namespace BlingFire
+{
+
 
 FAArray_p2ca::FAArray_p2ca () :
     m_pA (NULL),
@@ -28,5 +31,7 @@ void FAArray_p2ca::SetArray (const int * pA, const int Count)
 {
     m_pA = pA;
     m_Count = Count;
+}
+
 }
 

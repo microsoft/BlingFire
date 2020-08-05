@@ -10,6 +10,9 @@
 #include "FAUtils.h"
 #include "FAUtf8Utils.h"
 
+namespace BlingFire
+{
+
 
 FAStr2Utf16::FAStr2Utf16 (FAAllocatorA * pAlloc) :
     m_is_utf8 (false),
@@ -39,7 +42,7 @@ void FAStr2Utf16::SetEncodingName (const char * pEncStr)
 {
     DebugLogAssert (pEncStr);
 
-    m_is_utf8 = ::FAIsUtf8Enc (pEncStr);
+    m_is_utf8 = FAIsUtf8Enc (pEncStr);
 
 #ifdef HAVE_ICONV_LIB
     if (0 != m_conv_type) {
@@ -48,7 +51,7 @@ void FAStr2Utf16::SetEncodingName (const char * pEncStr)
 
     m_conv_type = iconv_open ("UTF-16LE", pEncStr);
 #else
-    m_cp = ::FAEncoding2CodePage (pEncStr);
+    m_cp = FAEncoding2CodePage (pEncStr);
 
     if (0 == m_cp) {
         m_cp = atoi (pEncStr);
@@ -84,7 +87,7 @@ const int FAStr2Utf16::Process (
             return 0;
 
         const int ActualCount = \
-            ::FAStrUtf8ToArray (pInStr, InSize, pOutStr, OutSize);
+            FAStrUtf8ToArray (pInStr, InSize, pOutStr, OutSize);
 
         if (ActualCount > (int) OutSize)
             return -1;
@@ -140,4 +143,6 @@ const int FAStr2Utf16::Process (
         return ActualCount;
 
     } // of if (m_is_utf8) ...
+}
+
 }

@@ -12,6 +12,9 @@
 #include "FAException.h"
 #include "FAFsmConst.h"
 
+namespace BlingFire
+{
+
 
 const FAToken FATrBr2Symbol::m_left_br (FARegexpTree::TYPE_LBR, -1, 0);
 const FAToken FATrBr2Symbol::m_right_br (FARegexpTree::TYPE_RBR, -1, 0);
@@ -85,7 +88,7 @@ void FATrBr2Symbol::Process ()
         } else if (FARegexpTree::TYPE_RTRBR == Type) {
 
             if (0 == m_stack.size ()) {
-                ::FASyntaxError (m_pRegexp, m_Length, -1, \
+                FASyntaxError (m_pRegexp, m_Length, -1, \
                     "Unbalanced triangular brackets");
                 throw FAException (FAMsg::InternalError, __FILE__, __LINE__);
             }
@@ -109,7 +112,7 @@ void FATrBr2Symbol::Process ()
     } // of for (int i = 0; ...
 
     if (0 != m_stack.size ()) {
-        ::FASyntaxError (m_pRegexp, m_Length, -1, \
+        FASyntaxError (m_pRegexp, m_Length, -1, \
             "Unbalanced triangular brackets");
         throw FAException (FAMsg::InternalError, __FILE__, __LINE__);
     }
@@ -123,5 +126,7 @@ void FATrBr2Symbol::Process ()
         const FAToken & t = m_tmp_tokens [i];
         m_pTokens->push_back (t);
     }
+}
+
 }
 

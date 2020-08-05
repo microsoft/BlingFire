@@ -11,6 +11,9 @@
 #include "FAArray_t.h"
 #include "FAToken.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 
@@ -91,5 +94,7 @@ private:
     /// does not actualy store the string, just keeps the pointer
     const char * m_pStr;
 };
+
+}
 
 #endif

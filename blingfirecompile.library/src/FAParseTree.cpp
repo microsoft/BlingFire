@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FAParseTree.h"
 
+namespace BlingFire
+{
+
 
 FAParseTree::FAParseTree (FAAllocatorA * pAlloc)
 {
@@ -172,5 +175,7 @@ const int FAParseTree::GetLabel (const int Node) const
 {
     const FANodeData & NodeData = m_i2n [Node];
     return NodeData.m_Label;
+}
+
 }
 

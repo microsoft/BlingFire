@@ -11,6 +11,9 @@
 #include "FAArray_cont_t.h"
 #include "FAChains2MinDfa_sort.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -64,5 +67,7 @@ private:
     FAChains2MinDfa_sort m_chains2dfa;
 
 };
+
+}
 
 #endif

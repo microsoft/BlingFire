@@ -11,6 +11,9 @@
 #include "FAStr2Int_hash.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -40,5 +43,7 @@ private:
     FAArray_cont_t < int > m_tag2idx;
     int m_iMaxTag;
 };
+
+}
 
 #endif

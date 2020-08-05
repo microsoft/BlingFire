@@ -12,6 +12,9 @@
 
 #include <algorithm>
 
+namespace BlingFire
+{
+
 
 FARSDfaRenum_depth_first::FARSDfaRenum_depth_first (FAAllocatorA * pAlloc) :
     m_pDfa (NULL),
@@ -116,7 +119,7 @@ void FARSDfaRenum_depth_first::build_dsts (const int State)
         }
     }
 
-    const int NewSize = ::FASortUniq (m_tmp_dsts.begin (), m_tmp_dsts.end ());
+    const int NewSize = FASortUniq (m_tmp_dsts.begin (), m_tmp_dsts.end ());
     m_tmp_dsts.resize (NewSize);
 
     if (1 < NewSize) {
@@ -141,7 +144,7 @@ void FARSDfaRenum_depth_first::build_dsts (const int State)
 
             if (-1 != DstState) {
 
-                const int Idx = ::FAFind_log (pDst, DstCount, DstState);
+                const int Idx = FAFind_log (pDst, DstCount, DstState);
                 DebugLogAssert (0 <= Idx && DstCount > Idx);
 
                 DebugLogAssert (0 <= m_iw2f [Iw]);
@@ -199,4 +202,6 @@ void FARSDfaRenum_depth_first::Process ()
             }
         }
     } // of while (0 < m_stack.size ()) ...
+}
+
 }

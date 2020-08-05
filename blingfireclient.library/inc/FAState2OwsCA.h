@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 ///
 /// client-side interface for Multi-Moore automaton reaction
 ///
@@ -31,5 +34,7 @@ public:
     virtual const int GetMaxOwsCount () const = 0;
 
 };
+
+}
 
 #endif

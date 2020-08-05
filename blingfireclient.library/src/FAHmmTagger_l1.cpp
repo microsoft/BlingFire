@@ -9,6 +9,8 @@
 #include "FAHmmTagger_l1.h"
 #include "FAFsmConst.h"
 
+namespace BlingFire
+{
 
 FAHmmTagger_l1::FAHmmTagger_l1 ():
     m_fInitialized (false),
@@ -339,4 +341,6 @@ const int FAHmmTagger_l1::Process (int * pOut, const int MaxOutSize)
     m_WordCount = 1;
 
     return OutSize;
+}
+
 }

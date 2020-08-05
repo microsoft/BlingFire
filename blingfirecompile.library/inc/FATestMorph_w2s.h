@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FATestMorph.h"
 
+namespace BlingFire
+{
+
 ///
 /// W2S quality test
 ///
@@ -37,5 +40,7 @@ private:
     inline const bool IsValid (const int * pB, const int BSize) const;
 
 };
+
+}
 
 #endif

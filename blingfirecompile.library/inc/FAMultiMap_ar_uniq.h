@@ -13,6 +13,9 @@
 #include "FAMap_judy.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -78,5 +81,7 @@ private:
     // allocator
     FAAllocatorA * m_pAlloc;
 };
+
+}
 
 #endif

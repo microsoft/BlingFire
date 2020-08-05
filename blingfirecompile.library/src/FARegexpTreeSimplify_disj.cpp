@@ -9,6 +9,9 @@
 #include "FARegexpTreeSimplify_disj.h"
 #include "FARegexpTree.h"
 
+namespace BlingFire
+{
+
 
 FARegexpTreeSimplify_disj::FARegexpTreeSimplify_disj (FAAllocatorA * pAlloc):
     m_pTree (NULL),
@@ -575,5 +578,7 @@ void FARegexpTreeSimplify_disj::Process ()
     // as some of the nodes do not exists (TODO: test without this)
     TopoOrder ();
     LeftFact ();
+
+}
 
 }
