@@ -262,8 +262,8 @@ const int FAGetCaseType (const Ty * pChain, const int Size)
 
         const Ty Symbol = pChain [0];
 
-        const bool Lo = ::FAUtf32IsLower (Symbol);
-        const bool Up = ::FAUtf32IsUpper (Symbol);
+        const bool Lo = FAUtf32IsLower (Symbol);
+        const bool Up = FAUtf32IsUpper (Symbol);
 
         if (Lo) {
             fAllUp = false;
@@ -278,8 +278,8 @@ const int FAGetCaseType (const Ty * pChain, const int Size)
 
             const Ty Symbol = pChain [i];
 
-            const bool Lo = ::FAUtf32IsLower (Symbol);
-            const bool Up = ::FAUtf32IsUpper (Symbol);
+            const bool Lo = FAUtf32IsLower (Symbol);
+            const bool Up = FAUtf32IsUpper (Symbol);
 
             if (Lo) {
                 fAllUp = false;

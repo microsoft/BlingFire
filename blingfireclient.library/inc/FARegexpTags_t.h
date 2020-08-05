@@ -306,7 +306,7 @@ const int FARegexpTags_t< Ty >::
                 Iw = DefSubIw;
             }
             if (m_fIgnoreCase) {
-                Iw = ::FAUtf32ToLower (Iw);
+                Iw = FAUtf32ToLower (Iw);
             }
             Dst = m_pDfa->GetDest (State, Iw);
             if (-1 == Dst) {
