@@ -17,6 +17,8 @@
 #include "FAMultiMap_pack_fixed.h"
 #include "FALimits.h"
 
+namespace BlingFire
+{
 
 FAWbdConfKeeper::FAWbdConfKeeper () :
     m_pRsDfa (NULL),
@@ -489,4 +491,6 @@ const int FAWbdConfKeeper::GetMaxTag () const
 const int FAWbdConfKeeper::GetMaxTokenLength () const
 {
     return m_MaxTokenLength;
+}
+
 }

@@ -17,6 +17,7 @@
 #include <assert.h>
 #include <dlfcn.h>
 
+using namespace BlingFire;
 
 const char * __PROG__ = "";
 

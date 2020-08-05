@@ -10,6 +10,9 @@
 #include "FAEncodeUtils.h"
 #include "FAException.h"
 
+namespace BlingFire
+{
+
 
 FAArrayPack::FAArrayPack (FAAllocatorA * pAlloc) :
     m_pArr (NULL),
@@ -296,4 +299,6 @@ void FAArrayPack::Process ()
         DebugLogAssert (1 < m_M && 8 >= m_M);
         BuildPacked ();
     }
+}
+
 }

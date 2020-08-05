@@ -10,6 +10,9 @@
 #include "FARSNfaA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FACalcMealy1::FACalcMealy1 (FAAllocatorA * pAlloc) :
     m_pInNfa (NULL),
@@ -135,7 +138,7 @@ const int FACalcMealy1::
     }
 
     if (1 < Count) {
-        const int NewSize = ::FASortUniq (pTmp, pTmp + Count);
+        const int NewSize = FASortUniq (pTmp, pTmp + Count);
         m_tmp.resize (NewSize);
     }
 
@@ -171,7 +174,7 @@ void FACalcMealy1::RemapNfa ()
     m_in_nfa.SetFinals (pNewStates, NewCount);
 
     // calculate the alphabet
-    ::FAGetAlphabet (m_pInNfa, &m_alphabet);
+    FAGetAlphabet (m_pInNfa, &m_alphabet);
 
     const int * pIws = m_alphabet.begin ();
     const int IwsCount = m_alphabet.size ();
@@ -205,7 +208,7 @@ void FACalcMealy1::RemapNfa ()
 
             // build a set from all old destination states
             const int NewTmpSize = \
-                ::FASortUniq (m_tmp2.begin (), m_tmp2.end ());
+                FASortUniq (m_tmp2.begin (), m_tmp2.end ());
             m_tmp2.resize (NewTmpSize);
 
             // remap this set
@@ -241,7 +244,7 @@ void FACalcMealy1::Process ()
     const int * pIws;
     const int IwCount = m_OutDfa.GetIWs (&pIws);
     DebugLogAssert (0 < IwCount && pIws);
-    DebugLogAssert (::FAIsSortUniqed (pIws, IwCount));
+    DebugLogAssert (FAIsSortUniqed (pIws, IwCount));
 
     for (int State = 0; State <= MaxState; ++State) {
 
@@ -258,3 +261,4 @@ void FACalcMealy1::Process ()
     } // of for (int State = 0; ...
 }
 
+}

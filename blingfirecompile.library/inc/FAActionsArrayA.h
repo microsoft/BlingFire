@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FAActionsA;
 
 ///
@@ -23,5 +26,7 @@ public:
     /// returns i-th stage pointer, i = 0..(Count-1)
     virtual const FAActionsA * GetStage (const int Num) const = 0;
 };
+
+}
 
 #endif

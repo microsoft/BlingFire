@@ -12,6 +12,9 @@
 #include "FAGetIWsCA.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class is able to interpret automaton image stored by FADfaPack_triv
 ///
@@ -39,5 +42,7 @@ private:
     // dst size
     int m_DstSize;
 };
+
+}
 
 #endif

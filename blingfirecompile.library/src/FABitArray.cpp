@@ -9,6 +9,9 @@
 #include "FABitArray.h"
 #include "FAAllocatorA.h"
 
+namespace BlingFire
+{
+
 
 FABitArray::FABitArray () :
     m_ar (NULL),
@@ -205,5 +208,7 @@ void FABitArray::resize (const unsigned int N)
 const unsigned int * FABitArray::begin () const
 {
     return m_ar;
+}
+
 }
 

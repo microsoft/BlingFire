@@ -11,6 +11,9 @@
 #include "FAConfig.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 
@@ -195,6 +198,8 @@ void FAHeap_t< Ty >::push (const Ty& e)
 
     // heapify from the end
     heapify_up (new_idx);
+}
+
 }
 
 #endif

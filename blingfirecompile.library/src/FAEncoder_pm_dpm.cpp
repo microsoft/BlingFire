@@ -9,6 +9,9 @@
 #include "FAEncoder_pm_dpm.h"
 #include "FAEncodeUtils.h"
 
+namespace BlingFire
+{
+
 
 const int FAEncoder_pm_dpm::GetMaxBytes () const
 {
@@ -42,4 +45,6 @@ const int FAEncoder_pm_dpm::Encode (const int * pChain,
   }
 
   return int (pOut - pOutBuffer);
+}
+
 }

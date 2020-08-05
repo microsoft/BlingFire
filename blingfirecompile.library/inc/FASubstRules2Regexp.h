@@ -18,6 +18,9 @@
 #include <string>
 #include <map>
 
+namespace BlingFire
+{
+
 class FATagSet;
 
 ///
@@ -129,5 +132,7 @@ private:
     FAArray_cont_t < FAToken > m_tokens;
 
 };
+
+}
 
 #endif

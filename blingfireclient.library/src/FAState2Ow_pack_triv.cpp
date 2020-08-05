@@ -10,6 +10,8 @@
 #include "FAEncodeUtils.h"
 #include "FAFsmConst.h"
 
+namespace BlingFire
+{
 
 FAState2Ow_pack_triv::FAState2Ow_pack_triv () :
     m_pAutImage (NULL),
@@ -125,4 +127,6 @@ const int FAState2Ow_pack_triv::GetOw (const int State) const
     }
 
     return Ow;
+}
+
 }

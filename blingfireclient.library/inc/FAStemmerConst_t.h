@@ -17,6 +17,9 @@
 #include "FASecurity.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 ///
 /// PRM-based stemmer (expansive, reductive and context-sensitive stemming).
 ///
@@ -624,6 +627,8 @@ const int FAStemmerConst_t< Ty >::
     } else {
         return OutSize;
     }
+}
+
 }
 
 #endif

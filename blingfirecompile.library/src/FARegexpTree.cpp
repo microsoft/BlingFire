@@ -9,6 +9,9 @@
 #include "FARegexpTree.h"
 #include "FAAllocatorA.h"
 
+namespace BlingFire
+{
+
 
 FARegexpTree::FARegexpTree (FAAllocatorA* pAlloc) :
     m_root (-1)
@@ -289,5 +292,7 @@ void FARegexpTree::Clear ()
     m_deleted.clear ();
     m_root = -1;
     m_stack.resize (0);
+}
+
 }
 

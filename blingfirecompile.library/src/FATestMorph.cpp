@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FATestMorph.h"
 
+namespace BlingFire
+{
+
 
 FATestMorph::FATestMorph (FAAllocatorA * pAlloc) :
     m_pOs (NULL),
@@ -260,4 +263,6 @@ void FATestMorph::PrintReport (std::ostream * pOs)
             << m_ExpectedEventCount
             << '\n' ;
     }
+}
+
 }

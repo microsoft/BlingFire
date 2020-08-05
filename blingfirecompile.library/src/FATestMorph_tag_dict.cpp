@@ -15,6 +15,9 @@
 
 #include <string>
 
+namespace BlingFire
+{
+
 
 FATestMorph_tag_dict::FATestMorph_tag_dict (FAAllocatorA * pAlloc) :
     FATestMorph (pAlloc),
@@ -60,7 +63,7 @@ void FATestMorph_tag_dict::Test (const char * pLineStr, const int LineLen)
 
     // convert UTF-8 input word into array of integers (UTF-32)
     const int ChainSize = \
-        ::FAStrUtf8ToArray (
+        FAStrUtf8ToArray (
             pTmpStr, 
             TmpStrLen, 
             m_ChainBuffer, 
@@ -77,7 +80,7 @@ void FATestMorph_tag_dict::Test (const char * pLineStr, const int LineLen)
 
     // make input in the lower case, if needed
     if (m_IgnoreCase) {
-        ::FAUtf32StrLower (m_ChainBuffer, ChainSize);
+        FAUtf32StrLower (m_ChainBuffer, ChainSize);
     }
 
     int InTagCount = 0;
@@ -105,7 +108,7 @@ void FATestMorph_tag_dict::Test (const char * pLineStr, const int LineLen)
         return;
     }
     // make them sorted and uniqued
-    InTagCount = ::FASortUniq (
+    InTagCount = FASortUniq (
             m_OutChain2Buffer, 
             m_OutChain2Buffer + InTagCount
         );
@@ -131,7 +134,7 @@ void FATestMorph_tag_dict::Test (const char * pLineStr, const int LineLen)
 
     if (0 < OutTagCount) {
 
-        OutTagCount = ::FASortUniq (
+        OutTagCount = FASortUniq (
                 m_OutChainBuffer, 
                 m_OutChainBuffer + OutTagCount
             );
@@ -163,13 +166,15 @@ void FATestMorph_tag_dict::Test (const char * pLineStr, const int LineLen)
         }
 
         // print the word
-        ::FAPrintWordList (*pDbgOs, m_ChainBuffer, ChainSize);
+        FAPrintWordList (*pDbgOs, m_ChainBuffer, ChainSize);
         (*pDbgOs) << '\t';
         // print the output tags
-        ::FAPrintTagList (*pDbgOs, m_pTagSet, m_OutChainBuffer, OutTagCount);
+        FAPrintTagList (*pDbgOs, m_pTagSet, m_OutChainBuffer, OutTagCount);
         (*pDbgOs) << "\tvs\t";
         // print the expected tags
-        ::FAPrintTagList (*pDbgOs, m_pTagSet, m_OutChain2Buffer, InTagCount);
+        FAPrintTagList (*pDbgOs, m_pTagSet, m_OutChain2Buffer, InTagCount);
         (*pDbgOs) << '\n';
     }
+}
+
 }

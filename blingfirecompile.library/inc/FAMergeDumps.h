@@ -12,6 +12,9 @@
 
 #include <iostream>
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -42,5 +45,7 @@ private:
     FAArray_cont_t < unsigned char * > m_dumps;
     FAArray_cont_t < int > m_sizes;
 };
+
+}
 
 #endif

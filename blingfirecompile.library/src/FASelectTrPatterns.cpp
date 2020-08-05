@@ -15,6 +15,9 @@
 #include "FAUtils.h"
 #include "FAFsmConst.h"
 
+namespace BlingFire
+{
+
 
 FASelectTrPatterns::FASelectTrPatterns (FAAllocatorA * pAlloc) :
     m_pDfa (NULL),
@@ -229,7 +232,7 @@ void FASelectTrPatterns::UpdateBest (const int * pOws, const int Count)
 
     const int * pUsedIds = m_used_ids.begin ();
     const int UsedIdsCount = m_used_ids.size ();
-    DebugLogAssert (::FAIsSortUniqed (pUsedIds, UsedIdsCount));
+    DebugLogAssert (FAIsSortUniqed (pUsedIds, UsedIdsCount));
 
     for (i = 0; i < Count; ++i) {
 
@@ -251,11 +254,11 @@ void FASelectTrPatterns::UpdateBest (const int * pOws, const int Count)
             for (j = 0; j < IdCount; ++j) {
                 const int Id = pIds [j];
                 // log search in all selected patterns
-                if (-1 != ::FAFind_log (pUsedIds, UsedIdsCount, Id)) {
+                if (-1 != FAFind_log (pUsedIds, UsedIdsCount, Id)) {
                     break;
                 }
                 // linear search in newly selected patters
-                if (-1 != ::FAFind_linear (m_tmp.begin (), m_tmp.size (), Id)){
+                if (-1 != FAFind_linear (m_tmp.begin (), m_tmp.size (), Id)){
                     break;
                 }
             }
@@ -285,7 +288,7 @@ void FASelectTrPatterns::UpdateBest (const int * pOws, const int Count)
         memcpy (pOut, m_tmp.begin (), sizeof (int) * NewPatCount);
 
         const int NewCount = \
-            ::FASortUniq (m_used_ids.begin (), m_used_ids.end ());
+            FASortUniq (m_used_ids.begin (), m_used_ids.end ());
         m_used_ids.resize (NewCount);
     }
 }
@@ -376,3 +379,5 @@ void FASelectTrPatterns::PutUnsolved (const int *, const int *, const int)
 void FASelectTrPatterns::PutConflict (const int *, const int, const int)
 {}
 
+
+}

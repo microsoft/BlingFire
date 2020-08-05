@@ -11,6 +11,9 @@
 #include "FAArray_cont_t.h"
 #include "FARSNfa_wo_ro.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -82,5 +85,7 @@ protected:
     int m_TrBrBaseIw;
 
 };
+
+}
 
 #endif

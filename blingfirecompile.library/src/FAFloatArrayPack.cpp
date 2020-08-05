@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FAFloatArrayPack.h"
 
+namespace BlingFire
+{
+
 
 FAFloatArrayPack::FAFloatArrayPack (FAAllocatorA * pAlloc) :
     m_pArr (NULL),
@@ -48,4 +51,6 @@ const int FAFloatArrayPack::GetDump (const unsigned char ** ppDump) const
     DebugLogAssert (ppDump);
     *ppDump = m_dump.begin ();
     return m_dump.size ();
+}
+
 }

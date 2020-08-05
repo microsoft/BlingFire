@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FAStringTokenizer.h"
 
+namespace BlingFire
+{
+
 
 const char * const FAStringTokenizer::DefSpaces = " \t\r\n";
 
@@ -161,4 +164,6 @@ const int FAStringTokenizer::GetArray2 (
     }
 
     return count;
+}
+
 }

@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FASummTagScores.h"
 
+namespace BlingFire
+{
+
 
 FASummTagScores::FASummTagScores () :
     m_TotalCount (0),
@@ -141,5 +144,7 @@ const int FASummTagScores::GetScores (const float ** ppScores, const int ** ppCo
 const int FASummTagScores::GetTotalCount () const
 {
     return m_TotalCount;
+}
+
 }
 

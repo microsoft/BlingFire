@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAState2OwsCA.h"
 
+namespace BlingFire
+{
+
 ///
 /// Additional interface for Moore Machines with multiple Ows at State
 ///
@@ -43,5 +46,7 @@ public:
             const int Size
         ) = 0;
 };
+
+}
 
 #endif

@@ -12,6 +12,9 @@
 #include "FASetUtils.h"
 #include "FARSNfa_wo_ro.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -62,5 +65,7 @@ private:
   int m_any_iw;
   bool m_process_any;
 };
+
+}
 
 #endif

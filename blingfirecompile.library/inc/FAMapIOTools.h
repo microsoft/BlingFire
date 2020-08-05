@@ -11,6 +11,9 @@
 
 #include <iostream>
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FAMapA;
 class FAMultiMapA;
@@ -77,5 +80,7 @@ private:
     FAArray_cont_t < int > m_tmp_arr;
     FAArray_cont_t < float > m_tmp_farr;
 };
+
+}
 
 #endif

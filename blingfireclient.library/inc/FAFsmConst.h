@@ -9,6 +9,8 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
 
 class FAFsmConst {
 
@@ -401,5 +403,7 @@ public:
     };
 
 };
+
+}
 
 #endif

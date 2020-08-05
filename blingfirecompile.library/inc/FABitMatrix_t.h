@@ -12,6 +12,9 @@
 #include "FABitArray.h"
 #include "FAAllocatorA.h"
 
+namespace BlingFire
+{
+
 ///
 /// Maps (X,Y) -> T|F
 /// X \in 0..N, Y \in 0..K
@@ -129,7 +132,7 @@ template < class Ty >
 void FABitMatrix_t< Ty >::Set (const Ty X, const Ty * pYs, const int YsCount)
 {
     DebugLogAssert (0 <= X);
-    DebugLogAssert (::FAIsSortUniqed (pYs, YsCount));
+    DebugLogAssert (FAIsSortUniqed (pYs, YsCount));
 
     // ensure there is entry for X allocated
     AddEmpty (X);
@@ -239,6 +242,8 @@ const Ty FABitMatrix_t< Ty >::GetMaxY (const Ty X) const
     }
 
     return -1;
+}
+
 }
 
 #endif

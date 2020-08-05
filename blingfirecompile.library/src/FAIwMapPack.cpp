@@ -10,6 +10,9 @@
 #include "FAEncodeUtils.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FAIwMapPack::FAIwMapPack (FAAllocatorA * pAlloc) :
     m_pOldIws (NULL),
@@ -48,7 +51,7 @@ void FAIwMapPack::
     SetIws (const int * pOldIws, const int * pNewIws, const int Count)
 {
     DebugLogAssert (0 < Count && pOldIws && pNewIws);
-    DebugLogAssert (::FAIsSortUniqed (pOldIws, Count));
+    DebugLogAssert (FAIsSortUniqed (pOldIws, Count));
 
     m_pOldIws = pOldIws;
     m_pNewIws = pNewIws;
@@ -155,7 +158,7 @@ void FAIwMapPack::BuildIntervals ()
 
 const int FAIwMapPack::GetNewIw (const int OldIw) const
 {
-    const int IwIdx = ::FAFind_log (m_pOldIws, m_Count, OldIw);
+    const int IwIdx = FAFind_log (m_pOldIws, m_Count, OldIw);
 
     if (-1 == IwIdx)
         return -1;
@@ -279,4 +282,6 @@ void FAIwMapPack::Process ()
     BuildIntervals ();
     BuildNewIwsArray ();
     BuildDump ();
+}
+
 }

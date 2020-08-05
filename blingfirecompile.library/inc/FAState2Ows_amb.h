@@ -12,6 +12,9 @@
 #include "FABitArray.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSNfaA;
 
@@ -40,5 +43,7 @@ private:
     FAArray_cont_t < int > m_ows;
 
 };
+
+}
 
 #endif

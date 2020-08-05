@@ -20,6 +20,9 @@
 #include <string>
 #include <iomanip>
 
+namespace BlingFire
+{
+
 
 void FAPrintRegexpTree (
         std::ostream& os,
@@ -367,7 +370,7 @@ void FAPrintWordList (
             DebugLogAssert (pTmpStr);
 
             const int TmpStrLen = \
-                ::FAArrayToStrUtf8 (pWordList, Count, pTmpStr, MaxStrLen);
+                FAArrayToStrUtf8 (pWordList, Count, pTmpStr, MaxStrLen);
 
             if (0 > TmpStrLen || MaxStrLen < TmpStrLen) {
                 throw FAException (FAMsg::IOError, __FILE__, __LINE__);
@@ -425,7 +428,7 @@ void FAPrintSplitting (
                 os << Delim;
             }
 
-            ::FAPrintWordList (os, pChain + BeginPos, SegmentSize);
+            FAPrintWordList (os, pChain + BeginPos, SegmentSize);
             BeginPos = EndPos + 1;
         }
     }
@@ -509,7 +512,7 @@ void FAPrintTaggedWord (
         if (FAFsmConst::CHAR_SPACE == Symbol)
             Symbol = FAFsmConst::CHAR_MWE_DELIM;
 
-        char * pEnd = ::FAIntToUtf8 (Symbol, Utf8Symbol, MaxSize - 1);
+        char * pEnd = FAIntToUtf8 (Symbol, Utf8Symbol, MaxSize - 1);
         *pEnd = 0;
 
         os << Utf8Symbol;
@@ -551,7 +554,7 @@ void FAPrintWord (
 
         // convert UTF-32 --> UTF-8
         const int StrLen = \
-            ::FAArrayToStrUtf8 (pWord, WordLen, WordStr, MaxStrLen);
+            FAArrayToStrUtf8 (pWord, WordLen, WordStr, MaxStrLen);
         FAAssert (0 < StrLen && StrLen < MaxStrLen - 1, \
             FAMsg::InvalidParameters);
 
@@ -606,36 +609,36 @@ void FAPrintChain (
 
     if (FAFsmConst::DIR_L2R == Dir) {
 
-        ::FAPrintValue (os, pChain [0], Width, Hex);
+        FAPrintValue (os, pChain [0], Width, Hex);
         for (int i = 1; i < ChainSize; ++i) {
             os << ' ';
-            ::FAPrintValue (os, pChain [i], Width, Hex);
+            FAPrintValue (os, pChain [i], Width, Hex);
         }
 
     } else if (FAFsmConst::DIR_R2L == Dir) {
 
-        ::FAPrintValue (os, pChain [ChainSize - 1], Width, Hex);
+        FAPrintValue (os, pChain [ChainSize - 1], Width, Hex);
         for (int i = ChainSize - 2; i >= 0; --i) {
             os << ' ';
-            ::FAPrintValue (os, pChain [i], Width, Hex);
+            FAPrintValue (os, pChain [i], Width, Hex);
         }
 
     } else {
 
         DebugLogAssert (FAFsmConst::DIR_AFF == Dir);
 
-        ::FAPrintValue (os, pChain [ChainSize - 1], Width, Hex);
+        FAPrintValue (os, pChain [ChainSize - 1], Width, Hex);
         const int ChainSize_2 = ChainSize >> 1;
 
         for (int i = 0; i < ChainSize_2; ++i) {
 
             os << ' ';
-            ::FAPrintValue (os, pChain [i], Width, Hex);
+            FAPrintValue (os, pChain [i], Width, Hex);
 
             const int j = ChainSize - 2 - i;
             if (j > i) {
                 os << ' ';
-                ::FAPrintValue (os, pChain [j], Width, Hex);
+                FAPrintValue (os, pChain [j], Width, Hex);
             }
         }
     } // of if ...
@@ -660,7 +663,7 @@ void FAPrintHyphWord (
 
         const int Symbol = pWord [i];
 
-        char * pEnd = ::FAIntToUtf8 (Symbol, Utf8Symbol, MaxSize - 1);
+        char * pEnd = FAIntToUtf8 (Symbol, Utf8Symbol, MaxSize - 1);
         FAAssert (NULL != pEnd, FAMsg::IOError);
         *pEnd = 0;
 
@@ -676,7 +679,7 @@ void FAPrintHyphWord (
             const int HyphSymbol = HyphId >> 4;
 
             if (0 < HyphSymbol) {
-                char * pEndHyph = ::FAIntToUtf8 (HyphSymbol, Utf8Symbol, MaxSize - 1);
+                char * pEndHyph = FAIntToUtf8 (HyphSymbol, Utf8Symbol, MaxSize - 1);
                 FAAssert (NULL != pEndHyph, FAMsg::IOError);
                 *pEndHyph = 0;
             } else {
@@ -718,5 +721,7 @@ void FAPrintHyphWord (
         } // of if (FAFsmConst::HYPH_NO_HYPH < HyphId) ...
 
     } // for (int i = 0; ...
+}
+
 }
 

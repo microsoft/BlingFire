@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FATaggedText.h"
 
+namespace BlingFire
+{
+
 
 FATaggedText::FATaggedText (FAAllocatorA * pAlloc)
 {
@@ -123,4 +126,6 @@ void FATaggedText::SetTags (const int * pTags, const int Count)
     LogAssert (0 <= Count && (unsigned) Count == m_num2tag.size ());
 
     memcpy (m_num2tag.begin (), pTags, Count * sizeof (int));
+}
+
 }

@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FAMultiMapCA;
 
@@ -54,5 +57,7 @@ private:
     int m_MaxChainSize2;
 
 };
+
+}
 
 #endif

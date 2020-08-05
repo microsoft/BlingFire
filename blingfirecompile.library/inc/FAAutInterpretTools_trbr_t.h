@@ -14,6 +14,9 @@
 #include "FAMultiMapCA.h"
 #include "FABrResultA.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -105,7 +108,7 @@ const bool FAAutInterpretTools_trbr_t< Ty >::
     const int BrCount = m_pPos2BrEnd->Get (Pos, &pBrs);
 
     if (0 < BrCount)
-        return (-1 != ::FAFind_log (pBrs, BrCount, BrId));
+        return (-1 != FAFind_log (pBrs, BrCount, BrId));
     else
         return false;
 }
@@ -246,6 +249,8 @@ const bool FAAutInterpretTools_trbr_t< Ty >::
 
         return false;
     }
+}
+
 }
 
 #endif

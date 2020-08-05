@@ -17,6 +17,9 @@
 #include <vector>
 #include <float.h>
 
+namespace BlingFire
+{
+
 ///
 /// Splits input sequence into segments with smaller number of segments 
 ///   and maximum sum of weights.
@@ -272,6 +275,8 @@ const int FATokenSegmentationTools_1best_t < Ty >::
     }
 
     return ActualOutSize;
+}
+
 }
 
 #endif

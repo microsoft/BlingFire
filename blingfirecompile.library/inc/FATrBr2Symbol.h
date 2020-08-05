@@ -11,6 +11,9 @@
 #include "FAArray_cont_t.h"
 #include "FAToken.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -57,5 +60,7 @@ private:
     static const FAToken m_left_br;
     static const FAToken m_right_br;
 };
+
+}
 
 #endif

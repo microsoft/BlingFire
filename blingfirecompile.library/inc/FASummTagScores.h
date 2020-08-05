@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAFsmConst.h"
 
+namespace BlingFire
+{
+
 ///
 /// Calculates a combined score for each input tag of the 
 /// 
@@ -55,5 +58,7 @@ private:
     int m_MaxTag;
     float m_UnkScore;
 };
+
+}
 
 #endif

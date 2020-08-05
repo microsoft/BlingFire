@@ -12,6 +12,9 @@
 #include "FAArray_cont_t.h"
 #include "FAChainsPack_triv.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -66,5 +69,7 @@ private:
     int m_Offset;
 
 };
+
+}
 
 #endif

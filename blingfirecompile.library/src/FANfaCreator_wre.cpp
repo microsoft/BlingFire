@@ -9,6 +9,9 @@
 #include "FANfaCreator_wre.h"
 #include "FAChain2NumA.h"
 
+namespace BlingFire
+{
+
 
 FANfaCreator_wre::FANfaCreator_wre (FAAllocatorA * pAlloc) :
     FANfaCreator_base (pAlloc),
@@ -83,4 +86,6 @@ void FANfaCreator_wre::SetTransition (const int FromState,
     const int Iw = TokenNum + m_BaseIw;
 
     m_tmp_nfa.SetTransition (FromState, Iw, ToState);
+}
+
 }

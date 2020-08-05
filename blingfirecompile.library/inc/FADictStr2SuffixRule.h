@@ -11,6 +11,9 @@
 #include "FATransformCA_t.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FAMultiMapCA;
 
@@ -99,5 +102,7 @@ private:
     // charmap
     const FAMultiMapCA * m_pCharMap;
 };
+
+}
 
 #endif

@@ -15,6 +15,9 @@
 
 #include <iostream>
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FAChain2NumA;
 class FAMultiMapA;
@@ -172,5 +175,7 @@ protected:
     const FATagSet * m_pTagSet;
     const FATagSet * m_pTagSet2;
 };
+
+}
 
 #endif

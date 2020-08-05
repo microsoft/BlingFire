@@ -9,6 +9,9 @@
 #include "FAEncoder_pref.h"
 #include "FAEncodeUtils.h"
 
+namespace BlingFire
+{
+
 
 const int FAEncoder_pref::GetMaxBytes () const
 {
@@ -34,5 +37,7 @@ const int FAEncoder_pref::Encode (const int * pChain,
   }
 
   return int (pOut - pOutBuffer);
+}
+
 }
 

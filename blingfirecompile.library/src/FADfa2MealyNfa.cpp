@@ -12,6 +12,9 @@
 #include "FARSDfaA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FADfa2MealyNfa::FADfa2MealyNfa (FAAllocatorA * pAlloc) :
     m_pDfa (NULL),
@@ -53,7 +56,7 @@ void FADfa2MealyNfa::Process ()
     const int * pIws;
     const int Count = m_pDfa->GetIWs (&pIws);
     DebugLogAssert (0 < Count && pIws);
-    DebugLogAssert (::FAIsSortUniqed (pIws, Count));
+    DebugLogAssert (FAIsSortUniqed (pIws, Count));
 
     const int MaxState = m_pDfa->GetMaxState ();
     m_state2state.resize (MaxState + 1);
@@ -122,7 +125,7 @@ void FADfa2MealyNfa::Process ()
         } // of for (int i = 0; ...
     } // of while (!m_stack.empty ()) ...
 
-    const int NewSize = ::FASortUniq (m_finals.begin (), m_finals.end ());
+    const int NewSize = FASortUniq (m_finals.begin (), m_finals.end ());
     m_pOutNfa->SetFinals (m_finals.begin (), NewSize);
 
     m_finals.Clear ();
@@ -135,4 +138,6 @@ void FADfa2MealyNfa::Process ()
     m_state2state.Create ();
 
     m_pOutNfa->Prepare ();
+}
+
 }

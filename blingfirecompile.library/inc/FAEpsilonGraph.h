@@ -12,6 +12,9 @@
 #include "FAArray_cont_t.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSNfaA;
 
@@ -76,5 +79,7 @@ protected:
     const int m_DeadState;
 
 };
+
+}
 
 #endif

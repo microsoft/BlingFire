@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FALDB;
 class FARSDfa_pack_triv;
 class FAState2Ows_pack_triv;
@@ -65,5 +68,7 @@ private:
     bool m_UseNfst;
     FAMultiMap_pack_fixed * m_pCharMap;
 };
+
+}
 
 #endif

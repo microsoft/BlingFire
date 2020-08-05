@@ -31,6 +31,8 @@ on Windows, Linux, Mac OSX, etc.
 // defines g_dumpBlingFireTokLibSbdData, the sources of this data is SearchGold\deploy\builds\data\IndexGenData\ldbsrc\ldb\tp3\sbd
 #include "BlingFireTokLibSbdData.cxx"
 
+using namespace BlingFire;
+
 // version of this binary and the algo logic
 #define BLINGFIRETOK_MAJOR_VERSION_NUM 6
 #define BLINGFIRETOK_MINOR_VERSION_NUM 1

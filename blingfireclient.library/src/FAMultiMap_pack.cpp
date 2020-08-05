@@ -9,6 +9,8 @@
 #include "FAMultiMap_pack.h"
 #include "FAEncodeUtils.h"
 
+namespace BlingFire
+{
 
 FAMultiMap_pack::FAMultiMap_pack () :
     m_pOffsets (NULL),
@@ -121,4 +123,6 @@ const int FAMultiMap_pack::Get (const int Key, const int ** ppValues) const
 
         return -1;
     }
+}
+
 }

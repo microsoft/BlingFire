@@ -14,6 +14,9 @@
 #include "FASetUtils.h"
 #include "FAAllocatorA.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class calculates transistive closure for acyclic graphs.
 ///
@@ -157,6 +160,8 @@ void FATransClosure_acyc_t< _TGraph >::ProcessNode (const int Node)
   if (0 < Size) {
       m_pOutGraph->SetDstNodes (Node, pRes, Size);
   }
+}
+
 }
 
 #endif

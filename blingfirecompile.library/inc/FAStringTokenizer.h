@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class splits input string into tokens by specified delimiters
 ///
@@ -60,5 +63,7 @@ private:
 
     static const char * const DefSpaces;
 };
+
+}
 
 #endif

@@ -10,6 +10,9 @@
 #include "FAFsmConst.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FARSDfa_renum::FARSDfa_renum (FAAllocatorA * pAlloc) :
     m_pDfa (NULL),
@@ -80,7 +83,7 @@ void FARSDfa_renum::Prepare ()
         m_new_finals.push_back (NewFinal);
     }
 
-    const int NewSize = ::FASortUniq (m_new_finals.begin (), m_new_finals.end ());
+    const int NewSize = FASortUniq (m_new_finals.begin (), m_new_finals.end ());
     m_new_finals.resize (NewSize);
 }
 
@@ -232,4 +235,6 @@ void FARSDfa_renum::SetTransition (const int /*FromState*/,
 {
     // not implemented
     DebugLogAssert (0);
+}
+
 }

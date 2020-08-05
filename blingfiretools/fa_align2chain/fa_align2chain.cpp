@@ -21,6 +21,7 @@
 #include <string>
 #include <fstream>
 
+using namespace BlingFire;
 
 const char * __PROG__ = "";
 

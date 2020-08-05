@@ -7,6 +7,9 @@
 #include "FAConfig.h"
 #include "FABrResult.h"
 
+namespace BlingFire
+{
+
 
 FABrResult::FABrResult (FAAllocatorA * pAlloc) :
     m_Base (0)
@@ -77,3 +80,4 @@ void FABrResult::Clear ()
     m_res.Clear ();
 }
 
+}

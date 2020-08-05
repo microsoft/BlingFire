@@ -43,6 +43,9 @@
 #endif
 */
 
+namespace BlingFire
+{
+
 
 FAWRECompiler::FAWRECompiler (FAAllocatorA * pAlloc) :
     m_Type (FAFsmConst::WRE_TYPE_RS),
@@ -279,7 +282,7 @@ void FAWRECompiler::Process ()
     // WRE --> TnNfa
     m_wre2tnnfa.Process ();
     const FARSNfaA * pTokenNfa = m_wre2tnnfa.GetTokenNfa ();
-    DebugLogAssert (::FAIsValidNfa (pTokenNfa));
+    DebugLogAssert (FAIsValidNfa (pTokenNfa));
 
     // Tokens --> Digitizers, if not external
     if (m_pToken2Num == &m_token2num) {
@@ -300,7 +303,7 @@ void FAWRECompiler::Process ()
     // TnNfa --> Nfa
     m_tnnfa2nfa.SetTokenNfa (pTokenNfa);
     m_tnnfa2nfa.Process ();
-    DebugLogAssert (::FAIsValidNfa (&m_nfa));
+    DebugLogAssert (FAIsValidNfa (&m_nfa));
 
     // build different types of Dfa
     if (FAFsmConst::WRE_TYPE_MEALY == m_Type) {
@@ -329,13 +332,13 @@ void FAWRECompiler::BuildRs ()
     // add one more state, to be used as a dead
     const int MaxState = m_dfa.GetMaxState ();
     m_dfa.SetMaxState (MaxState + 1);
-    DebugLogAssert (::FAIsValidDfa (&m_dfa));
+    DebugLogAssert (FAIsValidDfa (&m_dfa));
 
     // Dfa --> Min Dfa
     m_dfa2mindfa.Process ();
     m_dfa.Clear ();
     m_dfa2mindfa.Clear ();
-    DebugLogAssert (::FAIsValidDfa (&m_min_dfa));
+    DebugLogAssert (FAIsValidDfa (&m_min_dfa));
 
     // Min Dfa --> Min Dfa no gaps
     m_renum.Process ();
@@ -344,7 +347,7 @@ void FAWRECompiler::BuildRs ()
     m_renum_dfa.SetOldDfa (&m_min_dfa);
     m_renum_dfa.SetOld2New (pOld2New);
     m_renum_dfa.Prepare ();
-    DebugLogAssert (::FAIsValidDfa (&m_renum_dfa));
+    DebugLogAssert (FAIsValidDfa (&m_renum_dfa));
 
     m_pDfa1 = &m_renum_dfa;
 }
@@ -355,13 +358,13 @@ void FAWRECompiler::BuildMoore ()
     // eNfa --> Nfa
     m_e_removal.Process ();
     m_nfa.Clear ();
-    DebugLogAssert (::FAIsValidNfa (&m_nfa_rw));
+    DebugLogAssert (FAIsValidNfa (&m_nfa_rw));
 
     // Nfa --> Dfa
     m_nfa2dfa.Process ();
     m_nfa_rw.Clear ();
     m_nfa2dfa.Clear ();
-    DebugLogAssert (::FAIsValidDfa (&m_dfa));
+    DebugLogAssert (FAIsValidDfa (&m_dfa));
 
     // add one more state, to be used as a dead
     const int MaxState = m_dfa.GetMaxState ();
@@ -371,7 +374,7 @@ void FAWRECompiler::BuildMoore ()
     m_dfa2mindfa.Process ();
     m_dfa.Clear ();
     m_dfa2mindfa.Clear ();
-    DebugLogAssert (::FAIsValidDfa (&m_min_dfa));
+    DebugLogAssert (FAIsValidDfa (&m_min_dfa));
 
     // Min Dfa --> Min Dfa no gaps
     m_renum.Process ();
@@ -380,13 +383,13 @@ void FAWRECompiler::BuildMoore ()
     m_renum_dfa.SetOldDfa (&m_min_dfa);
     m_renum_dfa.SetOld2New (pOld2New);
     m_renum_dfa.Prepare ();
-    DebugLogAssert (::FAIsValidDfa (&m_renum_dfa));
+    DebugLogAssert (FAIsValidDfa (&m_renum_dfa));
 
     // Rs Dfa --> Moore Dfa
     m_rs2moore.Process ();
     m_min_dfa.Clear ();
     m_renum_dfa.Clear ();
-    DebugLogAssert (::FAIsValidDfa (&m_dfa1));
+    DebugLogAssert (FAIsValidDfa (&m_dfa1));
 
     m_pDfa1 = &m_dfa1;
     m_pMooreOws = &m_moore_ows;
@@ -399,12 +402,12 @@ void FAWRECompiler::BuildMealy ()
     FAWRECompiler::BuildRs ();
 
     // Rs Nfa --> Mealy Nfa + TrBr map
-    ::FACopyDfa2Nfa (&m_nfa_rw, &m_renum_dfa);
+    FACopyDfa2Nfa (&m_nfa_rw, &m_renum_dfa);
     m_nfa2mealy.Process ();
     m_pTrBrMap = m_nfa2mealy.GetOw2TrBrMap ();
 
     // check whether map is empty, e.g. no brackets
-    if (::FAIsEmpty (m_pTrBrMap)) {
+    if (FAIsEmpty (m_pTrBrMap)) {
 
         m_pTrBrMap = NULL;
         m_pDfa1 = NULL;
@@ -422,14 +425,14 @@ void FAWRECompiler::BuildMealy ()
 
         // Mealy Nfa --> Mealy Dfa(s)
         const FARSNfaA * pNfa = m_unamb.GetNfa ();
-        DebugLogAssert (::FAIsValidNfa (pNfa));
+        DebugLogAssert (FAIsValidNfa (pNfa));
         const FAMealyNfaA * pSigma = m_unamb.GetSigma ();
         DebugLogAssert (pSigma);
         m_nfa2dfa_mealy.SetInNfa (pNfa, pSigma);
         m_nfa2dfa_mealy.Process ();
         m_nfa2dfa_mealy.Clear ();
         m_unamb.Clear ();
-        DebugLogAssert (::FAIsValidDfa (&m_dfa1));
+        DebugLogAssert (FAIsValidDfa (&m_dfa1));
 
         m_pDfa1 = &m_dfa1;
         m_pSigma1 = &m_sigma1;
@@ -438,28 +441,28 @@ void FAWRECompiler::BuildMealy ()
         if (-1 != m_dfa2.GetMaxState ()) {
 
             // calculate Iw equivalence classes of m_dfa2
-            DebugLogAssert (::FAIsValidDfa (&m_dfa2));
+            DebugLogAssert (FAIsValidDfa (&m_dfa2));
             m_iw_classify.SetIwMax (m_dfa2.GetMaxIw ());
             m_iw_classify.Process ();
 
             // remap Sigma2
-            ::FARemapMealySigma2 (&m_dfa2, &m_sigma2, \
+            FARemapMealySigma2 (&m_dfa2, &m_sigma2, \
                 &m_sigma2_min, &m_old2new);
             m_sigma2.Clear ();
 
             // remap Dfa2
-            ::FARemapRsFsmIws (&m_dfa2, &m_dfa2_min, &m_old2new);
+            FARemapRsFsmIws (&m_dfa2, &m_dfa2_min, &m_old2new);
             m_dfa2.Clear ();
-            DebugLogAssert (::FAIsValidDfa (&m_dfa2_min));
+            DebugLogAssert (FAIsValidDfa (&m_dfa2_min));
 
             // remap Sigma1 in-place
-            ::FARemapMealySigma1 (&m_dfa1, &m_sigma1, &m_sigma1, &m_old2new);
+            FARemapMealySigma1 (&m_dfa1, &m_sigma1, &m_sigma1, &m_old2new);
             m_old2new.Clear ();
 
             m_pDfa2 = &m_dfa2_min;
             m_pSigma2 = &m_sigma2_min;
         }
-    } // of if (::FAIsEmpty (m_pTrBrMap)) ... else ...
+    } // of if (FAIsEmpty (m_pTrBrMap)) ... else ...
 }
 
 
@@ -703,4 +706,6 @@ void FAWRECompiler::GetSigma2 (FAMealyDfaA **)
 void FAWRECompiler::GetTrBrMap (FAMultiMapA **)
 {
     DebugLogAssert (0);
+}
+
 }

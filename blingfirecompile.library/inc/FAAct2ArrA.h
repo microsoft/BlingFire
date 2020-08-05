@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FATagSet;
 
 ///
@@ -32,5 +35,7 @@ public:
             int * pRightCxAdjust
         ) = 0;
 };
+
+}
 
 #endif

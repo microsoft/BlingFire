@@ -11,6 +11,9 @@
 #include "FASetImageA.h"
 #include "FAArrayCA.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class interprets the dump created by FAArrayPack, see FAArrayPack
 /// for the details of representation.
@@ -42,5 +45,7 @@ private:
     /// data themselves
     const unsigned char * m_pData;
 };
+
+}
 
 #endif

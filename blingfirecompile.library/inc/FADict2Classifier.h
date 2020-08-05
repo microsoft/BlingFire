@@ -15,6 +15,9 @@
 #include "FADfaTopoGraph.h"
 #include "FASetUtils.h"
 
+namespace BlingFire
+{
+
 class FARSDfaA;
 class FAState2OwsA;
 class FAAllocatorA;
@@ -136,5 +139,7 @@ private:
         DefMinDepth = 3,
     };
 };
+
+}
 
 #endif

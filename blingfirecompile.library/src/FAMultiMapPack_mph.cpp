@@ -10,6 +10,9 @@
 #include "FAFsmConst.h"
 #include "FAMultiMapA.h"
 
+namespace BlingFire
+{
+
 
 FAMultiMapPack_mph::FAMultiMapPack_mph (FAAllocatorA * pAlloc) :
     m_pMMap (NULL),
@@ -176,4 +179,6 @@ void FAMultiMapPack_mph::Process ()
     pCurrPtr += sizeof (int);
 
     memcpy (pCurrPtr, pFsmDump, FsmDumpSize);
+}
+
 }

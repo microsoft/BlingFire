@@ -12,6 +12,9 @@
 #include "FATagSet.h"
 #include "FALimits.h"
 
+namespace BlingFire
+{
+
 ///
 /// fa_lex based word-breaker
 ///
@@ -123,5 +126,7 @@ private:
     // amount of tokens which can be processed at once
     unsigned int m_uMaxTokensSize;
 };
+
+}
 
 #endif

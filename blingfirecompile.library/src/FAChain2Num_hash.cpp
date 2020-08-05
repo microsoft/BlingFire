@@ -11,6 +11,9 @@
 #include "FAException.h"
 #include "FALimits.h"
 
+namespace BlingFire
+{
+
 
 FAChain2Num_hash::FAChain2Num_hash () :
   m_pAlloc (NULL)
@@ -504,4 +507,6 @@ void FAChain2Num_hash::Remove (const int * pChain, const int Size)
         } // of if (k < SetSize) ...
 
     } // of if (0 < Idx) ...
+}
+
 }

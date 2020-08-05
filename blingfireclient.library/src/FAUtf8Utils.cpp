@@ -9,9 +9,15 @@
 #include "FAFsmConst.h"
 #include "FAUtf8Utils.h"
 
+#include "FANormalizeDiacriticsMapPreserve.cxx"
+#include "FANormalizeDiacriticsMapProd.cxx"
+#include "FANormalizeDiacriticsMapRemove.cxx"
+
 
 #define FAIsSurrogate(S) (0x0000D800 == (0xFFFFF800 & S))
 
+namespace BlingFire
+{
 
 const int FAUtf8Size (const char * ptr)
 {
@@ -94,7 +100,7 @@ const char * FAUtf8ToInt (const char * ptr, int * result)
             ret |= ch & 0x3f ;
         }
 
-        if (octet_count != ::FAUtf8Size (ret)) {
+        if (octet_count != FAUtf8Size (ret)) {
             // input sequence must be the shortest one
             return NULL;
         }
@@ -172,7 +178,7 @@ const char * FAUtf8ToInt (const char * pBegin, const char * pEnd, int * pResult)
             ret |= ch & 0x3f ;
         }
 
-        if (octet_count != ::FAUtf8Size (ret)) {
+        if (octet_count != FAUtf8Size (ret)) {
             // input sequence must be the shortest one
             return NULL;
         }
@@ -208,7 +214,7 @@ const int FAStrUtf8ToArray (
     int i = 0;
     while (i < MaxSize && 0 != *pStr) {
 
-        pStr = ::FAUtf8ToInt (pStr, pArray);
+        pStr = FAUtf8ToInt (pStr, pArray);
 
         if (NULL == pStr) {
             // invalid input sequence
@@ -248,7 +254,7 @@ const int FAStrUtf8ToArray (
     int i = 0;
     while (pStr < pEnd && pArray < pArrayEnd) {
 
-        pStr = ::FAUtf8ToInt (pStr, pEnd, pArray);
+        pStr = FAUtf8ToInt (pStr, pEnd, pArray);
 
         if (NULL == pStr) {
             // invalid input sequence
@@ -291,7 +297,7 @@ const int FAStrUtf8ToArray (
     while (pStr < pEnd && pArray < pArrayEnd) {
 
         const int Offset = (int) (pStr - pBegin);
-        pStr = ::FAUtf8ToInt (pStr, pEnd, pArray);
+        pStr = FAUtf8ToInt (pStr, pEnd, pArray);
 
         if (NULL == pStr) {
             // invalid input sequence
@@ -366,14 +372,14 @@ const int FAStrUtf8ToUtf16LE (
     while (pStr < pEnd && pArray < pArrayEnd) {
 
         const int Offset = (int) (pStr - pBegin);
-        pStr = ::FAUtf8ToInt (pStr, pEnd, &codepoint);
+        pStr = FAUtf8ToInt (pStr, pEnd, &codepoint);
 
         if (NULL == pStr) {
             // invalid input sequence
             return -1;
         }
 
-        wchar_t * out = ::FAIntToUtf16LE(codepoint, pArray, MaxSize - i);
+        wchar_t * out = FAIntToUtf16LE(codepoint, pArray, MaxSize - i);
 
         if (NULL == out) {
             //not enough memory
@@ -468,7 +474,7 @@ const int FAArrayToStrUtf8 (
         const int Symbol = pArray [i];
 
         const int CurrSize = (const int) (ptr - pStr);
-        ptr = ::FAIntToUtf8 (Symbol, ptr, MaxStrSize - CurrSize);
+        ptr = FAIntToUtf8 (Symbol, ptr, MaxStrSize - CurrSize);
 
         if (NULL == ptr) {
             // invalid input sequence
@@ -498,10 +504,6 @@ const bool FAIsUtf8Enc (const char * pEncName)
 }
 
 
-
-#include "FANormalizeDiacriticsMapPreserve.cxx"
-#include "FANormalizeDiacriticsMapProd.cxx"
-#include "FANormalizeDiacriticsMapRemove.cxx"
 
 typedef const uint16_t (*_TPCharNormalizationMapDiacritics)[65536][2];
 
@@ -549,7 +551,7 @@ const int FAStrUtf8Normalize (
 
         // get the UTF-32LE value and get the pointer to the next UTF-8 character
         int utf32le = 0;
-        const char * pNextStr = ::FAUtf8ToInt (pStr, pEnd, &utf32le);
+        const char * pNextStr = FAUtf8ToInt (pStr, pEnd, &utf32le);
 
         if (NULL == pNextStr) {
             // invalid input sequence
@@ -571,20 +573,20 @@ const int FAStrUtf8Normalize (
         if(1 != c1) {
 
             if(0 < c1) {
-                char * const pOut = ::FAIntToUtf8 (c1, pOutStrCurr, int(pOutStrEnd - pOutStrCurr));
+                char * const pOut = FAIntToUtf8 (c1, pOutStrCurr, int(pOutStrEnd - pOutStrCurr));
                 if(NULL == pOut) {
                     // non UTF-8 data in the map
                     return -1;
                 }
-                pOutStrCurr += ::FAUtf8Size (c1);
+                pOutStrCurr += FAUtf8Size (c1);
             }
             if(0 < c2) {
-                char * const pOut = ::FAIntToUtf8 (c2, pOutStrCurr, int(pOutStrEnd - pOutStrCurr));
+                char * const pOut = FAIntToUtf8 (c2, pOutStrCurr, int(pOutStrEnd - pOutStrCurr));
                 if(NULL == pOut) {
                     // non UTF-8 data in the map
                     return -1;
                 }
-                pOutStrCurr += ::FAUtf8Size (c2);
+                pOutStrCurr += FAUtf8Size (c2);
             }
 
         // copy the character over as-is
@@ -604,4 +606,6 @@ const int FAStrUtf8Normalize (
     // Note: if MaxOutSize is equal or bigger than this value, 
     //  then the output string is stored in the pOutStr buffer.
     return int(pOutStrCurr - pOutStr);
+}
+
 }

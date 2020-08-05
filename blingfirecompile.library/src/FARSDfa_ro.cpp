@@ -11,6 +11,9 @@
 
 #include <algorithm>
 
+namespace BlingFire
+{
+
 
 FARSDfa_ro::FARSDfa_ro (FAAllocatorA * pAlloc) :
     m_Initial (-1),
@@ -93,7 +96,7 @@ void FARSDfa_ro::
 {
     DebugLogAssert (m_tmp_iws.size () == m_tmp_dsts.size ());
     DebugLogAssert (0 < Count && pDsts && pIws);
-    DebugLogAssert (::FAIsSortUniqed (pIws, Count));
+    DebugLogAssert (FAIsSortUniqed (pIws, Count));
     DebugLogAssert (0 == m_State2Sets.size () % 2);
     DebugLogAssert (0 <= State);
 
@@ -138,7 +141,7 @@ void FARSDfa_ro::
 
     for (int i = 0; i < Count; ++i) {
         const int Iw = pIws [i];
-        if (-1 == ::FAFind_log (m_iws.begin (), OldIwsSize, Iw)) {
+        if (-1 == FAFind_log (m_iws.begin (), OldIwsSize, Iw)) {
             m_iws.push_back (Iw);
         }
     }
@@ -163,7 +166,7 @@ void FARSDfa_ro::SetTransition (const int State, const int Iw, const int Dst)
             const int * pIws = m_tmp_iws.begin ();
             const int * pDsts = m_tmp_dsts.begin ();
             const int Count = m_tmp_dsts.size ();
-            DebugLogAssert (::FAIsSortUniqed (pIws, Count));
+            DebugLogAssert (FAIsSortUniqed (pIws, Count));
 
             FARSDfa_ro::SetTransition (m_TmpState, pIws, pDsts, Count);
         }
@@ -185,7 +188,7 @@ void FARSDfa_ro::Prepare ()
         const int * pIws = m_tmp_iws.begin ();
         const int * pDsts = m_tmp_dsts.begin ();
         const int Count = m_tmp_dsts.size ();
-        DebugLogAssert (0 < Count && ::FAIsSortUniqed (pIws, Count));
+        DebugLogAssert (0 < Count && FAIsSortUniqed (pIws, Count));
 
         FARSDfa_ro::SetTransition (m_TmpState, pIws, pDsts, Count);
 
@@ -199,8 +202,8 @@ void FARSDfa_ro::Prepare ()
     int * pFinals = m_finals.begin ();
     const int OldCount = m_finals.size ();
 
-    if (!::FAIsSortUniqed (pFinals, OldCount)) {
-        const int NewCount = ::FASortUniq (pFinals, pFinals + OldCount);
+    if (!FAIsSortUniqed (pFinals, OldCount)) {
+        const int NewCount = FASortUniq (pFinals, pFinals + OldCount);
         m_finals.resize (NewCount);
     }
 }
@@ -235,8 +238,8 @@ const int FARSDfa_ro::GetInitial () const
 
 const bool FARSDfa_ro::IsFinal (const int State) const
 {
-    DebugLogAssert (::FAIsSortUniqed (m_finals.begin (), m_finals.size ()));
-    return -1 != ::FAFind_log (m_finals.begin (), m_finals.size (), State);
+    DebugLogAssert (FAIsSortUniqed (m_finals.begin (), m_finals.size ()));
+    return -1 != FAFind_log (m_finals.begin (), m_finals.size (), State);
 }
 
 
@@ -287,9 +290,9 @@ const int FARSDfa_ro::GetDest (const int State, const int Iw) const
 
         const int * pIws;
         const int Count = m_Sets.GetChain(Idx1, &pIws);
-        DebugLogAssert (0 < Count && ::FAIsSortUniqed (pIws, Count));
+        DebugLogAssert (0 < Count && FAIsSortUniqed (pIws, Count));
 
-        const int DstIdx = ::FAFind_log (pIws, Count, Iw);
+        const int DstIdx = FAFind_log (pIws, Count, Iw);
 
         if (-1 != DstIdx) {
 
@@ -332,3 +335,5 @@ const int FARSDfa_ro::GetFinals (const int ** ppStates) const
     return Count;
 }
 
+
+}

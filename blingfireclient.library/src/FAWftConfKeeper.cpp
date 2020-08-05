@@ -17,6 +17,8 @@
 #include "FAMultiMap_pack_fixed.h"
 #include "FAUtils_cl.h"
 
+namespace BlingFire
+{
 
 FAWftConfKeeper::FAWftConfKeeper () :
     m_pLDB (NULL),
@@ -244,3 +246,4 @@ const FAMultiMapCA * FAWftConfKeeper::GetCharMap () const
     return m_pCharMap;
 }
 
+}

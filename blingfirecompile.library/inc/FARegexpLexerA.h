@@ -10,6 +10,9 @@
 #include "FAArray_cont_t.h"
 #include "FAToken.h"
 
+namespace BlingFire
+{
+
 ///
 /// A common interface for regular-expression lexical analysers.
 ///
@@ -22,5 +25,7 @@ public:
   virtual void Process () = 0;
 
 };
+
+}
 
 #endif

@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FASetImageA.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class interprets image dump created by FAOffsetTablePack class
 ///
@@ -37,5 +40,7 @@ private:
     // number of indices for validation
     int m_OffsetCount;
 };
+
+}
 
 #endif

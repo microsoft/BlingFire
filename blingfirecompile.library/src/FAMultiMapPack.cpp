@@ -10,6 +10,9 @@
 #include "FAEncodeUtils.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FAMultiMapPack::FAMultiMapPack (FAAllocatorA * pAlloc) :
     m_pMMap (NULL),
@@ -82,7 +85,7 @@ void FAMultiMapPack::Prepare ()
 #ifndef NDEBUG
     const int NewSize =
 #endif
-        ::FASortUniq (m_keys.begin (), m_keys.end ());
+        FASortUniq (m_keys.begin (), m_keys.end ());
     DebugLogAssert ((unsigned int) NewSize == m_keys.size ());
 
     const int KeyCount = m_keys.size ();
@@ -243,5 +246,7 @@ void FAMultiMapPack::Process ()
     Prepare ();
     BuildDump ();
     Clear ();
+}
+
 }
 

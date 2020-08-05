@@ -11,6 +11,8 @@
 #include "FAUtils_cl.h"
 #include "FAFsmConst.h"
 
+namespace BlingFire
+{
 
 FARSDfa_pack_triv::FARSDfa_pack_triv () :
     m_pAutImage (NULL),
@@ -69,7 +71,7 @@ void FARSDfa_pack_triv::SetImage (const unsigned char * pAutImage)
 
         m_InitialState = Offset;
 
-        LogAssert (::FAIsValidDfa (this));
+        LogAssert (FAIsValidDfa (this));
     }
 }
 
@@ -187,7 +189,7 @@ const int FARSDfa_pack_triv::GetDest (const int State, const int Iw) const
             pCurrPtr += sizeof (char);
             // find outgoing transition index, if any
             const unsigned char * pIws = pCurrPtr;
-            Idx = ::FAFind_log (pIws, DstCount, (unsigned char) NewIw);
+            Idx = FAFind_log (pIws, DstCount, (unsigned char) NewIw);
             // skip Iws array
             pCurrPtr += (DstCount * sizeof (char));
 
@@ -203,7 +205,7 @@ const int FARSDfa_pack_triv::GetDest (const int State, const int Iw) const
             pCurrPtr += sizeof (short);
             // find outgoing transition index, if any
             const unsigned short * pIws = (const unsigned short*) pCurrPtr;
-            Idx = ::FAFind_log (pIws, DstCount, (unsigned short) NewIw);
+            Idx = FAFind_log (pIws, DstCount, (unsigned short) NewIw);
             // skip Iws array
             pCurrPtr += (DstCount * sizeof (short));
 
@@ -216,7 +218,7 @@ const int FARSDfa_pack_triv::GetDest (const int State, const int Iw) const
             pCurrPtr += sizeof (int);
             // find outgoing transition index, if any
             const unsigned int * pIws = (const unsigned int *) pCurrPtr;
-            Idx = ::FAFind_log (pIws, DstCount, (unsigned int) NewIw);
+            Idx = FAFind_log (pIws, DstCount, (unsigned int) NewIw);
             // skip Iws array
             pCurrPtr += (DstCount * sizeof (int));
         }
@@ -282,7 +284,7 @@ const int FARSDfa_pack_triv::GetDest (const int State, const int Iw) const
             pCurrPtr += sizeof (char);
             // find range index
             const unsigned char * pFromIws = pCurrPtr;
-            Idx = ::FAFindEqualOrLess_log \
+            Idx = FAFindEqualOrLess_log \
                 (pFromIws, RangeCount, (unsigned char) NewIw);
             // smaller than smallest range beginning
             if (-1 == Idx) {
@@ -311,7 +313,7 @@ const int FARSDfa_pack_triv::GetDest (const int State, const int Iw) const
             pCurrPtr += sizeof (short);
             // find range index
             const unsigned short * pFromIws = (const unsigned short*)pCurrPtr;
-            Idx = ::FAFindEqualOrLess_log \
+            Idx = FAFindEqualOrLess_log \
                 (pFromIws, RangeCount, (unsigned short) NewIw);
             // smaller than smallest range beginning
             if (-1 == Idx) {
@@ -337,7 +339,7 @@ const int FARSDfa_pack_triv::GetDest (const int State, const int Iw) const
             pCurrPtr += sizeof (int);
             // find range index
             const unsigned int * pFromIws = (const unsigned int*)pCurrPtr;
-            Idx = ::FAFindEqualOrLess_log \
+            Idx = FAFindEqualOrLess_log \
                 (pFromIws, RangeCount, (unsigned int) NewIw);
             // smaller than smallest range beginning
             if (-1 == Idx) {
@@ -394,4 +396,6 @@ const int FARSDfa_pack_triv::GetDest (const int State, const int Iw) const
 
     DebugLogAssert (FAFsmConst::TRS_NONE == TrType);
     return -1;
+}
+
 }

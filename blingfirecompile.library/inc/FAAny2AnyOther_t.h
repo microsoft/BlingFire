@@ -13,6 +13,8 @@
 #include "FAArray_cont_t.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
 
 /// This processor converts special symbool Any into special symbol
 /// AnyOther, which makes it possible to make further determinization.
@@ -203,7 +205,7 @@ AddTransitions (const int State, const int * pIws, const int IwsCount)
     DebugLogAssert (pDstSet);
 
     // sort uniq destination states
-    const int NewSize = ::FASortUniq (pDstSet->begin (), pDstSet->end ());
+    const int NewSize = FASortUniq (pDstSet->begin (), pDstSet->end ());
     pDstSet->resize (NewSize);
 
     // add transitions
@@ -347,6 +349,8 @@ void FAAny2AnyOther_t < NFA_in, NFA_out >::Process ()
 
   // make out Nfa ready
   m_pOutNfa->Prepare ();
+}
+
 }
 
 #endif

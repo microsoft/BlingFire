@@ -16,6 +16,8 @@
 #define STATUS_SUCCESS (0x00000000L)
 #endif
 
+using namespace BlingFire;
+
 const char * __PROG__ = "";
 
 const char * g_pInFile = NULL;

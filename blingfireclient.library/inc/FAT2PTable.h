@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FATsConfKeeper;
 
 ///
@@ -41,6 +44,8 @@ inline const float FAT2PTable::GetProb (const int T) const
     DebugLogAssert (0 < T && T <= m_Size); // assumes all tag probs have been stored
 
     return m_pArr [T - 1];
+}
+
 }
 
 #endif

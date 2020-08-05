@@ -12,6 +12,9 @@
 #include "FAChain2Num_hash.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -78,5 +81,7 @@ private:
     // keeps total number of elements in all the sets plus length
     int m_ValuesCount;
 };
+
+}
 
 #endif

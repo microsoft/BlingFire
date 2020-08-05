@@ -12,6 +12,8 @@
 #include "FAArray_cont_t.h"
 #include "FAHeap_t.h"
 
+namespace BlingFire
+{
 
 class FARegexpTree {
 
@@ -130,5 +132,6 @@ private:
 
 };
 
+}
 
 #endif

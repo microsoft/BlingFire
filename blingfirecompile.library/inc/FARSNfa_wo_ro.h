@@ -11,6 +11,9 @@
 #include "FAArray_cont_t.h"
 #include "FANfaDelta_wo_ro.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -67,5 +70,7 @@ private:
     FAArray_cont_t < int > m_finals;
     FANfaDelta_wo_ro m_delta;
 };
+
+}
 
 #endif

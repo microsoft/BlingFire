@@ -10,6 +10,9 @@
 #include "FAAllocatorA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FAMultiMap_ar_uniq::FAMultiMap_ar_uniq () :
     m_MaxCount (0),
@@ -322,9 +325,9 @@ void FAMultiMap_ar_uniq::SortUniq ()
         int * pBegin = pValues->begin ();
         int * pEnd = pValues->end ();
 
-        if (false == ::FAIsSortUniqed (pBegin, int (pEnd - pBegin))) {
+        if (false == FAIsSortUniqed (pBegin, int (pEnd - pBegin))) {
 
-            const int NewSize = ::FASortUniq (pBegin, pEnd);
+            const int NewSize = FASortUniq (pBegin, pEnd);
             pValues->resize (NewSize);
         }
 
@@ -332,4 +335,6 @@ void FAMultiMap_ar_uniq::SortUniq ()
         if (m_MaxCount < NewSize)
             m_MaxCount = NewSize;
     }
+}
+
 }

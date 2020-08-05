@@ -11,6 +11,9 @@
 #include "FATaggedTextA.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -53,5 +56,7 @@ private:
     FAArray_cont_t < int > m_num2tag;
     FAArray_cont_t < int > m_num2offset;
 };
+
+}
 
 #endif

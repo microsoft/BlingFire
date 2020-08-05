@@ -12,6 +12,9 @@
 #include "FARSDfaCA.h"
 #include "FAIwMap_pack.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class is able to interpret automaton image stored by FADfaPack_triv
 ///
@@ -52,5 +55,7 @@ private:
     // dst size
     int m_DstSize;
 };
+
+}
 
 #endif

@@ -16,6 +16,9 @@
 #include "FAWbdConfKeeper.h"
 #include "FALimits.h"
 
+namespace BlingFire
+{
+
 ///
 /// For the given input string, this processor returns a set of tags with
 /// scores. The tags and scores are calculated by matching fa_lex-style regular
@@ -303,7 +306,7 @@ const int FARegexpTags_t< Ty >::
                 Iw = DefSubIw;
             }
             if (m_fIgnoreCase) {
-                Iw = ::FAUtf32ToLower (Iw);
+                Iw = FAUtf32ToLower (Iw);
             }
             Dst = m_pDfa->GetDest (State, Iw);
             if (-1 == Dst) {
@@ -351,6 +354,8 @@ const int FARegexpTags_t< Ty >::
     *ppTags = m_pTags;
     *ppScores = m_pScores;
     return m_TagCount;
+}
+
 }
 
 #endif

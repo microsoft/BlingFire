@@ -9,6 +9,9 @@
 #include "FAFsmConst.h"
 #include "FANfaCreator_base.h"
 
+namespace BlingFire
+{
+
 
 FARegexp2Nfa::FARegexp2Nfa (FAAllocatorA * pAlloc) :
     m_pNfa (NULL),
@@ -303,4 +306,6 @@ void FARegexp2Nfa::Clear ()
 {
     m_tokens.resize (1);
     m_tree.Clear ();
+}
+
 }

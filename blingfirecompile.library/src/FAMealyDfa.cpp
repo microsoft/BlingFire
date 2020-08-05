@@ -9,6 +9,9 @@
 #include "FAMealyDfa.h"
 #include "FARSDfaCA.h"
 
+namespace BlingFire
+{
+
 
 FAMealyDfa::FAMealyDfa (FAAllocatorA * pAlloc) :
     m_pRsDfa (NULL)
@@ -84,4 +87,6 @@ const int FAMealyDfa::
 
         return -1;
     }
+}
+
 }

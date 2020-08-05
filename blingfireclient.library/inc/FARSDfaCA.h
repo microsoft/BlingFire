@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// client-side interface for Rabin-Scott NFA
 ///
@@ -30,5 +33,7 @@ public:
             const int MaxIwCount
         ) const = 0;
 };
+
+}
 
 #endif

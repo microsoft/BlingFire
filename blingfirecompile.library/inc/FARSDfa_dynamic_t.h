@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -101,6 +104,8 @@ void FARSDfa_dynamic_t< TDfa >::SetTransition (const int FromState,
     }
 
     TDfa::SetTransition (FromState, pIws, pDstStates, Count);
+}
+
 }
 
 #endif

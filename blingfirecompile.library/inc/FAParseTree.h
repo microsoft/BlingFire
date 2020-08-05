@@ -11,6 +11,9 @@
 #include "FAParseTreeA.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -64,5 +67,7 @@ private:
     /// upper level position -> node label (redundant but speeds things up)
     FAArray_cont_t < int > m_p2l;
 };
+
+}
 
 #endif

@@ -12,6 +12,9 @@
 #include "FAArray_cont_t.h"
 #include "FAMphInterpretTools_t.h"
 
+namespace BlingFire
+{
+
 class FARSDfaCA;
 class FAMealyDfaCA;
 class FAMultiMapCA;
@@ -99,5 +102,7 @@ private:
 
     bool m_NoEmpty;
 };
+
+}
 
 #endif

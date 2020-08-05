@@ -12,6 +12,9 @@
 #include "FAFsmConst.h"
 #include "FAUtils_cl.h"
 
+namespace BlingFire
+{
+
 
 FAMergeDumps::FAMergeDumps (FAAllocatorA * pAlloc) :
     m_pAlloc (pAlloc)
@@ -103,7 +106,7 @@ void FAMergeDumps::AddValidationDump ()
         LogAssert (0 <= m_sizes [i]);
 
         pVal [FAFsmConst::VALIDATION_SIZE] += m_sizes [i];
-        pVal [FAFsmConst::VALIDATION_HASH] = ::FAGetCrc32 (m_dumps [i], (size_t) m_sizes [i], pVal [FAFsmConst::VALIDATION_HASH]);
+        pVal [FAFsmConst::VALIDATION_HASH] = FAGetCrc32 (m_dumps [i], (size_t) m_sizes [i], pVal [FAFsmConst::VALIDATION_HASH]);
     }
 
     m_dumps.push_back ((unsigned char *) pVal);
@@ -144,4 +147,6 @@ void FAMergeDumps::Save (std::ostream * pOs)
 
         pOs->write ((const char *) pImageDump, CurrSize);
     }
+}
+
 }

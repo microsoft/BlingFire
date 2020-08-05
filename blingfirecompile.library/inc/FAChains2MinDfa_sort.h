@@ -16,6 +16,9 @@
 #include "FAEncoder_pref_mask.h"
 #include "FABitArray.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 
@@ -164,5 +167,7 @@ private:
   enum { AVE_ARCS_PER_STATE = 4 };
 
 };
+
+}
 
 #endif

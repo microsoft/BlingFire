@@ -14,6 +14,9 @@
 #include "FARegexpTree2Hash.h"
 #include "FARegexpTree2Str.h"
 
+namespace BlingFire
+{
+
 class FARegexpTree;
 class FAAllocatorA;
 
@@ -110,5 +113,7 @@ private:
 
     const char * m_pTmpRegexp;
 };
+
+}
 
 #endif

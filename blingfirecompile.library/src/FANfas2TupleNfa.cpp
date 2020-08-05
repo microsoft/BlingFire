@@ -11,6 +11,9 @@
 #include "FAException.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FANfas2TupleNfa::FANfas2TupleNfa (FAAllocatorA * pAlloc) :
     m_pNfaArr (NULL),
@@ -417,7 +420,7 @@ void FANfas2TupleNfa::CalcStateMap ()
             }
         } // of for (int i = 0; i < IwCount; ...
 
-        const int NewSize = ::FASortUniq (m_tmp.begin (), m_tmp.end ());
+        const int NewSize = FASortUniq (m_tmp.begin (), m_tmp.end ());
         m_tmp.resize (NewSize);
 
         const int * pUniqDsts = m_tmp.begin ();
@@ -536,4 +539,6 @@ void FANfas2TupleNfa::Process ()
 
     // make it ready to use
     m_pOutNfa->Prepare ();
+}
+
 }

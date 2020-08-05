@@ -14,6 +14,9 @@
 
 #include <Judy.h>
 
+namespace BlingFire
+{
+
 
 FAChain2Num_judy::FAChain2Num_judy () :
   m_map ((Pvoid_t) NULL)
@@ -135,6 +138,8 @@ const int FAChain2Num_judy::GetValue (const int /*Idx*/) const
   DebugLogAssert (0);
 
   return 0;
+}
+
 }
 
 // of ifdef HAVE_JUDYSL_LIB

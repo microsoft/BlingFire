@@ -9,6 +9,8 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
 
 class FAEncoderA;
 
@@ -36,5 +38,7 @@ public:
   virtual const int GetValue (const int Idx) const = 0;
 
 };
+
+}
 
 #endif

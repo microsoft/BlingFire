@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARegexpTree;
 
@@ -48,5 +51,7 @@ private:
 
     FAArray_cont_t < char > m_RegexpText;
 };
+
+}
 
 #endif

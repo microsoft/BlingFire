@@ -15,6 +15,9 @@
 
 #include <set>
 
+namespace BlingFire
+{
+
 class FARSDfaA;
 class FAMealyDfaA;
 
@@ -69,5 +72,7 @@ private:
     FARSNfa_wo_ro m_OutNfa;
     FAMealyNfa m_OutSigma;
 };
+
+}
 
 #endif

@@ -10,6 +10,9 @@
 #include "FAChain2Num_hash.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FATaggedTextCA;
 
@@ -116,5 +119,7 @@ private:
     unsigned int m_EosWordLen;
 
 };
+
+}
 
 #endif

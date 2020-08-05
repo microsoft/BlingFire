@@ -10,6 +10,9 @@
 
 #include <iostream>
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSNfaA;
 class FARSDfaA;
@@ -76,5 +79,7 @@ private:
 private:
     FAAllocatorA * m_pAlloc;
 };
+
+}
 
 #endif

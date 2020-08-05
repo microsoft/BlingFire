@@ -12,6 +12,9 @@
 #include "FAException.h"
 #include "FALimits.h"
 
+namespace BlingFire
+{
+
 /// contiguous array
 
 template <class Ty>
@@ -232,5 +235,7 @@ private:
     unsigned int m_size;
 
 };
+
+}
 
 #endif

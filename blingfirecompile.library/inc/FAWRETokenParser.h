@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FAWREToken;
 class FATagSet;
@@ -77,5 +80,7 @@ private:
     /// symbol -> info mapping
     FAArray_cont_t < int > m_char2info;
 };
+
+}
 
 #endif

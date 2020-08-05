@@ -12,6 +12,9 @@
 #include "FAState2OwCA.h"
 #include "FAUtf32Utils.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -133,7 +136,7 @@ void FADigitizer_t< Ty >::Prepare ()
     LogAssert (pIws);
 
     m_pDfa->GetIWs (pIws, IwsCount);
-    DebugLogAssert (pIws && ::FAIsSortUniqed (pIws, IwsCount));
+    DebugLogAssert (pIws && FAIsSortUniqed (pIws, IwsCount));
 
     m_MaxIw = pIws [IwsCount - 1];
 
@@ -163,7 +166,7 @@ inline const int FADigitizer_t< Ty >::Symbol2Iw (int Symbol) const
     DebugLogAssert (0 <= Symbol);
 
     if (m_IgnoreCase) {
-        Symbol = ::FAUtf32ToLower (Symbol);
+        Symbol = FAUtf32ToLower (Symbol);
     }
 
     if (0 <= Symbol && Symbol <= m_MaxIw) {
@@ -211,6 +214,8 @@ const int FADigitizer_t< Ty >::Process (const Ty * pChain,  const int Size) cons
         return Ow;
     else
         return m_AnyOw;
+}
+
 }
 
 #endif

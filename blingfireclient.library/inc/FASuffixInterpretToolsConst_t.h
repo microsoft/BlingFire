@@ -17,6 +17,9 @@
 #include "FASecurity.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 ///
 /// Suffix rules interpreter. Converts Word, Word/Tag or Word/TagFrom/TagTo
 /// to whatever rules for. See FASuffixRules2Chains.h for syntax description.
@@ -480,7 +483,7 @@ inline void FASuffixInterpretToolsConst_t< Ty >::
     if (m_IgnoreCase) {
         for (int i = 0 ; i < pTmp->m_InSize; ++i) {
             const int InSymbol = (int) pTmp->m_pIn [i] ;
-            const int OutSymbol = ::FAUtf32ToLower (InSymbol) ;
+            const int OutSymbol = FAUtf32ToLower (InSymbol) ;
             pOut [i] = (Ty) OutSymbol ;
         }
         pTmp->m_pIn = pOut;
@@ -489,7 +492,7 @@ inline void FASuffixInterpretToolsConst_t< Ty >::
     // normalize characters
     if (m_pCharMap) {
         // in-place is fine
-        pTmp->m_InSize = ::FANormalizeWord (pTmp->m_pIn, pTmp->m_InSize, \
+        pTmp->m_InSize = FANormalizeWord (pTmp->m_pIn, pTmp->m_InSize, \
             pOut, MaxOutSize, m_pCharMap);
         pTmp->m_pIn = pOut;
     }
@@ -648,6 +651,8 @@ const int FASuffixInterpretToolsConst_t< Ty >::
     }
 
     return -1;
+}
+
 }
 
 #endif

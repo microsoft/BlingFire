@@ -14,6 +14,9 @@
 #include "FASecurity.h"
 #include "FALimits.h"
 
+namespace BlingFire
+{
+
 class FARSNfaCA;
 class FARSDfaCA;
 
@@ -144,7 +147,7 @@ inline const int FAFindEqualOrLess_log (
     )
 {
     DebugLogAssert (0 <= Size);
-    DebugLogAssert (::FAIsSortUniqed (pBegin, Size));
+    DebugLogAssert (FAIsSortUniqed (pBegin, Size));
 
     // this optimization is helpful for automata arc lookup.
 
@@ -259,8 +262,8 @@ const int FAGetCaseType (const Ty * pChain, const int Size)
 
         const Ty Symbol = pChain [0];
 
-        const bool Lo = ::FAUtf32IsLower (Symbol);
-        const bool Up = ::FAUtf32IsUpper (Symbol);
+        const bool Lo = FAUtf32IsLower (Symbol);
+        const bool Up = FAUtf32IsUpper (Symbol);
 
         if (Lo) {
             fAllUp = false;
@@ -275,8 +278,8 @@ const int FAGetCaseType (const Ty * pChain, const int Size)
 
             const Ty Symbol = pChain [i];
 
-            const bool Lo = ::FAUtf32IsLower (Symbol);
-            const bool Up = ::FAUtf32IsUpper (Symbol);
+            const bool Lo = FAUtf32IsLower (Symbol);
+            const bool Up = FAUtf32IsUpper (Symbol);
 
             if (Lo) {
                 fAllUp = false;
@@ -487,5 +490,7 @@ inline const int FANormalizeWord (
 /// returns a CRC32 hash key for the buffer of data
 ///  crc can be used to get a combined value with the hash of previous buffer(s).
 const unsigned int FAGetCrc32 (const unsigned char *buf, size_t size, unsigned int crc = 0);
+
+}
 
 #endif

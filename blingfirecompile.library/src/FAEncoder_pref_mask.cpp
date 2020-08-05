@@ -9,6 +9,9 @@
 #include "FAEncoder_pref_mask.h"
 #include "FAEncodeUtils.h"
 
+namespace BlingFire
+{
+
 
 const int FAEncoder_pref_mask::GetMaxBytes () const
 {
@@ -32,4 +35,6 @@ const int FAEncoder_pref_mask::Encode (const int * pChain,
   }
 
   return int (pOut - pOutBuffer);
+}
+
 }

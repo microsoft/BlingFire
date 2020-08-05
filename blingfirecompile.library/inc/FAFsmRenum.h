@@ -18,6 +18,9 @@
 
 #include <iostream>
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -99,5 +102,7 @@ private:
         const FAArray_t < int > * m_pTrs;
     };
 };
+
+}
 
 #endif

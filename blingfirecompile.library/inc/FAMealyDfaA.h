@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAMealyDfaCA.h"
 
+namespace BlingFire
+{
+
 ///
 /// FSM-compile-time interface for MealyDfa automaton reaction.
 ///
@@ -31,5 +34,7 @@ public:
     /// returns container into the state as if it was just constructed
     virtual void Clear () = 0;
 };
+
+}
 
 #endif

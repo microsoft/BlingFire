@@ -12,6 +12,8 @@
 
 #include <algorithm>
 
+namespace BlingFire
+{
 
 /// returns new size of the array
 const int FASortUniq (int * pBegin, int * pEnd)
@@ -68,7 +70,7 @@ const bool FAIsValidDfa (const FARSDfaCA * pDfa)
     if (0 > Iws [0] || FALimits::MaxIwVal < Iws [IwsCount - 1]) {
         return false;
     }
-    if (!::FAIsSortUniqed (Iws, IwsCount)) {
+    if (!FAIsSortUniqed (Iws, IwsCount)) {
         return false;
     }
 
@@ -156,3 +158,4 @@ const unsigned int FAGetCrc32 (const unsigned char *buf, size_t size, unsigned i
     return crc ^ ~0U;
 }
 
+}

@@ -20,6 +20,8 @@
                  (cp == 65000) || \
                  (cp == 65001))
 
+namespace BlingFire
+{
 
 
 FAUtf32ToEnc::FAUtf32ToEnc (FAAllocatorA * pAlloc) :
@@ -42,15 +44,15 @@ void FAUtf32ToEnc::SetEncodingName (const char * pEncStr)
 {
     DebugLogAssert (pEncStr);
 
-    const bool fUtf16Be = ::FAIsUtf16BeEnc (pEncStr);
-    const bool fUtf16Le = ::FAIsUtf16LeEnc (pEncStr);
+    const bool fUtf16Be = FAIsUtf16BeEnc (pEncStr);
+    const bool fUtf16Le = FAIsUtf16LeEnc (pEncStr);
 
-    m_is_utf8 = ::FAIsUtf8Enc (pEncStr);
+    m_is_utf8 = FAIsUtf8Enc (pEncStr);
 
     m_is_utf16 = fUtf16Le || fUtf16Be;
     m_fBE = fUtf16Be;
 
-    m_cp = ::FAEncoding2CodePage (pEncStr);
+    m_cp = FAEncoding2CodePage (pEncStr);
 
     if (0 == m_cp) {
         m_cp = atoi (pEncStr);
@@ -75,7 +77,7 @@ const int FAUtf32ToEnc::Process (
             return 0;
 
         const int OutSize = \
-            ::FAArrayToStrUtf8 (pInStr, InSize, pOutStr, MaxOutSize);
+            FAArrayToStrUtf8 (pInStr, InSize, pOutStr, MaxOutSize);
 
         if (OutSize > (int) MaxOutSize) {
             return -1;
@@ -90,7 +92,7 @@ const int FAUtf32ToEnc::Process (
 
         const unsigned int MaxOutWchars = MaxOutSize / sizeof (wchar_t);
 
-        const int OutWchars = ::FAArrayToStrUtf16 (pInStr, InSize, \
+        const int OutWchars = FAArrayToStrUtf16 (pInStr, InSize, \
             (wchar_t*) pOutStr, MaxOutWchars, m_fBE);
 
         if (-1 == OutWchars || OutWchars > (int) MaxOutWchars) {
@@ -111,7 +113,7 @@ const int FAUtf32ToEnc::Process (
         wchar_t * pTmpOut = m_tmp_buff.begin ();
 
         /// convert UTF-32LE into UTF-16LE
-        const int OutWchars = ::FAArrayToStrUtf16 (pInStr, InSize, \
+        const int OutWchars = FAArrayToStrUtf16 (pInStr, InSize, \
             (wchar_t*) pTmpOut, MaxOutSize, false);
 
         if (-1 == OutWchars || OutWchars > (int) MaxOutSize) {
@@ -141,4 +143,6 @@ const int FAUtf32ToEnc::Process (
 #endif
 
     } // of if (m_is_utf8) ...
+}
+
 }

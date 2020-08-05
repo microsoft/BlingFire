@@ -17,6 +17,8 @@
 #include "FARSDfa_pack_triv.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
 
 template < class Ty >
 class FATrsConfKeeper_t {
@@ -383,5 +385,6 @@ const bool FATrsConfKeeper_t< Ty >::GetIgnoreCase () const
     return m_ignore_case;
 }
 
+}
 
 #endif

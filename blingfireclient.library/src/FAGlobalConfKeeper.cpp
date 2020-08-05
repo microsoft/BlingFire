@@ -11,6 +11,8 @@
 #include "FAFsmConst.h"
 #include "FARSDfa_pack_triv.h"
 
+namespace BlingFire
+{
 
 FAGlobalConfKeeper::FAGlobalConfKeeper () :
     m_pLDB (NULL),
@@ -118,3 +120,4 @@ const FARSDfaCA * FAGlobalConfKeeper::GetSuffixes () const
     return m_pSuffDfa;
 }
 
+}

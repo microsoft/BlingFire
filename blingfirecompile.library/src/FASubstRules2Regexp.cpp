@@ -14,6 +14,9 @@
 #include "FAFsmConst.h"
 #include "FAException.h"
 
+namespace BlingFire
+{
+
 
 FASubstRules2Regexp::FASubstRules2Regexp (FAAllocatorA * pAlloc) :
     m_pIs (NULL),
@@ -36,7 +39,7 @@ void FASubstRules2Regexp::SetEncodingName (const char * pInputEnc)
 {
     m_recode.SetEncodingName (pInputEnc);
 
-    m_use_utf8 = ::FAIsUtf8Enc (pInputEnc);
+    m_use_utf8 = FAIsUtf8Enc (pInputEnc);
     m_lexer.SetUseUtf8 (m_use_utf8);
 }
 
@@ -163,7 +166,7 @@ void FASubstRules2Regexp::WriteRegexp (
                 m_recode.Process (pRegexp + Offset, Length, &Symbol, 1);
 
             if (-1 == Count) {
-                ::FASyntaxError (pRegexp, Length, Offset, "Can not convert to UTF-16.");
+                FASyntaxError (pRegexp, Length, Offset, "Can not convert to UTF-16.");
                 throw FAException (FAMsg::IOError, __FILE__, __LINE__);
             }
 
@@ -246,14 +249,14 @@ void FASubstRules2Regexp::BuildRightParts ()
 
                     int SymbolLen = 1;
                     if (m_use_utf8) {
-                        SymbolLen = ::FAUtf8Size (pRight + i);
+                        SymbolLen = FAUtf8Size (pRight + i);
                     }
 
                     const int Count = 
                         m_recode.Process (pRight + i, SymbolLen, &Value, 1);
 
                     if (-1 == Count) {
-                        ::FASyntaxError (pRight, Len, i, "Can not convert to UTF-16.");
+                        FASyntaxError (pRight, Len, i, "Can not convert to UTF-16.");
                         throw FAException (FAMsg::IOError, __FILE__, __LINE__);
                     }
 
@@ -265,13 +268,13 @@ void FASubstRules2Regexp::BuildRightParts ()
                 if (i < Len && '"' == pRight [i]) {
                     i++;
                 } else {
-                    ::FASyntaxError (pRight, Len, -1, "Missing Quotation.");
+                    FASyntaxError (pRight, Len, -1, "Missing Quotation.");
                     throw FAException (FAMsg::IOError, __FILE__, __LINE__);
                 }
 
             } else {
 
-                ::FASyntaxError (pRight, Len, i, "Unexpected symbol.");
+                FASyntaxError (pRight, Len, i, "Unexpected symbol.");
                 throw FAException (FAMsg::IOError, __FILE__, __LINE__);
             }
 
@@ -314,7 +317,7 @@ void FASubstRules2Regexp::AddEntry (const char * pLeft, const char * pRight)
         }
         if (-1 == TagFromBegin || -1 == TagFromEnd) {
             // there should be at least one tag
-            ::FASyntaxError (pRight, Length, -1, "Convertion tags were not found.");
+            FASyntaxError (pRight, Length, -1, "Convertion tags were not found.");
             throw FAException (FAMsg::IOError, __FILE__, __LINE__);
         }
 
@@ -423,7 +426,7 @@ void FASubstRules2Regexp::BuildRight2Left ()
             const char * pLeftSumm = LeftSumm.c_str ();
             const int LeftSummLen = (const int) LeftSumm.length ();
 
-            ::FASyntaxError (pLeftSumm, LeftSummLen, -1, 
+            FASyntaxError (pLeftSumm, LeftSummLen, -1, 
                              "Right part does not exist.");
             throw FAException (FAMsg::IOError, __FILE__, __LINE__);
         }
@@ -437,7 +440,7 @@ void FASubstRules2Regexp::BuildRight2Left ()
         }
 
         if (0 == LeftSumm.length ()) {
-            ::FASyntaxError (NULL, 0, -1, "Left part does not exist.");
+            FASyntaxError (NULL, 0, -1, "Left part does not exist.");
             throw FAException (FAMsg::IOError, __FILE__, __LINE__);
         }
 
@@ -456,4 +459,6 @@ void FASubstRules2Regexp::Process ()
     BuildRight2Left ();
     WriteLeftParts ();
     BuildRightParts ();
+}
+
 }

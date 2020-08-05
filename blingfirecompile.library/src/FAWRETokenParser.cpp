@@ -13,6 +13,9 @@
 #include "FAException.h"
 
 
+namespace BlingFire
+{
+
 FAWRETokenParser::FAWRETokenParser (FAAllocatorA * pAlloc) :
     m_pTokenStr (NULL),
     m_Len (-1),
@@ -53,7 +56,7 @@ inline const bool FAWRETokenParser::
     IsEscaped (const char * pBegin, const int Pos)
 {
     DebugLogAssert (pBegin && 0 <= Pos);
-    return ::FAIsEscaped (Pos, pBegin, Pos + 1);
+    return FAIsEscaped (Pos, pBegin, Pos + 1);
 }
 
 
@@ -61,7 +64,7 @@ inline const char * FAWRETokenParser::
     FindListEnd (const char * pBegin, const char * pEnd) const
 {
     if (NULL == pBegin || pEnd <= pBegin) {
-        ::FASyntaxError (m_pTokenStr, m_Len, -1, "fatal error");
+        FASyntaxError (m_pTokenStr, m_Len, -1, "fatal error");
         throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
     }
 
@@ -94,7 +97,7 @@ inline void FAWRETokenParser::
     ParseWordList (const char * pBegin, const char * pEnd)
 {
     if (NULL == pBegin || pEnd <= pBegin) {
-        ::FASyntaxError (m_pTokenStr, m_Len, -1, "fatal error");
+        FASyntaxError (m_pTokenStr, m_Len, -1, "fatal error");
         throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
     }
 
@@ -155,7 +158,7 @@ inline void FAWRETokenParser::
     ParseRegexpList (const char * pBegin, const char * pEnd)
 {
     if (NULL == pBegin || pEnd <= pBegin) {
-        ::FASyntaxError (m_pTokenStr, m_Len, -1, "fatal error");
+        FASyntaxError (m_pTokenStr, m_Len, -1, "fatal error");
         throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
     }
 
@@ -224,7 +227,7 @@ inline void FAWRETokenParser::
     ParseDictList (const char * pBegin, const char * pEnd)
 {
     if (NULL == pBegin || pEnd <= pBegin) {
-        ::FASyntaxError (m_pTokenStr, m_Len, -1, "fatal error");
+        FASyntaxError (m_pTokenStr, m_Len, -1, "fatal error");
         throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
     }
 
@@ -298,7 +301,7 @@ inline void FAWRETokenParser::
     ParseTagList (const char * pBegin, const char * pEnd)
 {
     if (NULL == pBegin || pEnd <= pBegin) {
-        ::FASyntaxError (m_pTokenStr, m_Len, -1, "fatal error");
+        FASyntaxError (m_pTokenStr, m_Len, -1, "fatal error");
         throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
     }
 
@@ -391,7 +394,7 @@ void FAWRETokenParser::Process  ()
         if (Negative & m_char2info [C]) {
             /// syntax error: unexpected symbol at pBegin
             if (pBegin + 1 >= pEnd) {
-                ::FASyntaxError (m_pTokenStr, m_Len, -1, "unexpected end of token");
+                FASyntaxError (m_pTokenStr, m_Len, -1, "unexpected end of token");
                 throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
             }
             C = *(pBegin + 1);
@@ -456,8 +459,10 @@ void FAWRETokenParser::Process  ()
         }
 
         /// syntax error: unexpected symbol at pBegin
-        ::FASyntaxError (m_pTokenStr, m_Len, int (pBegin - m_pTokenStr), 
+        FASyntaxError (m_pTokenStr, m_Len, int (pBegin - m_pTokenStr), 
                          "unexpected symbol");
         throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
     }
+}
+
 }

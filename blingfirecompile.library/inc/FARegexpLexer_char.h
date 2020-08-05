@@ -9,6 +9,9 @@
 #include "FAConfig.h"
 #include "FARegexpLexer_triv.h"
 
+namespace BlingFire
+{
+
 ///
 /// Understands UTF-8 and any 8-bit encoded character regular expressions.
 /// Uses 1-byte encoding by default.
@@ -31,5 +34,7 @@ private:
     bool m_is_space [AsciiSize];
     bool m_UseUtf8;
 };
+
+}
 
 #endif

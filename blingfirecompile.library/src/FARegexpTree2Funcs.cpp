@@ -14,6 +14,9 @@
 
 #include <algorithm>
 
+namespace BlingFire
+{
+
 
 FARegexpTree2Funcs::FARegexpTree2Funcs (FAAllocatorA * pAlloc) :
     m_pAlloc (pAlloc)
@@ -693,5 +696,7 @@ void FARegexpTree2Funcs::CalcFollow (const int NodeId)
                 break;
             }
     };
+}
+
 }
 

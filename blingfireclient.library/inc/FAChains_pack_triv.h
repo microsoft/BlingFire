@@ -12,6 +12,9 @@
 #include "FAUtils_cl.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// Chains container, encoded by FAChainsPack_triv.
 ///
@@ -251,7 +254,7 @@ inline const int FAChains_pack_triv::
             Idx = Count - 1;
         } else {
             DebugLogAssert (Value == *(const char *)&Value);
-            Idx = ::FAFindEqualOrLess_log (pEncodedVals, Count, (char) Value);
+            Idx = FAFindEqualOrLess_log (pEncodedVals, Count, (char) Value);
         }
         *pIdx = Idx;
         if (0 > Idx)
@@ -276,7 +279,7 @@ inline const int FAChains_pack_triv::
             Idx = Count - 1;
         } else {
             DebugLogAssert (Value == *(const short *)&Value);
-            Idx = ::FAFindEqualOrLess_log (pEncodedVals, Count, (short) Value);
+            Idx = FAFindEqualOrLess_log (pEncodedVals, Count, (short) Value);
         }
         *pIdx = Idx;
         if (0 > Idx)
@@ -294,7 +297,7 @@ inline const int FAChains_pack_triv::
             (const int *)(m_pImage + Offset + sizeof (int));
 
         // find value index
-        const int Idx = ::FAFindEqualOrLess_log (pEncodedVals, Count, Value);
+        const int Idx = FAFindEqualOrLess_log (pEncodedVals, Count, Value);
         *pIdx = Idx;
         if (0 > Idx)
             return -1;
@@ -302,6 +305,8 @@ inline const int FAChains_pack_triv::
         const int FoundValue = pEncodedVals [Idx];
         return FoundValue;
     }
+}
+
 }
 
 #endif

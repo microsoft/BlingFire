@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSDfaCA;
 
@@ -67,5 +70,7 @@ private:
     // indicates whether splitting point is found
     bool m_PrefFound;
 };
+
+}
 
 #endif

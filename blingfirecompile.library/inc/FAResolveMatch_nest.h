@@ -11,6 +11,9 @@
 #include "FAResolveMatchA.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -49,5 +52,7 @@ private:
         DefMaxRule = 0xFFFF, // local limitation
     };
 };
+
+}
 
 #endif

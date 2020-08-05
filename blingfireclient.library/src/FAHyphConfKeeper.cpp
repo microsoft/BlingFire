@@ -15,6 +15,8 @@
 #include "FAMultiMap_pack.h"
 #include "FAMultiMap_pack_fixed.h"
 
+namespace BlingFire
+{
 
 FAHyphConfKeeper::FAHyphConfKeeper () :
     m_pLDB (NULL),
@@ -240,5 +242,7 @@ const int FAHyphConfKeeper::GetNoHyphLen () const
 const FAMultiMapCA * FAHyphConfKeeper::GetCharMap () const
 {
     return m_pCharMap;
+}
+
 }
 

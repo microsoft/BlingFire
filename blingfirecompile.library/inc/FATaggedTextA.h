@@ -10,6 +10,8 @@
 #include "FAConfig.h"
 #include "FATaggedTextCA.h"
 
+namespace BlingFire
+{
 
 class FATaggedTextA : public FATaggedTextCA {
 
@@ -30,5 +32,7 @@ public:
     // makes object empty
     virtual void Clear () = 0;
 };
+
+}
 
 #endif

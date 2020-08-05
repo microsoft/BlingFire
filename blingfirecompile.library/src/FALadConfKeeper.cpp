@@ -13,6 +13,9 @@
 #include "FAMultiMapCA.h"
 #include "FAMultiMap_pack_fixed.h"
 
+namespace BlingFire
+{
+
 
 FALadConfKeeper::FALadConfKeeper () :
     m_Order (0),
@@ -243,4 +246,6 @@ const int FALadConfKeeper::GetMinScriptTag () const
 const int FALadConfKeeper::GetMaxScriptTag () const
 {
     return m_MaxScriptTag;
+}
+
 }

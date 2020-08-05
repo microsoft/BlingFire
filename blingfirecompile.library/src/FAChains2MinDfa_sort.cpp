@@ -10,6 +10,9 @@
 #include "FAAllocatorA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FAChains2MinDfa_sort::FAChains2MinDfa_sort (FAAllocatorA * pAlloc) :
   m_MaxIw (0),
@@ -279,9 +282,9 @@ const int FAChains2MinDfa_sort::GetDest (const int State, const int Iw) const
   const int * pIwsPtr = pIws->begin () + 1;
   const int IwsCount = pIws->size () - 1;
 
-  DebugLogAssert (true == ::FAIsSortUniqed (pIwsPtr, IwsCount));
+  DebugLogAssert (true == FAIsSortUniqed (pIwsPtr, IwsCount));
 
-  const int Idx = ::FAFind_log (pIwsPtr, IwsCount, Iw);
+  const int Idx = FAFind_log (pIwsPtr, IwsCount, Iw);
 
   if (-1 == Idx)
       return -1;
@@ -639,7 +642,7 @@ void FAChains2MinDfa_sort::Prepare ()
 
   } // of for (int State = 0; ...
 
-  const int NewSize = ::FASortUniq (m_alphabet.begin (), m_alphabet.end ());
+  const int NewSize = FASortUniq (m_alphabet.begin (), m_alphabet.end ());
   m_alphabet.resize (NewSize, 0);
 }
 
@@ -696,4 +699,6 @@ void FAChains2MinDfa_sort::SetTransition (const int /*FromState*/,
 {
     // not implemented
     DebugLogAssert (false);
+}
+
 }

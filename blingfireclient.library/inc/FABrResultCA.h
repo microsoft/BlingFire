@@ -10,6 +10,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 ///
 /// Interface for reading results of extracting brackets
 ///
@@ -30,5 +33,7 @@ public:
     virtual const int GetTo (const int BrId) const = 0;
 
 };
+
+}
 
 #endif

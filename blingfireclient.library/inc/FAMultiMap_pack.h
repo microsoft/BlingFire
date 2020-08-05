@@ -13,6 +13,9 @@
 #include "FAChains_pack_triv.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class interprets dump created by FAMultiMapPack.
 ///
@@ -50,5 +53,7 @@ private:
     // values un-packer
     FAChains_pack_triv m_values;
 };
+
+}
 
 #endif

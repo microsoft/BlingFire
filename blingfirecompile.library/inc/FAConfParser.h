@@ -13,6 +13,9 @@
 
 #include <iostream>
 
+namespace BlingFire
+{
+
 class FAMultiMapA;
 class FAAllocatorA;
 
@@ -102,5 +105,7 @@ private:
     int m_FirstTokenLen;
 
 };
+
+}
 
 #endif

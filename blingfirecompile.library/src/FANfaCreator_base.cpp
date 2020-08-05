@@ -15,6 +15,9 @@
 
 #include <string>
 
+namespace BlingFire
+{
+
 
 FANfaCreator_base::FANfaCreator_base (FAAllocatorA * pAlloc):
     m_pRegexp (NULL),
@@ -136,7 +139,7 @@ void FANfaCreator_base::SetTransition (
 
     } else if (0 > LabelOffset || 0 > LabelLength) {
 
-        ::FASyntaxError (m_pRegexp, m_ReLength, -1, \
+        FASyntaxError (m_pRegexp, m_ReLength, -1, \
             "Unexpected token with negative offset or length");
         throw FAException (FAMsg::IOError, __FILE__, __LINE__);
     }
@@ -175,18 +178,18 @@ void FANfaCreator_base::Prepare ()
     int * pBegin = m_initials.begin ();
     int Size = m_initials.size ();
 
-    if (false == ::FAIsSortUniqed (pBegin, Size)) {
+    if (false == FAIsSortUniqed (pBegin, Size)) {
 
-        Size = ::FASortUniq (pBegin, pBegin + Size);
+        Size = FASortUniq (pBegin, pBegin + Size);
         m_initials.resize (Size);
     }
 
     pBegin = m_finals.begin ();
     Size = m_finals.size ();
 
-    if (false == ::FAIsSortUniqed (pBegin, Size)) {
+    if (false == FAIsSortUniqed (pBegin, Size)) {
 
-        Size = ::FASortUniq (pBegin, pBegin + Size);
+        Size = FASortUniq (pBegin, pBegin + Size);
         m_finals.resize (Size);
     }
 
@@ -199,6 +202,8 @@ void FANfaCreator_base::Prepare ()
 
 void FANfaCreator_base::SetError (const int ErrorOffset)
 {
-    ::FASyntaxError (m_pRegexp, m_ReLength, ErrorOffset, "unexpected symbol");
+    FASyntaxError (m_pRegexp, m_ReLength, ErrorOffset, "unexpected symbol");
     throw FAException (FAMsg::IOError, __FILE__, __LINE__);
+}
+
 }

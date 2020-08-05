@@ -12,6 +12,9 @@
 #include "FARSNfaA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FANfas2CommonENfa::FANfas2CommonENfa (FAAllocatorA * pAlloc) :
     m_empty (true),
@@ -151,7 +154,7 @@ void FANfas2CommonENfa::AddFinals (const int StateOffset)
 
     int * pBegin = m_states.begin ();
     int * pEnd = pBegin + m_states.size ();
-    const int FinalsCount = ::FASortUniq (pBegin, pEnd);
+    const int FinalsCount = FASortUniq (pBegin, pEnd);
     m_states.resize (FinalsCount);
 
     m_common_nfa.SetFinals (m_states.begin (), m_states.size ());
@@ -276,7 +279,7 @@ void FANfas2CommonENfa::Process ()
     /// calc epsilon transitions
     int * pBegin = m_eps_dst.begin ();
     int * pEnd = pBegin + m_eps_dst.size ();
-    const int NewSize = ::FASortUniq (pBegin, pEnd);
+    const int NewSize = FASortUniq (pBegin, pEnd);
     m_eps_dst.resize (NewSize);
 
     /// setup epsilon transitions
@@ -290,4 +293,6 @@ void FANfas2CommonENfa::Process ()
 
     /// make the automaton ready
     m_common_nfa.Prepare ();
+}
+
 }

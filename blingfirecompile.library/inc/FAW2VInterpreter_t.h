@@ -14,6 +14,9 @@
 #include "FANfstLookupTools_t.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// W2V (spelling variants) function run-time interpreter.
 ///
@@ -149,6 +152,8 @@ const int FAW2VInterpreter_t< Ty >::
     const int OutSize = m_pNfstW2V->Process (pIn, InSize, pOut, MaxOutSize);
 
     return OutSize;
+}
+
 }
 
 #endif

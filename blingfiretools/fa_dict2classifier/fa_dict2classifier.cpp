@@ -19,6 +19,8 @@
 #include <iostream>
 #include <fstream>
 
+using namespace BlingFire;
+
 const char * __PROG__ = "";
 
 const char * pInFile = NULL;

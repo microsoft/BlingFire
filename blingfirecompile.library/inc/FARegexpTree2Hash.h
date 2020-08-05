@@ -12,6 +12,9 @@
 #include "FATopoSort_t.h"
 #include "FARegexpTreeTopoGraph.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARegexpTree;
 
@@ -55,5 +58,7 @@ private:
     FAArray_cont_t < int > m_node2key;
 
 };
+
+}
 
 #endif

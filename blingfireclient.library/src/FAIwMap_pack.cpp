@@ -10,6 +10,8 @@
 #include <algorithm>
 #include <limits>
 
+namespace BlingFire
+{
 
 FAIwMap_pack::FAIwMap_pack () :
     m_IntervalCount (0),
@@ -83,4 +85,6 @@ void FAIwMap_pack::SetImage (const unsigned char * pImage)
 
         } // of if (0 < m_IntervalCount) ...
     }
+}
+
 }

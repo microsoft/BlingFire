@@ -9,6 +9,8 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
 
 class FALessA {
 
@@ -16,5 +18,7 @@ public:
     virtual const bool Less (const int Val1, const int Val2) const = 0;
 
 };
+
+}
 
 #endif

@@ -11,6 +11,9 @@
 #include "FAMealyNfaA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FAMealyNfa2Dfa::_TEqGraph::
     _TEqGraph (const int * pV, const int Count, const FANfa2EqPairs * pE) :
@@ -188,7 +191,7 @@ void FAMealyNfa2Dfa::CreateDfa_triv ()
 void FAMealyNfa2Dfa::CalcEqPairs ()
 {
     m_eq_pairs.Process ();
-    // this should always be true unless ::FAIsDfa () has failed
+    // this should always be true unless FAIsDfa () has failed
     DebugLogAssert (0 < m_eq_pairs.GetPairCount ());
 }
 
@@ -271,9 +274,9 @@ void FAMealyNfa2Dfa::CalcFsm2 ()
     const FARSNfaA * pNfa2 = m_calc_fsm2.GetOutNfa ();
     const FAMealyNfaA * pOws2 = m_calc_fsm2.GetSigma ();
 
-    if (::FAIsDfa (pNfa2)) {
+    if (FAIsDfa (pNfa2)) {
 
-        ::FACopyNfa2Dfa (m_pFsm2Dfa, pNfa2);
+        FACopyNfa2Dfa (m_pFsm2Dfa, pNfa2);
 
         const int * pIws;
         const int IwsCount = m_pFsm2Dfa->GetIWs (&pIws);
@@ -311,16 +314,16 @@ void FAMealyNfa2Dfa::RmArcs1 ()
 
     const FARSNfaA * pNfa2 = m_calc_fsm2.GetOutNfa ();
     m_tmp.resize (0);
-    ::FAGetAlphabet (pNfa2, & m_tmp);
+    FAGetAlphabet (pNfa2, & m_tmp);
     const int * pIws2 = m_tmp.begin ();
     const int Iws2 = m_tmp.size ();
     DebugLogAssert (0 < Iws2 && pIws2);
-    DebugLogAssert (::FAIsSortUniqed (pIws2, Iws2));
+    DebugLogAssert (FAIsSortUniqed (pIws2, Iws2));
 
     const int * pIws1;
     const int Iws1 = pDfa1->GetIWs (&pIws1);
     DebugLogAssert (0 < Iws1 && pIws1);
-    DebugLogAssert (::FAIsSortUniqed (pIws1, Iws1));
+    DebugLogAssert (FAIsSortUniqed (pIws1, Iws1));
 
     const int MaxState = pDfa1->GetMaxState ();
     m_pFsm1Dfa->SetMaxState (MaxState);
@@ -351,7 +354,7 @@ void FAMealyNfa2Dfa::RmArcs1 ()
             const int Ow = pOws1->GetOw (State, Iw1);
             DebugLogAssert (-1 != Ow);
 
-            if (-1 != ::FAFind_log (pIws2, Iws2, Ow)) {
+            if (-1 != FAFind_log (pIws2, Iws2, Ow)) {
 
                 m_pFsm1Dfa->SetTransition (State, Iw1, Dst);
                 m_pFsm1Ows->SetOw (State, Iw1, Ow);
@@ -367,7 +370,7 @@ void FAMealyNfa2Dfa::RmArcs1 ()
 const bool FAMealyNfa2Dfa::IsNonDet () const
 {
     const FARSNfaA * pNfa2 = m_calc_fsm2.GetOutNfa ();
-    return !::FAIsDfa (pNfa2);
+    return !FAIsDfa (pNfa2);
 }
 
 const FARSNfaA * FAMealyNfa2Dfa::GetNfa2 () const
@@ -388,7 +391,7 @@ void FAMealyNfa2Dfa::Process ()
     DebugLogAssert (m_pInNfa && m_pInOws);
 
     // see whether no decomposition is needed
-    if (::FAIsDfa (m_pInNfa)) {
+    if (FAIsDfa (m_pInNfa)) {
 
         CreateDfa_triv ();
 
@@ -411,4 +414,6 @@ void FAMealyNfa2Dfa::Process ()
         CalcFsm2 ();
         RmArcs1 ();
     }
+}
+
 }

@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 ///
 /// Parsing tree interface.
 ///
@@ -36,5 +39,7 @@ public:
     virtual void Update () = 0;
 
 };
+
+}
 
 #endif

@@ -9,6 +9,9 @@
 #include "FAUtf8Utils.h"
 #include "FAUtils_cl.h"
 
+namespace BlingFire
+{
+
 
 FALexBreaker::FALexBreaker() :
     m_fInitialized (false), 
@@ -186,7 +189,7 @@ bool FALexBreaker::BreakText_int (const UInt8 *pbUTF8Text, size_t cbUTF8Text)
                 if (false == m_fUseBytes)
                 {
                     // UTF-8 --> UTF-32 with offsets
-                    Count = ::FAStrUtf8ToArray ((const char*)pbSubStr, (int)cbSubStrLen, m_pTxt, m_pOffsets, m_uMaxCharsAtOnce);
+                    Count = FAStrUtf8ToArray ((const char*)pbSubStr, (int)cbSubStrLen, m_pTxt, m_pOffsets, m_uMaxCharsAtOnce);
                 }
                 else
                 {
@@ -237,7 +240,7 @@ bool FALexBreaker::BreakText_int (const UInt8 *pbUTF8Text, size_t cbUTF8Text)
         if (false == m_fUseBytes)
         {
             // UTF-8 --> UTF-32 with offsets
-            Count = ::FAStrUtf8ToArray ((const char*)pbSubStr, (int)cbSubStrLen, m_pTxt, m_pOffsets, m_uMaxCharsAtOnce);
+            Count = FAStrUtf8ToArray ((const char*)pbSubStr, (int)cbSubStrLen, m_pTxt, m_pOffsets, m_uMaxCharsAtOnce);
         }
         else
         {
@@ -415,7 +418,7 @@ inline void FALexBreaker::
         if (m_pNorm) 
         {
             const int TxtLen = TxtTo - TxtFrom + 1;
-            NormTxtLen = ::FANormalize (m_pTxt + TxtFrom, TxtLen, NormTxt, MaxWordLen, m_pNorm);
+            NormTxtLen = FANormalize (m_pTxt + TxtFrom, TxtLen, NormTxt, MaxWordLen, m_pNorm);
             // see if the result of the word normalization is longer than the MaxWordLen
             if (MaxWordLen < NormTxtLen)
             {
@@ -441,7 +444,7 @@ inline void FALexBreaker::
     // surface string offset
     const size_t Offset = m_uUtf8Offset + Utf8From;
     // surface string length, the last character length can be greater than 1
-    const size_t Length = Utf8To - Utf8From + ::FAUtf8Size (m_pTxt [TxtTo]);
+    const size_t Length = Utf8To - Utf8From + FAUtf8Size (m_pTxt [TxtTo]);
 
     // see if we can just get a surface string
     if (fUseRaw)
@@ -453,7 +456,7 @@ inline void FALexBreaker::
     else
     {
         // convert UTF-32LE to UTF-8
-        const int Utf8Len = ::FAArrayToStrUtf8 (pNormTxt, NormTxtLen, (char*) NormUtf8, FAUtf8Const::MAX_CHAR_SIZE * MaxWordLen);
+        const int Utf8Len = FAArrayToStrUtf8 (pNormTxt, NormTxtLen, (char*) NormUtf8, FAUtf8Const::MAX_CHAR_SIZE * MaxWordLen);
         // we don't expect errors here because pTxt is a valid UTF-32LE
         LogAssert (0 <= Utf8Len);
 
@@ -538,4 +541,6 @@ inline void FALexBreaker::AddWord (
             *pOut++ = Symbol;
         }
     }
+}
+
 }

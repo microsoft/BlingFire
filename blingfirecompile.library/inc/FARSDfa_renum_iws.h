@@ -10,6 +10,9 @@
 #include "FARSDfaA.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAMapA;
 class FAAllocatorA;
 
@@ -74,5 +77,7 @@ private:
     int m_MaxIw;
     FAArray_cont_t < int > m_iws;
 };
+
+}
 
 #endif

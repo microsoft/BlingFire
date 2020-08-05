@@ -28,6 +28,8 @@
 #include <fstream>
 #include <string>
 
+using namespace BlingFire;
+
 const char * __PROG__ = "";
 
 const char * g_pInFile = NULL;

@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FAMsg.h"
 
+namespace BlingFire
+{
+
 const char * const FAMsg::InternalError = \
     "Internal error.";
 
@@ -47,3 +50,4 @@ const char * const FAMsg::ObjectIsNotReady = \
 const char * const FAMsg::SyntaxError = \
     "Syntax error.";
 
+}

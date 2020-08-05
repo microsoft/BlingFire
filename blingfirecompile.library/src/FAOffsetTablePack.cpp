@@ -9,6 +9,9 @@
 #include "FAOffsetTablePack.h"
 #include "FAEncodeUtils.h"
 
+namespace BlingFire
+{
+
 
 FAOffsetTablePack::FAOffsetTablePack (FAAllocatorA * pAlloc) :
     m_pOffsets (NULL),
@@ -299,4 +302,6 @@ void FAOffsetTablePack::StoreCompressed ()
         const unsigned int Base = m_base [i];
         EncodeOffset (Base);    
     }
+}
+
 }

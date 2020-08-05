@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 ///
 /// Client side interface for Mealy NFA reaction representation.
 ///
@@ -25,5 +28,7 @@ public:
         ) const = 0;
 
 };
+
+}
 
 #endif

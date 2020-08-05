@@ -9,6 +9,9 @@
 #include "FARSDfaRenum_remove_gaps.h"
 #include "FARSDfaA.h"
 
+namespace BlingFire
+{
+
 
 FARSDfaRenum_remove_gaps::FARSDfaRenum_remove_gaps (FAAllocatorA * pAlloc) :
     m_pDfa (NULL),
@@ -118,5 +121,7 @@ void FARSDfaRenum_remove_gaps::Process ()
             m_old2new [State] = -1;
         }
     }
+}
+
 }
 

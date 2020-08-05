@@ -11,6 +11,9 @@
 #include "FAWordGuesser_prob_t.h"
 #include "FASummTagScores.h"
 
+namespace BlingFire
+{
+
 class FALadLDB;
 
 ///
@@ -131,5 +134,7 @@ private:
     bool m_fUseNgrams;
     bool m_fUseWords;
 };
+
+}
 
 #endif

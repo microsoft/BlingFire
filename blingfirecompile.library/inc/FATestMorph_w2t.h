@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FATestMorph.h"
 
+namespace BlingFire
+{
+
 class FATagSet;
 
 ///
@@ -37,5 +40,7 @@ private:
     int m_Func;
     const FATagSet * m_pTagSet;
 };
+
+}
 
 #endif

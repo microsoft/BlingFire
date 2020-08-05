@@ -18,6 +18,9 @@
 #include "FARegexpLexer_wre.h"
 #include "FARegexpTree2Str.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -80,5 +83,7 @@ private:
     // pointer to simplified regexp
     const char * m_pSimpleRe;
 };
+
+}
 
 #endif

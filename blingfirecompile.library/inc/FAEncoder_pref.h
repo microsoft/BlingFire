@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAEncoderA.h"
 
+namespace BlingFire
+{
+
 /// Does the following:
 ///  foreach V \in Chain do
 ///    if V <= 0x7F then
@@ -38,5 +41,7 @@ private:
   enum { MAX_BYTES_PER_INT = 5 };
 
 };
+
+}
 
 #endif

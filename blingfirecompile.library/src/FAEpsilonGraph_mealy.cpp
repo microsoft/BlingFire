@@ -10,6 +10,9 @@
 #include "FARSNfaA.h"
 #include "FAMealyNfaA.h"
 
+namespace BlingFire
+{
+
 
 FAEpsilonGraph_mealy::FAEpsilonGraph_mealy (FAAllocatorA * pAlloc) :
     FAEpsilonGraph (pAlloc),
@@ -139,4 +142,6 @@ void FAEpsilonGraph_mealy::
 
     // update m_pOutNfa
     FAEpsilonGraph::SetDstNodes (Node, pDstNodes, Size);
+}
+
 }

@@ -12,6 +12,9 @@
 #include "FAChain2Num_hash.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSDfaCA;
 
@@ -68,5 +71,7 @@ private:
     FAArray_cont_t < int > m_tmp_iws;
     FAArray_cont_t < int > m_tmp_ows;
 };
+
+}
 
 #endif

@@ -12,6 +12,9 @@
 #include "FAArray_cont_t.h"
 #include "FAMultiMap_judy.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSDfaA;
 class FAState2OwA;
@@ -74,5 +77,7 @@ private:
     int m_MaxOw;
     int m_InitialOw;
 };
+
+}
 
 #endif

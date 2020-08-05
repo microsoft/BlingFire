@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// Multi-Map client-side interface
 ///
@@ -50,5 +53,7 @@ public:
     virtual const int GetMaxCount () const = 0;
 
 };
+
+}
 
 #endif

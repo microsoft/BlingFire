@@ -17,6 +17,9 @@
 
 #include <string>
 
+namespace BlingFire
+{
+
 
 FAMapIOTools::FAMapIOTools (FAAllocatorA * pAlloc) :
     m_pAlloc (pAlloc)
@@ -398,4 +401,6 @@ void FAMapIOTools::Print (std::ostream& os, const float * pArr, const int Count)
     }
 
     os << '\n';
+}
+
 }

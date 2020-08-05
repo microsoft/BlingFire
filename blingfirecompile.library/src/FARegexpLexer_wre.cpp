@@ -9,6 +9,9 @@
 #include "FARegexpLexer_wre.h"
 #include "FARegexpTree.h"
 
+namespace BlingFire
+{
+
 
 FARegexpLexer_wre::FARegexpLexer_wre ()
 {
@@ -210,4 +213,6 @@ const int FARegexpLexer_wre::FindToken (const int Pos, int * pLength) const
     }
 
     return -1;
+}
+
 }

@@ -10,6 +10,8 @@
 #include "FAEncodeUtils.h"
 #include "FAFsmConst.h"
 
+namespace BlingFire
+{
 
 FAGetIWs_pack_triv::FAGetIWs_pack_triv () :
     m_pAutImage (NULL),
@@ -282,4 +284,6 @@ const int FAGetIWs_pack_triv::
 
     DebugLogAssert (FAFsmConst::TRS_NONE == TrType);
     return 0;
+}
+
 }

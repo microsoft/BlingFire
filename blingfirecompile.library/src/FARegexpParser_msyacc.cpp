@@ -11,6 +11,8 @@
 #include "FARegexpTree.h"
 #include "FAToken.h"
 
+namespace BlingFire
+{
 
 #line 12 "FARegexpParser_msyacc.y"
 
@@ -734,3 +736,4 @@ YYCONST short FARegexpParser_msyacc::yyrecover[] = {
 };
 #endif
 
+}

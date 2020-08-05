@@ -14,6 +14,9 @@
 
 #include <iostream>
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -110,5 +113,7 @@ private:
         MaxChainSize = 4096,
     };
 };
+
+}
 
 #endif

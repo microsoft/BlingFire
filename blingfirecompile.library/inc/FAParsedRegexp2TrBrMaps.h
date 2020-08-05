@@ -11,6 +11,9 @@
 #include "FASetUtils.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARegexpTree;
 class FARegexpTree2Funcs;
@@ -80,5 +83,7 @@ private:
         const FARegexpTree * m_pRegexpTree;
     };
 };
+
+}
 
 #endif

@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FAState2Ows.h"
 
+namespace BlingFire
+{
+
 
 FAState2Ows::FAState2Ows (FAAllocatorA * pAlloc) : 
     m_MaxOwsCount (0)
@@ -85,4 +88,6 @@ void FAState2Ows::Prepare ()
 
         Size = m_state2ows.Prev (&Key, &pValues);
     }
+}
+
 }

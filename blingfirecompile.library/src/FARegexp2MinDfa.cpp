@@ -9,6 +9,9 @@
 #include "FAFsmConst.h"
 #include "FAUtf8Utils.h"
 
+namespace BlingFire
+{
+
 
 FARegexp2MinDfa::FARegexp2MinDfa (FAAllocatorA * pAlloc) :
     m_regexp2nfa (pAlloc),
@@ -44,7 +47,7 @@ FARegexp2MinDfa::FARegexp2MinDfa (FAAllocatorA * pAlloc) :
 
 void FARegexp2MinDfa::SetEncodingName (const char * pEncStr)
 {
-    m_regexp2nfa.SetUseUtf8 (::FAIsUtf8Enc (pEncStr));
+    m_regexp2nfa.SetUseUtf8 (FAIsUtf8Enc (pEncStr));
     m_nfa_char.SetEncodingName (pEncStr);
 }
 
@@ -98,4 +101,6 @@ void FARegexp2MinDfa::Process ()
 const FARSDfaA * FARegexp2MinDfa::GetRsDfa () const
 {
     return & m_min_dfa;
+}
+
 }

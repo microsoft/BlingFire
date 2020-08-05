@@ -13,6 +13,9 @@
 
 #include <iostream>
 
+namespace BlingFire
+{
+
 
 FAEpsilonGraph::FAEpsilonGraph (FAAllocatorA * pAlloc) :
     m_pInNfa (NULL),
@@ -193,4 +196,6 @@ void FAEpsilonGraph::SetDstNodes (const int Node,
     // return class into the proper state
     m_set_ptrs.resize (0);
     m_set_lengths.resize (0);
+}
+
 }

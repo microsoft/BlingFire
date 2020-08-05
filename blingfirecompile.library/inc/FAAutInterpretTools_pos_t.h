@@ -15,6 +15,9 @@
 #include "FAUtils_cl.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class calculates the match between intput text positions and
 /// positions in regular expression.
@@ -159,7 +162,7 @@ void FAAutInterpretTools_pos_t< Ty >::SetRsDfa (const FARSDfaCA * pDfa)
         m_pDfa->GetIWs (m_Iws.begin (), Size);
 
         const int * pIws = m_Iws.begin ();
-        DebugLogAssert (pIws && ::FAIsSortUniqed (pIws, Size));
+        DebugLogAssert (pIws && FAIsSortUniqed (pIws, Size));
 
         const int MaxIw = pIws [Size - 1];
 
@@ -242,9 +245,9 @@ inline const int FAAutInterpretTools_pos_t< Ty >::
     ) const
 {
     DebugLogAssert (1 < m_FollowSetSize && m_pFollowSet);
-    DebugLogAssert (::FAIsSortUniqed (m_pFollowSet, m_FollowSetSize));
+    DebugLogAssert (FAIsSortUniqed (m_pFollowSet, m_FollowSetSize));
     DebugLogAssert (0 < StateSetSize && pStateSet);
-    DebugLogAssert (::FAIsSortUniqed (pStateSet, StateSetSize));
+    DebugLogAssert (FAIsSortUniqed (pStateSet, StateSetSize));
 
     // O (Min*log(Max))
     if (10 >= m_FollowSetSize || 10 >= StateSetSize) {
@@ -254,7 +257,7 @@ inline const int FAAutInterpretTools_pos_t< Ty >::
             int i = m_FollowSetSize - 1;
             for (; i >= 0; --i) {
                 const int Pos = m_pFollowSet [i];
-                if (-1 != ::FAFind_log (pStateSet, StateSetSize, Pos))
+                if (-1 != FAFind_log (pStateSet, StateSetSize, Pos))
                     return Pos;
             }
 
@@ -263,7 +266,7 @@ inline const int FAAutInterpretTools_pos_t< Ty >::
             int i = StateSetSize - 1;
             for (; i >= 0; --i) {
                 const int Pos = pStateSet [i];
-                if (-1 != ::FAFind_log (m_pFollowSet, m_FollowSetSize, Pos))
+                if (-1 != FAFind_log (m_pFollowSet, m_FollowSetSize, Pos))
                     return Pos;
             }
         }
@@ -500,6 +503,8 @@ const bool FAAutInterpretTools_pos_t< Ty >::
     States2Pos (pInChain, pStates, pPosChain, Size);
 
     return true;
+}
+
 }
 
 #endif

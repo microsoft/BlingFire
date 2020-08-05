@@ -8,6 +8,9 @@
 #include "FAConfig.h"
 #include "FAState2Ows_ar_uniq.h"
 
+namespace BlingFire
+{
+
 
 FAState2Ows_ar_uniq::FAState2Ows_ar_uniq (FAAllocatorA * pAlloc) :
     m_MaxOwsCount (0)
@@ -60,4 +63,6 @@ void FAState2Ows_ar_uniq::Clear ()
 {
     m_state2ows.Clear ();
     m_MaxOwsCount = 0;
+}
+
 }

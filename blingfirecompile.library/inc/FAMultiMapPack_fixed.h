@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAMultiMapA;
 class FAAllocatorA;
 
@@ -50,5 +53,7 @@ private:
     FAArray_cont_t < unsigned char > m_dump;
     unsigned char * m_pDump;
 };
+
+}
 
 #endif

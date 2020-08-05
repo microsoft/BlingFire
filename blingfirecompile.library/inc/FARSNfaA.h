@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FARSNfaCA.h"
 
+namespace BlingFire
+{
+
 ///
 /// Common interface for Rabin-Scott Nfa.
 ///
@@ -79,5 +82,7 @@ public:
     // return Nfa into the state as if constructor has just been called
     virtual void Clear () = 0;
 };
+
+}
 
 #endif

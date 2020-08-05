@@ -11,6 +11,9 @@
 #include "FAState2OwsA.h"
 #include "FAException.h"
 
+namespace BlingFire
+{
+
 
 FAExtendClassifier_cxp::
     FAExtendClassifier_cxp (FAAllocatorA * pAlloc) :
@@ -240,4 +243,6 @@ void FAExtendClassifier_cxp::Process ()
 const FAState2OwsA * FAExtendClassifier_cxp::GetOws () const
 {
     return & m_new_ows;
+}
+
 }

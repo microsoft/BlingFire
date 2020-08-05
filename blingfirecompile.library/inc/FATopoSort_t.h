@@ -12,6 +12,9 @@
 #include "FAAllocatorA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 ///
 /// This processor calculates a topological order.
 ///
@@ -202,6 +205,8 @@ FATopoSort_t< _TGraph >::GetTopoOrder (const int ** ppTopoOrder) const
     *ppTopoOrder = m_order.begin ();
 
     return m_order.size ();
+}
+
 }
 
 #endif

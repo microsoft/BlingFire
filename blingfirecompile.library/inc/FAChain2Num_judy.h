@@ -14,7 +14,13 @@
 #ifndef HAVE_JUDYSL_LIB
 
 #include "FAChain2Num_hash.h"
+
+namespace BlingFire
+{
+
 typedef FAChain2Num_hash FAChain2Num_judy;
+
+}
 
 // of ifndef HAVE_JUDYSL_LIB
 #else
@@ -22,6 +28,9 @@ typedef FAChain2Num_hash FAChain2Num_judy;
 #include "FAChain2NumA.h"
 #include "FAArray_cont_t.h"
 #include "FAEncoder_mask.h"
+
+namespace BlingFire
+{
 
 class FAAllocatorA;
 
@@ -71,6 +80,8 @@ private:
   unsigned char m_buff [CHAIN_BUFF_SIZE];
   FAEncoder_mask m_def_enc;
 };
+
+}
 
 // of ifndef HAVE_JUDYSL_LIB
 #endif

@@ -14,6 +14,9 @@
 #include "FAMealyNfa.h"
 #include "FARemoveUnreachable.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FALessA;
 
@@ -93,5 +96,7 @@ private:
     /// removes unreachable states
     FARemoveUnreachable m_rm;
 };
+
+}
 
 #endif

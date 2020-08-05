@@ -9,6 +9,9 @@
 #include "FAWREToken.h"
 #include "FAAllocatorA.h"
 
+namespace BlingFire
+{
+
 
 FAWREToken::FAWREToken (FAAllocatorA * pAlloc) :
     m_disj_words (false),
@@ -176,4 +179,6 @@ void FAWREToken::Clear ()
     m_disj_regexps = false;
     m_disj_dicts = false;
     m_disj_tags = false;
+}
+
 }

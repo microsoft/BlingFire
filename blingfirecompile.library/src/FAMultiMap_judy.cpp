@@ -11,6 +11,9 @@
 #include "FAArray_cont_t.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FAMultiMap_judy::FAMultiMap_judy () :
   m_pAlloc (NULL),
@@ -308,9 +311,9 @@ void FAMultiMap_judy::SortUniq ()
       int * pBegin = pArray->begin ();
       int * pEnd = pArray->end ();
 
-      if (false == ::FAIsSortUniqed (pBegin, int (pEnd - pBegin))) {
+      if (false == FAIsSortUniqed (pBegin, int (pEnd - pBegin))) {
 
-        NewSize = ::FASortUniq (pBegin, pEnd);
+        NewSize = FASortUniq (pBegin, pEnd);
         pArray->resize (NewSize);
 
       } else {
@@ -321,4 +324,6 @@ void FAMultiMap_judy::SortUniq ()
       if (m_MaxCount < NewSize)
           m_MaxCount = NewSize;
     }
+}
+
 }

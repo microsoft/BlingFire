@@ -10,6 +10,9 @@
 #include "FAEncodeUtils.h"
 #include "FAException.h"
 
+namespace BlingFire
+{
+
 
 FAState2TrBr_pack_triv::FAState2TrBr_pack_triv (const int MapType) :
     m_MapType (MapType),
@@ -182,5 +185,7 @@ const int FAState2TrBr_pack_triv::GetMaxCount () const
 {
     const int MaxCount = m_trbrs.GetMaxCount ();
     return MaxCount;
+}
+
 }
 

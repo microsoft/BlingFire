@@ -18,6 +18,7 @@
 #include <iomanip>
 #include <sstream>
 
+using namespace BlingFire;
 
 const char * __PROG__ = "";
 

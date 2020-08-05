@@ -12,6 +12,9 @@
 #include "FAChain2Num_hash.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 ///
 /// W2H quality test. Input format: see FATrWordIOTools_utf8.h for details.
 ///
@@ -37,5 +40,7 @@ private:
     FAHyphInterpreter_t < int > * m_pHyph;
     bool m_UseAltW2H;
 };
+
+}
 
 #endif

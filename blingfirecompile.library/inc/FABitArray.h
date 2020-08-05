@@ -9,6 +9,8 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
 
 class FAAllocatorA;
 
@@ -103,5 +105,7 @@ private:
     // allocator
     FAAllocatorA * m_pAlloc;
 };
+
+}
 
 #endif

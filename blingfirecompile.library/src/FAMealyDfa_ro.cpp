@@ -9,6 +9,9 @@
 #include "FARSDfaCA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FAMealyDfa_ro::FAMealyDfa_ro (FAAllocatorA * pAlloc) :
     m_pRsDfa (NULL),
@@ -60,7 +63,7 @@ inline void FAMealyDfa_ro::AddIwsOws ()
     const int * pIws = m_tmp_iws.begin ();
     const int * pOws = m_tmp_ows.begin ();
     const int Count = m_tmp_ows.size ();
-    DebugLogAssert (::FAIsSortUniqed (pIws, Count));
+    DebugLogAssert (FAIsSortUniqed (pIws, Count));
 
     const int Idx1 = m_Sets.Add (pIws, Count, 0);
     const int Idx2 = m_Sets.Add (pOws, Count, 0);
@@ -141,7 +144,7 @@ const int FAMealyDfa_ro::
         DebugLogAssert (0 < Count);
 
         // find equal or less Ow idx
-        const int OwIdx = ::FAFindEqualOrLess_log (pOws, Count, Ow1);
+        const int OwIdx = FAFindEqualOrLess_log (pOws, Count, Ow1);
 
         // get Ow
         if (0 <= OwIdx && OwIdx < Count) {
@@ -156,7 +159,7 @@ const int FAMealyDfa_ro::
         const int Count2 = 
 #endif
             m_Sets.GetChain(Idx1, &pIws);
-        DebugLogAssert (Count2 == Count && ::FAIsSortUniqed (pIws, Count2));
+        DebugLogAssert (Count2 == Count && FAIsSortUniqed (pIws, Count2));
 
         // get Iw
         const int Iw = pIws [OwIdx];
@@ -189,9 +192,9 @@ const int FAMealyDfa_ro::GetOw (const int State, const int Iw) const
 
         const int * pIws;
         const int Count = m_Sets.GetChain(Idx1, &pIws);
-        DebugLogAssert (0 < Count && ::FAIsSortUniqed (pIws, Count));
+        DebugLogAssert (0 < Count && FAIsSortUniqed (pIws, Count));
 
-        const int OwIdx = ::FAFind_log (pIws, Count, Iw);
+        const int OwIdx = FAFind_log (pIws, Count, Iw);
 
         if (-1 != OwIdx) {
 
@@ -224,4 +227,6 @@ const int FAMealyDfa_ro::
     }
 
     return -1;
+}
+
 }

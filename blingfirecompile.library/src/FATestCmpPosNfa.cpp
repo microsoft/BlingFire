@@ -10,6 +10,9 @@
 #include "FARSNfaCA.h"
 #include "FAMultiMapCA.h"
 
+namespace BlingFire
+{
+
 
 FATestCmpPosNfa::FATestCmpPosNfa (FAAllocatorA * pAlloc) :
     m_pNfa1 (NULL),
@@ -263,5 +266,7 @@ const bool FATestCmpPosNfa::Process (const int MaxState, const int MaxIw)
     } // of for (int State = 0; ...
 
     return true;
+}
+
 }
 

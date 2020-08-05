@@ -15,6 +15,9 @@
 
 #include <iostream>
 
+namespace BlingFire
+{
+
 class FATagSet;
 
 ///
@@ -163,5 +166,7 @@ private:
     enum { DefNumSize = 5 };
 
 };
+
+}
 
 #endif

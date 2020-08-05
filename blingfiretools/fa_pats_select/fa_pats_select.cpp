@@ -33,6 +33,8 @@
 #include <string>
 #include <iomanip>
 
+using namespace BlingFire;
+
 const char * __PROG__ = "";
 
 FAAllocator g_alloc;

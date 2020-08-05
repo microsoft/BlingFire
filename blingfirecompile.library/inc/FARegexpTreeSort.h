@@ -15,6 +15,9 @@
 #include "FABitArray.h"
 #include "FARegexpTreeTopoGraph.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -120,5 +123,7 @@ private:
     // sorting order
     bool m_Reverse;
 };
+
+}
 
 #endif

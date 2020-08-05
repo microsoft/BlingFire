@@ -10,6 +10,9 @@
 #include "FARSDfaCA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FAWord2WordSuff::FAWord2WordSuff (FAAllocatorA * pAlloc) :
     m_pIws (NULL),
@@ -63,7 +66,7 @@ void FAWord2WordSuff::Process ()
     m_pIws = m_iws.begin ();
     DebugLogAssert (m_pIws);
 
-    DebugLogAssert (-1 == ::FAFind_log < int > (m_pIws, m_IwsCount, m_Delim));
+    DebugLogAssert (-1 == FAFind_log < int > (m_pIws, m_IwsCount, m_Delim));
 
     const int InitialState = m_pDfa->GetInitial ();
 
@@ -171,4 +174,6 @@ void FAWord2WordSuff::PutSplit (
     )
 {
     // assumed to be overloaded
+}
+
 }

@@ -12,6 +12,9 @@
 #include "FAArray_cont_t.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -68,5 +71,7 @@ private:
     FAAllocatorA * m_pAlloc;
 
 };
+
+}
 
 #endif

@@ -14,7 +14,13 @@
 #ifndef HAVE_JUDY_LIB
 
 #include "FAMap_std.h"
+
+namespace BlingFire
+{
+
 typedef class FAMap_std FAMap_judy;
+
+}
 
 // of ifndef HAVE_JUDY_LIB
 #else
@@ -23,6 +29,8 @@ typedef class FAMap_std FAMap_judy;
 
 #include <Judy.h>
 
+namespace BlingFire
+{
 
 class FAMap_judy : public FAMapA {
 
@@ -49,6 +57,8 @@ private:
 
   Pvoid_t m_map;
 };
+
+}
 
 // of ifndef HAVE_JUDY_LIB
 #endif

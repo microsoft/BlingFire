@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FALDB;
 class FAWREConfCA;
 class FAMultiMapCA;
@@ -56,5 +59,7 @@ private:
     bool m_IgnoreCase;
     float m_MinUniProb;
 };
+
+}
 
 #endif

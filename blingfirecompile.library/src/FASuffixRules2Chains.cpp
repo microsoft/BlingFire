@@ -15,6 +15,9 @@
 #include <string>
 #include <iomanip>
 
+namespace BlingFire
+{
+
 
 FASuffixRules2Chains::FASuffixRules2Chains (FAAllocatorA * pAlloc) :
     m_use_utf8 (false),
@@ -65,7 +68,7 @@ void FASuffixRules2Chains::Clear ()
 void FASuffixRules2Chains::SetEncodingName (const char * pInputEnc)
 {
     m_recode.SetEncodingName (pInputEnc);
-    m_use_utf8 = ::FAIsUtf8Enc (pInputEnc);
+    m_use_utf8 = FAIsUtf8Enc (pInputEnc);
 }
 
 
@@ -160,7 +163,7 @@ inline void FASuffixRules2Chains::
             int * pBegin = pArr->begin ();
 
             const int Size = \
-                ::FAStrUtf8ToArray (pStr, StrLen, pBegin, StrLen);
+                FAStrUtf8ToArray (pStr, StrLen, pBegin, StrLen);
 
             if (0 >= Size) {
                 throw FAException (FAMsg::IOError, __FILE__, __LINE__);
@@ -200,7 +203,7 @@ void FASuffixRules2Chains::
 
     // see whether left part is not empty
     if (0 == m_left_chain.size ()) {
-        ::FASyntaxError (m_pStr, m_StrLen, LeftPos,
+        FASyntaxError (m_pStr, m_StrLen, LeftPos,
                          "Left part is empty or wrong encoding has been setup.");
         throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
     }
@@ -296,13 +299,13 @@ void FASuffixRules2Chains::
             m_TagFrom = m_pTagSet->Str2Tag (pRight + TagFromPos, TagFromLen);
 
             if (-1 == m_TagFrom) {
-                ::FASyntaxError (m_pStr, m_StrLen, RightPos + TagFromPos, 
+                FASyntaxError (m_pStr, m_StrLen, RightPos + TagFromPos, 
                                  "Unknown FromTag was specified.");
                 throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
             }
 
         } else {
-            ::FASyntaxError (m_pStr, m_StrLen, RightPos,
+            FASyntaxError (m_pStr, m_StrLen, RightPos,
                              "Rule has no conversion tags but tagset was specified.");
             throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
         }
@@ -312,7 +315,7 @@ void FASuffixRules2Chains::
             m_TagTo = m_pTagSet->Str2Tag (pRight + TagToPos, TagToLen);
 
             if (-1 == m_TagTo) {
-                ::FASyntaxError (m_pStr, m_StrLen, RightPos + TagToPos,
+                FASyntaxError (m_pStr, m_StrLen, RightPos + TagToPos,
                                  "Unknown ToTag was specified.");
                 throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
             }
@@ -344,7 +347,7 @@ void FASuffixRules2Chains::
         }
 
     } else {
-        ::FASyntaxError (m_pStr, m_StrLen, RightPos + Pos,
+        FASyntaxError (m_pStr, m_StrLen, RightPos + Pos,
                          "Right part action is missing.");
         throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
     }
@@ -521,7 +524,7 @@ void FASuffixRules2Chains::Process ()
         const int DelimPos = GetDelimPos ();
 
         if (-1 == DelimPos) {
-            ::FASyntaxError (m_pStr, m_StrLen, -1, "Invalid rule.");
+            FASyntaxError (m_pStr, m_StrLen, -1, "Invalid rule.");
             throw FAException (FAMsg::IOError, __FILE__, __LINE__);
         }
 
@@ -544,4 +547,6 @@ void FASuffixRules2Chains::Process ()
 
     // builds action map
     BuildMap ();
+}
+
 }

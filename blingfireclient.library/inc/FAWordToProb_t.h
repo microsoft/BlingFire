@@ -17,6 +17,9 @@
 #include "FALimits.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// Word --> Probability Guesser
 ///
@@ -215,7 +218,7 @@ const int FAWordToProb_t< Ty >::GetIntProb (const Ty * pWordStr, const int WordS
     if (m_IgnoreCase) {
         for (int i = 0 ; i < WordSize; ++i) {
             const int InSymbol = (int) m_pIn [i] ;
-            const int OutSymbol = ::FAUtf32ToLower (InSymbol) ;
+            const int OutSymbol = FAUtf32ToLower (InSymbol) ;
             TmpBuff [i] = (Ty) OutSymbol ;
         }
         m_pIn = TmpBuff;
@@ -223,7 +226,7 @@ const int FAWordToProb_t< Ty >::GetIntProb (const Ty * pWordStr, const int WordS
     // normalize characters
     if (m_pCharMap) {
         // in-place is fine
-        m_InSize = ::FANormalizeWord (m_pIn, m_InSize, \
+        m_InSize = FANormalizeWord (m_pIn, m_InSize, \
             TmpBuff, TmpBuffSize, m_pCharMap);
         m_pIn = TmpBuff;
     }
@@ -267,6 +270,8 @@ const float FAWordToProb_t< Ty >::GetProb (const Ty * pWordStr, const int WordSi
 
         return float (DefUnfoundProb);
     }
+}
+
 }
 
 #endif

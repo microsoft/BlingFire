@@ -20,6 +20,8 @@
 #include <sstream>
 
 
+using namespace BlingFire;
+
 const char * __PROG__ = "";
 
 FAAllocator g_alloc;

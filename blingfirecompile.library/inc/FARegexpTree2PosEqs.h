@@ -14,6 +14,9 @@
 #include "FABitArray.h"
 #include "FARegexpTreeTopoGraph.h"
 
+namespace BlingFire
+{
+
 class FARegexpTree;
 
 ///
@@ -69,5 +72,7 @@ private:
     // mapping from pos to the smallest equivalent position
     FAMap_judy m_Pos2Class;
 };
+
+}
 
 #endif

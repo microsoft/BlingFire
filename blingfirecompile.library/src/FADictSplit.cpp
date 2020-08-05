@@ -14,6 +14,9 @@
 #include <algorithm>
 #include <iomanip>
 
+namespace BlingFire
+{
+
 
 FADictSplit::FADictSplit (FAAllocatorA * pAlloc) :
     m_pChainBuffer (NULL),
@@ -129,7 +132,7 @@ inline void FADictSplit::ProcessEntry_raw ()
 inline void FADictSplit::ProcessEntry_tags ()
 {
     // make a set
-    const int SetSize = ::FASortUniq (m_Set.begin (), m_Set.end ());
+    const int SetSize = FASortUniq (m_Set.begin (), m_Set.end ());
 
     // create KeyNum --> SetId --> Set relation
     const int Idx = m_Sets.Add (m_Set.begin (), SetSize, 0);
@@ -198,7 +201,7 @@ inline void FADictSplit::ProcessEntry_hyph ()
     int i;
 
     // remove duplicates
-    const int SetSize = ::FASortUniq (m_Set.begin (), m_Set.end ());
+    const int SetSize = FASortUniq (m_Set.begin (), m_Set.end ());
     FAAssert (0 < SetSize, FAMsg::IOError);
 
     // build the INFO: [F, Ow1, Ow2, ..., OwN], N - pattern length
@@ -322,7 +325,7 @@ inline void FADictSplit::ProcessEntry_tag_prob ()
     }
 
     // sort indices, if needed
-    if (false == ::FAIsSorted (m_Tags.begin (), Count)) {
+    if (false == FAIsSorted (m_Tags.begin (), Count)) {
         std::sort (pSet, pSet + Count, FAIdxCmp_s2b (m_Tags.begin ()));
     }
 
@@ -337,7 +340,7 @@ inline void FADictSplit::ProcessEntry_tag_prob ()
     }
 
     // tag duplicates are not allowed
-    FAAssert (::FAIsSortUniqed (pSet, Count), FAMsg::IOError);
+    FAAssert (FAIsSortUniqed (pSet, Count), FAMsg::IOError);
 
     // create KeyNum --> SetId --> Set relation
     const int Idx = m_Sets.Add (pSet, SetSize, 0);
@@ -543,5 +546,7 @@ void FADictSplit::Clear ()
     m_Mode = FAFsmConst::DM_TAGS;
     m_NoK2I  = false;
     m_InfoBase = 0;
+}
+
 }
 

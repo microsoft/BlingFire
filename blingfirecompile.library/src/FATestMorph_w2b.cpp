@@ -14,6 +14,9 @@
 
 #include <string>
 
+namespace BlingFire
+{
+
 
 FATestMorph_w2b::FATestMorph_w2b (FAAllocatorA * pAlloc) :
     FATestMorph (pAlloc),
@@ -70,7 +73,7 @@ void FATestMorph_w2b::Test (const char * pLineStr, const int LineLen)
 
     // convert UTF-8 input word into array of integers (UTF-32)
     const int ChainSize = \
-        ::FAStrUtf8ToArray (
+        FAStrUtf8ToArray (
             pTmpStr,
             TmpStrLen,
             m_ChainBuffer,
@@ -87,7 +90,7 @@ void FATestMorph_w2b::Test (const char * pLineStr, const int LineLen)
 
     // make input in the lower case, if needed
     if (m_IgnoreCase) {
-        ::FAUtf32StrLower (m_ChainBuffer, ChainSize);
+        FAUtf32StrLower (m_ChainBuffer, ChainSize);
     }
 
     // build a set of ids from the input set of base-forms
@@ -95,7 +98,7 @@ void FATestMorph_w2b::Test (const char * pLineStr, const int LineLen)
     while (tokenizer.GetNextStr (&pTmpStr, &TmpStrLen)) {
 
         const int WordSize = \
-            ::FAStrUtf8ToArray (
+            FAStrUtf8ToArray (
                 pTmpStr, 
                 TmpStrLen,
                 m_OutChainBuffer,
@@ -111,7 +114,7 @@ void FATestMorph_w2b::Test (const char * pLineStr, const int LineLen)
         }
 
         if (m_IgnoreCase) {
-            ::FAUtf32StrLower (m_OutChainBuffer, WordSize);
+            FAUtf32StrLower (m_OutChainBuffer, WordSize);
         }
 
         const int Id = Word2Id (m_OutChainBuffer, WordSize);
@@ -126,7 +129,7 @@ void FATestMorph_w2b::Test (const char * pLineStr, const int LineLen)
         return;
     }
     // make them sorted and uniqued
-    InCount = ::FASortUniq (m_OutChain2Buffer, m_OutChain2Buffer + InCount);
+    InCount = FASortUniq (m_OutChain2Buffer, m_OutChain2Buffer + InCount);
 
     // generate base forms
      const int OutChainSize = \
@@ -161,7 +164,7 @@ void FATestMorph_w2b::Test (const char * pLineStr, const int LineLen)
         Pos++;
     }
     // make them sorted and uniqued
-    OutCount = ::FASortUniq (m_ChainBuffer, m_ChainBuffer + OutCount);
+    OutCount = FASortUniq (m_ChainBuffer, m_ChainBuffer + OutCount);
 
     // calculate the difference between input and result
     const int ErrType = \
@@ -182,7 +185,9 @@ void FATestMorph_w2b::Test (const char * pLineStr, const int LineLen)
 
         std::string line (pLineStr, LineLen);
         (*pDbgOs) << line << "\t\t";
-        ::FAPrintWordList (*pDbgOs, m_OutChainBuffer, OutChainSize);
+        FAPrintWordList (*pDbgOs, m_OutChainBuffer, OutChainSize);
         (*pDbgOs) << '\n';
     }
+}
+
 }

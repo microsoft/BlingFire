@@ -9,6 +9,9 @@
 #include "FAConfig.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// Note: 
 /// 1. All symbols are assumed to be UTF-32LE
@@ -37,5 +40,6 @@ const bool FAUtf32IsUpper (const int Symbol);
 /// returns true if Symbol is in upper case
 const bool FAUtf32IsLower (const int Symbol);
 
+}
 
 #endif

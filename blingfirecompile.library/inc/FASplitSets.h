@@ -13,6 +13,9 @@
 #include "FAEncoder_pref.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 
@@ -50,5 +53,7 @@ private:
     int m_size;
     FAArray_cont_t < int > m_e2c;
 };
+
+}
 
 #endif

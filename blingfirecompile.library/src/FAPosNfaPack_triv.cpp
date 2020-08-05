@@ -14,6 +14,9 @@
 
 #include <algorithm>
 
+namespace BlingFire
+{
+
 
 FAPosNfaPack_triv::FAPosNfaPack_triv (FAAllocatorA * pAlloc) :
     m_pNfa (NULL),
@@ -487,7 +490,7 @@ void FAPosNfaPack_triv::CalcIwMap ()
     const int * pIws = m_alphabet.begin ();
     const int IwsCount = m_alphabet.size ();
     DebugLogAssert (0 < IwsCount && pIws);
-    DebugLogAssert (true == ::FAIsSortUniqed (pIws, IwsCount));
+    DebugLogAssert (true == FAIsSortUniqed (pIws, IwsCount));
 
     const int MaxIw = pIws [IwsCount - 1];
     DebugLogAssert (m_pNfa->GetMaxIw () == MaxIw);
@@ -579,7 +582,7 @@ void FAPosNfaPack_triv::CalcAlphabet ()
             int * pEnd = m_alphabet.end ();
 
             memcpy (pBegin + OldSize, pIws, IwsCount * sizeof (int));
-            const int NewSize = ::FASortUniq (pBegin, pEnd);
+            const int NewSize = FASortUniq (pBegin, pEnd);
             m_alphabet.resize (NewSize);
         }
     }
@@ -848,4 +851,6 @@ void FAPosNfaPack_triv::Process ()
     StoreTrBrs ();
     // add State2Offset map
     StoreOffsetTable ();
+}
+
 }

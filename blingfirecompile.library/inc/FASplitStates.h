@@ -13,6 +13,9 @@
 #include "FAEncoder_pref.h"
 #include "FAChain2Num_hash.h"
 
+namespace BlingFire
+{
+
 class FARSNfaA;
 
 
@@ -48,5 +51,7 @@ private:
     FAEncoder_pref m_enc;
     FAChain2Num_hash m_dsts2num;
 };
+
+}
 
 #endif

@@ -10,6 +10,8 @@
 #include "FAConfig.h"
 #include "FARegexpLexerA.h"
 
+namespace BlingFire
+{
 
 ///
 /// The lexer assumes that the input is the combination of the following:
@@ -61,5 +63,7 @@ private:
   void PushToken (const int Type, const int Offset, const int Length);
 
 };
+
+}
 
 #endif

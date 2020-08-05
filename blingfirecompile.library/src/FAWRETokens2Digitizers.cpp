@@ -13,6 +13,9 @@
 #include <fstream>
 #include <sstream>
 
+namespace BlingFire
+{
+
 
 FAWRETokens2Digitizers::FAWRETokens2Digitizers (FAAllocatorA * pAlloc) :
     FAWRETokens2Dicts (pAlloc),
@@ -358,7 +361,7 @@ void FAWRETokens2Digitizers::
         const std::string msg = \
             std::string ("Can't open the dictionary '") + \
             TxtName + std::string ("' or '") + RgxName;
-        ::FASyntaxError (NULL, 0, -1, msg.c_str ());
+        FASyntaxError (NULL, 0, -1, msg.c_str ());
         throw FAException (FAMsg::SyntaxError, __FILE__, __LINE__);
     }
     m_NoTxt = false;
@@ -453,14 +456,14 @@ inline void FAWRETokens2Digitizers::BuildTag2Ids ()
     while (-1 != (TagCount = m_pTagDict->GetInfo (m_IdCount, pTags, MaxTags))){
 
         DebugLogAssert (TagCount <= MaxTags);
-        DebugLogAssert (::FAIsSortUniqed (pTags, TagCount));
+        DebugLogAssert (FAIsSortUniqed (pTags, TagCount));
 
         for (i = 0; i < m_DictTagCount; ++i) {
 
             DebugLogAssert (m_pDictTags);
             const int Tag = m_pDictTags [i];
 
-            if (-1 != ::FAFind_log (pTags, TagCount, Tag)) {
+            if (-1 != FAFind_log (pTags, TagCount, Tag)) {
                 m_tag2ids.Add (Tag + 1, m_IdCount);
             }
         }
@@ -579,7 +582,7 @@ inline void FAWRETokens2Digitizers::BuildTag2Ows ()
 
 void FAWRETokens2Digitizers::BuildDctDigitizer ()
 {
-    DebugLogAssert (::FAIsSortUniqed (m_pDictTags, m_DictTagCount));
+    DebugLogAssert (FAIsSortUniqed (m_pDictTags, m_DictTagCount));
 
     if (!m_pTagDict || !m_pTagSet2 || 0 >= m_DictTagCount) {
         throw FAException (FAMsg::InternalError, __FILE__, __LINE__);
@@ -654,4 +657,6 @@ const bool FAWRETokens2Digitizers::
     *pId2OwSize = m_id2ow.size ();
 
     return !m_NoDct;
+}
+
 }

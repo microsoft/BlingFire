@@ -10,6 +10,9 @@
 #include "FAUtils_cl.h"
 #include "FAException.h"
 
+namespace BlingFire
+{
+
 
 FAGcLDB::FAGcLDB (FAAllocatorA *) :
     FALDB (),
@@ -105,4 +108,6 @@ void FAGcLDB::SetImage (const unsigned char * pImgDump)
     } // of for (int i = 0; ...
 
     DebugLogAssert (m_Count <= Size);
+}
+
 }

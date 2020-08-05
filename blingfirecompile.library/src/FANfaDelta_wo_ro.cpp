@@ -11,6 +11,9 @@
 
 #include <algorithm>
 
+namespace BlingFire
+{
+
 
 FANfaDelta_wo_ro::_TTrCmp::_TTrCmp (const int * pTrs, const int Count) :
     m_pTrs (pTrs),
@@ -244,5 +247,7 @@ const int FANfaDelta_wo_ro::
 {
     DebugLogAssert (!m_IsWo);
     return m_delta_const.GetDest (State, Iw, ppDsts);
+}
+
 }
 

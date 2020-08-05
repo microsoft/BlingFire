@@ -11,6 +11,9 @@
 #include "FAArray_cont_t.h"
 #include "FAMultiMap_judy.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSNfaA;
 
@@ -56,5 +59,7 @@ private:
     /// final/initial-unreachable removal flag, true by default
     bool m_RemoveIniUnreach;
 };
+
+}
 
 #endif

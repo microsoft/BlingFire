@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FALDB;
 class FARSDfa_pack_triv;
 class FAState2Ow_pack_triv;
@@ -54,5 +57,7 @@ private:
     bool m_IgnoreCase;
     int m_Dir;
 };
+
+}
 
 #endif

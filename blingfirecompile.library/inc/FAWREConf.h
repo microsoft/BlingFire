@@ -16,6 +16,9 @@
 #include "FARSDfa_ro.h"
 #include "FAMultiMap_ar_uniq.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -96,5 +99,7 @@ private:
     /// trbr map
     FAMultiMap_ar_uniq m_trbr;
 };
+
+}
 
 #endif

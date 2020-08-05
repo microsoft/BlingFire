@@ -10,6 +10,9 @@
 #include "FAAllocatorA.h"
 #include "FARSNfaA.h"
 
+namespace BlingFire
+{
+
 
 FARemoveUnreachable::FARemoveUnreachable (FAAllocatorA * pAlloc) :
     m_pNfa (NULL),
@@ -241,5 +244,7 @@ void FARemoveUnreachable::Process ()
     RemoveTransitions ();
 
     m_pNfa->Prepare ();
+}
+
 }
 

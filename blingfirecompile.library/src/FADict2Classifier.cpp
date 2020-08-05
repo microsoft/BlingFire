@@ -15,6 +15,9 @@
 
 #include <algorithm>
 
+namespace BlingFire
+{
+
 
 FADict2Classifier::FADict2Classifier (FAAllocatorA * pAlloc):
     m_pInDfa (NULL),
@@ -197,8 +200,8 @@ void FADict2Classifier::BuildDstStates (const FARSDfaA * pDfa, const int State)
     int * pBegin = m_tmp_dsts.begin ();
     const int Size = m_tmp_dsts.size ();
 
-    if (!::FAIsSortUniqed (pBegin, Size)) {
-        const int NewSize = ::FASortUniq (pBegin, pBegin + Size);
+    if (!FAIsSortUniqed (pBegin, Size)) {
+        const int NewSize = FASortUniq (pBegin, pBegin + Size);
         m_tmp_dsts.resize (NewSize);
     }
 }
@@ -238,7 +241,7 @@ void FADict2Classifier::ProcessState (const int State)
         m_tmp_arr.push_back (State);
     }
 
-    const int Size = ::FASortUniq (m_tmp_arr.begin (), m_tmp_arr.end ());
+    const int Size = FASortUniq (m_tmp_arr.begin (), m_tmp_arr.end ());
     m_tmp_arr.resize (Size);
 
     if (1 < Size) {
@@ -317,7 +320,7 @@ void FADict2Classifier::BuildOutput ()
     } // of while (0 < m_stack.size ()) ...
 
     // setup final states
-    const int Size = ::FASortUniq (m_finals.begin (), m_finals.end ());
+    const int Size = FASortUniq (m_finals.begin (), m_finals.end ());
     m_finals.resize (Size);
     m_pOutDfa->SetFinals (m_finals.begin (), Size);
 
@@ -531,7 +534,7 @@ void FADict2Classifier::ExtendFsm ()
         // apply filter to the resulting Ows
         const int * pRes;
         const int ResSize = FilterOws (&pRes);
-        DebugLogAssert (::FAIsSortUniqed (pRes, ResSize));
+        DebugLogAssert (FAIsSortUniqed (pRes, ResSize));
         m_sets.SetRes (NULL, 0, 0);
 
         // setup the reaction
@@ -545,7 +548,7 @@ void FADict2Classifier::ExtendFsm ()
 
     if (m_ExtendFinals) {
 
-        const int Size = ::FASortUniq (m_finals.begin (), m_finals.end ());
+        const int Size = FASortUniq (m_finals.begin (), m_finals.end ());
         m_finals.resize (Size);
 
         // setup final states
@@ -593,3 +596,4 @@ void FADict2Classifier::Process ()
     }
 }
 
+}

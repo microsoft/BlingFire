@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FALDB;
 class FAWREConfCA;
 class FAWREConf_pack;
@@ -86,5 +89,7 @@ private:
         MinActSize = 3,
     };
 };
+
+}
 
 #endif

@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FAMsg {
 
 public:
@@ -28,5 +31,7 @@ public:
     static const char * const SyntaxError;
 
 };
+
+}
 
 #endif

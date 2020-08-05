@@ -26,6 +26,9 @@
 #define FAResolveMatch_nest_Res2Rule(Res) \
     ((unsigned short) (0x0000FFFF & Res))
 
+namespace BlingFire
+{
+
 
 FAResolveMatch_nest::FAResolveMatch_nest (FAAllocatorA * pAlloc)
 {
@@ -76,7 +79,7 @@ inline void FAResolveMatch_nest::SortResults ()
     unsigned int * pResults = m_results.begin ();
 
     // if results don't overlap they are already sorted
-    if (false == ::FAIsSorted (pResults, ResCount)) {
+    if (false == FAIsSorted (pResults, ResCount)) {
         // sort the results, special encoding allows integer comparison here
         // TODO: make something faster here
         std::sort (pResults, pResults + ResCount);
@@ -89,7 +92,7 @@ inline void FAResolveMatch_nest::FilterResults_uniq ()
     int ResCount = m_results.size ();
     unsigned int * pResults = m_results.begin ();
     DebugLogAssert (0 < ResCount && pResults);
-    DebugLogAssert (::FAIsSorted (pResults, ResCount));
+    DebugLogAssert (FAIsSorted (pResults, ResCount));
 
     unsigned int * pEnd = pResults + ResCount;
     ResCount = int (std::unique (pResults, pEnd) - pResults);
@@ -107,7 +110,7 @@ inline void FAResolveMatch_nest::FilterResults_overlap_include ()
     int ResCount = m_results.size ();
     unsigned int * pResults = m_results.begin ();
     DebugLogAssert (0 < ResCount && pResults);
-    DebugLogAssert (::FAIsSorted (pResults, ResCount));
+    DebugLogAssert (FAIsSorted (pResults, ResCount));
 
     int * pRule2To = m_rule2pos.begin ();
 
@@ -234,4 +237,6 @@ void FAResolveMatch_nest::
 void FAResolveMatch_nest::Clear ()
 {
     m_results.resize (0);
+}
+
 }

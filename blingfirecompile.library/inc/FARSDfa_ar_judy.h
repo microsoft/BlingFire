@@ -13,6 +13,9 @@
 #include "FABitArray.h"
 #include "FAMap_judy.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 
@@ -92,5 +95,7 @@ class FARSDfa_ar_judy : public FARSDfaA {
 
   FAAllocatorA * m_pAlloc;
 };
+
+}
 
 #endif

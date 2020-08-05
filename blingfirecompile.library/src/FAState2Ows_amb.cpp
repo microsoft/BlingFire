@@ -9,6 +9,9 @@
 #include "FAState2Ows_amb.h"
 #include "FARSNfaA.h"
 
+namespace BlingFire
+{
+
 
 FAState2Ows_amb::FAState2Ows_amb (FAAllocatorA * pAlloc) :
     FAState2Ows (pAlloc),
@@ -90,4 +93,6 @@ void FAState2Ows_amb::SetOws (const int State, const int * pOws, const int Size)
             FAState2Ows::SetOws (State, m_ows.begin (), NewSize);
 
     } // of if (0 < Size) ...
+}
+
 }

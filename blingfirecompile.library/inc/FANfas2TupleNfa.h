@@ -12,6 +12,9 @@
 #include "FAChain2Num_judy.h"
 #include "FAEncoder_pref.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSNfaA;
 
@@ -95,5 +98,7 @@ private:
     int m_IgnoreBase;
     int m_IgnoreMax;
 };
+
+}
 
 #endif

@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// client-side interface for getting state's set of defined outgoing arcs
 ///
@@ -25,6 +28,8 @@ public:
         ) const = 0;
     
 };
+
+}
 
 #endif
 

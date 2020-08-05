@@ -15,6 +15,9 @@
 #include "FAMapA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FACalcIwEqClasses::FACalcIwEqClasses (FAAllocatorA * pAlloc) :
     m_pInDfa (NULL),
@@ -116,13 +119,13 @@ void FACalcIwEqClasses::Prepare ()
     } else {
         DebugLogAssert (m_pInNfa);
 
-        ::FAGetAlphabet (m_pInNfa, &m_iws);
+        FAGetAlphabet (m_pInNfa, &m_iws);
         pIws = m_iws.begin ();
         Count = m_iws.size ();
     }
 
     DebugLogAssert (0 < Count && pIws);
-    DebugLogAssert (::FAIsSortUniqed (pIws, Count));
+    DebugLogAssert (FAIsSortUniqed (pIws, Count));
 
     for (int i = 0; i < Count; ++i) {
 
@@ -310,3 +313,4 @@ void FACalcIwEqClasses::Process ()
     Clear ();
 }
 
+}

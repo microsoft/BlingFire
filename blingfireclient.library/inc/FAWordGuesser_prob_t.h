@@ -11,6 +11,9 @@
 #include "FAWordGuesser_t.h"
 #include "FAState2OwsCA.h"
 
+namespace BlingFire
+{
+
 ///
 /// Word -> TAG/PROB guesser; for the given word returns an array of 
 /// possible tags and an array of tag probabilities given the word, i.e. P(T|W)
@@ -339,6 +342,8 @@ const int FAWordGuesser_prob_t< Ty >::
 
         return OwCount;
     }
+}
+
 }
 
 #endif

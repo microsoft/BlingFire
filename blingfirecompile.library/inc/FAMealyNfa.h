@@ -12,6 +12,9 @@
 #include "FAEncoder_pref.h"
 #include "FAChain2Num_hash.h"
 
+namespace BlingFire
+{
+
 ///
 /// FSM-compile-time interafece for Mealy NFA sigma function.
 ///
@@ -32,5 +35,7 @@ private:
     FAEncoder_pref m_enc;
     FAChain2Num_hash m_arc2ow;
 };
+
+}
 
 #endif

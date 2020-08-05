@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FALDB;
 class FARSDfaCA;
 class FARSDfa_pack_triv;
@@ -46,5 +49,7 @@ private:
     FARSDfa_pack_triv * m_pDfa;
     FARSDfa_pack_triv * m_pSuffDfa;
 };
+
+}
 
 #endif

@@ -11,6 +11,9 @@
 
 #include <algorithm>
 
+namespace BlingFire
+{
+
 
 FARSDfa_wo_ro::_TTrCmp::_TTrCmp (const int * pTrs, const int Count) :
     m_pTrs (pTrs),
@@ -289,5 +292,7 @@ const int FARSDfa_wo_ro::GetFinals (const int ** ppStates) const
 {
     DebugLogAssert (!m_IsWo);
     return m_ro_dfa.GetFinals (ppStates);
+}
+
 }
 

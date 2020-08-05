@@ -11,6 +11,9 @@
 
 #include <algorithm>
 
+namespace BlingFire
+{
+
 
 FARegexpTreeSort::_TNodeCmp::_TNodeCmp (const int * pNode2Min,
                                         const int * pNode2Max,
@@ -415,4 +418,6 @@ void FARegexpTreeSort::Clear ()
     m_seen.resize (0);
     m_disj_nodes.resize (0);
     m_child_nodes.resize (0);
+}
+
 }

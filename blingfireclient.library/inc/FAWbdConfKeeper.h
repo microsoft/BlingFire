@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 class FALDB;
 class FARSDfa_pack_triv;
 class FAState2Ow_pack_triv;
@@ -117,5 +120,7 @@ private:
         MaxFunctionId = 65536,
     };
 };
+
+}
 
 #endif

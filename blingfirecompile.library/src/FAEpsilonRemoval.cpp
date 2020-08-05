@@ -11,6 +11,9 @@
 #include "FARSNfaA.h"
 #include "FAFsmConst.h"
 
+namespace BlingFire
+{
+
 
 FAEpsilonRemoval::FAEpsilonRemoval (FAAllocatorA * pAlloc) :
     m_has_epsilon (false),
@@ -249,5 +252,7 @@ void FAEpsilonRemoval::Process ()
 
     // remove unreachable states
     m_remover.Process ();
+}
+
 }
 

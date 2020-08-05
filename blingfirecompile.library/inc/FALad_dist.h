@@ -13,6 +13,9 @@
 #include "FASummTagScores.h"
 #include "MemLfpStringMap.h"
 
+namespace BlingFire
+{
+
 class FALadLDB;
 
 ///
@@ -124,6 +127,8 @@ private:
     bool m_fUseNgrams;
     bool m_fUseWords;
 };
+
+}
 
 #endif
 #endif

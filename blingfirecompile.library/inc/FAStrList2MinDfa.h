@@ -11,6 +11,9 @@
 #include "FAStr2Utf16.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -44,5 +47,7 @@ private:
     // builds min dfa from the list chains
     FAChains2MinDfa m_chains2dfa;
 };
+
+}
 
 #endif

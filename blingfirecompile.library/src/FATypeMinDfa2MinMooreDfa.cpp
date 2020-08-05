@@ -13,6 +13,9 @@
 #include "FAAllocatorA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FATypeMinDfa2MinMooreDfa::FATypeMinDfa2MinMooreDfa (FAAllocatorA * pAlloc) :
     m_InitialTypeIw (0),
@@ -117,7 +120,7 @@ void FATypeMinDfa2MinMooreDfa::ProcessState (const int State)
     const int * pIws;
     const int IwCount = m_pInDfa->GetIWs (&pIws);
     DebugLogAssert (0 < IwCount && pIws);
-    DebugLogAssert (true == ::FAIsSortUniqed (pIws, IwCount));
+    DebugLogAssert (true == FAIsSortUniqed (pIws, IwCount));
 
     /// copy non-type transitions and build the chain
     for (int i = 0; i < IwCount; ++i) {
@@ -183,4 +186,6 @@ void FATypeMinDfa2MinMooreDfa::Process ()
     }
     // make the output automaton ready
     m_pOutDfa->Prepare ();
+}
+
 }

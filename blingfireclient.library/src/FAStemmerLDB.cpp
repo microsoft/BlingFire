@@ -9,6 +9,8 @@
 #include "FAFsmConst.h"
 #include "FAStemmerLDB.h"
 
+namespace BlingFire
+{
 
 FAStemmerLDB::FAStemmerLDB () :
     FALDB (),
@@ -131,4 +133,6 @@ const FAW2PConfKeeper * FAStemmerLDB::GetW2PConf () const
         return NULL;
     }
     return & m_w2p;
+}
+
 }

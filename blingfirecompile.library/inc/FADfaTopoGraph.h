@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSDfaA;
 
@@ -35,5 +38,7 @@ private:
     const FARSDfaA * m_pInDfa;
     FAAllocatorA * m_pAlloc;
 };
+
+}
 
 #endif

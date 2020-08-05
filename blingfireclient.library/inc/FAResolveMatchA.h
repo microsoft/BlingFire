@@ -9,6 +9,9 @@
 
 #include "FAConfig.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class describes the interface for match results disambiguation.
 /// For example, in some cases overlapped results may be prohibited.
@@ -55,5 +58,7 @@ public:
     virtual void Clear () = 0;
 
 };
+
+}
 
 #endif

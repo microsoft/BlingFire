@@ -20,6 +20,9 @@
 #include "FACalcMealy2.h"
 #include "FAMealyDfa.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FAMealyNfaA;
 
@@ -120,5 +123,7 @@ private:
 
     bool m_UseBiMachine;
 };
+
+}
 
 #endif

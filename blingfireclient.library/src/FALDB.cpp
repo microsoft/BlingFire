@@ -10,6 +10,8 @@
 #include "FAFsmConst.h"
 #include "FAUtils_cl.h"
 
+namespace BlingFire
+{
 
 FALDB::FALDB () :
     m_DumpCount (0)
@@ -97,7 +99,7 @@ const bool FALDB::IsValidBinary ()
                 }
 
                 DataSize += Size;
-                DataHash = ::FAGetCrc32 (m_Dumps [i], (size_t) Size, DataHash);
+                DataHash = FAGetCrc32 (m_Dumps [i], (size_t) Size, DataHash);
             }
 
             // see if actual numbers match the expected onces
@@ -186,4 +188,6 @@ const bool FALDB::
     }
 
     return false;
+}
+
 }

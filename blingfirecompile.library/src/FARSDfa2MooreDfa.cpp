@@ -13,6 +13,9 @@
 #include "FAState2OwsA.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FARSDfa2MooreDfa::FARSDfa2MooreDfa (FAAllocatorA * pAlloc) :
     m_pInDfa (NULL),
@@ -117,8 +120,8 @@ void FARSDfa2MooreDfa::ProcessState (const int State)
         int * pBegin = m_ows.begin ();
         int Size = m_ows.size ();
 
-        if (false == ::FAIsSortUniqed (pBegin, Size)) {
-            Size = ::FASortUniq (pBegin, pBegin + Size);
+        if (false == FAIsSortUniqed (pBegin, Size)) {
+            Size = FASortUniq (pBegin, pBegin + Size);
             m_ows.resize (Size);
         }
 
@@ -148,7 +151,7 @@ const int FARSDfa2MooreDfa::GetNewMaxIw () const
     const int * pIws;
     const int IwsCount = m_pInDfa->GetIWs (&pIws);
     DebugLogAssert (0 < IwsCount && pIws);
-    DebugLogAssert (::FAIsSortUniqed (pIws, IwsCount));
+    DebugLogAssert (FAIsSortUniqed (pIws, IwsCount));
 
     // get old MaxIw
     const int OldMaxIw = m_pInDfa->GetMaxIw ();
@@ -208,10 +211,12 @@ void FARSDfa2MooreDfa::Process ()
     } // of for (int State = 0; ...
 
     // setup finals
-    const int NewSize = ::FASortUniq (m_finals.begin (), m_finals.end ());
+    const int NewSize = FASortUniq (m_finals.begin (), m_finals.end ());
     m_finals.resize (NewSize);
     m_pOutDfa->SetFinals (m_finals.begin (), NewSize);
 
     // make it ready to work
     m_pOutDfa->Prepare ();
+}
+
 }

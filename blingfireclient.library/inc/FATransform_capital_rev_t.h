@@ -12,6 +12,9 @@
 #include "FAUtf32Utils.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// This is a reverse Upper-Case-First (UCF) transformation.
 ///
@@ -103,5 +106,6 @@ void FATransform_capital_rev_t< Ty >::
     m_Delim = Delim;
 }
 
+}
 
 #endif

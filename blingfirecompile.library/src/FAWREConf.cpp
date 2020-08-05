@@ -10,6 +10,9 @@
 #include "FAException.h"
 
 
+namespace BlingFire
+{
+
 FAWREConf::FAWREConf (FAAllocatorA * pAlloc) :
     m_Type (FAFsmConst::WRE_TYPE_RS),
     m_TokenType (FAFsmConst::WRE_TT_DEFAULT),
@@ -363,3 +366,4 @@ void FAWREConf::GetTrBrMap (const FAMultiMapA ** ppTrBr) const
     }
 }
 
+}

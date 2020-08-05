@@ -13,6 +13,9 @@
 #include "FARemoveUnreachable.h"
 #include "FASetUtils.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSNfaA;
 
@@ -88,5 +91,7 @@ private:
     /// custom epsilon graph
     FAEpsilonGraph * m_pG;
 };
+
+}
 
 #endif

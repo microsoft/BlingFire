@@ -11,6 +11,9 @@
 #include "FARSDfaA.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 ///
 /// Implements renumerated automaton having old automaton and Old2New State map
 ///
@@ -68,5 +71,7 @@ private:
     FAArray_cont_t < int > m_new2old;
     FAArray_cont_t < int > m_new_finals;
 };
+
+}
 
 #endif

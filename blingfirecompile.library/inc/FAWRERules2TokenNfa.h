@@ -13,6 +13,9 @@
 #include "FARegexp2Nfa.h"
 #include "FANfas2CommonENfa.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class builds Token NFA from a list of WRE rules or a single rule.
 ///
@@ -48,5 +51,7 @@ private:
     /// NFA list --> ENFA
     FANfas2CommonENfa m_merge;
 };
+
+}
 
 #endif

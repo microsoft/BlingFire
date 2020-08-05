@@ -33,6 +33,9 @@
 #include "FACalcIwEqClasses.h"
 #include "FAArray_p2ca.h"
 
+namespace BlingFire
+{
+
 class FATagSet;
 class FAAllocatorA;
 
@@ -190,5 +193,7 @@ private:
     FARSDfa_wo_ro m_dfa2_min;
     FAMealyDfa m_sigma2_min;
 };
+
+}
 
 #endif

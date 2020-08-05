@@ -10,6 +10,9 @@
 #include "FAFsmConst.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FANfaDelta_ro::FANfaDelta_ro (FAAllocatorA * pAlloc)
 {
@@ -51,7 +54,7 @@ void FANfaDelta_ro::
     )
 {
     DebugLogAssert (0 <= State && 0 <= Iw && pDsts && 0 <= Count);
-    DebugLogAssert (true == ::FAIsSortUniqed (pDsts, Count));
+    DebugLogAssert (true == FAIsSortUniqed (pDsts, Count));
     DebugLogAssert (m_Dsts.size () == m_Iws.size ());
     DebugLogAssert (0 == m_State2FC.size () % 2);
 
@@ -150,7 +153,7 @@ const int FANfaDelta_ro::
     const int * pDsts = m_Dsts.begin () + From;
     DebugLogAssert (m_Dsts.begin () && m_Iws.begin ());
 
-    const int i = ::FAFind_log (pIws, Count, Iw);
+    const int i = FAFind_log (pIws, Count, Iw);
     DebugLogAssert ((0 <= i && i < Count) || (-1 == i));
     if (-1 == i) {
         return -1;
@@ -173,4 +176,6 @@ const int FANfaDelta_ro::
         DebugLogAssert (-1 == SetId);
         return 0;
     }
+}
+
 }

@@ -12,6 +12,9 @@
 #include "FAMultiMapCA.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
+
 ///
 /// This class interprets dump created by FAMultiMapPack_fixed.
 ///
@@ -49,5 +52,7 @@ private:
     // min key value
     int m_MaxKey;
 };
+
+}
 
 #endif

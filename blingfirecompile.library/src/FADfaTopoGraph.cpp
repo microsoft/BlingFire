@@ -12,6 +12,9 @@
 #include "FAArray_cont_t.h"
 #include "FAUtils.h"
 
+namespace BlingFire
+{
+
 
 FADfaTopoGraph::FADfaTopoGraph (FAAllocatorA * pAlloc) : 
     m_pInDfa (NULL),
@@ -60,7 +63,7 @@ const int FADfaTopoGraph::GetDstNodes (
     }
 
     const int Size = 
-        ::FASortUniq (tmp_dst_nodes.begin (), tmp_dst_nodes.end ());
+        FASortUniq (tmp_dst_nodes.begin (), tmp_dst_nodes.end ());
     tmp_dst_nodes.resize (Size);
 
     if (pDstNodes && DstNodesSize >= Size) {
@@ -69,4 +72,6 @@ const int FADfaTopoGraph::GetDstNodes (
     }
 
     return Size;
+}
+
 }

@@ -10,6 +10,9 @@
 #include "FARSDfaA.h"
 #include "FAMealyDfaA.h"
 
+namespace BlingFire
+{
+
 
 FACalcMealy2::FACalcMealy2 (FAAllocatorA * pAlloc) :
     m_pInRevNfa (NULL),
@@ -216,3 +219,4 @@ const FAMealyNfaA * FACalcMealy2::GetSigma () const
     return & m_OutSigma;
 }
 
+}

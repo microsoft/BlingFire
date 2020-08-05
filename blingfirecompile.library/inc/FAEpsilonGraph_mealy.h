@@ -12,6 +12,9 @@
 #include "FAChain2Num_hash.h"
 #include "FAArray_cont_t.h"
 
+namespace BlingFire
+{
+
 class FAMealyNfaA;
 
 ///
@@ -63,5 +66,7 @@ private:
     FAArray_cont_t < int > m_chain;
 
 };
+
+}
 
 #endif

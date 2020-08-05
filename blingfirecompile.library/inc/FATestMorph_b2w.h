@@ -11,6 +11,9 @@
 #include "FATestMorph.h"
 #include "FAChain2Num_judy.h"
 
+namespace BlingFire
+{
+
 ///
 /// B2W quality test
 ///
@@ -38,5 +41,7 @@ private:
     FAChain2Num_judy m_word2id;
     int m_MaxId;
 };
+
+}
 
 #endif

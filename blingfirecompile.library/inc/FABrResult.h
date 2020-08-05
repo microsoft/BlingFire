@@ -11,6 +11,9 @@
 #include "FABrResultCA.h"
 #include "FAMultiMap_judy.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 
 ///
@@ -41,5 +44,7 @@ private:
     int m_Base;
     FAMultiMap_judy m_res;
 };
+
+}
 
 #endif

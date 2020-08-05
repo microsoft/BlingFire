@@ -11,6 +11,8 @@
 #include "FATransformCA_t.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
 
 ///
 /// Makes reverse transformation to FATransform_prefix_t.
@@ -146,6 +148,8 @@ inline const int FATransform_prefix_rev_t< Ty >::
     }
 
     return -1;
+}
+
 }
 
 #endif

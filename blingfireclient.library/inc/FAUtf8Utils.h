@@ -9,6 +9,8 @@
 #include "FAConfig.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
 
 /// Converts UTF-8 symbol into int (UTF-32LE),
 /// returns new pointer in the multi byte sequence,
@@ -139,5 +141,7 @@ public:
         MAX_CHAR_SIZE = 4,
     };
 };
+
+}
 
 #endif

@@ -10,6 +10,9 @@
 #include "FAConfig.h"
 #include "FAMultiMapCA.h"
 
+namespace BlingFire
+{
+
 /// General interface for Key -> { Val_1, ... ,Val_N } multi-map.
 /// Holds:
 /// \forall Key_1, Key_2 \in M, Key_1 != Key_2.
@@ -41,5 +44,7 @@ public:
     virtual const int Prev (int * pKey, const int ** ppValues) const = 0;
 
 };
+
+}
 
 #endif

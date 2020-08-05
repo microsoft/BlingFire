@@ -14,6 +14,9 @@
 #include "FAMealyDfaCA.h"
 #include "FAFsmConst.h"
 
+namespace BlingFire
+{
+
 
 FATestCmpDfa::FATestCmpDfa (FAAllocatorA * pAlloc) :
     m_pDfa1 (NULL),
@@ -333,4 +336,6 @@ const bool FATestCmpDfa::Process (const int /*MaxState*/, const int MaxIw)
     } // of while (0 < StackSize) ...
 
     return true;
+}
+
 }

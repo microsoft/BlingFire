@@ -16,6 +16,9 @@
 #include "FAIwMapPack.h"
 #include "FACalcIwEqClasses.h"
 
+namespace BlingFire
+{
+
 class FARSDfaA;
 class FAState2OwA;
 class FAState2OwsA;
@@ -259,5 +262,7 @@ private:
     // e.g. 0x00ffffff, for m_DstSize == 3
     unsigned int m_DstMask;
 };
+
+}
 
 #endif

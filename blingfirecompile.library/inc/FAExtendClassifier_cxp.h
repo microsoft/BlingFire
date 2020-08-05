@@ -12,6 +12,9 @@
 #include "FAState2Ows_ar_uniq.h"
 #include "FAChain2Num_hash.h"
 
+namespace BlingFire
+{
+
 class FAAllocatorA;
 class FARSDfaA;
 class FAState2OwsA;
@@ -71,5 +74,7 @@ private:
         DefMaxProb = 255,
     };
 };
+
+}
 
 #endif

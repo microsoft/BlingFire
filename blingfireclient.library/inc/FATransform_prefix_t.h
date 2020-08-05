@@ -12,6 +12,8 @@
 #include "FARSDfaCA.h"
 #include "FASecurity.h"
 
+namespace BlingFire
+{
 
 ///
 /// Moves recognized prefix to the end of word delimited with m_Delim value.
@@ -182,6 +184,8 @@ inline const int FATransform_prefix_t< Ty >::
     }
 
     return PrefLen;
+}
+
 }
 
 #endif

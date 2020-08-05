@@ -13,6 +13,9 @@
 
 #include <string>
 
+namespace BlingFire
+{
+
 
 FATestMorph_w2s::FATestMorph_w2s (FAAllocatorA * pAlloc) :
     FATestMorph (pAlloc)
@@ -47,7 +50,7 @@ inline const bool FATestMorph_w2s::
         return false;
     }
 
-    if (!::FAIsSortUniqed (pB, BSize)) {
+    if (!FAIsSortUniqed (pB, BSize)) {
         return false;
     }
 
@@ -70,7 +73,7 @@ void FATestMorph_w2s::Test (const char * pLineStr, const int LineLen)
 
     // convert UTF-8 string into array of integers (UTF-32)
     const int ChainSize = \
-        ::FAStrUtf8ToArray (
+        FAStrUtf8ToArray (
             pLineStr, 
             LineLen, 
             m_ChainBuffer, 
@@ -87,7 +90,7 @@ void FATestMorph_w2s::Test (const char * pLineStr, const int LineLen)
 
     // make input in the lower case, if needed
     if (m_IgnoreCase) {
-        ::FAUtf32StrLower (m_ChainBuffer, ChainSize);
+        FAUtf32StrLower (m_ChainBuffer, ChainSize);
     }
 
     // find delimiter
@@ -148,7 +151,7 @@ void FATestMorph_w2s::Test (const char * pLineStr, const int LineLen)
         }
 
         // print the output splitting
-        ::FAPrintSplitting (
+        FAPrintSplitting (
             *pDbgOs, 
             m_ChainBuffer, 
             ChainSize, 
@@ -158,7 +161,7 @@ void FATestMorph_w2s::Test (const char * pLineStr, const int LineLen)
         (*pDbgOs) << "\tvs\t";
 
         // print the expexted splitting
-        ::FAPrintSplitting (
+        FAPrintSplitting (
             *pDbgOs, 
             m_ChainBuffer, 
             ChainSize,
@@ -167,5 +170,7 @@ void FATestMorph_w2s::Test (const char * pLineStr, const int LineLen)
         );
         (*pDbgOs) << '\n';
     }
+}
+
 }
 
