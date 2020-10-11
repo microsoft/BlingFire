@@ -2,13 +2,7 @@ require "json"
 
 Dir.chdir(__dir__)
 
-contents = <<~EOS
-<pad>\t0
-<s>\t0
-</s>\t0
-<unk>\t0
-<sep>\t0
-EOS
+contents = ""
 
 lines = JSON.parse(File.read("gpt2-vocab.json"))
 lines.each do |k, v|
