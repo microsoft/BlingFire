@@ -1,3 +1,5 @@
+require "json"
+
 Dir.chdir(__dir__)
 
 contents = <<~EOS
@@ -8,10 +10,10 @@ contents = <<~EOS
 <sep>\t0
 EOS
 
-lines = File.read("vocab.bpe").split("\n")[1..-1]
-lines.each_with_index do |line, i|
-  token = line.sub("Ġ", "▁")
-  contents << "#{token}\t-#{i}\n"
+lines = JSON.parse(File.read("gpt2-vocab.json"))
+lines.each do |k, v|
+  token = k.sub("Ġ", "▁")
+  contents << "#{token}\t-#{v}\n"
 end
 
 File.write("spiece.model.exportvocab.txt", contents)
