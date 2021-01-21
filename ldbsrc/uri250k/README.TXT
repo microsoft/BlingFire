@@ -18,34 +18,21 @@ python ./generate_charmap.py > charmap.utf8
 cd <BlingFire>/ldbsrc
 make -f Makefile.gnu lang=uri250k all
 
-# after the succuessful compilation there should be a new file xlnet.bin inside the ldb directory
-ls -l ldb/xlnet.bin
+# after that you should get a new uri250k.bin under the ldb directory
 
-# let's run the parity verification
-cat input.utf8 | python ../scripts/test_bling_with_offsets.py -m ldb/xlnet.bin -p xlnet/spiece.model > output.utf8
+# let's use it to change URLs into a sequence of IDs
+cat seedtest.txt | python ../scripts/test_bling.py -m ldb/uri250k.bin --no-padding true --max-length 128 --single-space true  > qq
+paste seedtest.txt qq
 
-# count number of mismatches
-> cat output.utf8 | awk '/ERROR:/' |  wc -l
-2133
+https://github.com/microsoft    7 6 8 1434 3 9 4 1736
+https://github.com/facebookresearch     7 6 8 1434 3 9 4 63 1547
+https://github.com/OpenBuilds   7 6 8 1434 3 9 4 757 2235 6
+https://www.cnn.com/    7 6 8 10 3 81 42 3 9 4
+https://www.cnn.com/interactive/2021/01/politics/us-capitol-siege/      7 6 8 10 3 81 42 3 9 4 7636 170277 152 4 3922 4 99 5 16012 5 23548 4
+https://www.cnn.com/2021/01/07/tech/facebook-trump-restrictions/index.html      7 6 8 10 3 81 42 3 9 170277 152 4 133 4 561 4 63 5 6069 5 114302 4 79 3 19
+https://coupons.cnn.com/        7 6 8 6957 3 81 42 3 9 4
+https://coupons.cnn.com/categories/bikes        7 6 8 6957 3 81 42 3 9 4 642 4 5007
+https://coupons.cnn.com/categories/electronics  7 6 8 6957 3 81 42 3 9 4 642 4 1429
+https://coupons.cnn.com/categories/diapers      7 6 8 6957 3 81 42 3 9 4 642 4 94281
 
-# count total number of input texts
-> wc -l input.utf8
-2052515 input.utf8
-
-Input level parity is close to 99.9%, token level parity will be much higher than this. Upon inspection, 
-most of the disparities are due to sentence piece treating some Unicode control characters as a letter and some as a space,
-Bling Fire treats them all as a space.
-
-
-
-Measure perf:
-
-> time -p cat input.utf8 | python ../scripts/test_sp.py -m spiece.model -s 1 
-real 218.04
-user 217.69
-sys 1.19
-> time -p cat input.utf8 | python ../scripts/test_bling.py -m xlnet.bin  -s 1 
-real 101.53
-user 101.33
-sys 1.42
-
+# the URL tokenization was found helpful in many URL classification tasks
