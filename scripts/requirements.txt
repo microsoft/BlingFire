@@ -16,7 +16,7 @@ invoke==1.2.0
 msgpack==0.5.6
 msgpack-numpy==0.4.3.2
 murmurhash==1.0.1
-nltk==3.3
+nltk==3.4.5
 numpy==1.15.4
 paramiko==2.4.2
 plac==0.9.6
