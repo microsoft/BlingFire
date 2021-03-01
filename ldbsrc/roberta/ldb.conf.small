@@ -1,0 +1,15 @@
+#
+# LDB runtime configuration for the sentence piece model
+#
+
+[global]
+verify-ldb-bin
+
+[pos-dict]
+# note: the line below should be added to switch runtime to BPE from unigram lm mode
+tokalgo bpe-opt
+fsm-type mealy-dfa
+multi-map-mode fixed-dump
+fsm 1
+array 2
+multi-map 3
