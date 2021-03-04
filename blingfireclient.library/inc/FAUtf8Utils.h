@@ -74,6 +74,32 @@ const int FAStrUtf8ToArray (
         const int MaxSize
     );
 
+
+/// Converts UTF8 string of specified length to the array of ints
+///  using each byte as a character.
+/// Returns the number of used elements in the array.
+/// Returns -1 if the input sequence is invalid.
+const int FAStrUtf8AsBytesToArray (
+        const char * pStr, 
+        const int Len, 
+        __out_ecount(MaxSize) int * pArray, 
+        const int MaxSize
+    );
+
+/// Converts UTF8 string of specified length to the array of ints
+///  using each byte as a character and for each returned character
+//   returns its offset in the pStr.
+/// Returns the number of used elements in the array.
+/// Returns -1 if the input sequence is invalid.
+const int FAStrUtf8AsBytesToArray (
+        const char * pStr,
+        const int Len,
+        __out_ecount(MaxSize) int * pArray,
+        __out_ecount(MaxSize) int * pOffsets,
+        const int MaxSize
+    );
+
+
 /// Converts int (UTF-32LE) into UTF-16LE encoded string
 /// returns end pointer of the output sequence
 /// return NULL if buffer length is insufficient

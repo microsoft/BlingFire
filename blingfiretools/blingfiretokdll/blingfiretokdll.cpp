@@ -64,11 +64,14 @@ struct FAModelData
     // BPE runtime, it uses the m_DictConf for data
     FATokenSegmentationTools_1best_bpe_t < int > m_SegEngineBpe;
     bool m_isBpe;
+    // indicates wether characters are bytes of the UTF-8 rather than the Unicode symbols
+    bool m_useRawBytes;
 
     FAModelData ():
         m_hasWbd (false),
         m_hasSeg (false),
-        m_isBpe (false)
+        m_isBpe (false),
+        m_useRawBytes (false)
     {}
 };
 
@@ -826,11 +829,14 @@ void* SetModelData(FAModelData * pNewModelData, const unsigned char * pImgBytes)
 
         // check if this is a Unigram LM or BPE model
         pNewModelData->m_isBpe = FAFsmConst::TOKENIZE_BPE == pNewModelData->m_DictConf.GetTokAlgo()
-            || FAFsmConst::TOKENIZE_BPE_OPT == pNewModelData->m_DictConf.GetTokAlgo();
+            || FAFsmConst::TOKENIZE_BPE_OPT == pNewModelData->m_DictConf.GetTokAlgo()
+            || FAFsmConst::TOKENIZE_BPE_BYTE_OPT == pNewModelData->m_DictConf.GetTokAlgo();
+
+        // see if we need to treat UTF-8 bytes as input
+        pNewModelData->m_useRawBytes = FAFsmConst::TOKENIZE_BPE_BYTE_OPT == pNewModelData->m_DictConf.GetTokAlgo();
 
         // initialize the segmentation engine
-        if (pNewModelData->m_isBpe)
-        {
+        if (pNewModelData->m_isBpe) {
             pNewModelData->m_SegEngineBpe.SetConf(&pNewModelData->m_DictConf);
         } else {
             pNewModelData->m_SegEngine.SetConf(&pNewModelData->m_DictConf);
@@ -1180,19 +1186,26 @@ const int TextToIdsWithOffsets_sp(
         pOffsets[0] = 0; // added for prepended first character
     }
 
-    // convert input to UTF-32 (write past the added first space)
-    int BuffSize = fNeedOffsets ? 
-        ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + 1, pOffsets + 1, InUtf8StrByteCount) :
-        ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + 1, InUtf8StrByteCount);
-    if (BuffSize <= 0 || BuffSize > InUtf8StrByteCount) {
-        return 0;
-    }
-    BuffSize++; // to accomodate the first space
-
     // get the model data
     const FAModelData * pModelData = (const FAModelData *)ModelPtr;
     const FADictConfKeeper * pConf = &(pModelData->m_DictConf);
     const FAMultiMapCA * pCharMap = pConf->GetCharMap ();
+
+    // convert input to UTF-32 or bytes (write output past the added first space)
+    int BuffSize;
+    if(false == pModelData->m_useRawBytes) {
+        BuffSize = fNeedOffsets ? 
+            ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + 1, pOffsets + 1, InUtf8StrByteCount) :
+            ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + 1, InUtf8StrByteCount);
+    } else {
+        BuffSize = fNeedOffsets ? 
+            ::FAStrUtf8AsBytesToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + 1, pOffsets + 1, InUtf8StrByteCount) :
+            ::FAStrUtf8AsBytesToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + 1, InUtf8StrByteCount);
+    }
+    if (BuffSize <= 0 || BuffSize > InUtf8StrByteCount) {
+        return 0;
+    }
+    BuffSize++; // to accomodate the first space
 
     // needed for normalization
     std::vector< int > utf32input_norm;
@@ -1292,13 +1305,13 @@ const int TextToIdsWithOffsets_sp(
     }
 
     int OutSize = 0;
-
+    int IdOffset = pConf->GetIdOffset (); // see if we need to shift output IDs by a constant
     // return the ids only
     for (int i = 0; i < WbdOutSize && OutSize < MaxIdsArrLength; i += 3) {
 
         // copy id
         const int id = pWbdResults [i];
-        pIdsArr [OutSize] = id;
+        pIdsArr [OutSize] = id + IdOffset;
 
         // copy offsets if needed
         if (fNeedOffsets) {
