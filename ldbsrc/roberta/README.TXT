@@ -1,3 +1,5 @@
+# for details of the original implementation see this https://huggingface.co/transformers/_modules/transformers/models/roberta/tokenization_roberta.html#RobertaTokenizer
+
 ruby export_vocab.rb
 
 # produce pos.dict.utf8 file and tagset.txt:

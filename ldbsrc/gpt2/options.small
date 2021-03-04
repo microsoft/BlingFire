@@ -6,7 +6,7 @@
 
 OUTPUT = gpt2.bin
 
-opt_build_pos_dict = --input-enc=UTF-8 --type=mph --raw --tagset=$(srcdir)/tagset.txt --float-nums
+opt_build_pos_dict = --input-enc=DEC --type=mph --raw --tagset=$(srcdir)/tagset.txt --float-nums
 
 # add --dst-size=4 to opt_pack_dict_fsm if data are too big
 opt_pack_dict_fsm = --alg=triv --type=mealy-dfa

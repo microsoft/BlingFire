@@ -311,6 +311,75 @@ const int FAStrUtf8ToArray (
     return i;
 }
 
+
+const int FAStrUtf8AsBytesToArray (
+        const char * pStr, 
+        const int Len, 
+        __out_ecount(MaxSize) int * pArray, 
+        const int MaxSize
+    )
+{
+    DebugLogAssert (0 == Len || pStr);
+    DebugLogAssert (pArray);
+
+    const char * pEnd = pStr + Len;
+    const int * pArrayEnd = pArray + MaxSize;
+
+    // check for Byte-Order-Mark (Utf-8 encoded U+FEFF symbol)
+    if (3 <= Len) {
+        if (0xEF == (unsigned char) pStr [0] && 
+            0xBB == (unsigned char) pStr [1] && 
+            0xBF == (unsigned char) pStr [2])
+            pStr += 3;
+    }
+
+    // process symbol sequence
+    int i = 0;
+    while (pStr < pEnd && pArray < pArrayEnd) {
+        *pArray++ = (unsigned char) *pStr++;
+        i++;
+    }
+
+    return i;
+}
+
+
+const int FAStrUtf8AsBytesToArray (
+        const char * pStr,
+        const int Len,
+        __out_ecount(MaxSize) int * pArray,
+        __out_ecount(MaxSize) int * pOffsets,
+        const int MaxSize
+    )
+{
+    DebugLogAssert (0 == Len || pStr);
+    DebugLogAssert (pArray && pOffsets);
+
+    const char * pBegin = pStr;
+    const char * pEnd = pStr + Len;
+    const int * pArrayEnd = pArray + MaxSize;
+
+    // check for Byte-Order-Mark (Utf-8 encoded U+FEFF symbol)
+    if (3 <= Len) {
+        if (0xEF == (unsigned char) pStr [0] && 
+            0xBB == (unsigned char) pStr [1] && 
+            0xBF == (unsigned char) pStr [2])
+            pStr += 3;
+    }
+
+    // process symbol sequence
+    int i = 0;
+    while (pStr < pEnd && pArray < pArrayEnd) {
+
+        const int Offset = (int) (pStr - pBegin);
+        *pArray++ = (unsigned char) *pStr++;
+        pOffsets [i++] = Offset;
+    }
+
+    return i;
+}
+
+
 wchar_t * FAIntToUtf16LE (
         int Symbol,
         __out_ecount(MaxSize) wchar_t * ptr,

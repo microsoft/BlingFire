@@ -35,7 +35,8 @@ FADictConfKeeper::FADictConfKeeper () :
     m_NoTrUse (true),
     m_Direction (FAFsmConst::DIR_L2R),
     m_pCharMap (NULL),
-    m_TokAlgo (FAFsmConst::TOKENIZE_DEFAULT)
+    m_TokAlgo (FAFsmConst::TOKENIZE_DEFAULT),
+    m_IdOffset (0)
 {}
 
 
@@ -92,6 +93,11 @@ void FADictConfKeeper::Init (const int * pValues, const int Size)
             LogAssert (FAFsmConst::TOKENIZE_DEFAULT <= m_TokAlgo && \
                     FAFsmConst::TOKENIZE_COUNT > m_TokAlgo);
 
+            break;
+        }
+        case FAFsmConst::PARAM_ID_OFFSET:
+        {
+            m_IdOffset = pValues [++i];
             break;
         }
         case FAFsmConst::PARAM_FSM_TYPE:
@@ -250,6 +256,8 @@ void FADictConfKeeper::Clear ()
     m_Direction = FAFsmConst::DIR_L2R;
     m_pI2Info = NULL;
     m_FsmType = FAFsmConst::TYPE_MEALY_DFA;
+    m_TokAlgo = FAFsmConst::TOKENIZE_DEFAULT;
+    m_IdOffset = 0;
 }
 
 
@@ -316,5 +324,11 @@ const int FADictConfKeeper::GetTokAlgo () const
 {
     return m_TokAlgo;
 }
+
+const int FADictConfKeeper::GetIdOffset () const
+{
+    return m_IdOffset;
+}
+
 
 }

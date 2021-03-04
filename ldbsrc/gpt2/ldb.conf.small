@@ -7,7 +7,8 @@ verify-ldb-bin
 
 [pos-dict]
 # note: the line below should be added to switch runtime to BPE from unigram lm mode
-tokalgo bpe-opt
+tokalgo byte-bpe-opt
+id-offset -1
 fsm-type mealy-dfa
 multi-map-mode fixed-dump
 fsm 1

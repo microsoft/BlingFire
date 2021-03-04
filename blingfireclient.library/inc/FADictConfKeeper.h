@@ -58,6 +58,7 @@ public:
     const int GetDirection () const;
     const FAMultiMapCA * GetCharMap () const;
     const int GetTokAlgo () const;
+    const int GetIdOffset () const;
 
 private:
     // input LDB
@@ -81,6 +82,9 @@ private:
     FAMultiMap_pack_fixed * m_pCharMap;
     // indicates what runtime algo to use with these data
     int m_TokAlgo;
+    // specifies a value to be added to all IDs from a tokenizer
+    int m_IdOffset;
+
 };
 
 }
