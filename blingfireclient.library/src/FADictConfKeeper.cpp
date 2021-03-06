@@ -36,7 +36,8 @@ FADictConfKeeper::FADictConfKeeper () :
     m_Direction (FAFsmConst::DIR_L2R),
     m_pCharMap (NULL),
     m_TokAlgo (FAFsmConst::TOKENIZE_DEFAULT),
-    m_IdOffset (0)
+    m_IdOffset (0),
+    m_UseRawBytes (false)
 {}
 
 
@@ -75,6 +76,11 @@ void FADictConfKeeper::Init (const int * pValues, const int Size)
         case FAFsmConst::PARAM_IGNORE_CASE:
         {
             m_IgnoreCase = true;
+            break;
+        }
+        case FAFsmConst::PARAM_USE_BYTE_ENCODING:
+        {
+            m_UseRawBytes = true;
             break;
         }
         case FAFsmConst::PARAM_DIRECTION:
@@ -258,6 +264,7 @@ void FADictConfKeeper::Clear ()
     m_FsmType = FAFsmConst::TYPE_MEALY_DFA;
     m_TokAlgo = FAFsmConst::TOKENIZE_DEFAULT;
     m_IdOffset = 0;
+    m_UseRawBytes = false;
 }
 
 
@@ -320,15 +327,22 @@ const FAMultiMapCA * FADictConfKeeper::GetCharMap () const
     return m_pCharMap;
 }
 
+
 const int FADictConfKeeper::GetTokAlgo () const
 {
     return m_TokAlgo;
 }
+
 
 const int FADictConfKeeper::GetIdOffset () const
 {
     return m_IdOffset;
 }
 
+
+const bool FADictConfKeeper::GetUseByteEncoding () const
+{
+    return m_UseRawBytes;
+}
 
 }

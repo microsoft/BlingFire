@@ -59,6 +59,7 @@ public:
     const FAMultiMapCA * GetCharMap () const;
     const int GetTokAlgo () const;
     const int GetIdOffset () const;
+    const bool GetUseByteEncoding () const;
 
 private:
     // input LDB
@@ -84,7 +85,8 @@ private:
     int m_TokAlgo;
     // specifies a value to be added to all IDs from a tokenizer
     int m_IdOffset;
-
+    // specifieds if the input encoding is bytes instead of UTF-32
+    bool m_UseRawBytes;
 };
 
 }

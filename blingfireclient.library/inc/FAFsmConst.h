@@ -262,6 +262,7 @@ public:
         PARAM_VERIFY_LDB_BIN, // if specified, requires a CRC32-like check for the LDB file to pass
         PARAM_TOKENIZATION_TYPE, // specifies which tokenization runtime should be used
         PARAM_ID_OFFSET,   // specifies the integer value to be added to all output IDs (used in Bling Fire tokenizer)
+        PARAM_USE_BYTE_ENCODING, // specifies if input characters are UTF-8 bytes, not Unicode symbols
         PARAM_COUNT,
     };
 
@@ -400,9 +401,10 @@ public:
         TOKENIZE_BPE = 3,
         TOKENIZE_BPE_OPT = 4,     // optimized version of the BPE, prefers a single token match over
                                   //  subtoken, assumes tokens are delimited with U+x2581 
-        TOKENIZE_BPE_BYTE_OPT = 5,// optimized version of the BPE, prefers a single token match over
-                                  //  subtoken, assumes tokens are delimited with U+x2581 uses UTF-8 bytes
-                                  //  as input characters and U+x2581
+
+        TOKENIZE_BPE_OPT_WITH_MERGES = 5, // optimized version of the BPE, prefers a single token match over
+                                          // subtoken, assumes tokens are delimited with U+x2581 uses scores 
+                                          // as merge ranks
         TOKENIZE_COUNT,
     };
 

@@ -8,6 +8,7 @@
 #include "FADictConfKeeper.h"
 #include "FATokenSegmentationTools_1best_t.h"
 #include "FATokenSegmentationTools_1best_bpe_t.h"
+#include "FATokenSegmentationTools_1best_bpe_with_merges_t.h"
 
 #include <algorithm>
 #include <vector>
@@ -35,7 +36,7 @@ using namespace BlingFire;
 
 // version of this binary and the algo logic
 #define BLINGFIRETOK_MAJOR_VERSION_NUM 6
-#define BLINGFIRETOK_MINOR_VERSION_NUM 1
+#define BLINGFIRETOK_MINOR_VERSION_NUM 2
 
 const int WBD_WORD_TAG = 1;
 const int WBD_IGNORE_TAG = 4;
@@ -58,19 +59,25 @@ struct FAModelData
 
     // data and const processor for tokenization
     FADictConfKeeper m_DictConf;
-    FATokenSegmentationTools_1best_t < int > m_SegEngine;
+    // indicates that a pos-dict data are present in the bin LDB file
     bool m_hasSeg;
 
-    // BPE runtime, it uses the m_DictConf for data
+    // Unigram LM algorithm
+    FATokenSegmentationTools_1best_t < int > m_SegEngine;
+    // BPE (with separate merge ranks, ID's are ranks) runtime
     FATokenSegmentationTools_1best_bpe_t < int > m_SegEngineBpe;
-    bool m_isBpe;
+    // BPE (with separate merge ranks) runtime
+    FATokenSegmentationTools_1best_bpe_with_merges_t < int > m_SegEngineBpeWithMerges;
+    // one selected algorithm for this bin file
+    const FATokenSegmentationToolsCA_t < int > * m_pAlgo;
+
     // indicates wether characters are bytes of the UTF-8 rather than the Unicode symbols
     bool m_useRawBytes;
 
     FAModelData ():
         m_hasWbd (false),
         m_hasSeg (false),
-        m_isBpe (false),
+        m_pAlgo (NULL),
         m_useRawBytes (false)
     {}
 };
@@ -809,6 +816,7 @@ void* SetModelData(FAModelData * pNewModelData, const unsigned char * pImgBytes)
 
     // see if the [wbd] section is present
     if (-1 != iSize) {
+
         pNewModelData->m_hasWbd = true;
         // initialize WBD configuration
         pNewModelData->m_Conf.Initialize (&(pNewModelData->m_Ldb), pValues, iSize);
@@ -822,25 +830,33 @@ void* SetModelData(FAModelData * pNewModelData, const unsigned char * pImgBytes)
 
     // see if the [pos-dict] section is present
     if (-1 != iSize) {
+
         pNewModelData->m_hasSeg = true;
+
         // initialize dict configuration
         pNewModelData->m_DictConf.SetLDB (&(pNewModelData->m_Ldb));
         pNewModelData->m_DictConf.Init (pValues, iSize);
 
-        // check if this is a Unigram LM or BPE model
-        pNewModelData->m_isBpe = FAFsmConst::TOKENIZE_BPE == pNewModelData->m_DictConf.GetTokAlgo()
-            || FAFsmConst::TOKENIZE_BPE_OPT == pNewModelData->m_DictConf.GetTokAlgo()
-            || FAFsmConst::TOKENIZE_BPE_BYTE_OPT == pNewModelData->m_DictConf.GetTokAlgo();
+        // initialize algorithm based on pNewModelData->m_DictConf.GetTokAlgo()
+        if (FAFsmConst::TOKENIZE_BPE == pNewModelData->m_DictConf.GetTokAlgo() ||
+            FAFsmConst::TOKENIZE_BPE_OPT == pNewModelData->m_DictConf.GetTokAlgo()) {
 
-        // see if we need to treat UTF-8 bytes as input
-        pNewModelData->m_useRawBytes = FAFsmConst::TOKENIZE_BPE_BYTE_OPT == pNewModelData->m_DictConf.GetTokAlgo();
-
-        // initialize the segmentation engine
-        if (pNewModelData->m_isBpe) {
             pNewModelData->m_SegEngineBpe.SetConf(&pNewModelData->m_DictConf);
+            pNewModelData->m_pAlgo = &(pNewModelData->m_SegEngineBpe);
+
+        } else if (FAFsmConst::TOKENIZE_BPE_OPT_WITH_MERGES == pNewModelData->m_DictConf.GetTokAlgo()) {
+
+            pNewModelData->m_SegEngineBpeWithMerges.SetConf(&pNewModelData->m_DictConf);
+            pNewModelData->m_pAlgo = &(pNewModelData->m_SegEngineBpeWithMerges);
+
         } else {
+
             pNewModelData->m_SegEngine.SetConf(&pNewModelData->m_DictConf);
+            pNewModelData->m_pAlgo = &(pNewModelData->m_SegEngine);
         }
+        
+        // see if we need to treat UTF-8 bytes as input
+        pNewModelData->m_useRawBytes = pNewModelData->m_DictConf.GetUseByteEncoding();
     }
 
     return (void*) pNewModelData;
@@ -1296,10 +1312,8 @@ const int TextToIdsWithOffsets_sp(
     std::vector< int > WbdResults(WbdResMaxSize);
     int * pWbdResults = WbdResults.data ();
 
-    // use either unigram lm or bpe runtime
-    const int WbdOutSize = pModelData->m_isBpe ? 
-        pModelData->m_SegEngineBpe.Process (pBuff, BuffSize, pWbdResults, WbdResMaxSize, UnkId) :
-        pModelData->m_SegEngine.Process (pBuff, BuffSize, pWbdResults, WbdResMaxSize, UnkId);
+    // tokenize input with a selected algorithm
+    const int WbdOutSize = pModelData->m_pAlgo->Process (pBuff, BuffSize, pWbdResults, WbdResMaxSize, UnkId);
     if (WbdOutSize > WbdResMaxSize || 0 != WbdOutSize % 3) {
         return 0;
     }
