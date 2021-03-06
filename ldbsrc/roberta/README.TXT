@@ -4,9 +4,9 @@
 #  1. We will not use UTF-8 as input encoding for the dictionary, instead each symbol is represented as an integer
 #  this is because Roberta uses byte level alphabet. We need to specify --input-enc=DEC when we build the dictionary 
 #  (see fa_line2chain_unicode --help for details).
-#  2. For whatever Roberta's IDs are different from merge.txt ranks and so we need use the rank for merging order
-#  but ID when we identify the tokens, therefor we did some modifications to export_vocab.py below and in ldb.conf.small
-#  we should use a different algorithm: "bpe-opt-with-merges"
+#  2. For whatever reason Roberta's IDs are different from merge.txt ranks and so we need use the rank for merging order
+#  but ID when we return the tokens, therefore we did some modifications to export_vocab.py. Also in ldb.conf.small,
+#  we should specify a different algorithm: "bpe-opt-with-merges"
 
 # run this python script to generate tagset.txt and pos.dict.utf8 from vocab.json AND merges.txt
 python export_vocab.py
@@ -37,8 +37,8 @@ fa_fsm2fsm_pack --alg=fixed --type=mmap  --in=gpt2/tmp/pos.dict.i2t.txt --out=gp
 fa_merge_dumps --out=ldb/gpt2.bin gpt2/tmp/ldb.conf.small.dump gpt2/tmp/pos.dict.fsm.small.dump gpt2/tmp/pos.dict.k2i.small.dump gpt2/tmp/pos.dict.i2t.small.dump 
 
 
-# you can also test if what we have indended to store into the finite state machine is actualy there
-# use test_ldb for this, see test_ldb --help for details
+# Now we can check if what we have indended to store into the finite state machine is actualy there
+# we can use test_ldb for this, see test_ldb --help for details
 
 ~/BlingFire/ldbsrc$ test_ldb --ldb=ldb/roberta.bin --tagset=roberta/tagset.txt 
 ?
@@ -50,5 +50,5 @@ WORD_ID_45984 [ c7433d00 ] as floats: [ -49981 ] as hex int32: c7433d00
 pos-dict <|endoftext|>
 WORD_ID_50261 [ c7445500 ] as floats: [ -50261 ] as hex int32: c7445500
 
-# word "pedia" has ID 47746 (-1) and floating point score associated to it: -49979.0
+# So word "pedia" has ID 47746 (-1) and floating point score associated to it: -49979.0
 
