@@ -14,6 +14,7 @@
 #include "FADictConfKeeper.h"
 #include "FALimits.h"
 #include "FASecurity.h"
+#include "FATokenSegmentationToolsCA_t.h"
 #include <vector>
 #include <float.h>
 
@@ -32,7 +33,7 @@ namespace BlingFire
 ///
 
 template < class Ty >
-class FATokenSegmentationTools_1best_t {
+class FATokenSegmentationTools_1best_t : public FATokenSegmentationToolsCA_t <Ty> {
 
 public:
     FATokenSegmentationTools_1best_t ();

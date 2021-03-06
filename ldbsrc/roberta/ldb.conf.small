@@ -6,10 +6,17 @@
 verify-ldb-bin
 
 [pos-dict]
-# note: the line below should be added to switch runtime to BPE from unigram lm mode
-tokalgo bpe-opt
+# the line below should be added to switch runtime to BPE from unigram lm mode
+tokalgo bpe-opt-with-merges
+# this is needed to subtract -1 from all IDs in the pos-dict'ionary since it does not allow 0's
+id-offset -1
+# this is needed to use UTF-8 bytes as input instead of the UTF-32 Unicode
+use-byte-encoding
+# mealy DFA as we use MPH
 fsm-type mealy-dfa
+# faster version of the multi map
 multi-map-mode fixed-dump
+# resource locations (0 is always the dump of this config)
 fsm 1
 array 2
 multi-map 3

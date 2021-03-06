@@ -3,8 +3,8 @@
  * Licensed under the MIT License.
  */
 
-#ifndef _FA_TOKENSEGMENTATIONTOOLS_1BEST_BPE_T_H_
-#define _FA_TOKENSEGMENTATIONTOOLS_1BEST_BPE_T_H_
+#ifndef _FA_TOKENSEGMENTATIONTOOLS_1BEST_BPE_WITH_MERGES_T_H_
+#define _FA_TOKENSEGMENTATIONTOOLS_1BEST_BPE_WITH_MERGES_T_H_
 
 #include "FAConfig.h"
 #include "FARSDfaCA.h"
@@ -25,19 +25,19 @@ namespace BlingFire
 ///
 /// Splits input sequence into segments using BPE algorithm.
 ///
-/// Note this algorithm assumes that the merge rank is an ID of a token 
-///  from the vocaulary, for some model that is not the case in this case
-///  you need to use FATokenSegmentationTools_1best_bpe_with_merges_t.h
+/// Note this algorithm takes merge ranks from a separate field and
+///  it does not assume that the rank is an ID of a token from the 
+///  vocaulary.
 ///
 /// Input:  sequence of characters
 /// Output: array of tuples <TokenId, From, To>
 ///
 
 template < class Ty >
-class FATokenSegmentationTools_1best_bpe_t : public FATokenSegmentationToolsCA_t <Ty> {
+class FATokenSegmentationTools_1best_bpe_with_merges_t : public FATokenSegmentationToolsCA_t <Ty> {
 
 public:
-    FATokenSegmentationTools_1best_bpe_t ();
+    FATokenSegmentationTools_1best_bpe_with_merges_t ();
 
 public:
     /// initializes from the valid configuration object
@@ -66,21 +66,24 @@ private:
     // to keep track of arc data (note we use ID as a score for BPE since it follows strict ordering)
     struct _TArc {
 
-        int _Start;    // the begging position of the segment
-        int _End;      // the ending position of the segment
-        int _Id;       // ID of a segment from the vocab
+        int _Start;   // the begging position of the segment
+        int _End;     // the ending position of the segment
+        int _Id;      // ID of a segment from the vocab
+        float _Rank;  // merge order/rank
 
     public:
         _TArc ():
             _Start(0),
             _End(0),
-            _Id(0)
+            _Id(0),
+            _Rank(0.0f)
         {}
 
-        _TArc (int b, int e, int id):
+        _TArc (int b, int e, int id, float rank):
             _Start(b),
             _End(e),
-            _Id(id)
+            _Id(id),
+            _Rank(rank)
         {}
 
     };
@@ -89,8 +92,8 @@ private:
 
 
 template < class Ty >
-FATokenSegmentationTools_1best_bpe_t < Ty >::
-    FATokenSegmentationTools_1best_bpe_t () :
+FATokenSegmentationTools_1best_bpe_with_merges_t < Ty >::
+    FATokenSegmentationTools_1best_bpe_with_merges_t () :
         m_pDfa (NULL),
         m_pMealy (NULL),
         m_pK2I (NULL),
@@ -100,7 +103,7 @@ FATokenSegmentationTools_1best_bpe_t < Ty >::
 
 
 template < class Ty >
-void FATokenSegmentationTools_1best_bpe_t < Ty >::
+void FATokenSegmentationTools_1best_bpe_with_merges_t < Ty >::
     SetConf (const FADictConfKeeper * pConf)
 {
     LogAssert (pConf);
@@ -108,7 +111,7 @@ void FATokenSegmentationTools_1best_bpe_t < Ty >::
 
     // allows to use optimizations such as:
     //  1. whole word will be always prefered over the pieces
-    m_fFastBpe = FAFsmConst::TOKENIZE_BPE_OPT == pConf->GetTokAlgo ();
+    m_fFastBpe = FAFsmConst::TOKENIZE_BPE_OPT_WITH_MERGES == pConf->GetTokAlgo ();
 
     m_pDfa = pConf->GetRsDfa ();
     m_pMealy = pConf->GetMphMealy ();
@@ -123,7 +126,7 @@ void FATokenSegmentationTools_1best_bpe_t < Ty >::
 
 
 template < class Ty >
-const int FATokenSegmentationTools_1best_bpe_t < Ty >::
+const int FATokenSegmentationTools_1best_bpe_with_merges_t < Ty >::
     Process (
         const Ty * pIn, 
         const int InSize, 
@@ -184,6 +187,7 @@ const int FATokenSegmentationTools_1best_bpe_t < Ty >::
 
                 // get the ID
                 const int id = pValues [0];
+                const float rank = *(float*)(pValues + 1);
 
                 // see if the optimization should be applied
                 const bool fApplyOpt = m_fFastBpe && fTokenStart && \
@@ -194,13 +198,13 @@ const int FATokenSegmentationTools_1best_bpe_t < Ty >::
                 if (!fApplyOpt)
                 {
                     // add the arc
-                    arcs.push_back(_TArc(start, i, id));
+                    arcs.push_back(_TArc(start, i, id, rank));
 
                 } else {
 
                     // remove all intermediate arcs, if the whole token arc is found
                     //  Note: this does not prevent to have arcs *larger* than one token
-                    arcs [ArcCountAtStart] = _TArc(start, i, id); 
+                    arcs [ArcCountAtStart] = _TArc(start, i, id, rank); 
                     arcs.resize (ArcCountAtStart + 1); // resize deletes elements from the end
                     startFastForward = i;
                 }
@@ -221,7 +225,7 @@ const int FATokenSegmentationTools_1best_bpe_t < Ty >::
                 arcs [ArcCount - 1]._End = start;
             } else {
                 // add a new unknown arc
-                arcs.push_back(_TArc(start, start, UnkId));
+                arcs.push_back(_TArc(start, start, UnkId, 0.0f));
             }
         }
 
@@ -238,17 +242,20 @@ const int FATokenSegmentationTools_1best_bpe_t < Ty >::
     std::qsort(pArcs, ArcCount, sizeof(_TArc), [](const void* a, const void* b) {
         const _TArc* pA = static_cast<const _TArc*>(a);
         const _TArc* pB = static_cast<const _TArc*>(b);
-        // smaller ids first
-        if (pA->_Id < pB->_Id) { 
-            return -1; 
-        } else if (pA->_Id == pB->_Id) {
-            // if ids are the same left-most first
-            if (pA->_Start < pB->_Start) {
-                return -1;
-            } else if (pA->_Start == pB->_Start) {
-                return 0;
-            } else {
-                return 1;
+        // bigger ranks first, since we made them negative in the pos-dict
+        if (pA->_Rank > pB->_Rank) {
+            return -1;
+        } else if (pA->_Rank == pB->_Rank) {
+            // smaller ids first
+            if (pA->_Id < pB->_Id) {
+                return -1; 
+            } else if (pA->_Id == pB->_Id) {
+                // if ids are the same left-most first
+                if (pA->_Start < pB->_Start) {
+                    return -1;
+                } else if (pA->_Start == pB->_Start) {
+                    return 0;
+                }
             }
         }
         return 1;

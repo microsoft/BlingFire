@@ -31,3 +31,18 @@ fa_fsm2fsm_pack --alg=triv --type=arr --force-flat  --in=gpt2/tmp/pos.dict.k2i.t
 fa_fsm2fsm_pack --alg=fixed --type=mmap  --in=gpt2/tmp/pos.dict.i2t.txt --out=gpt2/tmp/pos.dict.i2t.small.dump --auto-test
 fa_merge_dumps --out=ldb/gpt2.bin gpt2/tmp/ldb.conf.small.dump gpt2/tmp/pos.dict.fsm.small.dump gpt2/tmp/pos.dict.k2i.small.dump gpt2/tmp/pos.dict.i2t.small.dump 
 
+# you can also test if what we have indended to store into the finite state machine is actualy there
+# use test_ldb for this, see test_ldb --help for details
+
+~/BlingFire2/BlingFire/ldbsrc$ test_ldb --ldb=ldb/gpt2.bin
+?
+commands: pos-dict
+pos-dict pedia
+???50236 [ -951829504 ] as floats: [ -50236 ] as hex int32: c7443c00
+pos-dict Revolution
+???c43e [ c7443e00 ] as floats: [ -50238 ] as hex int32: c7443e00
+pos-dict <|endoftext|>
+???c451 [ c7445100 ] as floats: [ -50257 ] as hex int32: c7445100
+
+# word "pedia" has ID 50236 (-1) and floating point score associated to it: -50236.0
+

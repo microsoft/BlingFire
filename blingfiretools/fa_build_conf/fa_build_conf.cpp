@@ -248,6 +248,7 @@ void SetupConfParams ()
     g_parser.AddNumParam ("max-ambiguous-distance", FAFsmConst::PARAM_MAX_DISTANCE);
     g_parser.AddNumParam ("threshold", FAFsmConst::PARAM_THRESHOLD);
     g_parser.AddNumParam ("id-offset", FAFsmConst::PARAM_ID_OFFSET);
+    g_parser.AddParam ("use-byte-encoding", FAFsmConst::PARAM_USE_BYTE_ENCODING);
 
     // requires a CRC32-like check for the LDB file to pass
     g_parser.AddParam ("verify-ldb-bin", FAFsmConst::PARAM_VERIFY_LDB_BIN);
@@ -264,7 +265,7 @@ void SetupConfParams ()
     g_parser.AddStrParam ("tokalgo", FAFsmConst::PARAM_TOKENIZATION_TYPE,
                           "bpe-opt", FAFsmConst::TOKENIZE_BPE_OPT);
     g_parser.AddStrParam ("tokalgo", FAFsmConst::PARAM_TOKENIZATION_TYPE,
-                          "byte-bpe-opt", FAFsmConst::TOKENIZE_BPE_BYTE_OPT);
+                          "bpe-opt-with-merges", FAFsmConst::TOKENIZE_BPE_OPT_WITH_MERGES);
 
 }
 
