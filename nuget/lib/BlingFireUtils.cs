@@ -1,26 +1,40 @@
+// <copyright file="BlingFireUtils.cs" company="Microsoft">
+//     Copyright (c) Microsoft Corporation.  All rights reserved.
+//     Licensed under the MIT License.
+// </copyright>
+
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 /// <summary>
 /// This is C# interface for blingfiretokdll.dll
 /// </summary>
 namespace BlingFire
 {
-    public static class BlingFireUtils
+    public static class BlingFire
     {
         private const string BlingFireTokDllName = "blingfiretokdll";
 
         [DllImport(BlingFireTokDllName)]
-        public static extern Int32 GetBlingFireTokVersion();
+        static extern Int32 GetBlingFireTokVersion();
+
+        public static Int32 GetBlingFireTokVersion(int fake = 0)
+        {
+            return GetBlingFireTokVersion();
+        }
+        
 
         [DllImport(BlingFireTokDllName)]
-        public static extern UInt64 LoadModel(byte[] modelName);
+        static extern UInt64 LoadModel(byte[] modelName);
 
-        public static UInt64 LoadModel(string modelName)
+        [DllImport(BlingFireTokDllName)]
+        static extern int FreeModel(UInt64 model);
+        
+        public static int FreeModel(long model)
         {
-            return LoadModel(System.Text.Encoding.UTF8.GetBytes(modelName));
+            return FreeModel((UInt64)model);
         }
 
         [DllImport(BlingFireTokDllName)]
@@ -30,16 +44,16 @@ namespace BlingFire
         {
             // use Bling Fire TOK for sentence breaking
             byte[] paraBytes = Encoding.UTF8.GetBytes(paragraph);
-            int MaxLength = (2 * paraBytes.Length) + 1;
-            byte[] outputBytes = new byte[MaxLength];
+            int maxLength = (2 * paraBytes.Length) + 1;
+            byte[] outputBytes = new byte[maxLength];
 
             // native call returns '\n' delimited sentences, and adds 0 byte at the end
-            Int32 actualLength = TextToSentences(paraBytes, (Int32)paraBytes.Length, outputBytes, MaxLength);
-            if (0 < actualLength - 1 && actualLength <= MaxLength)
+            Int32 actualLength = TextToSentences(paraBytes, (Int32)paraBytes.Length, outputBytes, maxLength);
+            if (0 < actualLength - 1 && actualLength <= maxLength)
             {
                 Array.Resize(ref outputBytes, actualLength);
                 string sentencesStr = Encoding.UTF8.GetString(outputBytes);
-                var sentences = sentencesStr.Split(_justNewLineChar, StringSplitOptions.RemoveEmptyEntries);
+                var sentences = sentencesStr.Split(justNewLineChar, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var s in sentences)
                 {
                     yield return s;
@@ -56,18 +70,18 @@ namespace BlingFire
         public static IEnumerable<Tuple<string, int, int>> GetSentencesWithOffsets(Span<byte> paraBytes)
         {
             // use Bling Fire TOK for sentence breaking
-            int MaxLength = (2 * paraBytes.Length) + 1;
-            byte[] outputBytes = new byte[MaxLength];
-            int[] startOffsets = new int[MaxLength];
-            int[] endOffsets = new int[MaxLength];
+            int maxLength = (2 * paraBytes.Length) + 1;
+            byte[] outputBytes = new byte[maxLength];
+            int[] startOffsets = new int[maxLength];
+            int[] endOffsets = new int[maxLength];
 
             // native call returns '\n' delimited sentences, and adds 0 byte at the end
-            Int32 actualLength = TextToSentencesWithOffsets(paraBytes, (Int32)paraBytes.Length, outputBytes, startOffsets, endOffsets, MaxLength);
-            if (0 < actualLength - 1 && actualLength <= MaxLength)
+            Int32 actualLength = TextToSentencesWithOffsets(paraBytes, (Int32)paraBytes.Length, outputBytes, startOffsets, endOffsets, maxLength);
+            if (0 < actualLength - 1 && actualLength <= maxLength)
             {
                 Array.Resize(ref outputBytes, actualLength);
                 string sentencesStr = Encoding.UTF8.GetString(outputBytes);
-                var sentences = sentencesStr.Split(_justNewLineChar, StringSplitOptions.RemoveEmptyEntries);
+                var sentences = sentencesStr.Split(justNewLineChar, StringSplitOptions.RemoveEmptyEntries);
                 for (int i = 0; i < sentences.Length; ++i)
                 {
                     yield return new Tuple<string, int, int>(sentences[i], startOffsets[i], endOffsets[i]);
@@ -75,21 +89,20 @@ namespace BlingFire
             }
         }
 
-
         public static IEnumerable<string> GetWords(string sentence)
         {
             // use Bling Fire TOK for sentence breaking
             byte[] paraBytes = Encoding.UTF8.GetBytes(sentence);
-            int MaxLength = (2 * paraBytes.Length) + 1;
-            byte[] outputBytes = new byte[MaxLength];
+            int maxLength = (2 * paraBytes.Length) + 1;
+            byte[] outputBytes = new byte[maxLength];
 
             // native call returns '\n' delimited sentences, and adds 0 byte at the end
-            Int32 actualLength = TextToWords(paraBytes, (Int32)paraBytes.Length, outputBytes, MaxLength);
-            if (0 < actualLength - 1 && actualLength <= MaxLength)
+            Int32 actualLength = TextToWords(paraBytes, (Int32)paraBytes.Length, outputBytes, maxLength);
+            if (0 < actualLength - 1 && actualLength <= maxLength)
             {
                 Array.Resize(ref outputBytes, actualLength);
                 string wordsStr = Encoding.UTF8.GetString(outputBytes);
-                var words = wordsStr.Split(_justSpaceChar, StringSplitOptions.RemoveEmptyEntries);
+                var words = wordsStr.Split(justSpaceChar, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var w in words)
                 {
                     yield return w;
@@ -101,18 +114,18 @@ namespace BlingFire
         {
             // use Bling Fire TOK for sentence breaking
             byte[] paraBytes = Encoding.UTF8.GetBytes(sentence);
-            int MaxLength = (2 * paraBytes.Length) + 1;
-            byte[] outputBytes = new byte[MaxLength];
-            int[] startOffsets = new int[MaxLength];
-            int[] endOffsets = new int[MaxLength];
+            int maxLength = (2 * paraBytes.Length) + 1;
+            byte[] outputBytes = new byte[maxLength];
+            int[] startOffsets = new int[maxLength];
+            int[] endOffsets = new int[maxLength];
 
             // native call returns '\n' delimited sentences, and adds 0 byte at the end
-            Int32 actualLength = TextToWordsWithOffsets(paraBytes, (Int32)paraBytes.Length, outputBytes, startOffsets, endOffsets, MaxLength);
-            if (0 < actualLength - 1 && actualLength <= MaxLength)
+            Int32 actualLength = TextToWordsWithOffsets(paraBytes, (Int32)paraBytes.Length, outputBytes, startOffsets, endOffsets, maxLength);
+            if (0 < actualLength - 1 && actualLength <= maxLength)
             {
                 Array.Resize(ref outputBytes, actualLength);
                 string wordsStr = Encoding.UTF8.GetString(outputBytes);
-                var words = wordsStr.Split(_justSpaceChar, StringSplitOptions.RemoveEmptyEntries);
+                var words = wordsStr.Split(justSpaceChar, StringSplitOptions.RemoveEmptyEntries);
                 for (int i = 0; i < words.Length; ++i)
                 {
                     yield return new Tuple<string, int, int>(words[i], startOffsets[i], endOffsets[i]);
@@ -120,243 +133,251 @@ namespace BlingFire
             }
         }
 
-
         //
         // expose Bling Fire interfaces
         //
-
         [DllImport(BlingFireTokDllName)]
-        static extern Int32 TextToSentences(in byte InUtf8Str, Int32 InUtf8StrLen, ref byte OutBuff, Int32 MaxBuffSize);
-        public static Int32 TextToSentences(Span<byte> InUtf8Str, Int32 InUtf8StrLen, Span<byte> OutBuff, Int32 MaxBuffSize)
+        static extern Int32 TextToSentences(in byte inUtf8Str, Int32 inUtf8StrLen, ref byte outBuff, Int32 maxBuffSize);
+
+        public static Int32 TextToSentences(Span<byte> inUtf8Str, Int32 inUtf8StrLen, Span<byte> outBuff, Int32 maxBuffSize)
         {
             return TextToSentences(
-                in MemoryMarshal.GetReference(InUtf8Str),
-                InUtf8StrLen,
-                ref MemoryMarshal.GetReference(OutBuff),
-                MaxBuffSize);
+                in MemoryMarshal.GetReference(inUtf8Str),
+                inUtf8StrLen,
+                ref MemoryMarshal.GetReference(outBuff),
+                maxBuffSize);
         }
 
         [DllImport(BlingFireTokDllName)]
-        static extern Int32 TextToWords(in byte InUtf8Str, Int32 InUtf8StrLen, ref byte OutBuff, Int32 MaxBuffSize);
-        public static Int32 TextToWords(Span<byte> InUtf8Str, Int32 InUtf8StrLen, Span<byte> OutBuff, Int32 MaxBuffSize)
+        static extern Int32 TextToWords(in byte inUtf8Str, Int32 inUtf8StrLen, ref byte outBuff, Int32 maxBuffSize);
+
+        public static Int32 TextToWords(Span<byte> inUtf8Str, Int32 inUtf8StrLen, Span<byte> outBuff, Int32 maxBuffSize)
         {
             return TextToWords(
-                MemoryMarshal.GetReference(InUtf8Str),
-                InUtf8StrLen,
-                ref MemoryMarshal.GetReference(OutBuff),
-                MaxBuffSize
-                );
+                MemoryMarshal.GetReference(inUtf8Str),
+                inUtf8StrLen,
+                ref MemoryMarshal.GetReference(outBuff),
+                maxBuffSize);
         }
 
         [DllImport(BlingFireTokDllName)]
-        static extern Int32 TextToSentencesWithModel(in byte InUtf8Str, Int32 InUtf8StrLen, ref byte OutBuff, Int32 MaxBuffSize, UInt64 model);
-        public static Int32 TextToSentencesWithModel(Span<byte> InUtf8Str, Int32 InUtf8StrLen, Span<byte> OutBuff, Int32 MaxBuffSize, UInt64 model)
+        static extern Int32 TextToSentencesWithModel(in byte inUtf8Str, Int32 inUtf8StrLen, ref byte outBuff, Int32 maxBuffSize, UInt64 model);
+
+        public static Int32 TextToSentencesWithModel(Span<byte> inUtf8Str, Int32 inUtf8StrLen, Span<byte> outBuff, Int32 maxBuffSize, UInt64 model)
         {
             return TextToSentencesWithModel(
-                MemoryMarshal.GetReference(InUtf8Str),
-                InUtf8StrLen,
-                ref MemoryMarshal.GetReference(OutBuff),
-                MaxBuffSize,
+                MemoryMarshal.GetReference(inUtf8Str),
+                inUtf8StrLen,
+                ref MemoryMarshal.GetReference(outBuff),
+                maxBuffSize,
                 model);
         }
 
         [DllImport(BlingFireTokDllName)]
-        static extern Int32 TextToWordsWithModel(in byte InUtf8Str, Int32 InUtf8StrLen, ref byte OutBuff, Int32 MaxBuffSize, UInt64 model);
-        public static Int32 TextToWordsWithModel(Span<byte> InUtf8Str, Int32 InUtf8StrLen, Span<byte> OutBuff, Int32 MaxBuffSize, UInt64 model)
+        static extern Int32 TextToWordsWithModel(in byte inUtf8Str, Int32 inUtf8StrLen, ref byte outBuff, Int32 maxBuffSize, UInt64 model);
+
+        public static Int32 TextToWordsWithModel(Span<byte> inUtf8Str, Int32 inUtf8StrLen, Span<byte> outBuff, Int32 maxBuffSize, UInt64 model)
         {
             return TextToWordsWithModel(
-                MemoryMarshal.GetReference(InUtf8Str),
-                InUtf8StrLen,
-                ref MemoryMarshal.GetReference(OutBuff),
-                MaxBuffSize,
+                MemoryMarshal.GetReference(inUtf8Str),
+                inUtf8StrLen,
+                ref MemoryMarshal.GetReference(outBuff),
+                maxBuffSize,
                 model);
         }
 
         [DllImport(BlingFireTokDllName)]
         static extern Int32 TextToSentencesWithOffsets(
-            in byte InUtf8Str,
-            Int32 InUtf8StrLen,
-            ref byte OutBuff,
-            ref int StartOffsets,
-            ref int EndOffsets,
-            Int32 MaxBuffSize);
+            in byte inUtf8Str,
+            Int32 inUtf8StrLen,
+            ref byte outBuff,
+            ref int startOffsets,
+            ref int endOffsets,
+            Int32 maxBuffSize);
+
         public static Int32 TextToSentencesWithOffsets(
-            Span<byte> InUtf8Str,
-            Int32 InUtf8StrLen,
-            Span<byte> OutBuff,
-            Span<int> StartOffsets,
-            Span<int> EndOffsets,
-            Int32 MaxBuffSize)
+            Span<byte> inUtf8Str,
+            Int32 inUtf8StrLen,
+            Span<byte> outBuff,
+            Span<int> startOffsets,
+            Span<int> endOffsets,
+            Int32 maxBuffSize)
         {
             return TextToSentencesWithOffsets(
-                MemoryMarshal.GetReference(InUtf8Str),
-                InUtf8StrLen,
-                ref MemoryMarshal.GetReference(OutBuff),
-                ref MemoryMarshal.GetReference(StartOffsets),
-                ref MemoryMarshal.GetReference(EndOffsets),
-                MaxBuffSize);
+                MemoryMarshal.GetReference(inUtf8Str),
+                inUtf8StrLen,
+                ref MemoryMarshal.GetReference(outBuff),
+                ref MemoryMarshal.GetReference(startOffsets),
+                ref MemoryMarshal.GetReference(endOffsets),
+                maxBuffSize);
         }
 
         [DllImport(BlingFireTokDllName)]
         static extern Int32 TextToWordsWithOffsets(
-            in byte InUtf8Str,
-            Int32 InUtf8StrLen,
-            ref byte OutBuff,
-            ref int StartOffsets,
-            ref int EndOffsets,
-            Int32 MaxBuffSize);
+            in byte inUtf8Str,
+            Int32 inUtf8StrLen,
+            ref byte outBuff,
+            ref int startOffsets,
+            ref int endOffsets,
+            Int32 maxBuffSize);
+
         public static Int32 TextToWordsWithOffsets(
-            Span<byte> InUtf8Str,
-            Int32 InUtf8StrLen,
-            Span<byte> OutBuff,
-            Span<int> StartOffsets,
-            Span<int> EndOffsets,
-            Int32 MaxBuffSize)
+            Span<byte> inUtf8Str,
+            Int32 inUtf8StrLen,
+            Span<byte> outBuff,
+            Span<int> startOffsets,
+            Span<int> endOffsets,
+            Int32 maxBuffSize)
         {
             return TextToSentencesWithOffsets(
-                MemoryMarshal.GetReference(InUtf8Str),
-                InUtf8StrLen,
-                ref MemoryMarshal.GetReference(OutBuff),
-                ref MemoryMarshal.GetReference(StartOffsets),
-                ref MemoryMarshal.GetReference(EndOffsets),
-                MaxBuffSize);
+                MemoryMarshal.GetReference(inUtf8Str),
+                inUtf8StrLen,
+                ref MemoryMarshal.GetReference(outBuff),
+                ref MemoryMarshal.GetReference(startOffsets),
+                ref MemoryMarshal.GetReference(endOffsets),
+                maxBuffSize);
         }
 
         [DllImport(BlingFireTokDllName)]
         static extern Int32 TextToSentencesWithOffsetsWithModel(
-            in byte InUtf8Str,
-            Int32 InUtf8StrLen,
-            ref byte OutBuff,
-            ref int StartOffsets,
-            ref int EndOffsets,
-            Int32 MaxBuffSize,
+            in byte inUtf8Str,
+            Int32 inUtf8StrLen,
+            ref byte outBuff,
+            ref int startOffsets,
+            ref int endOffsets,
+            Int32 maxBuffSize,
             UInt64 model);
+
         public static Int32 TextToSentencesWithOffsetsWithModel(
-            Span<byte> InUtf8Str,
-            Int32 InUtf8StrLen,
-            Span<byte> OutBuff,
-            Span<int> StartOffsets,
-            Span<int> EndOffsets,
-            Int32 MaxBuffSize,
+            Span<byte> inUtf8Str,
+            Int32 inUtf8StrLen,
+            Span<byte> outBuff,
+            Span<int> startOffsets,
+            Span<int> endOffsets,
+            Int32 maxBuffSize,
             UInt64 model)
         {
             return TextToSentencesWithOffsetsWithModel(
-                MemoryMarshal.GetReference(InUtf8Str),
-                InUtf8StrLen,
-                ref MemoryMarshal.GetReference(OutBuff),
-                ref MemoryMarshal.GetReference(StartOffsets),
-                ref MemoryMarshal.GetReference(EndOffsets),
-                MaxBuffSize,
+                MemoryMarshal.GetReference(inUtf8Str),
+                inUtf8StrLen,
+                ref MemoryMarshal.GetReference(outBuff),
+                ref MemoryMarshal.GetReference(startOffsets),
+                ref MemoryMarshal.GetReference(endOffsets),
+                maxBuffSize,
                 model);
         }
 
         [DllImport(BlingFireTokDllName)]
         static extern Int32 TextToWordsWithOffsetsWithModel(
-            in byte InUtf8Str,
-            Int32 InUtf8StrLen,
-            ref byte OutBuff,
-            ref int StartOffsets,
-            ref int EndOffsets,
-            Int32 MaxBuffSize,
+            in byte inUtf8Str,
+            Int32 inUtf8StrLen,
+            ref byte outBuff,
+            ref int startOffsets,
+            ref int endOffsets,
+            Int32 maxBuffSize,
             UInt64 model);
+
         public static Int32 TextToWordsWithOffsetsWithModel(
-            Span<byte> InUtf8Str,
-            Int32 InUtf8StrLen,
-            Span<byte> OutBuff,
-            Span<int> StartOffsets,
-            Span<int> EndOffsets,
-            Int32 MaxBuffSize,
+            Span<byte> inUtf8Str,
+            Int32 inUtf8StrLen,
+            Span<byte> outBuff,
+            Span<int> startOffsets,
+            Span<int> endOffsets,
+            Int32 maxBuffSize,
             UInt64 model)
         {
             return TextToWordsWithOffsetsWithModel(
-                MemoryMarshal.GetReference(InUtf8Str),
-                InUtf8StrLen,
-                ref MemoryMarshal.GetReference(OutBuff),
-                ref MemoryMarshal.GetReference(StartOffsets),
-                ref MemoryMarshal.GetReference(EndOffsets),
-                MaxBuffSize,
+                MemoryMarshal.GetReference(inUtf8Str),
+                inUtf8StrLen,
+                ref MemoryMarshal.GetReference(outBuff),
+                ref MemoryMarshal.GetReference(startOffsets),
+                ref MemoryMarshal.GetReference(endOffsets),
+                maxBuffSize,
                 model);
         }
 
         [DllImport(BlingFireTokDllName)]
         static extern int TextToIds(
             UInt64 model,
-            in byte InUtf8Str,
-            Int32 InUtf8StrLen,
-            ref int TokenIds,
-            Int32 MaxBuffSize,
-            int UnkId);
+            in byte inUtf8Str,
+            Int32 inUtf8StrLen,
+            ref int tokenIds,
+            Int32 maxBuffSize,
+            int unkId);
+
         public static int TextToIds(
             UInt64 model,
-            Span<byte> InUtf8Str,
-            Int32 InUtf8StrLen,
-            Span<int> TokenIds,
-            Int32 MaxBuffSize,
-            int UnkId)
+            Span<byte> inUtf8Str,
+            Int32 inUtf8StrLen,
+            Span<int> tokenIds,
+            Int32 maxBuffSize,
+            int unkId)
         {
             return TextToIds(
                 model,
-                MemoryMarshal.GetReference(InUtf8Str),
-                InUtf8StrLen,
-                ref MemoryMarshal.GetReference(TokenIds),
-                MaxBuffSize,
-                UnkId);
+                MemoryMarshal.GetReference(inUtf8Str),
+                inUtf8StrLen,
+                ref MemoryMarshal.GetReference(tokenIds),
+                maxBuffSize,
+                unkId);
         }
 
         [DllImport(BlingFireTokDllName)]
         static extern int TextToIdsWithOffsets(
            UInt64 model,
-           in byte InUtf8Str,
-           Int32 InUtf8StrLen,
-           ref int TokenIds,
-           ref int StartOffsets,
-           ref int EndOffsets,
-           Int32 MaxBuffSize,
-           int UnkId);
+           in byte inUtf8Str,
+           Int32 inUtf8StrLen,
+           ref int tokenIds,
+           ref int startOffsets,
+           ref int endOffsets,
+           Int32 maxBuffSize,
+           int unkId);
+
         public static int TextToIdsWithOffsets(
             UInt64 model,
-            Span<byte> InUtf8Str,
-            Int32 InUtf8StrLen,
-            Span<int> TokenIds,
-            Span<int> StartOffsets,
-            Span<int> EndOffsets,
-            Int32 MaxBuffSize,
-            int UnkId)
+            Span<byte> inUtf8Str,
+            Int32 inUtf8StrLen,
+            Span<int> tokenIds,
+            Span<int> startOffsets,
+            Span<int> endOffsets,
+            Int32 maxBuffSize,
+            int unkId)
         {
             return TextToIdsWithOffsets(
                 model,
-                MemoryMarshal.GetReference(InUtf8Str),
-                InUtf8StrLen,
-                ref MemoryMarshal.GetReference(TokenIds),
-                ref MemoryMarshal.GetReference(StartOffsets),
-                ref MemoryMarshal.GetReference(EndOffsets),
-                MaxBuffSize,
-                UnkId);
+                MemoryMarshal.GetReference(inUtf8Str),
+                inUtf8StrLen,
+                ref MemoryMarshal.GetReference(tokenIds),
+                ref MemoryMarshal.GetReference(startOffsets),
+                ref MemoryMarshal.GetReference(endOffsets),
+                maxBuffSize,
+                unkId);
         }
 
         [DllImport(BlingFireTokDllName)]
         static extern Int32 NormalizeSpaces(
-            in byte InUtf8Str,
-            Int32 InUtf8StrLen,
-            ref byte OutBuff,
-            Int32 MaxBuffSize,
+            in byte inUtf8Str,
+            Int32 inUtf8StrLen,
+            ref byte outBuff,
+            Int32 maxBuffSize,
             Int32 utf32SpaceCode);
+
         public static int NormalizeSpaces(
-            Span<byte> InUtf8Str,
-            Int32 InUtf8StrLen,
-            Span<byte> OutBuff,
-            Int32 MaxBuffSize,
+            Span<byte> inUtf8Str,
+            Int32 inUtf8StrLen,
+            Span<byte> outBuff,
+            Int32 maxBuffSize,
             Int32 utf32SpaceCode)
         {
             return NormalizeSpaces(
-                MemoryMarshal.GetReference(InUtf8Str),
-                InUtf8StrLen,
-                ref MemoryMarshal.GetReference(OutBuff),
-                MaxBuffSize,
+                MemoryMarshal.GetReference(inUtf8Str),
+                inUtf8StrLen,
+                ref MemoryMarshal.GetReference(outBuff),
+                maxBuffSize,
                 utf32SpaceCode);
         }
 
-        private static char[] _justNewLineChar = new char[] { '\n' };
-        private static char[] _justSpaceChar = new char[] { ' ' };
+        private static char[] justNewLineChar = new char[] { '\n' };
+        private static char[] justSpaceChar = new char[] { ' ' };
     }
 }
