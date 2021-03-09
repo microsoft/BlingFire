@@ -13,28 +13,19 @@ using System.Text;
 /// </summary>
 namespace BlingFire
 {
-    public static class BlingFire
+    public static class BlingFireUtils
     {
         private const string BlingFireTokDllName = "blingfiretokdll";
 
         [DllImport(BlingFireTokDllName)]
-        static extern Int32 GetBlingFireTokVersion();
-
-        public static Int32 GetBlingFireTokVersion(int fake = 0)
-        {
-            return GetBlingFireTokVersion();
-        }
-        
+        public static extern Int32 GetBlingFireTokVersion();
 
         [DllImport(BlingFireTokDllName)]
         static extern UInt64 LoadModel(byte[] modelName);
 
-        [DllImport(BlingFireTokDllName)]
-        static extern int FreeModel(UInt64 model);
-        
-        public static int FreeModel(long model)
+        public static UInt64 LoadModel(string modelName)
         {
-            return FreeModel((UInt64)model);
+            return LoadModel(System.Text.Encoding.UTF8.GetBytes(modelName));
         }
 
         [DllImport(BlingFireTokDllName)]
@@ -53,7 +44,7 @@ namespace BlingFire
             {
                 Array.Resize(ref outputBytes, actualLength);
                 string sentencesStr = Encoding.UTF8.GetString(outputBytes);
-                var sentences = sentencesStr.Split(justNewLineChar, StringSplitOptions.RemoveEmptyEntries);
+                var sentences = sentencesStr.Split(g_justNewLineChar, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var s in sentences)
                 {
                     yield return s;
@@ -81,7 +72,7 @@ namespace BlingFire
             {
                 Array.Resize(ref outputBytes, actualLength);
                 string sentencesStr = Encoding.UTF8.GetString(outputBytes);
-                var sentences = sentencesStr.Split(justNewLineChar, StringSplitOptions.RemoveEmptyEntries);
+                var sentences = sentencesStr.Split(g_justNewLineChar, StringSplitOptions.RemoveEmptyEntries);
                 for (int i = 0; i < sentences.Length; ++i)
                 {
                     yield return new Tuple<string, int, int>(sentences[i], startOffsets[i], endOffsets[i]);
@@ -102,7 +93,7 @@ namespace BlingFire
             {
                 Array.Resize(ref outputBytes, actualLength);
                 string wordsStr = Encoding.UTF8.GetString(outputBytes);
-                var words = wordsStr.Split(justSpaceChar, StringSplitOptions.RemoveEmptyEntries);
+                var words = wordsStr.Split(g_justSpaceChar, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var w in words)
                 {
                     yield return w;
@@ -125,7 +116,7 @@ namespace BlingFire
             {
                 Array.Resize(ref outputBytes, actualLength);
                 string wordsStr = Encoding.UTF8.GetString(outputBytes);
-                var words = wordsStr.Split(justSpaceChar, StringSplitOptions.RemoveEmptyEntries);
+                var words = wordsStr.Split(g_justSpaceChar, StringSplitOptions.RemoveEmptyEntries);
                 for (int i = 0; i < words.Length; ++i)
                 {
                     yield return new Tuple<string, int, int>(words[i], startOffsets[i], endOffsets[i]);
@@ -377,7 +368,7 @@ namespace BlingFire
                 utf32SpaceCode);
         }
 
-        private static char[] justNewLineChar = new char[] { '\n' };
-        private static char[] justSpaceChar = new char[] { ' ' };
+        private static char[] g_justNewLineChar = new char[] { '\n' };
+        private static char[] g_justSpaceChar = new char[] { ' ' };
     }
 }
