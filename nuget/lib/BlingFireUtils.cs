@@ -150,7 +150,7 @@ namespace BlingFire
 
         [DllImport(BlingFireTokDllName)]
         static extern Int32 TextToSentencesWithModel(in byte InUtf8Str, Int32 InUtf8StrLen, ref byte OutBuff, Int32 MaxBuffSize, UInt64 model);
-        public static Int32 TextToWords(Span<byte> InUtf8Str, Int32 InUtf8StrLen, Span<byte> OutBuff, Int32 MaxBuffSize, UInt64 model)
+        public static Int32 TextToSentencesWithModel(Span<byte> InUtf8Str, Int32 InUtf8StrLen, Span<byte> OutBuff, Int32 MaxBuffSize, UInt64 model)
         {
             return TextToSentencesWithModel(
                 MemoryMarshal.GetReference(InUtf8Str),
