@@ -96,7 +96,7 @@ This is the Bling - Fire tokenizer . 2007年9月日历表_2007年9月农历阳�
 
 
 ### 3. Python example, calling BERT BASE tokenizer
-On one thread, it works 14x faster than orignal BERT tokenizer written in Python. Given this code is written in C++ it can be called from multiple threads without blocking on global interpreter lock thus achiving higher speed-ups for batch mode.
+On one thread, it works 14x faster than orignal BERT tokenizer written in Python. Given this code is written in C++ it can be called from multiple threads without blocking on global interpreter lock thus achieving higher speed-ups for batch mode.
 
 ```python
 import os
