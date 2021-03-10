@@ -58,7 +58,7 @@ namespace BlingFire
             return GetSentencesWithOffsets(Encoding.UTF8.GetBytes(paragraph));
         }
 
-        public static IEnumerable<Tuple<string, int, int>> GetSentencesWithOffsets(Span<byte> paraBytes)
+        public static IEnumerable<Tuple<string, int, int>> GetSentencesWithOffsets(byte[] paraBytes)
         {
             // use Bling Fire TOK for sentence breaking
             int maxLength = (2 * paraBytes.Length) + 1;
@@ -286,6 +286,33 @@ namespace BlingFire
                 maxBuffSize,
                 model);
         }
+
+
+        [DllImport(BlingFireTokDllName)]
+        static extern Int32 WordHyphenationWithModel(
+            in byte inUtf8Str, 
+            Int32 inUtf8StrLen, 
+            ref byte outBuff, 
+            Int32 maxBuffSize, 
+            UInt64 model, 
+            Int32 utf32HyCode);
+
+        public static Int32 WordHyphenationWithModel(
+            Span<byte> inUtf8Str, 
+            Int32 inUtf8StrLen, 
+            Span<byte> outBuff, Int32 maxBuffSize, 
+            UInt64 model, 
+            Int32 utf32HyCode = 0x2D)
+        {
+            return WordHyphenationWithModel(
+                MemoryMarshal.GetReference(inUtf8Str),
+                inUtf8StrLen,
+                ref MemoryMarshal.GetReference(outBuff),
+                maxBuffSize,
+                model,
+                utf32HyCode);
+        }
+
 
         [DllImport(BlingFireTokDllName)]
         static extern int TextToIds(

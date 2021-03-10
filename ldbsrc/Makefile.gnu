@@ -31,6 +31,10 @@ ifeq ($(USE_CHARMAP), 1)
   built_charmap = $(tmpdir)/charmap.mmap.$(mode).dump
 endif
 
+ifeq ($(USE_EXTRA_W2H), 1)
+  extra_w2h_file = $(srcdir)/w2h.extra.pats.utf8
+endif
+
 build_first = $(built_prefix) $(built_charmap)
 
 ifeq ($(USE_TEST_WTBT_DICT), 1)
@@ -445,12 +449,12 @@ $(tmpdir)/pos.dict.i2t.txt: $(srcdir)/tagset.txt $(srcdir)/pos.dict.utf8.zip $(b
 $(tmpdir)/w2h.file.utf8: $(W2H_DICT)
 	$(cat_w2h_dict) > $(tmpdir)/w2h.file.utf8
 
-$(tmpdir)/w2h.pats.utf8: $(tmpdir)/w2h.file.utf8
+$(tmpdir)/w2h.pats.utf8: $(tmpdir)/w2h.file.utf8 $(extra_w2h_file) $(build_first)
 	fa_build_pats $(opt_dict2pats) $(opt_dict2pats_w2h) \
 	  --in=$(tmpdir)/w2h.file.utf8  \
-	  --out=$(tmpdir)/w2h.pats.utf8 \
-	  --out-actions=$(tmpdir)/w2h.acts.txt \
+	  --out=$(tmpdir)/w2h.pats1.utf8 \
 	  --out-unsolved=$(tmpdir)/w2h.unsolved.utf8
+	cat $(tmpdir)/w2h.pats1.utf8 $(extra_w2h_file) > $(tmpdir)/w2h.pats.utf8
 
 $(tmpdir)/w2h.fsm.txt \
 $(tmpdir)/w2h.i2h.txt: $(tmpdir)/w2h.pats.utf8

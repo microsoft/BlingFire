@@ -1,0 +1,15 @@
+#
+# map all hyphens into '-' \x002D
+#
+
+# unambiguously a hyphen character, as in “left-to-right”; narrow width
+\x2010 -
+# as hyphen-minus, but has the same width as digits
+\x2012 -
+# an arithmetic operator
+\x2212 -
+
+#
+# map all apostrophe into ''' \x0027
+#
+\x2019 '

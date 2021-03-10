@@ -25,7 +25,7 @@ namespace BlingUtilsTest
             actualLength = BlingFireUtils.TextToSentences(inBytes, (Int32)inBytes.Length, outputBytes, MaxOutLength);
             if (0 < actualLength && actualLength < MaxOutLength)
             {
-                Console.WriteLine(String.Format("BlingFireUtils.TextToSentences: '{0}'", System.Text.Encoding.UTF8.GetString(outputBytes)));
+                Console.WriteLine(String.Format("BlingFireUtils.TextToSentences: '{0}'", System.Text.Encoding.UTF8.GetString(new ArraySegment<byte>(outputBytes, 0, actualLength))));
             }
             else 
             {
@@ -39,7 +39,7 @@ namespace BlingUtilsTest
             actualLength = BlingFireUtils.TextToWords(inBytes, (Int32)inBytes.Length, outputBytes, MaxOutLength);
             if (0 < actualLength && actualLength < MaxOutLength)
             {
-                Console.WriteLine(String.Format("BlingFireUtils.TextToWords: '{0}'", System.Text.Encoding.UTF8.GetString(outputBytes)));
+                Console.WriteLine(String.Format("BlingFireUtils.TextToWords: '{0}'", System.Text.Encoding.UTF8.GetString(new ArraySegment<byte>(outputBytes, 0, actualLength))));
             }
             else 
             {
@@ -51,7 +51,7 @@ namespace BlingUtilsTest
             actualLength = BlingFireUtils.NormalizeSpaces(inBytes, (Int32)inBytes.Length, outputBytes, MaxOutLength, 9601);
             if (0 < actualLength && actualLength < MaxOutLength)
             {
-                Console.WriteLine(String.Format("BlingFireUtils.NormalizeSpaces: '{0}'", System.Text.Encoding.UTF8.GetString(outputBytes)));
+                Console.WriteLine(String.Format("BlingFireUtils.NormalizeSpaces: '{0}'", System.Text.Encoding.UTF8.GetString(new ArraySegment<byte>(outputBytes, 0, actualLength))));
             }
             else 
             {
@@ -167,6 +167,35 @@ namespace BlingUtilsTest
             BlingFireUtils.FreeModel(h1);
             BlingFireUtils.FreeModel(h2);
             BlingFireUtils.FreeModel(h3);
+
+
+            // Test syllabification API's
+
+            // break text into tokens first
+            actualLength = BlingFireUtils.TextToWords(inBytes, (Int32)inBytes.Length, outputBytes, MaxOutLength);
+            string [] tokens = null;
+            if (0 < actualLength && actualLength < MaxOutLength)
+            {
+                tokens = System.Text.Encoding.UTF8.GetString(new ArraySegment<byte>(outputBytes, 0, actualLength)).Split(' ');
+            }
+
+            var hy = BlingFireUtils.LoadModel("./bin/Debug/netcoreapp3.1/syllab.bin");
+            Console.WriteLine(String.Format("Model handle: {0}", hy));
+
+            foreach(var token in tokens)
+            {
+                inBytes = System.Text.Encoding.UTF8.GetBytes(token);
+                int outputLen = BlingFireUtils.WordHyphenationWithModel(inBytes, inBytes.Length, outputBytes, MaxOutLength, hy, 0x2D);
+
+                if (0 < outputLen)
+                {
+                    string hyphenatedToken = System.Text.Encoding.UTF8.GetString(new ArraySegment<byte>(outputBytes, 0, outputLen));
+                    Console.Write(String.Format("'{0}' ", hyphenatedToken));
+                }
+            }
+            Console.WriteLine("");
+
+            BlingFireUtils.FreeModel(hy);
 
             Console.WriteLine("Test Complete");
         }

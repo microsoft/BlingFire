@@ -190,6 +190,9 @@ $command = "".
   "sort | uniq -c | ".
   "fa_iwowsuff2pats $min_len $min_prec $min_freq $no_empty $dont_care $max_context --out=$tmp4 ";
 
+print STDERR "Running Commandline:\n" ;
+print STDERR "$command\n" ;
+
 `$command` ;
 
 if ($verbose eq "--verbose") {

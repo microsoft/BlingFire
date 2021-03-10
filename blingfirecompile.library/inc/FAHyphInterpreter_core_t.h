@@ -148,9 +148,9 @@ const int FAHyphInterpreter_core_t< Ty >::
     if (!m_Ready) {
         return -1;
     }
-
-    FAAssert ((FALimits::MaxWordSize >= InSize && pIn) && \
-              (pOut && MaxOutSize >= InSize), FAMsg::InvalidParameters);
+    if (!pIn || !pOut || InSize > FALimits::MaxWordSize || MaxOutSize < InSize) {
+        return -1;
+    }
 
     DebugLogAssert (0 < m_MinPatLen && 0 <= m_NoHyphLen);
     DebugLogAssert (m_pDfa && m_pState2Ow && m_pI2Info);
