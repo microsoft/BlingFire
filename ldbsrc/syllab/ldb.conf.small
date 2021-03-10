@@ -1,0 +1,12 @@
+#
+# LDB configuration file for syllab.bin
+#
+
+[w2h]
+# ignore-case
+min-len 2
+left-anchor 94
+right-anchor 94
+fsm 1
+multi-map 2
+charmap 3

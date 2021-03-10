@@ -1,0 +1,22 @@
+#
+# Compilation options for syllab.bin model
+#
+
+OUTPUT = syllab.bin
+
+# USE_EXTRA_W2H = 1
+USE_CHARMAP = 1
+
+# opt_dict2pats_w2h = --dont-care-pats --max-context=5 --min-length=3 --max-length=10 --spec-l-anchor=94 --spec-r-anchor=94 --charmap=$(tmpdir)/charmap.mmap.$(mode).dump
+opt_dict2pats_w2h = --no-empty --dont-care-pats --max-context=7 --min-prec=85 --min-freq=3 --min-length=2 --max-length=7 --spec-l-anchor=94 --spec-r-anchor=94 --charmap=$(tmpdir)/charmap.mmap.$(mode).dump
+
+opt_pack_w2h_fsm = --alg=triv --type=moore-dfa --use-iwia --remap-iws
+opt_pack_w2h_i2h = --alg=triv --type=mmap
+opt_pack_charmap = --alg=fixed --type=mmap --imp-mmap
+
+# USE_TEST_W2H_DICT = 1
+
+resources = \
+	$(tmpdir)/w2h.fsm.$(mode).dump \
+	$(tmpdir)/w2h.i2h.$(mode).dump \
+	$(tmpdir)/charmap.mmap.$(mode).dump \

@@ -122,6 +122,26 @@ def text_to_words_with_model(h, s):
     return o_bytes.value.decode('utf-8')
 
 
+def word_hyphenation_with_model(h, s, uHy = 0x2D):
+
+    # get the UTF-8 bytes
+    s_bytes = s.encode("utf-8")
+
+    # allocate the output buffer
+    o_bytes = create_string_buffer(len(s_bytes) * 4)
+    o_bytes_count = len(o_bytes)
+
+    # identify words
+    o_len = blingfire.WordHyphenationWithModel(c_char_p(s_bytes), c_int(len(s_bytes)), byref(o_bytes), c_int(o_bytes_count), c_void_p(h), c_int(uHy))
+
+    # check if no error has happened
+    if -1 == o_len or o_len > o_bytes_count:
+        return ''
+
+    # compute the unicode string from the UTF-8 bytes
+    return o_bytes.value.decode('utf-8')
+
+
 # returns the current version of the DLL's algo
 def get_blingfiretok_version():
     return blingfire.GetBlingFireTokVersion()

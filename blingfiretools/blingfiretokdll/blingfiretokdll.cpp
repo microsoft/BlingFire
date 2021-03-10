@@ -9,6 +9,8 @@
 #include "FATokenSegmentationTools_1best_t.h"
 #include "FATokenSegmentationTools_1best_bpe_t.h"
 #include "FATokenSegmentationTools_1best_bpe_with_merges_t.h"
+#include "FAHyphConfKeeper_packaged.h"
+#include "FAHyphInterpreter_core_t.h"
 
 #include <algorithm>
 #include <vector>
@@ -70,15 +72,20 @@ struct FAModelData
     FATokenSegmentationTools_1best_bpe_with_merges_t < int > m_SegEngineBpeWithMerges;
     // one selected algorithm for this bin file
     const FATokenSegmentationToolsCA_t < int > * m_pAlgo;
-
     // indicates wether characters are bytes of the UTF-8 rather than the Unicode symbols
     bool m_useRawBytes;
+
+    // Hyphenation / Syllabification data
+    bool m_hasHy;
+    FAHyphConfKeeper m_HyConf;
+    FAHyphInterpreter_core_t < int > m_HyEngine;
 
     FAModelData ():
         m_hasWbd (false),
         m_hasSeg (false),
         m_pAlgo (NULL),
-        m_useRawBytes (false)
+        m_useRawBytes (false),
+        m_hasHy (false)
     {}
 };
 
@@ -119,6 +126,9 @@ void InitializeWbdSbd()
 
 // SENTENCE PIECE DELIMITER
 #define __FASpDelimiter__ 0x2581
+
+// DEFAULT HYPHEN
+#define __FADefaultHyphen__ 0x2012
 
 // WHITESPACE [\x0004-\x0020\x007F-\x009F\x00A0\x2000-\x200F\x202F\x205F\x2060\x2420\x2424\x3000\xFEFF]
 #define __FAIsWhiteSpace__(C) ( \
@@ -794,6 +804,102 @@ const int TextToHashes(const char * pInUtf8Str, int InUtf8StrByteCount, int32_t 
 
 
 //
+// WordHyphenationWithModel - returns a hyphenated string for an input word.
+// 
+// The hModel parameter allows to use a model loaded with LoadModel API, 
+//  NULL is not allowed since there is no built in model for this function
+//
+extern "C"
+const int WordHyphenationWithModel(const char * pInUtf8Str, int InUtf8StrByteCount,
+    char * pOutUtf8Str, const int MaxOutUtf8StrByteCount, void * hModel, const int uHy = __FADefaultHyphen__)
+{
+    // pModel is always initialized here
+    const FAModelData * pModel = (const FAModelData *) hModel; 
+
+    // validate the parameters
+    if (0 == InUtf8StrByteCount) {
+        return 0;
+    }
+    if (0 > InUtf8StrByteCount || InUtf8StrByteCount > FALimits::MaxArrSize) {
+        return -1;
+    }
+    if (NULL == pInUtf8Str) {
+        return -1;
+    }
+
+    // allocate a buffer for UTF-32 representation of a word, also keep it within limits
+    int pBuff [FALimits::MaxWordSize];
+
+    // convert input to UTF-32
+    const int MaxBuffSize = ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff, FALimits::MaxWordSize);
+    if (MaxBuffSize <= 0 || MaxBuffSize > FALimits::MaxWordSize) {
+        return -1;
+    }
+    // make sure the utf32input does not contain 'U+0000' elements
+    std::replace(pBuff, pBuff + MaxBuffSize, 0, 0x20);
+
+    // keep inner hyphenation results here
+    int pHyRes [FALimits::MaxWordSize];
+    // get the sentence breaking results
+    const int Res = pModel->m_HyEngine.Process(pBuff, MaxBuffSize, pHyRes, MaxBuffSize);
+    if (-1 == Res) {
+        return -1;
+    }
+
+    // one character buffer
+    const int MaxSize = FAUtf8Const::MAX_CHAR_SIZE + 1;
+    char Utf8Symbol [MaxSize];
+
+    // convert UTF-32 hyphen to UTF-8 once to use it later
+    char Utf8HySymbol [MaxSize];
+    char * pHyEnd = FAIntToUtf8 (uHy, Utf8HySymbol, MaxSize);
+    if (NULL == pHyEnd) {
+        return -1;
+    }
+    const size_t Utf8HyLen = pHyEnd - Utf8HySymbol;
+
+    // keep track of how many bytes were outputted or needed to get a full output
+    int TotalOutputSizeNeeded = 0;
+
+    for (int i = 0; i < MaxBuffSize; ++i) {
+
+        // output current input symbol
+        const int Symbol = pBuff [i];
+        char * pEnd = FAIntToUtf8 (Symbol, Utf8Symbol, MaxSize);
+        if (NULL == pEnd) {
+            return -1;
+        }
+        const size_t Utf8SymbolLen = pEnd - Utf8Symbol;
+
+        if (NULL != pOutUtf8Str && TotalOutputSizeNeeded + ((int) Utf8SymbolLen) <= MaxOutUtf8StrByteCount) {
+            memcpy(pOutUtf8Str + TotalOutputSizeNeeded, Utf8Symbol, Utf8SymbolLen);
+        }
+        TotalOutputSizeNeeded += (int) Utf8SymbolLen;
+
+        // get corresponding hyphenation id
+        const int HyphId = pHyRes [i];
+
+        // output a hyphen, if it is any kind of hyphenation
+        if (FAFsmConst::HYPH_NO_HYPH < HyphId) {
+            if (NULL != pOutUtf8Str && TotalOutputSizeNeeded + ((int) Utf8HyLen) <= MaxOutUtf8StrByteCount) {
+                memcpy(pOutUtf8Str + TotalOutputSizeNeeded, Utf8HySymbol, Utf8HyLen);
+            }
+            TotalOutputSizeNeeded += (int) Utf8HyLen;
+        }
+
+    } // for (int i = 0; ...
+
+    // we will include the 0 just in case some scriping languages expect 0-terminated buffers and cannot use the size
+    if (NULL != pOutUtf8Str && TotalOutputSizeNeeded < MaxOutUtf8StrByteCount) {
+        pOutUtf8Str[TotalOutputSizeNeeded] = 0;
+        TotalOutputSizeNeeded++;
+    }
+
+    return TotalOutputSizeNeeded;
+}
+
+
+//
 // Helper, sets up pNewModelData object with model data from memory
 // Returns 0 in case of an error otherwise initialized pNewModelData object is returned
 //
@@ -857,6 +963,23 @@ void* SetModelData(FAModelData * pNewModelData, const unsigned char * pImgBytes)
         
         // see if we need to treat UTF-8 bytes as input
         pNewModelData->m_useRawBytes = pNewModelData->m_DictConf.GetUseByteEncoding();
+    }
+
+    // get the configuration paramenters for hyphenation [w2h]
+    pValues = NULL;
+    iSize = pNewModelData->m_Ldb.GetHeader ()->Get (FAFsmConst::FUNC_W2H, &pValues);
+
+    // see if the [pos-dict] section is present
+    if (-1 != iSize) {
+
+        pNewModelData->m_hasHy = true;
+
+        // initialize hyph configuration
+        pNewModelData->m_HyConf.SetLDB (&(pNewModelData->m_Ldb));
+        pNewModelData->m_HyConf.Init (pValues, iSize);
+
+        // initialize the algo with data
+        pNewModelData->m_HyEngine.SetConf (&pNewModelData->m_HyConf);
     }
 
     return (void*) pNewModelData;
