@@ -168,6 +168,34 @@ namespace BlingUtilsTest
             BlingFireUtils.FreeModel(h2);
             BlingFireUtils.FreeModel(h3);
 
+
+            // Test syllabification API's
+
+            // break text into tokens first
+            actualLength = BlingFireUtils.TextToWords(inBytes, (Int32)inBytes.Length, outputBytes, MaxOutLength);
+            string [] tokens = null;
+            if (0 < actualLength && actualLength < MaxOutLength)
+            {
+                tokens = System.Text.Encoding.UTF8.GetString(outputBytes).Split(' ');
+            }
+
+            var hy = BlingFireUtils.LoadModel("./bin/Debug/netcoreapp3.1/syllab.bin");
+            Console.WriteLine(String.Format("Model handle: {0}", hy));
+
+            foreach(var token in tokens)
+            {
+                inBytes = System.Text.Encoding.UTF8.GetBytes(token);
+                int outputLen = BlingFireUtils.WordHyphenationWithModel(hy, inBytes, outputBytes, MaxOutLength, 0x2D);
+                if (0 < outputLen)
+                {
+                    Console.Write(String.Format("'{0}' ", System.Text.Encoding.UTF8.GetString(outputBytes)));
+                }
+            }
+            Console.WriteLine("");
+
+            BlingFireUtils.FreeModel(hy);
+
+
             Console.WriteLine("Test Complete");
         }
     }
