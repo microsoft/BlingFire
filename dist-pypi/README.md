@@ -61,14 +61,18 @@ If you simply want to use it in Python, you can install the latest release using
 ### 1. Python example, using default pattern-based tokenizer:
 ```python
 from blingfire import *
-text = 'This is the Bling-Fire tokenizer'
-output = text_to_words(text)
-print(output)
+
+text = 'After reading this post, you will know: What "natural language" is and how it is different from other types of data. What makes working with natural language so challenging. [1]'
+
+print(text_to_sentences(text))
+print(text_to_words(text))
 ```
 
 Expected output:
 ```
-This is the Bling - Fire tokenizer
+After reading this post, you will know: What "natural language" is and how it is different from other types of data.
+What makes working with natural language so challenging. [1]
+After reading this post , you will know : What " natural language " is and how it is different from other types of data . What makes working with natural language so challenging . [ 1 ]
 ```
 
 
