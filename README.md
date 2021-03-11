@@ -7,12 +7,13 @@ Hi, we are a team at Microsoft called Bling (Beyond Language Understanding), we 
 
 ## Bling Fire Tokenizer Overview
 
-Bling Fire Tokenizer provides state of the art performance for Natural Language text tokenization. Bling Fire supports four tokenization algorithms:
+Bling Fire Tokenizer provides state of the art performance for Natural Language text tokenization. Bling Fire supports the following tokenization algorithms:
 
 1. Pattern-based tokenization
 2. [WordPiece](https://arxiv.org/pdf/1609.08144.pdf) tokenization
 3. [SentencePiece](https://github.com/google/sentencepiece) Unigram LM
 4. [SentencePiece](https://github.com/google/sentencepiece) BPE
+5. Induced syllabification (identifies possible hyphenation points within a token)
 
 Bling Fire provides uniform interface for working with all four algorithms so there is no difference for the client whether to use tokenizer for XLNET, BERT or your own custom model.
 
@@ -38,9 +39,11 @@ We have precompiled some popular models and listed with the source code referenc
 | xlnet_nonorm.bin | XLNET Tokenization Model /wo normalization    | Unigram LM | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/xlnet_nonorm) | 
 | bpe_example.bin | A model to test BPE tokenization    | BPE | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/bpe_example) | 
 | xlm_roberta_base.bin | XLM Roberta Tokenization | Unigram LM | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/xlm_roberta_base) | 
-| laser100k.bin | Trained on balanced by language WikiMatrix corpus of 80+ languages | Unigram LM | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/laser100k) | 
-| uri250k.bin | URL tokenization model trained on random URLs from the web | Unigram LM | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/uri250k) |
-
+| laser(100k|250k|500k).bin | Trained on balanced by language WikiMatrix corpus of 80+ languages | Unigram LM | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/laser100k) | 
+| uri(100k|250k|500k).bin | URL tokenization model trained on a large set of random URLs from the web | Unigram LM | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/uri250k) |
+| gpt2.bin | Byte-BPE tokenization model for GPT-2 | byte BPE | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/gpt2) |
+| roberta.bin | Byte-BPE tokenization model for Roberta model | byte BPE | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/roberta) |
+| syllab.bin | Multi lingual model to identify allowed hyphenation points inside a word. | W2H | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/syllab) |
 
 Oh yes, it is also the fastest! We did a comparison of Bling Fire with tokenizers from Hugging Face, [Bling Fire runs 4-5 times faster than Hugging Face Tokenizers](https://github.com/Microsoft/BlingFire/wiki/Comparing-performance-of-Bling-Fire-and-Hugging-Face-Tokenizers), see also [Bing Blog Post](https://blogs.bing.com/Developers-Blog/march-2020/Bling-FIRE-Tokenizer-for-BERT). We did comparison of Bling Fire Unigram LM and BPE implementaion to the same one in [SentencePiece](https://github.com/google/sentencepiece) library and our implementation is ~2x faster, see [XLNET benchmark](https://github.com/microsoft/BlingFire/blob/master/ldbsrc/xlnet/README.TXT) and [BPE benchmark](https://github.com/microsoft/BlingFire/blob/master/ldbsrc/bpe_example/README.TXT). Not to mention our default models are 10x faster than the same functionality from [SpaCy](https://github.com/explosion/spaCy), see [benchmark wiki](https://github.com/Microsoft/BlingFire/wiki/Benchmark-Guide) and this [Bing Blog Post](https://blogs.bing.com/Developers-Blog/2019-04/bling-fire-tokenizer-released-to-open-source).
 
