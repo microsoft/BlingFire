@@ -39,8 +39,8 @@ We have precompiled some popular models and listed with the source code referenc
 | xlnet_nonorm.bin | XLNET Tokenization Model /wo normalization    | Unigram LM | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/xlnet_nonorm) | 
 | bpe_example.bin | A model to test BPE tokenization    | BPE | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/bpe_example) | 
 | xlm_roberta_base.bin | XLM Roberta Tokenization | Unigram LM | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/xlm_roberta_base) | 
-| laser(100k|250k|500k).bin | Trained on balanced by language WikiMatrix corpus of 80+ languages | Unigram LM | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/laser100k) | 
-| uri(100k|250k|500k).bin | URL tokenization model trained on a large set of random URLs from the web | Unigram LM | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/uri250k) |
+| laser(100k\|250k\|500k).bin | Trained on balanced by language WikiMatrix corpus of 80+ languages | Unigram LM | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/laser100k) | 
+| uri(100k\|250k\|500k).bin | URL tokenization model trained on a large set of random URLs from the web | Unigram LM | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/uri250k) |
 | gpt2.bin | Byte-BPE tokenization model for GPT-2 | byte BPE | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/gpt2) |
 | roberta.bin | Byte-BPE tokenization model for Roberta model | byte BPE | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/roberta) |
 | syllab.bin | Multi lingual model to identify allowed hyphenation points inside a word. | W2H | [src](https://github.com/microsoft/BlingFire/tree/master/ldbsrc/syllab) |
