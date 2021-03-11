@@ -143,10 +143,39 @@ Model Handle: 2854016629088
 Model Freed
 ```
 
+### 4. Python example, doing tokenization and hyphenation of a text
 
-### 4. C# example, calling XLM Roberta tokenizer and getting ids and offsets
+Since hyphenation API's take one word at a time with the limit of 300 Unicode characters, we need to break the text into words first and then run hyphenation for each token.
 
-Let's load XLM Roberta model and tokenize a string, for each token let's get ID and offsets in the original text.
+```python
+import os
+import blingfire
+
+# load a provided with the package model
+h = blingfire.load_model(os.path.join(os.path.dirname(blingfire.__file__), "syllab.bin"))
+
+# get a text
+text = "Like Curiosity, the Perseverance rover was built by engineers and scientists at NASA's Jet Propulsion Laboratory in Pasadena, California. Roughly 85% of Perseverance's mass is based on Curiosity \"heritage hardware,\" saving NASA time and money and reducing risk considerably, agency officials have said.  Как и Curiosity, марсоход Perseverance был построен инженерами и учеными из Лаборатории реактивного движения НАСА в Пасадене, Калифорния. По словам официальных лиц агентства, примерно 85% массы Perseverance основано на «традиционном оборудовании» Curiosity, что экономит время и деньги NASA и значительно снижает риски."
+
+# break text into words with default model and hyphenate each word
+output = " ".join([blingfire.word_hyphenation_with_model(h, w) for w in blingfire.text_to_words(text).split(' ')])
+print(output)
+
+# free the model after we are all done
+blingfire.free_model(h)
+```
+
+The output should be something like this: 
+```
+Li-ke Cu-rios-i-ty , the Per-se-ve-rance ro-ver was built by en-gi-neers and sci-en-tists at NASA 's Jet Pro-pul-sion La-bo-ra-to-ry in Pa-sa-dena , Cali-for-nia . Roughly 85 % of Per-se-ve-rance 's mass is ba-se-d on Cu-rios-i-ty " he-r-i-tage hard-ware , " sa-ving NASA time and money and re-du-c-ing risk con-si-de-r-ably , agen-cy of-fi-cials ha-ve said . Ка-к и Cu-rios-i-ty , мар-со-ход Per-se-ve-rance бы-л построен ин-же-не-рами и у-че-ны-ми из Ла-бора-то-рии ре-актив-ного дви-же-ния НАСА в Па-са-дене , Ка-ли-фор-ния . По сло-вам офи-ци-аль-ных ли-ц агент-ства , при-мерно 85 % мас-сы Per-se-ve-rance осно-вано на « тра-ди-ци-он-ном обо-ру-до-ва-нии » Cu-rios-i-ty , что эко-но-мит вре-мя и деньги NASA и зна-чи-те-льно сни-жа-ет риски .
+```
+
+Note you can specify any other Unicode character as a hyphen that API inserts into the output string.
+
+
+### 5. C# example, calling XLM Roberta tokenizer and getting ids and offsets
+
+Note, everything that is supported in Python is supported by C# API as well. C# also has ability to use parallel computations since all models and functions are stateless you can share the same model across the threads without locks. Let's load XLM Roberta model and tokenize a string, for each token let's get ID and offsets in the original text.
 
 ```csharp
 using System;
@@ -203,7 +232,7 @@ tokens from offsets: ['Auto'/4396 'pho'/22014 'bia'/9166 ','/4 ' also'/2843 ' ca
 ```
 See this project for more C# examples: https://github.com/microsoft/BlingFire/tree/master/nuget/test .
  
-### 5. JavaScript example, fetching and loading model file, using the model to compute ids
+### 6. JavaScript example, fetching and loading model file, using the model to compute ids
 
 The goal of integration with JavaScript is ability to run the code in a browser with ML frameworks like TensorFlow.js and FastText web assembly.
 
@@ -249,11 +278,11 @@ $(document).ready(function() {
 Full example code can be found [here](https://github.com/microsoft/BlingFire/blob/master/wasm/example.html). Details of the API are described in the [wasm](https://github.com/microsoft/BlingFire/tree/master/wasm) folder.
 
 
-### 6. Example of making a difference with using Bling Fire default tokenizer in a classification task
+### 7. Example of making a difference with using Bling Fire default tokenizer in a classification task
 
 [This notebook](/doc/Bling%20Fire%20Tokenizer%20Demo.ipynb) demonstrates how Bling Fire tokenizer helps in Stack Overflow posts classification problem.
 
-### 7. Example of reaching 99% accuracy for language detection
+### 8. Example of reaching 99% accuracy for language detection
 
 [This document](https://github.com/microsoft/BlingFire/wiki/How-to-train-better-language-detection-with-Bling-Fire-and-FastText) describes how to improve [FastText](https://fasttext.cc/) language detection model with Bling Fire and achive 99% accuracy in language detection task for 365 languages.
 
