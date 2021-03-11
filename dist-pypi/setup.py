@@ -8,7 +8,7 @@ setup(
     version="0.1.5",
     author="Bling",
     author_email="bling@microsoft.com",
-    description="Python wrapper of lightening fast Finite State machine and REgular expression manipulation library.",
+    description="Python wrapper of lightning fast Finite State Machine based NLP library.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/microsoft/blingfire/",
