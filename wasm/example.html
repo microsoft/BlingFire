@@ -11,7 +11,7 @@
 
 <script type="module">
 
-import { GetVersion, TextToWords, TextToSentences, LoadModel, FreeModel, TextToIds } from './blingfire_wrapper.js';
+import { GetVersion, TextToWords, TextToSentences, LoadModel, FreeModel, TextToIds, WordHyphenation } from './blingfire_wrapper.js';
 
 $(document).ready(function() {
 
@@ -30,6 +30,7 @@ $(document).ready(function() {
   });
 
   var modelHandle1 = null;
+  var modelHandle2 = null;
 
   $("#btn4").click(function () {
     if(modelHandle1 == null) {
@@ -38,12 +39,23 @@ $(document).ready(function() {
         console.log("Model handle: " + modelHandle1);
       })();
     }
+    if(modelHandle2 == null) {
+      (async function () {
+        modelHandle2 = await LoadModel("./syllab.bin");
+        console.log("Model handle: " + modelHandle2);
+      })();
+    }
   });
 
   $("#btn5").click(function () {
     if(modelHandle1 != null) {
       FreeModel(modelHandle1);
       modelHandle1 = null;
+      console.log("Model Freed!");
+    }
+    if(modelHandle2 != null) {
+      FreeModel(modelHandle2);
+      modelHandle2 = null;
       console.log("Model Freed!");
     }
   });
@@ -55,6 +67,15 @@ $(document).ready(function() {
       console.log("Load the model first!");
     }
   });
+
+  $("#btn7").click(function () {
+    if(modelHandle2 != null) {
+      console.log(WordHyphenation(modelHandle2, "syllabification"));
+    } else {
+      console.log("Load the model first!");
+    }
+  });
+
 
 });
 
@@ -72,6 +93,7 @@ $(document).ready(function() {
   <button type="button" class="btn btn-secondary" id="btn4">LoadModel</button>
   <button type="button" class="btn btn-secondary" id="btn5">FreeModel</button>
   <button type="button" class="btn btn-secondary" id="btn6">TextToIds</button>
+  <button type="button" class="btn btn-secondary" id="btn7">HyphenateWordWithModel</button>
 </div>
 
 </body>

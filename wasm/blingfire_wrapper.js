@@ -139,3 +139,30 @@ export function TextToIds(handle, s, max_len, unk = 0) {
 
   return ids;
 }
+
+
+// breaks to words, takes a JS string and returns a JS string
+export function WordHyphenation(handle, s, hyp = 0x2D) {
+
+  if(handle == null) {
+    return;
+  }
+
+  // get the handle parsed
+  var { h, wasmMem } = handle;
+
+  var len = Module["lengthBytesUTF8"](s);
+
+  var inUtf8 = Module["stackAlloc"](len + 1); // if we don't do +1 this library won't copy the last character
+  Module["stringToUTF8"](s, inUtf8, len + 1); //  since it always also needs a space for a 0-char
+
+  var MaxOutLength = (len << 1) + 1; // worst case hyphen after every character
+  var outUtf8 = Module["stackAlloc"](MaxOutLength);
+
+  var actualLen = Module["_WordHyphenationWithModel"](inUtf8, len, outUtf8, MaxOutLength, h, hyp);
+  if(0 > actualLen || actualLen > MaxOutLength) {
+    return null;
+  }
+
+  return Module["UTF8ToString"](outUtf8);
+}
