@@ -9,6 +9,7 @@ The web assembly and JS code implement the following functions:
   3. async LoadModel -- given a URL fetches it and loads a model, returns a handle to the loaded model
   4. FreeModel -- destroys model object given a model handle
   5. TextToIds -- given a model handle and a JS string returns an array of ids of int type
+  6. WordHyphenation -- given a model handle and a word as a JS string and an optional hyphenation unicode code returns a hyphenated word
 
 ## To compile
 
