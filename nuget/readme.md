@@ -80,9 +80,9 @@ dotnet run --configuration Debug BlingUtilsTest.csproj
 
 After verifying the package works correctly localy, upload the nupkg to nuget.org.
 
-To publish to GitHub (optional) use the following command:
+To publish to GitHub (optional) use the following command, it requires having API token, which can be regenerated via Account / Settings / DeveloperSettings / ... :
 ```
-dotnet nuget push "bin/Release/BlingFire.x.y.z.nupkg" --source "github"
+dotnet nuget push "bin/Release/BlingFire.x.y.z.nupkg" --source "github" --api-key a123687fef23b8bfake0234820394802ffebc233
 ```
 
 
