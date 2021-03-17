@@ -3,16 +3,16 @@
 //     Licensed under the MIT License.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
-
-/// <summary>
-/// This is C# interface for blingfiretokdll.dll
-/// </summary>
 namespace BlingFire
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.InteropServices;
+    using System.Text;
+
+    /// <summary>
+    /// This is C# interface for blingfiretokdll.dll
+    /// </summary>
     public static class BlingFireUtils
     {
         private const string BlingFireTokDllName = "blingfiretokdll";
