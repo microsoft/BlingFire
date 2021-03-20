@@ -36,6 +36,9 @@ _TTextToIdsWithOffsetsPtr g_TextToIdsWithOffsetsPtr = NULL;
 typedef int (__cdecl* _TFreeModel)(void* ModelPtr);
 _TFreeModel g_FreeModelPtr = NULL;
 
+typedef int (__cdecl* _TTextToHashes)(const char *, int, int32_t *, const int, int, int);
+_TTextToHashes g_TextToHashesPtr = NULL;
+
 void * g_Module = NULL;
 
 
@@ -88,6 +91,14 @@ int __cdecl main (int argc, char ** argv)
             return false;
         }
 
+        g_TextToHashesPtr = (_TTextToHashes) dlsym(g_Module, "TextToHashes");
+        if (NULL == g_TextToHashesPtr)
+        {
+            std::cerr << "ERROR: Cannot get address of TextToHashes function" << std::endl;
+            return false;
+        }
+
+
         // tests
 
         void* hModel = (*g_LoadModelPtr)("laser100k.bin");
@@ -129,6 +140,35 @@ int __cdecl main (int argc, char ** argv)
         std::cout << std::endl;
 
         (*g_FreeModelPtr)(hModel);
+
+
+        // test text to hashes
+        //                  0         1         2
+        //                  012345678901234567890123456789
+        const char * pIn = "246694 4 4 4 4 4 4 4 4 4 4 4 4";
+        const int ngram_order = 6;
+        int output_buff [30*6];
+
+        const int ActualCount = (*g_TextToHashesPtr)(pIn, strlen(pIn), output_buff, sizeof(output_buff)/sizeof(output_buff[0]), ngram_order, 80000000);
+
+        for(int i = 0; i < ActualCount; ++i)
+        {
+            std::cout << output_buff[i] << ' ';
+        }
+        std::cout << std::endl;
+
+        // reinterpret output_buff as a two dimentional C array, to make sure all dimantions are done right
+        int (&m)[6][13] = *reinterpret_cast<int (*)[6][13]>(&output_buff[0]);
+
+        for(int i = 0; i < 6; ++i)
+        {
+            for(int j = 0; j < 13; ++j)
+            {
+                std::cout << m[i][j] << ' ';
+            }
+            std::cout << std::endl;
+        }
+        std::cout << std::endl;
 
         // unload the .so file
         dlclose(g_Module);

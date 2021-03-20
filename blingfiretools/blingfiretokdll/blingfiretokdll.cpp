@@ -697,10 +697,11 @@ const void AddWordNgrams(int32_t * hashArray, int& hashCount, int32_t wordNgrams
         for (int32_t j = i + 1; j < i + wordNgrams; j++) {
             uint64_t tempHash = (j < tokenCount) ? hashArray[j] : EOS_HASH;  // for computing ngram, we pad by EOS_HASH to allow each word has ngram which begins at itself.
             h = h * 116049371 + tempHash;
-            hashArray[hashCount] = (h % bucket);
-            ++hashCount;
+            const int ngram_idx = j - i;
+            hashArray[(ngram_idx * tokenCount) + i] = (h % bucket);
         }
     }
+    hashCount += (wordNgrams - 1) * tokenCount;
 }
 
 
@@ -732,20 +733,21 @@ inline const int GetTokenCount(const char * input, const int bufferSize)
 const int ComputeHashes(const char * input, const int strLen, int32_t * hashArr, int wordNgrams, int bucketSize)
 {
     int hashCount = 0;
-    char * pTemp = (char *)input;
-    char * pWordStart = &pTemp[0];
+    const char * pTemp = input;
+    const char * pWordStart = pTemp;
     size_t wordLength = 0;
 
     // add unigram hash first while reading the tokens. Unlike fasttext, there's no EOS padding here. 
-    for (int pos = 0; pos < strLen; pos++)
+    for (int pos = 0; pos <= strLen; pos++)
     {
-        if (pTemp[pos] == ' ' || pos == strLen - 1)  // if we hit word boundary pushback wordhash or end of sentence
+        // check for end of line first otherwise check the character so we don't read past the buffer end
+        if (pos == strLen || pTemp[pos] == ' ')  // if we hit word boundary pushback wordhash or end of sentence
         {
             uint32_t wordhash = GetHash(pWordStart, wordLength);
             hashArr[hashCount] = wordhash;
             ++hashCount;
             // move pointer to next word and reset length
-            pWordStart = &pTemp[pos + 1];
+            pWordStart = pTemp + pos + 1;
             wordLength = 0;
         }
         else // otherwise keep moving temp pointer
