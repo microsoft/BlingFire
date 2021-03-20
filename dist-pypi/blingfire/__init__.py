@@ -153,7 +153,7 @@ def text_to_hashes(s, word_n_grams, bucketSize):
     s_bytes = s.encode("utf-8")
 
     # allocate the output buffer
-    o_bytes = (c_uint32 * (2 * len(s_bytes)))()
+    o_bytes = (c_uint32 * (word_n_grams * len(s_bytes)))()
     o_bytes_count = len(o_bytes)
 
     # identify paragraphs
@@ -161,7 +161,7 @@ def text_to_hashes(s, word_n_grams, bucketSize):
 
     # check if no error has happened
     if -1 == o_len or o_len > o_bytes_count:
-        return ''
+        return None
 
     # return numpy array without copying
     return np.frombuffer(o_bytes, dtype=c_uint32, count=o_len)
