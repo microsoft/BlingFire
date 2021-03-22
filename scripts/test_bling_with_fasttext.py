@@ -5,7 +5,7 @@ import unicodedata
 import blingfire
 import fasttext
 
-np.set_printoptions(linewidth=72)
+np.set_printoptions(linewidth=160)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-m", "--model", default="./xlnet.bin", help="bin file with compiled tokenization model")
@@ -53,8 +53,17 @@ for line in sys.stdin:
         # get the hashes
         a = blingfire.text_to_hashes(idss, ngram_order, buckets)
         print(f'Hashes from Bling Fire: {a}')
+
         a = a.reshape((ngram_order, len(ids)), order='C')
-        print(f"Word Count: {word_count}, Buckets: {buckets}, Ngram Order: {ngram_order}\nHashes:\n{a}")
+        # change word hashes to ids and add word_count to all ngram hashes
+        for i in range(len(ids)):
+            for j in range(ngram_order):
+                if 0 == j:
+                    a[j][i] = f.get_word_id(str(ids[i]))
+                else:
+                    a[j][i] += word_count
+
+        print(f"Word Count: {word_count}, Buckets: {buckets}, Ngram Order: {ngram_order}\nUpdated Hashes and WordIds:\n{a}")
 
         # get the embedding matrix
         m = f.get_input_matrix()
@@ -63,16 +72,8 @@ for line in sys.stdin:
         for i in range(len(ids)):
             # for each ngram order
             for j in range(ngram_order):
-                # get the BlingFire's id
-                id = ids[i]
-                # compute a token vector importance / contribution
-                if j == 0:
-                    # use word id for the look up
-                    a[j][i] = np.linalg.norm(m[f.get_word_id(str(id))])
-                else:
-                    # use ngram hash for look up
-                    ngram_hash = a[j][i]
-                    a[j][i] = np.linalg.norm(np.linalg.norm(m[word_count + ngram_hash]))
+                # look up a hidden vector by index and compute its length
+                a[j][i] = np.linalg.norm(m[a[j][i]])
 
         print(f"Importance:\n{a}")
 
