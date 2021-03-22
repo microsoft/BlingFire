@@ -151,15 +151,18 @@ int __cdecl main (int argc, char ** argv)
 
         const int ActualCount = (*g_TextToHashesPtr)(pIn, strlen(pIn), output_buff, sizeof(output_buff)/sizeof(output_buff[0]), ngram_order, 80000000);
 
+        std::cout << "As an array:" << std::endl;
         for(int i = 0; i < ActualCount; ++i)
         {
             std::cout << output_buff[i] << ' ';
         }
         std::cout << std::endl;
 
+
         // reinterpret output_buff as a two dimentional C array, to make sure all dimantions are done right
         int (&m)[6][13] = *reinterpret_cast<int (*)[6][13]>(&output_buff[0]);
 
+        std::cout << "As a matrix:" << std::endl;
         for(int i = 0; i < 6; ++i)
         {
             for(int j = 0; j < 13; ++j)

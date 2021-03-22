@@ -153,7 +153,7 @@ def text_to_hashes(s, word_n_grams, bucketSize):
     s_bytes = s.encode("utf-8")
 
     # allocate the output buffer
-    o_bytes = (c_uint32 * (word_n_grams * len(s_bytes)))()
+    o_bytes = (c_int32 * (word_n_grams * len(s_bytes)))()
     o_bytes_count = len(o_bytes)
 
     # identify paragraphs
@@ -164,7 +164,7 @@ def text_to_hashes(s, word_n_grams, bucketSize):
         return None
 
     # return numpy array without copying
-    return np.frombuffer(o_bytes, dtype=c_uint32, count=o_len)
+    return np.frombuffer(o_bytes, dtype=c_int32, count=o_len)
 
 
 def text_to_token_with_offsets(s, text_to_token_f, split_byte):    
