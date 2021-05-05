@@ -264,5 +264,9 @@ def utf8text_to_ids_with_offsets(h, s_bytes, max_len, unk = 0, no_padding = Fals
     out_count = min (o_bytes_count, t_count) if no_padding else o_bytes_count
     # return numpy array without copying
     return ( np.frombuffer(o_bytes, dtype=c_uint32, count = out_count), 
-             np.frombuffer(o_bytes_starts, dtype=c_uint32, count = out_count), 
-             np.frombuffer(o_bytes_ends, dtype=c_uint32, count = out_count) )
+             np.frombuffer(o_bytes_starts, dtype=c_int32, count = out_count), 
+             np.frombuffer(o_bytes_ends, dtype=c_int32, count = out_count) )
+
+
+def change_settings_dummy_prefix(h, add_prefix):
+    blingfire.SetNoDummyPrefix(c_void_p(h), c_int(not add_prefix))

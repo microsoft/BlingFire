@@ -1324,7 +1324,7 @@ const int TextToIdsWithOffsets_sp(
         if (NULL == pOffsets) {
             return 0;
         }
-        pOffsets[0] = 0; // added for prepended first character
+        pOffsets[0] = -1; // an offset of the appended space (it is not a part of the input)
     }
 
     // get the model data
@@ -1332,21 +1332,24 @@ const int TextToIdsWithOffsets_sp(
     const FADictConfKeeper * pConf = &(pModelData->m_DictConf);
     const FAMultiMapCA * pCharMap = pConf->GetCharMap ();
 
+    // see if we need to get a summy space added
+    const int BUFF_DATA_OFFSET = pConf->GetNoDummyPrefix() ? 0 : 1;
+
     // convert input to UTF-32 or bytes (write output past the added first space)
     int BuffSize;
     if(false == pModelData->m_useRawBytes) {
         BuffSize = fNeedOffsets ? 
-            ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + 1, pOffsets + 1, InUtf8StrByteCount) :
-            ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + 1, InUtf8StrByteCount);
+            ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + BUFF_DATA_OFFSET, pOffsets + BUFF_DATA_OFFSET, InUtf8StrByteCount) :
+            ::FAStrUtf8ToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + BUFF_DATA_OFFSET, InUtf8StrByteCount);
     } else {
         BuffSize = fNeedOffsets ? 
-            ::FAStrUtf8AsBytesToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + 1, pOffsets + 1, InUtf8StrByteCount) :
-            ::FAStrUtf8AsBytesToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + 1, InUtf8StrByteCount);
+            ::FAStrUtf8AsBytesToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + BUFF_DATA_OFFSET, pOffsets + BUFF_DATA_OFFSET, InUtf8StrByteCount) :
+            ::FAStrUtf8AsBytesToArray(pInUtf8Str, InUtf8StrByteCount, pBuff + BUFF_DATA_OFFSET, InUtf8StrByteCount);
     }
     if (BuffSize <= 0 || BuffSize > InUtf8StrByteCount) {
         return 0;
     }
-    BuffSize++; // to accomodate the first space
+    BuffSize += BUFF_DATA_OFFSET; // to accomodate the first space
 
     // needed for normalization
     std::vector< int > utf32input_norm;
@@ -1396,8 +1399,8 @@ const int TextToIdsWithOffsets_sp(
     //
     int * pAdjustedOffsets = fNeedOffsets ? (NULL != pCharMap ? pNormOffsets : pOffsets) : NULL;
 
-    int i = 1; // index for reading
-    int j = 1; // index for writing
+    int i = 0; // index for reading
+    int j = 0; // index for writing
     while (i < BuffSize) {
 
         const int Ci = pBuff[i];
@@ -1410,8 +1413,8 @@ const int TextToIdsWithOffsets_sp(
                 pAdjustedOffsets[j] = pAdjustedOffsets[i];
             }
             j++;
-        // if Ci is a space, check if the previous character was not a sapce
-        } else if (__FASpDelimiter__ != pBuff[j - 1]) {
+        // if Ci is a space, check if the previous character was not a space
+        } else if (0 == j || __FASpDelimiter__ != pBuff[j - 1]) {
             // copy normalized space
             pBuff[j] = __FASpDelimiter__;
             if (fNeedOffsets) {
@@ -1595,5 +1598,22 @@ int FreeModel(void* ModelPtr)
     }
 
     delete (FAModelData*) ModelPtr;
+    return 1;
+}
+
+
+//
+// Allows to change the "no-dummy-prefix" (NoDummyPrefix) without the recompilation of the models
+// Note: it is the best to use the mode the same way it was trained / compiled leave this value to what it was set via ldb.conf.small file
+//
+extern "C"
+int SetNoDummyPrefix(void* ModelPtr, bool fNoDummyPrefix)
+{
+    if (NULL == ModelPtr) {
+        return 0;
+    }
+
+    FAModelData* pModel = (FAModelData*) ModelPtr;
+    pModel->m_DictConf.SetNoDummyPrefix(fNoDummyPrefix);
     return 1;
 }

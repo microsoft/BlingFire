@@ -13,6 +13,9 @@ namespace BlingFire
     /// <summary>
     /// This is C# interface for blingfiretokdll.dll, it uses Span<T> hence more efficient however 
     /// is not supported by older .Net frameworks
+    /// 
+    /// For API description please see blingfiretokdll.cpp comments.
+    ///
     /// </summary>
     public static class BlingFireUtils2
     {
@@ -395,6 +398,9 @@ namespace BlingFire
                 maxBuffSize,
                 utf32SpaceCode);
         }
+
+        [DllImport(BlingFireTokDllName)]
+        public static extern int SetNoDummyPrefix(UInt64 model, bool fNoDummyPrefix);
 
         private static char[] g_justNewLineChar = new char[] { '\n' };
         private static char[] g_justSpaceChar = new char[] { ' ' };

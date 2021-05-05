@@ -263,6 +263,7 @@ public:
         PARAM_TOKENIZATION_TYPE, // specifies which tokenization runtime should be used
         PARAM_ID_OFFSET,   // specifies the integer value to be added to all output IDs (used in Bling Fire tokenizer)
         PARAM_USE_BYTE_ENCODING, // specifies if input characters are UTF-8 bytes, not Unicode symbols
+        PARAM_NO_DUMMY_PREFIX,  // for unigram-lm and BPE, if specified then no dummy whitespace is added in the beginning of text
         PARAM_COUNT,
     };
 

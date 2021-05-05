@@ -60,6 +60,7 @@ public:
     const int GetTokAlgo () const;
     const int GetIdOffset () const;
     const bool GetUseByteEncoding () const;
+    const bool GetNoDummyPrefix () const;
 
 private:
     // input LDB
@@ -85,8 +86,16 @@ private:
     int m_TokAlgo;
     // specifies a value to be added to all IDs from a tokenizer
     int m_IdOffset;
-    // specifieds if the input encoding is bytes instead of UTF-32
+    // specifies if the input encoding is bytes instead of UTF-32
     bool m_UseRawBytes;
+    // specifies if a dummy space should be added for unigram-lm or BPE tokenization models, adds by default
+    bool m_fNoDummyPrefix;
+
+public:
+    // this is rather an exception, to let the users change the behaviour of the model
+    // Note: it is the best to use the mode the same way it was trained / compiled leave this value to what it was set via ldb.conf.small file
+    void SetNoDummyPrefix(bool fNoDummyPrefix);
+
 };
 
 }

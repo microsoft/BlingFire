@@ -62,9 +62,20 @@ for line in sys.stdin:
             print("IDS:")
             print(ids)
 
+            print("STARTS:")
+            print(starts)
+
+            print("ENDS:")
+            print(ends)
+
             print("TOKENS FROM OFFSETS:")
             for i in range(0, len(starts)):
-                t = utf8_s[starts[i] : ends[i]+1].decode('utf-8')
+                if starts[i] == -1 and ends[i] == -1:
+                    t = "^"
+                else:
+                    s = starts[i] if starts[i] >= 0 else 0
+                    e = ends[i] if ends[i] >= 0 else 0
+                    t = utf8_s[s : e + 1].decode('utf-8')
                 print("[" + t + "]", end=' ')
             print()
 
