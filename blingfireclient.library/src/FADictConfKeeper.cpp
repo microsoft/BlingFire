@@ -37,7 +37,8 @@ FADictConfKeeper::FADictConfKeeper () :
     m_pCharMap (NULL),
     m_TokAlgo (FAFsmConst::TOKENIZE_DEFAULT),
     m_IdOffset (0),
-    m_UseRawBytes (false)
+    m_UseRawBytes (false),
+    m_fNoDummyPrefix (false)
 {}
 
 
@@ -81,6 +82,11 @@ void FADictConfKeeper::Init (const int * pValues, const int Size)
         case FAFsmConst::PARAM_USE_BYTE_ENCODING:
         {
             m_UseRawBytes = true;
+            break;
+        }
+        case FAFsmConst::PARAM_NO_DUMMY_PREFIX:
+        {
+            m_fNoDummyPrefix = true;
             break;
         }
         case FAFsmConst::PARAM_DIRECTION:
@@ -265,6 +271,7 @@ void FADictConfKeeper::Clear ()
     m_TokAlgo = FAFsmConst::TOKENIZE_DEFAULT;
     m_IdOffset = 0;
     m_UseRawBytes = false;
+    m_fNoDummyPrefix = false;
 }
 
 
@@ -343,6 +350,17 @@ const int FADictConfKeeper::GetIdOffset () const
 const bool FADictConfKeeper::GetUseByteEncoding () const
 {
     return m_UseRawBytes;
+}
+
+
+const bool FADictConfKeeper::GetNoDummyPrefix () const
+{
+    return m_fNoDummyPrefix;
+}
+
+void FADictConfKeeper::SetNoDummyPrefix(bool fNoDummyPrefix)
+{
+    m_fNoDummyPrefix = fNoDummyPrefix;
 }
 
 }

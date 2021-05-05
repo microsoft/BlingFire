@@ -249,6 +249,7 @@ void SetupConfParams ()
     g_parser.AddNumParam ("threshold", FAFsmConst::PARAM_THRESHOLD);
     g_parser.AddNumParam ("id-offset", FAFsmConst::PARAM_ID_OFFSET);
     g_parser.AddParam ("use-byte-encoding", FAFsmConst::PARAM_USE_BYTE_ENCODING);
+    g_parser.AddParam ("no-dummy-prefix", FAFsmConst::PARAM_NO_DUMMY_PREFIX);
 
     // requires a CRC32-like check for the LDB file to pass
     g_parser.AddParam ("verify-ldb-bin", FAFsmConst::PARAM_VERIFY_LDB_BIN);

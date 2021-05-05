@@ -120,8 +120,9 @@ namespace BlingUtilsTest
                 Console.Write("tokens from offsets: [");
                 for(int i = 0; i < outputCount; ++i)
                 {
-                    int startOffset = Starts[i];
-                    int surfaceLen = Ends[i] - Starts[i] + 1;
+                    int startOffset = Starts[i] >= 0 ? Starts[i] : 0;
+                    int endOffset = Ends[i] >= 0 ? Ends[i] : 0;
+                    int surfaceLen = endOffset - startOffset + 1;
 
                     string token = System.Text.Encoding.UTF8.GetString(new ArraySegment<byte>(inBytes, startOffset, surfaceLen));
                     Console.Write(String.Format("'{0}'/{1} ", token, Ids[i]));
@@ -137,8 +138,9 @@ namespace BlingUtilsTest
                 Console.Write("tokens from offsets: [");
                 for(int i = 0; i < outputCount; ++i)
                 {
-                    int startOffset = Starts[i];
-                    int surfaceLen = Ends[i] - Starts[i] + 1;
+                    int startOffset = Starts[i] >= 0 ? Starts[i] : 0;
+                    int endOffset = Ends[i] >= 0 ? Ends[i] : 0;
+                    int surfaceLen = endOffset - startOffset + 1;
 
                     string token = System.Text.Encoding.UTF8.GetString(new ArraySegment<byte>(inBytes, startOffset, surfaceLen));
                     Console.Write(String.Format("'{0}'/{1} ", token, Ids[i]));
@@ -154,8 +156,9 @@ namespace BlingUtilsTest
                 Console.Write("tokens from offsets: [");
                 for(int i = 0; i < outputCount; ++i)
                 {
-                    int startOffset = Starts[i];
-                    int surfaceLen = Ends[i] - Starts[i] + 1;
+                    int startOffset = Starts[i] >= 0 ? Starts[i] : 0;
+                    int endOffset = Ends[i] >= 0 ? Ends[i] : 0;
+                    int surfaceLen = endOffset - startOffset + 1;
 
                     string token = System.Text.Encoding.UTF8.GetString(new ArraySegment<byte>(inBytes, startOffset, surfaceLen));
                     Console.Write(String.Format("'{0}'/{1} ", token, Ids[i]));

@@ -12,6 +12,9 @@ using System.Text;
 
     /// <summary>
     /// This is C# interface for blingfiretokdll.dll
+    /// 
+    /// For API description please see blingfiretokdll.cpp comments.
+    ///
     /// </summary>
     public static class BlingFireUtils
     {
@@ -187,6 +190,9 @@ using System.Text;
 
         [DllImport(BlingFireTokDllName)]
         public static extern Int32 NormalizeSpaces([MarshalAs(UnmanagedType.LPArray)] byte[] inUtf8Str, Int32 inUtf8StrLen, byte[] outBuff, Int32 maxBuffSize, Int32 utf32SpaceCode);
+
+        [DllImport(BlingFireTokDllName)]
+        public static extern int SetNoDummyPrefix(UInt64 model, bool fNoDummyPrefix);
 
         private static char[] g_justNewLineChar = new char[] { '\n' };
         private static char[] g_justSpaceChar = new char[] { ' ' };
