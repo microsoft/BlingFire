@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="blingfire",
-    version="0.1.5",
+    version="0.1.7",
     author="Bling",
     author_email="bling@microsoft.com",
     description="Python wrapper of lightning fast Finite State Machine based NLP library.",

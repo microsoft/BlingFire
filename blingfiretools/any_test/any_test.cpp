@@ -15,7 +15,21 @@
 #include <fstream>
 #include <vector>
 #include <assert.h>
+
+
+#ifdef WIN32
+#define FALoadLibrary(fileName) ::LoadLibrary(fileName)
+#define FAGetProcAddress((HMODULE)handle, fnName) ::GetProcAddress(handle, fnName)
+#define FAFreeLibrary((HMODULE)handle) ::FreeLibrary(handle)
+const char * g_BlingFireModuleName = "./blingfiretokdll.dll";
+#else
 #include <dlfcn.h>
+#define FALoadLibrary(fileName) ::dlopen(fileName, RTLD_LAZY)
+#define FAGetProcAddress(handle, fnName) ::dlsym(handle, fnName)
+#define FAFreeLibrary(handle) ::dlclose(handle)
+const char * g_BlingFireModuleName = "./libblingfiretokdll.so";
+#endif
+
 
 using namespace BlingFire;
 
@@ -39,8 +53,7 @@ _TFreeModel g_FreeModelPtr = NULL;
 typedef int (__cdecl* _TTextToHashes)(const char *, int, int32_t *, const int, int, int);
 _TTextToHashes g_TextToHashesPtr = NULL;
 
-void * g_Module = NULL;
-
+void* g_Module = NULL;
 
 int __cdecl main (int argc, char ** argv)
 {
@@ -53,51 +66,54 @@ int __cdecl main (int argc, char ** argv)
     try {
 
         // load library and get the function pointers
-        g_Module = dlopen("./libblingfiretokdll.so", RTLD_LAZY);
+        g_Module = FALoadLibrary(g_BlingFireModuleName);
         if (NULL == g_Module)
         {
             std::cerr << "ERROR: Failed to load libblingfiretokdll.so" << std::endl;
             return false;
         }
 
-        g_LoadModelPtr = (_TLoadModelPtr) dlsym(g_Module, "LoadModel");
+        g_LoadModelPtr = (_TLoadModelPtr)FAGetProcAddress(g_Module, "LoadModel");
         if (NULL == g_LoadModelPtr)
         {
             std::cerr << "ERROR: Cannot get address of LoadModel function" << std::endl;
             return false;
         }
-        g_NormalizeSpacesPtr = (_TNormalizeSpacesPtr) dlsym(g_Module, "NormalizeSpaces");
+
+        g_NormalizeSpacesPtr = (_TNormalizeSpacesPtr)FAGetProcAddress(g_Module, "NormalizeSpaces");
         if (NULL == g_NormalizeSpacesPtr)
         {
             std::cerr << "ERROR: Cannot get address of NormalizeSpaces function" << std::endl;
             return false;
         }
-        g_TextToIdsPtr = (_TTextToIdsPtr) dlsym(g_Module, "TextToIds");
+
+        g_TextToIdsPtr = (_TTextToIdsPtr)FAGetProcAddress(g_Module, "TextToIds");
         if (NULL == g_TextToIdsPtr)
         {
             std::cerr << "ERROR: Cannot get address of TextToIds function" << std::endl;
             return false;
         }
-        g_TextToIdsWithOffsetsPtr = (_TTextToIdsWithOffsetsPtr) dlsym(g_Module, "TextToIdsWithOffsets");
+
+        g_TextToIdsWithOffsetsPtr = (_TTextToIdsWithOffsetsPtr)FAGetProcAddress(g_Module, "TextToIdsWithOffsets");
         if (NULL == g_TextToIdsWithOffsetsPtr)
         {
             std::cerr << "ERROR: Cannot get address of TextToIdsWithOffsets function" << std::endl;
             return false;
         }
-        g_FreeModelPtr = (_TFreeModel) dlsym(g_Module, "FreeModel");
+
+        g_FreeModelPtr = (_TFreeModel)FAGetProcAddress(g_Module, "FreeModel");
         if (NULL == g_FreeModelPtr)
         {
             std::cerr << "ERROR: Cannot get address of FreeModel function" << std::endl;
             return false;
         }
 
-        g_TextToHashesPtr = (_TTextToHashes) dlsym(g_Module, "TextToHashes");
+        g_TextToHashesPtr = (_TTextToHashes)FAGetProcAddress(g_Module, "TextToHashes");
         if (NULL == g_TextToHashesPtr)
         {
             std::cerr << "ERROR: Cannot get address of TextToHashes function" << std::endl;
             return false;
         }
-
 
         // tests
 
@@ -111,15 +127,15 @@ int __cdecl main (int argc, char ** argv)
         std::string in1 ("performance report‍‍‍‍‍‍‍‍\xe2\x80\x8d\xe2\x80\x8d\xe2\x80\x8d");
 
         char norm_out [FALimits::MaxWordLen];
-        const int norm_len = (*g_NormalizeSpacesPtr)(in1.c_str(), in1.length(), norm_out, FALimits::MaxWordLen, 0x20);
+        const int norm_len = (*g_NormalizeSpacesPtr)(in1.c_str(), (int)in1.length(), norm_out, FALimits::MaxWordLen, 0x20);
 
-        int IdCount = (*g_TextToIdsPtr)(hModel, in1.c_str(), in1.length(), Ids, MaxIdCount, 3);
+        int IdCount = (*g_TextToIdsPtr)(hModel, in1.c_str(), (int)in1.length(), Ids, MaxIdCount, 3);
         for(int i = 0; i < IdCount; ++i) {
             std::cout << Ids[i] << ' ';
         }
         std::cout << std::endl;
 
-        IdCount = (*g_TextToIdsWithOffsetsPtr)(hModel, in1.c_str(), in1.length(), Ids, Starts, Ends, MaxIdCount, 3);
+        IdCount = (*g_TextToIdsWithOffsetsPtr)(hModel, in1.c_str(), (int)in1.length(), Ids, Starts, Ends, MaxIdCount, 3);
         for(int i = 0; i < IdCount; ++i) {
             std::cout << Ids[i] << ' ';
         }
@@ -149,7 +165,7 @@ int __cdecl main (int argc, char ** argv)
         const int ngram_order = 6;
         int output_buff [30*6];
 
-        const int ActualCount = (*g_TextToHashesPtr)(pIn, strlen(pIn), output_buff, sizeof(output_buff)/sizeof(output_buff[0]), ngram_order, 80000000);
+        const int ActualCount = (*g_TextToHashesPtr)(pIn, (int)strlen(pIn), output_buff, (int)(sizeof(output_buff)/sizeof(output_buff[0])), ngram_order, 80000000);
 
         std::cout << "As an array:" << std::endl;
         for(int i = 0; i < ActualCount; ++i)
@@ -173,8 +189,8 @@ int __cdecl main (int argc, char ** argv)
         }
         std::cout << std::endl;
 
-        // unload the .so file
-        dlclose(g_Module);
+        // unload the .so/dll file
+        FAFreeLibrary(g_Module);
 
     } catch (const FAException & e) {
 
