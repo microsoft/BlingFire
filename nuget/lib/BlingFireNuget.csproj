@@ -37,6 +37,9 @@
     <None Include="blingfiretokdll.dll" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any" PackageCopyToOutput="true" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="blingfiretokdll.pdb" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any" PackageCopyToOutput="true" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="libblingfiretokdll.dylib" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any" PackageCopyToOutput="true" />
   </ItemGroup>
   <ItemGroup>

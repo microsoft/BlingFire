@@ -18,7 +18,7 @@ ENDIF()
 
 IF (WIN32 AND MSVC)
   set (CMAKE_CXX_FLAGS " -DNDEBUG")
-  add_compile_options("/GS" "/W4" "/Gy" "/Qspectre" "/guard:cf" "/Gm-" "/O2" "/sdl" "/Zc:inline" "/fp:precise" "/GF" "/EHsc" "/Zc:forScope" "/Gd" "/ZH:SHA_256")
+  add_compile_options("/O2" "/W4" "/GS" "/Gy" "/guard:cf" "/Gm-" "/Zc:inline" "/fp:precise" "/GF" "/EHsc" "/ZH:SHA_256")
   add_compile_options("$<$<CONFIG:Debug>:/Od>")
   add_compile_options("$<$<NOT:$<CONFIG:Debug>>:/GL>")
   add_compile_options("$<$<NOT:$<CONFIG:Debug>>:/Ob2>")
