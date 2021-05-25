@@ -51,12 +51,13 @@ dotnet pack --configuration Release
 ```
 
 
-Test it first by publishing into a local repo (you need to install nuget.exe on linux):
+Test it first by publishing into a local repo (you need to install nuget.exe on linux and on Windows, see https://www.nuget.org/downloads):
 ```
+# on Linux
 nuget.exe add lib/bin/Release/BlingFireNuget.0.1.5.nupkg -Source /home/sergei/BlingFire2/tmplocalnugetrepo/packages/
 
-Installing BlingFireNuget 0.1.5.
-...
+# on Windows
+C:\src\BlingFire\nuget\lib>c:\Users\sergeio\Downloads\nuget.exe add bin\Release\BlingFireNuget.0.1.7.nupkg -Source C:/Users/sergeio/mytestnugets
 
 ```
 
