@@ -37,8 +37,8 @@ on Windows, Linux, Mac OSX, etc.
 using namespace BlingFire;
 
 // version of this binary and the algo logic
-#define BLINGFIRETOK_MAJOR_VERSION_NUM 6
-#define BLINGFIRETOK_MINOR_VERSION_NUM 2
+#define BLINGFIRETOK_MAJOR_VERSION_NUM 7
+#define BLINGFIRETOK_MINOR_VERSION_NUM 0
 
 const int WBD_WORD_TAG = 1;
 const int WBD_IGNORE_TAG = 4;

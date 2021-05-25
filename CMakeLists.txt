@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8.11)
+cmake_minimum_required (VERSION 3.0)
 
 set (BLING_FIRE_VERSION_MAJOR 1)
 set (BLING_FIRE_VERSION_MINOR 0)
@@ -15,10 +15,22 @@ IF (APPLE)
 ELSE()
   set (OPTIMIZE "-O4 -fexpensive-optimizations")
 ENDIF()
-set (CMAKE_CXX_FLAGS " -std=c++11 -fpic ${OPTIMIZE} -DNDEBUG")
-set (CMAKE_CXX_FLAGS_RELEASE " -std=c++11 -fpic ${OPTIMIZE} -DNDEBUG")
-set (CMAKE_CXX_FLAGS_DEBUG " -std=c++11 -fpic -O0 -g")
-set (default_build_type "Release")
+
+IF (WIN32 AND MSVC)
+  set (CMAKE_CXX_FLAGS " -DNDEBUG")
+  add_compile_options("/GS" "/W4" "/Gy" "/Qspectre" "/guard:cf" "/Gm-" "/O2" "/sdl" "/Zc:inline" "/fp:precise" "/GF" "/EHsc" "/Zc:forScope" "/Gd" "/ZH:SHA_256")
+  add_compile_options("$<$<CONFIG:Debug>:/Od>")
+  add_compile_options("$<$<NOT:$<CONFIG:Debug>>:/GL>")
+  add_compile_options("$<$<NOT:$<CONFIG:Debug>>:/Ob2>")
+  add_link_options("/guard:cf")
+  add_link_options("$<$<NOT:$<CONFIG:Debug>>:/LTCG>")
+  set (default_build_type "RelWithDebInfo")
+ELSE()
+  set (CMAKE_CXX_FLAGS " -std=c++11 -fpic ${OPTIMIZE} -DNDEBUG")
+  set (CMAKE_CXX_FLAGS_RELEASE " -std=c++11 -fpic ${OPTIMIZE} -DNDEBUG")
+  set (CMAKE_CXX_FLAGS_DEBUG " -std=c++11 -fpic -O0 -g")
+  set (default_build_type "Release")
+ENDIF()
 
 IF (UNIX OR LINUX)
   add_definitions ("-Wall -Wno-unknown-pragmas -DHAVE_ICONV_LIB -DHAVE_NO_SPECSTRINGS -D_VERBOSE -DBLING_FIRE_NOAP -DBLING_FIRE_NOWINDOWS")
@@ -28,7 +40,6 @@ IF (UNIX OR LINUX)
 ELSE()
   add_definitions ("-DHAVE_NO_SPECSTRINGS -D_VERBOSE -DBLING_FIRE_NOAP")
 ENDIF()
-
 
 # define headers and sources
 file(GLOB CLIENT_HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/blingfireclient.library/inc/*.h")
@@ -50,7 +61,6 @@ IF (UNIX OR LINUX)
   set_target_properties(fsaClient PROPERTIES LINKER_LANGUAGE CXX)
   set_target_properties(fsaCompile PROPERTIES LINKER_LANGUAGE CXX)
 ENDIF()
-
 
 # Macro for finding the sub directories
 MACRO(SUBDIRLIST result curdir)
@@ -91,4 +101,3 @@ FOREACH(dir ${SUBDIRS})
     ENDIF()
 
 ENDFOREACH()
-
