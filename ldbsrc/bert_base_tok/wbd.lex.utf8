@@ -12,10 +12,10 @@ _include common/bert.common.def.txt
 # BERT specific
 #
 
-< [\[] UNK [\]] > --> WORD _call FnTokWord
-< [\[] CLS [\]] > --> WORD _call FnTokWord
-< [\[] SEP [\]] > --> WORD _call FnTokWord
-< [\[] MASK [\]] > --> WORD _call FnTokWord
+< [\[] unk [\]] > --> WORD _call FnTokWord
+< [\[] cls [\]] > --> WORD _call FnTokWord
+< [\[] sep [\]] > --> WORD _call FnTokWord
+< [\[] mask [\]] > --> WORD _call FnTokWord
 
 _function FnTokWord
 _include bert_base_tok/vocab.falex
