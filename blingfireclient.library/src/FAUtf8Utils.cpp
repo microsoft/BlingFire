@@ -9,10 +9,11 @@
 #include "FAFsmConst.h"
 #include "FAUtf8Utils.h"
 
+#ifndef SIZE_OPTIMIZATION
 #include "FANormalizeDiacriticsMapPreserve.cxx"
 #include "FANormalizeDiacriticsMapProd.cxx"
 #include "FANormalizeDiacriticsMapRemove.cxx"
-
+#endif
 
 #define FAIsSurrogate(S) (0x0000D800 == (0xFFFFF800 & S))
 
@@ -573,7 +574,7 @@ const bool FAIsUtf8Enc (const char * pEncName)
 }
 
 
-
+#ifndef SIZE_OPTIMIZATION
 typedef const uint16_t (*_TPCharNormalizationMapDiacritics)[65536][2];
 
 const int FAStrUtf8Normalize (
@@ -676,5 +677,6 @@ const int FAStrUtf8Normalize (
     //  then the output string is stored in the pOutStr buffer.
     return int(pOutStrCurr - pOutStr);
 }
+#endif
 
 }

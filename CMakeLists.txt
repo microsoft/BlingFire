@@ -5,6 +5,8 @@ set (BLING_FIRE_VERSION_MINOR 0)
 
 project (BLING_FIRE)
 
+option(BLING_FIRE_SIZE_OPTIMIZATION "optimize the binary size of bling fire" OFF)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/blingfireclient.library/inc)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/blingfireclient.library/src)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/blingfirecompile.library/inc)
@@ -84,6 +86,10 @@ FOREACH(dir ${SUBDIRS})
     file(GLOB resourcefile  ${CMAKE_CURRENT_SOURCE_DIR}/blingfiretools/${dir}/*.cxx)
     file(GLOB deffile ${CMAKE_CURRENT_SOURCE_DIR}/blingfiretools/${dir}/*.def)
     IF(${dirname} STREQUAL "blingfiretokdll")
+      IF(BLING_FIRE_SIZE_OPTIMIZATION)
+        set(resourcefile "")
+      ENDIF()
+
       add_library(${dirname} SHARED ${sourcefile} ${resourcefile} ${deffile})
       target_link_libraries(${dirname} fsaClient fsaCompile)
 
@@ -101,3 +107,12 @@ FOREACH(dir ${SUBDIRS})
     ENDIF()
 
 ENDFOREACH()
+
+IF(BLING_FIRE_SIZE_OPTIMIZATION)
+  # remove the unused function and global variant
+  set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffunction-sections -fdata-sections -Wl,--gc-sections")
+
+  # add micro: SIZE_OPTIMIZATION
+  target_compile_definitions(fsaClient PUBLIC SIZE_OPTIMIZATION)
+  target_compile_definitions(fsaCompile PUBLIC SIZE_OPTIMIZATION)
+ENDIF()
