@@ -98,7 +98,7 @@ FOREACH(dir ${SUBDIRS})
       ELSE()
         target_link_libraries(${dirname} fsaClient fsaCompile)
         target_link_libraries(${dirname}_static fsaClient fsaCompile)
-      ENDIF(
+      ENDIF()
     ELSE()
       add_executable(${dirname} ${sourcefile} ${resourcefile} ${deffile})
       target_link_libraries(${dirname} fsaCompile fsaClient)
