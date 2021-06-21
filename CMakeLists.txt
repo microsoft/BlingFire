@@ -10,7 +10,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/blingfireclient.library/src)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/blingfirecompile.library/inc)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/blingfirecompile.library/src)
 
-IF (APPLE)
+IF (APPLE OR CMAKE_SYSTEM_NAME STREQUAL "Emscripten")
   set (OPTIMIZE "-O3")
 ELSE()
   set (OPTIMIZE "-O4 -fexpensive-optimizations")
@@ -27,12 +27,12 @@ IF (WIN32 AND MSVC)
   set (default_build_type "RelWithDebInfo")
 ELSE()
   set (CMAKE_CXX_FLAGS " -std=c++11 -fpic ${OPTIMIZE} -DNDEBUG")
-  set (CMAKE_CXX_FLAGS_RELEASE " -std=c++11 -fpic ${OPTIMIZE} -DNDEBUG")
+  set (CMAKE_CXX_FLAGS_RELEASE " -std=c++11 -fpic ${OPTIMIZE} -DNDEBUG -ffunction-sections -fdata-sections -Wl,--gc-sections")
   set (CMAKE_CXX_FLAGS_DEBUG " -std=c++11 -fpic -O0 -g")
   set (default_build_type "Release")
 ENDIF()
 
-IF (UNIX OR LINUX)
+IF (UNIX OR LINUX OR CMAKE_SYSTEM_NAME STREQUAL "Emscripten")
   add_definitions ("-Wall -Wno-unknown-pragmas -DHAVE_ICONV_LIB -DHAVE_NO_SPECSTRINGS -D_VERBOSE -DBLING_FIRE_NOAP -DBLING_FIRE_NOWINDOWS")
   IF (APPLE)
     add_definitions (-DBLING_FIRE_MAC)
@@ -52,6 +52,9 @@ file(GLOB COMPILE_SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/blingfirecompile.lib
 
 # build blingfire client
 add_library(fsaClient STATIC ${CLIENT_HEADER_FILES} ${CLIENT_SOURCE_FILES} ${CLIENT_RESOURCE_FILES})
+
+add_library(fsaClientTiny STATIC ${CLIENT_HEADER_FILES} ${CLIENT_SOURCE_FILES} ${CLIENT_RESOURCE_FILES})
+target_compile_definitions(fsaClientTiny PUBLIC SIZE_OPTIMIZATION)
 
 # build blingfire compile
 add_library(fsaCompile STATIC ${CLIENT_HEADER_FILES} ${COMPILE_SOURCE_FILES} ${COMPILE_RESOURCE_FILES})
@@ -85,10 +88,15 @@ FOREACH(dir ${SUBDIRS})
     file(GLOB deffile ${CMAKE_CURRENT_SOURCE_DIR}/blingfiretools/${dir}/*.def)
     IF(${dirname} STREQUAL "blingfiretokdll")
       add_library(${dirname} SHARED ${sourcefile} ${resourcefile} ${deffile})
-      target_link_libraries(${dirname} fsaClient fsaCompile)
-
       add_library(${dirname}_static ${sourcefile} ${resourcefile} ${deffile})
-      target_link_libraries(${dirname}_static fsaClient fsaCompile)
+      target_link_libraries(${dirname} fsaClient)
+      target_link_libraries(${dirname}_static fsaClient)
+
+      # A tiny binary
+      add_library(bingfirtinydll SHARED ${sourcefile} ${deffile})
+      add_library(bingfirtinydll_static STATIC ${sourcefile} ${deffile})
+      target_link_libraries(bingfirtinydll fsaClientTiny)
+      target_link_libraries(bingfirtinydll_static fsaClientTiny)
     ELSE()
       add_executable(${dirname} ${sourcefile} ${resourcefile} ${deffile})
       target_link_libraries(${dirname} fsaCompile fsaClient)

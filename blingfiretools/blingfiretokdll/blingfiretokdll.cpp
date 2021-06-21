@@ -89,9 +89,11 @@ struct FAModelData
     {}
 };
 
+#ifndef SIZE_OPTIMIZATION
 // keep two built-in models one for default WBD and one for default SBD 
 FAModelData g_DefaultWbd;
 FAModelData g_DefaultSbd;
+#endif
 
 //
 // returns the current version of the algo
@@ -103,6 +105,7 @@ const int GetBlingFireTokVersion()
 }
 
 
+#ifndef SIZE_OPTIMIZATION
 // does initialization
 void InitializeWbdSbd()
 {
@@ -123,6 +126,7 @@ void InitializeWbdSbd()
     g_DefaultSbd.m_Conf.Initialize(&g_DefaultSbd.m_Ldb, pValues, iSize);
     g_DefaultSbd.m_Engine.SetConf(&g_DefaultSbd.m_Conf);
 }
+#endif
 
 // SENTENCE PIECE DELIMITER
 #define __FASpDelimiter__ 0x2581
@@ -168,6 +172,12 @@ const int TextToSentencesWithOffsetsWithModel(const char * pInUtf8Str, int InUtf
     char * pOutUtf8Str, int * pStartOffsets, int * pEndOffsets, const int MaxOutUtf8StrByteCount,
     void * hModel)
 {
+
+#ifdef SIZE_OPTIMIZATION
+    if (NULL == hModel) {
+        return -1;
+    }
+#else
     // check if the initilization is needed
     if (false == g_fInitialized) {
         // make sure only one thread can get the mutex
@@ -184,9 +194,10 @@ const int TextToSentencesWithOffsetsWithModel(const char * pInUtf8Str, int InUtf
         hModel = &g_DefaultSbd;
     }
 
-    // get the types right, hModel is always defined 
-    const FAModelData * pModel = (const FAModelData *) hModel;
+#endif
 
+    // get the types right, hModel is always defined
+    const FAModelData * pModel = (const FAModelData *) hModel;
     // validate the parameters
     if (0 == InUtf8StrByteCount) {
         return 0;
@@ -413,6 +424,11 @@ const int TextToWordsWithOffsetsWithModel(const char * pInUtf8Str, int InUtf8Str
     char * pOutUtf8Str, int * pStartOffsets, int * pEndOffsets, const int MaxOutUtf8StrByteCount,
     void * hModel)
 {
+#ifdef SIZE_OPTIMIZATION
+    if (NULL == hModel) {
+        return -1;
+    }
+#else
     // check if the initilization is needed
     if (false == g_fInitialized) {
         // make sure only one thread can get the mutex
@@ -428,6 +444,7 @@ const int TextToWordsWithOffsetsWithModel(const char * pInUtf8Str, int InUtf8Str
     if (NULL == hModel) {
         hModel = &g_DefaultWbd;
     }
+#endif
 
     // pModel is always initialized here
     const FAModelData * pModel = (const FAModelData *) hModel; 
