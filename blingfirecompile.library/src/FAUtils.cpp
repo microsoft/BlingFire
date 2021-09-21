@@ -755,39 +755,6 @@ void FACopyTaggedText (FATaggedTextA * pOut, const FATaggedTextCA * pIn)
 }
 
 
-const int FAReadIntegerChain (
-        const char * pLine, 
-        const int LineLen, 
-        const int Base, 
-        __out_ecount(MaxOutSize) int * pChain, 
-        const int MaxChainSize
-    )
-{
-    FAStringTokenizer tokenizer;
-
-    tokenizer.SetSpaces (" ");
-    tokenizer.SetString (pLine, LineLen);
-
-    int OutSize = 0;
-    const char * pStr = NULL;
-    int Len = 0;
-
-    while (tokenizer.GetNextStr (&pStr, &Len)) {
-
-        std::string buff (pStr, Len);
-        const unsigned int C = strtol (buff.c_str (), NULL, Base);
-
-        if (OutSize + 1 < MaxChainSize) {
-            pChain [OutSize] = C ;
-        }
-
-        OutSize++;
-    }
-
-    return OutSize;
-}
-
-
 const int FAReadHexChain (
         const char * pLine, 
         const int LineLen, 

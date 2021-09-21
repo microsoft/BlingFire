@@ -14,6 +14,7 @@
 #include "FAArray_cont_t.h"
 #include "FAStringTokenizer.h"
 #include "FAException.h"
+#include "FAUtils.h"
 
 #include <string>
 
@@ -402,5 +403,76 @@ void FAMapIOTools::Print (std::ostream& os, const float * pArr, const int Count)
 
     os << '\n';
 }
+
+
+void FAMapIOTools::Read (std::istream& is, FAArray_cont_t < unsigned char > * pBuff, FAArray_cont_t < int > * pOffsets, bool fStringFormat)
+{
+    FAAssert (pBuff, FAMsg::IOError);
+    FAAssert (pOffsets, FAMsg::IOError);
+
+    pBuff->clear();
+    pOffsets->clear();
+
+    std::string line;
+
+    while (!is.eof ()) {
+
+        if (!std::getline (is, line))
+            break;
+
+        // interpret the data as a string or as a sequence of numbers
+        if (fStringFormat) {
+            
+            const int Offset = pBuff->size();
+            pOffsets->push_back(Offset);
+            if (0 < line.length()) {
+                pBuff->resize(pBuff->size() + line.length());
+                memcpy(pBuff->begin () + Offset, line.c_str(), line.length());
+            }
+
+        } else {
+
+            const int MaxTmpSize = 4096;
+            unsigned char Tmp [MaxTmpSize];
+            const int Count2 = FAReadIntegerChain <unsigned char> (line.c_str(), line.length(), 10, Tmp, MaxTmpSize);
+            FAAssert(0 <= Count2 && MaxTmpSize > Count2, FAMsg::IOError);
+
+            const int Offset = pBuff->size();
+            pOffsets->push_back(Offset);
+            if (0 < Count2) {
+                pBuff->resize(pBuff->size() + Count2);
+                memcpy(pBuff->begin () + Offset, Tmp, Count2);
+            }
+        }
+    }
+}
+
+
+void FAMapIOTools::Print (std::ostream& os, const FAArray_cont_t < unsigned char > * pBuff, const FAArray_cont_t < int > * pOffsets, bool fStringFormat)
+{
+    FAAssert (pBuff, FAMsg::IOError);
+    FAAssert (pOffsets, FAMsg::IOError);
+
+    const unsigned char * pBuffData = pBuff->begin();
+
+    for(int i = 0; i < pOffsets->size(); ++i) {
+
+        const unsigned char * pBegin = pBuffData + (*pOffsets)[i];
+        const unsigned char * pEnd = i + 1 == pOffsets->size() ? pBuff->end() : pBuffData + (*pOffsets)[i + 1];
+
+        if (fStringFormat) {
+            os << std::string (pBegin, pEnd) << '\n';
+        } else {
+            const size_t Count = pEnd - pBegin;
+            for (int i = 0; i < Count; ++i) {
+                if (0 != i) {
+                    os << ' ';
+                }
+                os << (long) pBegin [i] << '\n';
+            }
+        }
+    }
+}
+
 
 }

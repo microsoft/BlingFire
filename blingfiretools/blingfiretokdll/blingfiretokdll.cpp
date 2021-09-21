@@ -11,6 +11,7 @@
 #include "FATokenSegmentationTools_1best_bpe_with_merges_t.h"
 #include "FAHyphConfKeeper_packaged.h"
 #include "FAHyphInterpreter_core_t.h"
+#include "FAStringArray_pack.h"
 
 #include <algorithm>
 #include <vector>
@@ -80,12 +81,18 @@ struct FAModelData
     FAHyphConfKeeper m_HyConf;
     FAHyphInterpreter_core_t < int > m_HyEngine;
 
+    // id2word lexicon data
+    bool m_hasI2w;
+    FAStringArray_pack m_i2w;
+
+
     FAModelData ():
         m_hasWbd (false),
         m_hasSeg (false),
         m_pAlgo (NULL),
         m_useRawBytes (false),
-        m_hasHy (false)
+        m_hasHy (false),
+        m_hasI2w (false)
     {}
 };
 
@@ -926,10 +933,10 @@ extern "C"
 void* SetModelData(FAModelData * pNewModelData, const unsigned char * pImgBytes)
 {
     if (NULL == pNewModelData) {
-        return 0;
+        return NULL;
     }
     if (NULL == pImgBytes) {
-        return 0;
+        return NULL;
     }
 
     // create a generic LDB object from bytes
@@ -999,6 +1006,28 @@ void* SetModelData(FAModelData * pNewModelData, const unsigned char * pImgBytes)
 
         // initialize the algo with data
         pNewModelData->m_HyEngine.SetConf (&pNewModelData->m_HyConf);
+    }
+
+
+    // get the configuration paramenters for hyphenation [i2w]
+    pValues = NULL;
+    iSize = pNewModelData->m_Ldb.GetHeader ()->Get (FAFsmConst::FUNC_I2W, &pValues);
+
+    // see if the [pos-dict] section is present
+    if (-1 != iSize) {
+
+        if (1 < iSize && pValues [0] == FAFsmConst::PARAM_STRING_ARRAY) {
+
+            const int DumpNum = pValues [1];
+            const unsigned char * pDump = pNewModelData->m_Ldb.GetDump (DumpNum);
+
+            if (NULL == pDump) {
+                return NULL;
+            }
+
+            pNewModelData->m_i2w.SetImage(pDump);
+            pNewModelData->m_hasI2w = true;
+        }
     }
 
     return (void*) pNewModelData;
@@ -1633,4 +1662,65 @@ int SetNoDummyPrefix(void* ModelPtr, bool fNoDummyPrefix)
     FAModelData* pModel = (FAModelData*) ModelPtr;
     pModel->m_DictConf.SetNoDummyPrefix(fNoDummyPrefix);
     return 1;
+}
+
+
+//
+// Returns text string given a sequence of Ids
+//  Note: the model file should contain [i2w] configuration or separate *.i2w model file should be used
+// 
+// return value is the actual string length
+// if the actual string length is more than MaxOutUtf8StrByteCount then pOutUtf8Str content is undefined
+// 
+extern "C"
+int IdsToText (void* ModelPtr, const int32_t * pIdsArr, const int IdsCount, char * pOutUtf8Str, const int MaxOutUtf8StrByteCount)
+{
+    if (NULL == ModelPtr) {
+        return 0;
+    }
+    if (0 == IdsCount || NULL == pIdsArr) {
+        return 0;
+    }
+
+    const FAModelData* pModel = (FAModelData*) ModelPtr;
+    if (!pModel->m_hasI2w) {
+        return 0;
+    }
+
+    int ActualLength = 0;
+
+    for (int i = 0; i < IdsCount; ++i) {
+
+        // get the next id
+        const int id = pIdsArr [i];
+
+        // get token text
+        const unsigned char * pToken = NULL;
+        int TokenLength = pModel->m_i2w.GetAt (id, &pToken);
+        if (0 > TokenLength) {
+            return 0; // unknon id
+        }
+
+        // don't output space in the leading position
+        if (0 == ActualLength && 0 < TokenLength && 0x20 == pToken[0]) {
+            pToken++;
+            TokenLength--;
+        }
+
+        // copy token text into the output buffer
+        if (0 < TokenLength && MaxOutUtf8StrByteCount - ActualLength >= TokenLength) {
+            memcpy(pOutUtf8Str + ActualLength, pToken, TokenLength);
+        }
+
+        ActualLength += TokenLength;
+    }
+
+    // add a terminating 0 for some interpreters
+    if (MaxOutUtf8StrByteCount > ActualLength) {
+        pOutUtf8Str [ActualLength] = 0;
+    }
+    ActualLength++;
+
+    // return the actual length of the output (the minimum length needed to keep entire output)
+    return ActualLength;
 }
