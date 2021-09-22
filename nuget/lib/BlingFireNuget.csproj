@@ -14,8 +14,8 @@
     <PackageReleaseNotes>BlingFire wrapper for .Net Core, see https://github.com/microsoft/BlingFire for details.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.1.7</Version>
-    <FileVersion>0.1.7</FileVersion>
+    <Version>0.1.8</Version>
+    <FileVersion>0.1.8</FileVersion>
     <IsPackable>true</IsPackable>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>contentFiles</ContentTargetFolders>
@@ -47,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="*.bin" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any" PackageCopyToOutput="true" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="*.i2w" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any" PackageCopyToOutput="true" />
   </ItemGroup>
 
   <ItemGroup>

@@ -36,6 +36,7 @@
 #include "FAArrayPack.h"
 #include "FAArray_pack.h"
 #include "FAFloatArrayPack.h"
+#include "FAStringArrayPack.h"
 #include "FATestCmpDfa.h"
 #include "FATestCmpPosNfa.h"
 #include "FATestCmpMultiMap.h"
@@ -68,6 +69,9 @@ bool g_no_output = false;
 bool g_no_process = false;
 bool g_auto_test = false;
 
+// string array value is a string in UTF-8, otherwise is a sequence of bytes
+bool g_text_value = false;
+
 FAAllocator g_alloc;
 FAAutIOTools g_fsm_io (&g_alloc);
 FAMapIOTools g_map_io (&g_alloc);
@@ -83,6 +87,9 @@ FAMultiMap_judy g_in_mmap;
 FAMealyDfa g_in_sigma (&g_alloc);
 FAMap_judy g_iw_map;
 FARSDfa_renum_iws g_in_renum_fsm (&g_alloc);
+FAArray_cont_t < unsigned char > g_strings;
+FAArray_cont_t < int > g_offsets;
+
 
 /// memory dump containers (for test)
 FARSDfa_pack_triv g_rs_dfa_triv_dump;
@@ -105,6 +112,7 @@ FAMultiMapPack_mph g_mmap_pack_mph (&g_alloc);
 FAMultiMapPack_fixed g_mmap_pack_fixed (&g_alloc);
 FAArrayPack g_array_pack (&g_alloc);
 FAFloatArrayPack g_farray_pack (&g_alloc);
+FAStringArrayPack g_sarray_pack (&g_alloc);
 
 /// interface pointers
 FARSDfaA * g_pInDfa = & g_in_fsm_rs;
@@ -151,6 +159,7 @@ This program builds packed contiguous automaton image.\n\
     mealy-dfa  - Mealy DFA\n\
     arr        - Array of integers\n\
     farr       - Array of floats\n\
+    sarr       - Array of strings or bytes\n\
 \n\
   --trbr-maps=<input-file> - reads triangular bracket extraction maps,\n\
     can be used to pack position NFA, does not read them by default\n\
@@ -182,6 +191,9 @@ This program builds packed contiguous automaton image.\n\
 \n\
   --dst-size=N - overrides the deafult Dst size for DFA automata,\n\
     the default value is 3 (only 1, 2, 3, 4 are possible)\n\
+\n\
+  --text-value - forces string array values to be text in UTF-8 encoding\n\
+    otherwise it is a sequence space delimited numbers base 10\n\
 \n\
   --auto-test - compares two interfaces to be equivalent (original one and\n\
     its memory dump counterpart) before saving the output\n\
@@ -286,6 +298,10 @@ void process_args (int& argc, char**& argv)
         g_type = FAFsmConst::TYPE_FLOAT_ARRAY;
         continue;
     }
+    if (0 == strcmp ("--type=sarr", *argv)) {
+        g_type = FAFsmConst::TYPE_STRING_ARRAY;
+        continue;
+    }
     if (0 == strcmp ("--imp-mmap", *argv)) {
         g_imp_mmap = true;
         continue;
@@ -300,6 +316,10 @@ void process_args (int& argc, char**& argv)
     }
     if (0 == strncmp ("--dst-size=", *argv, 11)) {
         g_DstSize = atoi (&((*argv) [11]));
+        continue;
+    }
+    if (0 == strncmp ("--text-value", *argv, 12)) {
+        g_text_value = true;
         continue;
     }
     if (0 == strcmp ("--auto-test", *argv)) {
@@ -355,7 +375,12 @@ void Load ()
 
         g_map_io.Read (*pIs, &g_FloatArray, &g_FloatArraySize);
 
+    } else if (FAFsmConst::TYPE_STRING_ARRAY == g_type) {
+
+        g_map_io.Read (*pIs, &g_strings, &g_offsets, g_text_value);
+
     } else {
+
         DebugLogAssert (FAFsmConst::TYPE_POS_RS_NFA == g_type);
         g_fsm_io.Read (*pIs, g_pInNfa);
     }
@@ -545,6 +570,8 @@ int __cdecl main (int argc, char ** argv)
     g_pos2br_begin.SetAllocator (&g_alloc);
     g_pos2br_end.SetAllocator (&g_alloc);
     g_in_mmap.SetAllocator (&g_alloc);
+    g_strings.SetAllocator (&g_alloc);
+    g_offsets.SetAllocator (&g_alloc);
 
     // parse a command line
     process_args (argc, argv);
@@ -600,6 +627,13 @@ int __cdecl main (int argc, char ** argv)
                     g_farray_pack.Process ();
 
                     DumpSize = g_farray_pack.GetDump (&pDump);
+
+                } else if (FAFsmConst::TYPE_STRING_ARRAY == g_type) {
+
+                    g_sarray_pack.SetArray (&g_strings, &g_offsets);
+                    g_sarray_pack.Process ();
+
+                    DumpSize = g_sarray_pack.GetDump (&pDump);
 
                 } else {
 

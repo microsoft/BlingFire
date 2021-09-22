@@ -46,8 +46,7 @@ namespace BlingFire
             Int32 actualLength = TextToSentences(paraBytes, (Int32)paraBytes.Length, outputBytes, maxLength);
             if (0 < actualLength - 1 && actualLength <= maxLength)
             {
-                Array.Resize(ref outputBytes, actualLength);
-                string sentencesStr = Encoding.UTF8.GetString(outputBytes);
+                string sentencesStr = Encoding.UTF8.GetString(outputBytes, 0, actualLength);
                 var sentences = sentencesStr.Split(g_justNewLineChar, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var s in sentences)
                 {
@@ -74,8 +73,7 @@ namespace BlingFire
             Int32 actualLength = TextToSentencesWithOffsets(paraBytes, (Int32)paraBytes.Length, outputBytes, startOffsets, endOffsets, maxLength);
             if (0 < actualLength - 1 && actualLength <= maxLength)
             {
-                Array.Resize(ref outputBytes, actualLength);
-                string sentencesStr = Encoding.UTF8.GetString(outputBytes);
+                string sentencesStr = Encoding.UTF8.GetString(outputBytes, 0, actualLength);
                 var sentences = sentencesStr.Split(g_justNewLineChar, StringSplitOptions.RemoveEmptyEntries);
                 for (int i = 0; i < sentences.Length; ++i)
                 {
@@ -95,8 +93,7 @@ namespace BlingFire
             Int32 actualLength = TextToWords(paraBytes, (Int32)paraBytes.Length, outputBytes, maxLength);
             if (0 < actualLength - 1 && actualLength <= maxLength)
             {
-                Array.Resize(ref outputBytes, actualLength);
-                string wordsStr = Encoding.UTF8.GetString(outputBytes);
+                string wordsStr = Encoding.UTF8.GetString(outputBytes, 0, actualLength);
                 var words = wordsStr.Split(g_justSpaceChar, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var w in words)
                 {
@@ -118,8 +115,7 @@ namespace BlingFire
             Int32 actualLength = TextToWordsWithOffsets(paraBytes, (Int32)paraBytes.Length, outputBytes, startOffsets, endOffsets, maxLength);
             if (0 < actualLength - 1 && actualLength <= maxLength)
             {
-                Array.Resize(ref outputBytes, actualLength);
-                string wordsStr = Encoding.UTF8.GetString(outputBytes);
+                string wordsStr = Encoding.UTF8.GetString(outputBytes, 0, actualLength);
                 var words = wordsStr.Split(g_justSpaceChar, StringSplitOptions.RemoveEmptyEntries);
                 for (int i = 0; i < words.Length; ++i)
                 {
@@ -127,6 +123,35 @@ namespace BlingFire
                 }
             }
         }
+
+        public static string IdsToText(UInt64 model, int[] ids, bool skipSpecialTokens = true)
+        {
+            if (null == ids || 0 == ids.Length)
+            {
+                return String.Empty;
+            }
+
+            // guess maximum needed buffer size
+            int MaxOutputSize = Math.Max(4096, ids.Length * 32);
+            byte [] outputBytes = new byte[MaxOutputSize];
+            Int32 actualLength = IdsToText(model, ids, (Int32)ids.Length, outputBytes, (Int32)outputBytes.Length, skipSpecialTokens);
+
+            // if the buffer is too small call it again with a bigger buffer
+            if (0 < actualLength && actualLength > outputBytes.Length)
+            {
+                outputBytes = new byte[actualLength];
+                actualLength = IdsToText(model, ids, (Int32)ids.Length, outputBytes, (Int32)outputBytes.Length, skipSpecialTokens);
+            }
+
+            // see if the results are ready
+            if (0 < actualLength && actualLength <= outputBytes.Length)
+            {
+                return Encoding.UTF8.GetString(outputBytes, 0, actualLength);
+            }
+
+            return String.Empty;
+        }
+
 
         //
         // expose Bling Fire interfaces
@@ -401,6 +426,33 @@ namespace BlingFire
 
         [DllImport(BlingFireTokDllName)]
         public static extern int SetNoDummyPrefix(UInt64 model, bool fNoDummyPrefix);
+
+        [DllImport(BlingFireTokDllName)]
+        static extern int IdsToText(
+            UInt64 model,
+            in int ids,
+            Int32 idsCount,
+            ref byte outBuff,
+            Int32 maxBuffSize,
+            bool skipSpecialTokens);
+
+        public static int IdsToText(
+            UInt64 model,
+            Span<int> ids,
+            Int32 idsCount,
+            Span<byte> outBuff,
+            Int32 maxBuffSize,
+            bool skipSpecialTokens)
+        {
+            return IdsToText(
+                model,
+                MemoryMarshal.GetReference(ids),
+                idsCount,
+                ref MemoryMarshal.GetReference(outBuff),
+                maxBuffSize,
+                skipSpecialTokens);
+        }
+
 
         private static char[] g_justNewLineChar = new char[] { '\n' };
         private static char[] g_justSpaceChar = new char[] { ' ' };

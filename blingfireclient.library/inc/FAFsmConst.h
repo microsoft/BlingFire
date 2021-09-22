@@ -28,6 +28,7 @@ public:
         TYPE_MEALY_DFA,
         TYPE_ARRAY,
         TYPE_FLOAT_ARRAY,
+        TYPE_STRING_ARRAY,
         TYPE_COUNT,
     };
 
@@ -184,6 +185,7 @@ public:
         FUNC_N2TP,     // by the given ngram returns tags and p(t|ng) values
         FUNC_LAD,      // Language Auto-Detection (LAD)
         FUNC_U2L,      // returns a set of languages and possibly scores for the given url
+        FUNC_I2W,      // index to word conversion data
         FUNC_COUNT,
     };
 
@@ -264,6 +266,9 @@ public:
         PARAM_ID_OFFSET,   // specifies the integer value to be added to all output IDs (used in Bling Fire tokenizer)
         PARAM_USE_BYTE_ENCODING, // specifies if input characters are UTF-8 bytes, not Unicode symbols
         PARAM_NO_DUMMY_PREFIX,  // for unigram-lm and BPE, if specified then no dummy whitespace is added in the beginning of text
+        PARAM_STRING_ARRAY,// string array dump index
+        PARAM_TOKENID_MIN, // if specified provides smalles regular (non special) token id value
+        PARAM_TOKENID_MAX, // if specified provides biggest regular (non special) token id value
         PARAM_COUNT,
     };
 

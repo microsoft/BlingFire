@@ -1,0 +1,13 @@
+#
+# LDB compilation options
+#
+
+OUTPUT = gpt2.i2w
+
+opt_id2word_dependecy = $(tmpdir)/pos.dict.utf8
+opt_build_id2word = -b --defaulttok=32 --startid=-1 --tagset=$(srcdir)/tagset.txt
+
+opt_pack_id2word = --type=sarr 
+
+resources = \
+  $(tmpdir)/id2word.arr.$(mode).dump \

@@ -9,6 +9,7 @@
 #include "FAConfig.h"
 #include "FAArray_cont_t.h"
 
+#include <string>
 #include <iostream>
 
 namespace BlingFire
@@ -72,6 +73,10 @@ public:
     void Read (std::istream& is, const float ** ppArr, int * pCount);
     /// prints out textual representation
     void Print (std::ostream& os, const float * pArr, const int Count);
+    /// reads from textual representation, memory is valid upto the next call
+    void Read (std::istream& is, FAArray_cont_t < unsigned char > * pBuff, FAArray_cont_t < int > * pOffsets, bool fStringFormat = true);
+    /// prints out textual representation
+    void Print (std::ostream& os, const FAArray_cont_t < unsigned char > * pBuff, const FAArray_cont_t < int > * pOffsets, bool fStringFormat = true);
 
 private:
     /// allocator

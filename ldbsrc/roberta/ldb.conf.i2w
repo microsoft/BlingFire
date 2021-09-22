@@ -1,0 +1,11 @@
+#
+# LDB runtime configuration options
+#
+
+[global]
+verify-ldb-bin
+
+[i2w]
+token-id-min 4
+token-id-max 50259
+string-array 1

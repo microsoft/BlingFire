@@ -25,7 +25,7 @@ namespace BlingUtilsTest
             actualLength = BlingFireUtils.TextToSentences(inBytes, (Int32)inBytes.Length, outputBytes, MaxOutLength);
             if (0 < actualLength && actualLength < MaxOutLength)
             {
-                Console.WriteLine(String.Format("BlingFireUtils.TextToSentences: '{0}'", System.Text.Encoding.UTF8.GetString(new ArraySegment<byte>(outputBytes, 0, actualLength))));
+                Console.WriteLine(String.Format("BlingFireUtils.TextToSentences: '{0}'", System.Text.Encoding.UTF8.GetString(outputBytes, 0, actualLength)));
             }
             else 
             {
@@ -39,7 +39,7 @@ namespace BlingUtilsTest
             actualLength = BlingFireUtils.TextToWords(inBytes, (Int32)inBytes.Length, outputBytes, MaxOutLength);
             if (0 < actualLength && actualLength < MaxOutLength)
             {
-                Console.WriteLine(String.Format("BlingFireUtils.TextToWords: '{0}'", System.Text.Encoding.UTF8.GetString(new ArraySegment<byte>(outputBytes, 0, actualLength))));
+                Console.WriteLine(String.Format("BlingFireUtils.TextToWords: '{0}'", System.Text.Encoding.UTF8.GetString(outputBytes, 0, actualLength)));
             }
             else 
             {
@@ -51,7 +51,7 @@ namespace BlingUtilsTest
             actualLength = BlingFireUtils.NormalizeSpaces(inBytes, (Int32)inBytes.Length, outputBytes, MaxOutLength, 9601);
             if (0 < actualLength && actualLength < MaxOutLength)
             {
-                Console.WriteLine(String.Format("BlingFireUtils.NormalizeSpaces: '{0}'", System.Text.Encoding.UTF8.GetString(new ArraySegment<byte>(outputBytes, 0, actualLength))));
+                Console.WriteLine(String.Format("BlingFireUtils.NormalizeSpaces: '{0}'", System.Text.Encoding.UTF8.GetString(outputBytes, 0, actualLength)));
             }
             else 
             {
@@ -61,14 +61,17 @@ namespace BlingUtilsTest
 
             // load BERT base tokenization model
             var h1 = BlingFireUtils.LoadModel("./bin/Debug/netcoreapp3.1/bert_base_tok.bin");
+            var h1_i2w = BlingFireUtils.LoadModel("./bin/Debug/netcoreapp3.1/bert_base_tok.i2w");
             Console.WriteLine(String.Format("Model handle: {0}", h1));
 
             // load XLNET tokenization model
             var h2 = BlingFireUtils.LoadModel("./bin/Debug/netcoreapp3.1/xlnet.bin");
+            var h2_i2w = BlingFireUtils.LoadModel("./bin/Debug/netcoreapp3.1/xlnet.i2w");
             Console.WriteLine(String.Format("Model handle: {0}", h2));
 
             // load XLM Roberta tokenization model
             var h3 = BlingFireUtils.LoadModel("./bin/Debug/netcoreapp3.1/xlm_roberta_base.bin");
+            var h3_i2w = BlingFireUtils.LoadModel("./bin/Debug/netcoreapp3.1/xlm_roberta_base.i2w");
             Console.WriteLine(String.Format("Model handle: {0}", h3));
 
             // allocate space for ids
@@ -76,6 +79,7 @@ namespace BlingUtilsTest
 
 
             // tokenize with loaded BERT tokenization model and output the ids
+            Console.WriteLine("Model: bert_base_tok");
             var outputCount = BlingFireUtils.TextToIds(h1, inBytes, inBytes.Length, Ids, Ids.Length, 0);
             Console.WriteLine(String.Format("return length: {0}", outputCount));
             if (outputCount >= 0)
@@ -83,9 +87,12 @@ namespace BlingUtilsTest
                 Array.Resize(ref Ids, outputCount);
                 Console.WriteLine(String.Format("return array: [{0}]", string.Join(", ", Ids)));
                 Array.Resize(ref Ids, 128);
+
+                Console.WriteLine("IdsToText: " + BlingFireUtils.IdsToText(h1_i2w, Ids));
             }
 
             // tokenize with loaded XLNET tokenization model and output the ids
+            Console.WriteLine("Model: xlnet");
             outputCount = BlingFireUtils.TextToIds(h2, inBytes, inBytes.Length, Ids, Ids.Length, 0);
             Console.WriteLine(String.Format("return length: {0}", outputCount));
             if (outputCount >= 0)
@@ -93,16 +100,21 @@ namespace BlingUtilsTest
                 Array.Resize(ref Ids, outputCount);
                 Console.WriteLine(String.Format("return array: [{0}]", string.Join(", ", Ids)));
                 Array.Resize(ref Ids, 128);
+
+                Console.WriteLine("IdsToText: " + BlingFireUtils.IdsToText(h2_i2w, Ids));
             }
 
             // tokenize with loaded XLM Roberta tokenization model and output the ids
-            outputCount = BlingFireUtils.TextToIds(h3, inBytes, inBytes.Length, Ids, Ids.Length, 0);
+            Console.WriteLine("Model: xlm_roberta_base");
+            outputCount = BlingFireUtils2.TextToIds(h3, inBytes, inBytes.Length, Ids, Ids.Length, 0);
             Console.WriteLine(String.Format("return length: {0}", outputCount));
             if (outputCount >= 0)
             {
                 Array.Resize(ref Ids, outputCount);
                 Console.WriteLine(String.Format("return array: [{0}]", string.Join(", ", Ids)));
                 Array.Resize(ref Ids, 128);
+
+                Console.WriteLine("IdsToText: " + BlingFireUtils2.IdsToText(h3_i2w, Ids));
             }
 
 
@@ -124,7 +136,7 @@ namespace BlingUtilsTest
                     int endOffset = Ends[i] >= 0 ? Ends[i] : 0;
                     int surfaceLen = endOffset - startOffset + 1;
 
-                    string token = System.Text.Encoding.UTF8.GetString(new ArraySegment<byte>(inBytes, startOffset, surfaceLen));
+                    string token = System.Text.Encoding.UTF8.GetString(inBytes, startOffset, surfaceLen);
                     Console.Write(String.Format("'{0}'/{1} ", token, Ids[i]));
                 }
                 Console.WriteLine("]");
@@ -142,7 +154,7 @@ namespace BlingUtilsTest
                     int endOffset = Ends[i] >= 0 ? Ends[i] : 0;
                     int surfaceLen = endOffset - startOffset + 1;
 
-                    string token = System.Text.Encoding.UTF8.GetString(new ArraySegment<byte>(inBytes, startOffset, surfaceLen));
+                    string token = System.Text.Encoding.UTF8.GetString(inBytes, startOffset, surfaceLen);
                     Console.Write(String.Format("'{0}'/{1} ", token, Ids[i]));
                 }
                 Console.WriteLine("]");
@@ -160,7 +172,7 @@ namespace BlingUtilsTest
                     int endOffset = Ends[i] >= 0 ? Ends[i] : 0;
                     int surfaceLen = endOffset - startOffset + 1;
 
-                    string token = System.Text.Encoding.UTF8.GetString(new ArraySegment<byte>(inBytes, startOffset, surfaceLen));
+                    string token = System.Text.Encoding.UTF8.GetString(inBytes, startOffset, surfaceLen);
                     Console.Write(String.Format("'{0}'/{1} ", token, Ids[i]));
                 }
                 Console.WriteLine("]");
@@ -170,6 +182,9 @@ namespace BlingUtilsTest
             BlingFireUtils.FreeModel(h1);
             BlingFireUtils.FreeModel(h2);
             BlingFireUtils.FreeModel(h3);
+            BlingFireUtils.FreeModel(h1_i2w);
+            BlingFireUtils.FreeModel(h2_i2w);
+            BlingFireUtils.FreeModel(h3_i2w);
 
 
             // Test syllabification API's
@@ -179,7 +194,7 @@ namespace BlingUtilsTest
             string [] tokens = null;
             if (0 < actualLength && actualLength < MaxOutLength)
             {
-                tokens = System.Text.Encoding.UTF8.GetString(new ArraySegment<byte>(outputBytes, 0, actualLength)).Split(' ');
+                tokens = System.Text.Encoding.UTF8.GetString(outputBytes, 0, actualLength).Split(' ');
             }
 
             var hy = BlingFireUtils2.LoadModel("./bin/Debug/netcoreapp3.1/syllab.bin");
@@ -192,7 +207,7 @@ namespace BlingUtilsTest
 
                 if (0 < outputLen)
                 {
-                    string hyphenatedToken = System.Text.Encoding.UTF8.GetString(new ArraySegment<byte>(outputBytes, 0, outputLen));
+                    string hyphenatedToken = System.Text.Encoding.UTF8.GetString(outputBytes, 0, outputLen);
                     Console.Write(String.Format("'{0}' ", hyphenatedToken));
                 }
             }

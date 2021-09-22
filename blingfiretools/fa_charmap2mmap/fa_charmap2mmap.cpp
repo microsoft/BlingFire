@@ -39,6 +39,10 @@ bool g_no_process = false;
 const int MaxBuffSize = FALimits::MaxWordLen;
 int g_Tmp [MaxBuffSize];
 
+int g_value_base = -1; // -1 stands for default behavior, if not -1 then assumes value is a chain of numbers
+int g_key_base = -1;   // -1 stands for default behavior, if not -1 then assumes key is a number
+bool g_text_value = false; // value is a string in UTF-8
+bool g_tab_only_delimiter = false; // tab and space by default
 
 void usage ()
 {
@@ -54,7 +58,16 @@ should be in UTF-8.\n\
   --out=<output> - writes output to the <output> file,\n\
     if omited stdout is used\n\
 \n\
-Note: \n\
+  --key-base=N - if specified then Key is assumed to always be a number\n\
+     with Nth base\n\
+\n\
+  --value-base=N - if specified, Value is assumed to always be a number chain\n\
+     with Nth base\n\
+\n\
+  --text-value - forces values to be interpreted as a text in UTF-8 encoding\n\
+\n\
+  --tab-only-delim - delimiter between keys and values is only tab,\n\
+     space and tab by default\n\
 \n\
 ";
 }
@@ -76,6 +89,24 @@ void process_args (int& argc, char**& argv)
             g_pOutFile = &((*argv) [6]);
             continue;
         }
+        if (0 == strncmp ("--key-base=", *argv, 11)) {
+            g_key_base = atoi (&((*argv) [11]));
+            LogAssert (0 < g_key_base && g_key_base <= 16);
+            continue;
+        }
+        if (0 == strncmp ("--value-base=", *argv, 13)) {
+            g_value_base = atoi (&((*argv) [13]));
+            LogAssert (0 < g_value_base && g_value_base <= 16);
+            continue;
+        }
+        if (0 == strncmp ("--text-value", *argv, 12)) {
+            g_text_value = true;
+            continue;
+        }
+        if (0 == strncmp ("--tab-only-delim", *argv, 16)) {
+            g_tab_only_delimiter = true;
+            continue;
+        }
         if (0 == strncmp ("--no-output", *argv, 11)) {
             g_no_output = true;
             continue;
@@ -88,7 +119,7 @@ void process_args (int& argc, char**& argv)
 }
 
 
-static inline const int GetHex (const char * pStr, const int Len)
+static inline const int GetNum (const char * pStr, const int Len, int base = 16)
 {
     std::string buff (pStr, Len);
     return strtol (buff.c_str (), NULL, 16);
@@ -124,7 +155,11 @@ int __cdecl main (int argc, char ** argv)
         FAMapIOTools g_map_io (&g_alloc);
 
         FAStringTokenizer tokenizer;
-        tokenizer.SetSpaces (" \t");
+        if (g_tab_only_delimiter) {
+            tokenizer.SetSpaces ("\t");
+        } else {
+            tokenizer.SetSpaces (" \t");
+        }
 
         FAMultiMap_judy mmap;
         mmap.SetAllocator (&g_alloc);
@@ -162,9 +197,11 @@ int __cdecl main (int argc, char ** argv)
 
                 int Key;
 
-                if (2 < Len1 && '\\' == pStr1 [0] && \
+                if (-1 != g_key_base) {
+                    Key = GetNum (pStr1, Len1, g_key_base);
+                } else if (2 < Len1 && '\\' == pStr1 [0] && \
                     ('X' == pStr1 [1] || 'x' == pStr1 [1])) {
-                    Key = GetHex (pStr1 + 2, Len1 - 2);
+                    Key = GetNum (pStr1 + 2, Len1 - 2);
                 } else {
                     const int Count1 = \
                         ::FAStrUtf8ToArray (pStr1, Len1, &Key, 1);
@@ -177,11 +214,19 @@ int __cdecl main (int argc, char ** argv)
                 // Note: 0 length is allowed
                 FAAssert (0 <= Len2, FAMsg::IOError);
 
-                if (2 < Len2 && '\\' == pStr2 [0] && \
+                if (-1 != g_value_base) {
+
+                    // make a chain from numbers, if g_value_base == 10, the deciam numbers, e.g. 255 1 238 2
+                    const int Count2 = \
+                        ::FAReadIntegerChain(pStr2, Len2, g_value_base, g_Tmp, MaxBuffSize);
+                    FAAssert(0 <= Count2 && MaxBuffSize > Count2, FAMsg::IOError);
+                    mmap.Set (Key, g_Tmp, Count2);
+
+                } else if (false == g_text_value && 2 < Len2 && '\\' == pStr2 [0] && \
                     ('X' == pStr2 [1] || 'x' == pStr2 [1])) {
 
                     // TODO: allow arbitrary hexadecimal chains
-                    int SingleCharValue = GetHex (pStr2 + 2, Len2 - 2);
+                    int SingleCharValue = GetNum (pStr2 + 2, Len2 - 2);
                     mmap.Set (Key, &SingleCharValue, 1);
 
                 } else {
@@ -189,9 +234,7 @@ int __cdecl main (int argc, char ** argv)
                     const int Count2 = \
                         ::FAStrUtf8ToArray (pStr2, Len2, g_Tmp, MaxBuffSize);
                     // Note: 0 Count is allowed
-                    FAAssert (0 <= Count2 && MaxBuffSize > Count2, \
-                        FAMsg::IOError);
-
+                    FAAssert (0 <= Count2 && MaxBuffSize > Count2, FAMsg::IOError);
                     mmap.Set (Key, g_Tmp, Count2);
                 }
             }

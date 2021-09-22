@@ -1,0 +1,13 @@
+#
+# LDB compilation options
+#
+
+OUTPUT = bert_base_cased_tok.i2w
+
+opt_id2word_dependecy = $(srcdir)/vocab.txt
+opt_build_id2word = -e --defaulttok='[unk]'
+
+opt_pack_id2word = --type=sarr --text-value
+
+resources = \
+  $(tmpdir)/id2word.arr.$(mode).dump \

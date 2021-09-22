@@ -238,6 +238,10 @@ $(tmpdir)/wbd.mmap.$(mode).dump: $(tmpdir)/wbd.rules.map.txt
 $(tmpdir)/charmap.mmap.$(mode).dump: $(tmpdir)/charmap.mmap.txt
 	fa_fsm2fsm_pack $(opt_pack_charmap) --in=$(tmpdir)/charmap.mmap.txt --out=$(tmpdir)/charmap.mmap.$(mode).dump --auto-test
 
+$(tmpdir)/id2word.arr.$(mode).dump: $(tmpdir)/id2word.utf8
+	fa_fsm2fsm_pack $(opt_pack_id2word) --in=$(tmpdir)/id2word.utf8 --out=$(tmpdir)/id2word.arr.$(mode).dump --auto-test
+
+
 
 #
 # Configuration compilation
@@ -530,6 +534,16 @@ $(tmpdir)/wbd.rules.map.txt: $(srcdir)/wbd.lex.utf8 $(srcdir)/wbd.tagset.txt
 $(tmpdir)/charmap.mmap.txt: $(srcdir)/charmap.utf8
 	fa_charmap2mmap < $(srcdir)/charmap.utf8 > $(tmpdir)/charmap.mmap.txt
 
+$(tmpdir)/pos.dict.utf8: $(srcdir)/pos.dict.utf8.zip
+	unzip -p $(srcdir)/pos.dict.utf8.zip > $(tmpdir)/pos.dict.utf8
+
+# opt_id2word_dependecy = $(tmpdir)/pos.dict.utf8
+# opt_build_id2word = -p --tagset=$(srcdir)/tagset.txt OR -b --tagset=$(srcdir)/tagset.txt
+
+# opt_id2word_dependecy = $(srcdir)/vocab.txt
+# opt_build_id2word = -e OR -v 
+$(tmpdir)/id2word.utf8: $(opt_id2word_dependecy)
+	fa_build_id2word $(opt_build_id2word) --input=$(opt_id2word_dependecy) > $(tmpdir)/id2word.utf8
 
 
 # getting log-probabilities

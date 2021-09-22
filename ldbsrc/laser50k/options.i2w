@@ -1,0 +1,13 @@
+#
+# LDB compilation options
+#
+
+OUTPUT = laser50k.i2w
+
+opt_id2word_dependecy = $(tmpdir)/pos.dict.utf8
+opt_build_id2word = -p --defaulttok='<unk>' --tagset=$(srcdir)/tagset.txt
+
+opt_pack_id2word = --type=sarr --text-value
+
+resources = \
+  $(tmpdir)/id2word.arr.$(mode).dump \

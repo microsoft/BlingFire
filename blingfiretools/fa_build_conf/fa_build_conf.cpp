@@ -108,6 +108,7 @@ void SetupConfParams ()
     g_parser.AddSection ("n2tp", FAFsmConst::FUNC_N2TP);
     g_parser.AddSection ("lad", FAFsmConst::FUNC_LAD);
     g_parser.AddSection ("u2l", FAFsmConst::FUNC_U2L);
+    g_parser.AddSection ("i2w", FAFsmConst::FUNC_I2W);
 
     // parameters
     g_parser.AddNumParam ("trim", FAFsmConst::PARAM_TRIM);
@@ -178,6 +179,9 @@ void SetupConfParams ()
     g_parser.AddNumParam ("action-data", FAFsmConst::PARAM_ACT_DATA);
     g_parser.AddNumParam ("max-length", FAFsmConst::PARAM_MAX_LENGTH);
     g_parser.AddNumParam ("max-token-length", FAFsmConst::PARAM_MAX_LENGTH);
+    g_parser.AddNumParam ("string-array", FAFsmConst::PARAM_STRING_ARRAY);
+    g_parser.AddNumParam ("token-id-min", FAFsmConst::PARAM_TOKENID_MIN);
+    g_parser.AddNumParam ("token-id-max", FAFsmConst::PARAM_TOKENID_MAX);
 
     // WRE-compiler related parameters (not used at runtime)
     g_parser.AddNumParam ("fsm-count", FAFsmConst::PARAM_FSM_COUNT);
