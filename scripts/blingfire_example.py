@@ -15,6 +15,10 @@ print(ids)                                   # returns a numpy array of length 1
 text = blingfire.ids_to_text(h_i2w, ids)     # take a numpy array of ids
 print(text)                                  # returns a string
 
+text = blingfire.ids_to_text(h_i2w, ids, skip_special_tokens=False)     # generate text with special tokens included
+print(text)                                  
+
+
 # free the model at the end
 blingfire.free_model(h)
 blingfire.free_model(h_i2w)

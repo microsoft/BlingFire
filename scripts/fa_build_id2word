@@ -1,0 +1,99 @@
+#!/usr/bin/env python3
+
+import sys
+import argparse
+
+parser = argparse.ArgumentParser("This tool generates id2word.utf8 file from a vocab.txt or from a pos.dict.utf8.")
+
+parser.add_argument("-p", "--utf8-pos-dict", default=False, action="store_true", help="Input is a pos dict in UTF-8")
+parser.add_argument("-b", "--byte-pos-dict", default=False, action="store_true", help="Input is a pos dict with bytes from BPE")
+parser.add_argument("-e", "--bert-vocab", default=False, action="store_true", help="Input is one token a line in UTF-8 in BERT vocab format")
+parser.add_argument("-v", "--vocab-file", default=False, action="store_true", help="Input is one token a line in UTF-8, used by default")
+parser.add_argument("--startid", action="store", default=0, dest="startid", type=int, help="Base value for the IDS, 0 by default")
+parser.add_argument("--defaulttok", action="store", default="[unused]", dest="defaulttok", help="Default token text to use for gaps, default [unused].")
+parser.add_argument("--tagset", action="store", default="tagset.txt", dest="tagset", help="Specifies tagset file name, needed with -p or -b input formats.")
+parser.add_argument("--input", action="store", default="", dest="input", help="Input file name, stdin is used by default.")
+
+# args = parser.parse_args(['-e', '--input=/home/sergei/BlingFire2/BlingFire/ldbsrc/bert_base_cased_tok/vocab.txt'])
+args = parser.parse_args()
+max_id = 0
+d = {}
+
+# input from stdin or the input file
+ih = sys.stdin
+if args.input:
+    ih = open(args.input, encoding="utf-8")
+
+# see if we deal with pos.dict format or vocab.txt format
+if args.utf8_pos_dict or args.byte_pos_dict :
+
+    # read the tagset
+    with open(args.tagset, encoding="utf-8") as th:
+        tagset = [tuple(s.split()) for s in th.read().splitlines() if s]
+        tag2id = dict((x, int(y)) for x, y in tagset)
+
+    for line in ih:
+
+        line = line.rstrip()
+
+        t = line.split("\t")
+        if len(t) != 3:
+            raise Exception(f"ERROR: Input pos.dict lines does not have three components, line: {line}\n\n")
+
+        text = t[0]
+        tag = t[1]
+        if not(tag in tag2id):
+            raise Exception(f"ERROR: Unknown tag, line: {line}\n\n")
+        id = tag2id[tag] + args.startid
+
+        # modify text so that starting segments have 0x20 in-front
+        if args.byte_pos_dict:
+            t2 = []
+            for b in text.split(' '):
+                if b == '9601':
+                    t2.append('32') # replace our special unicode space with a normal ascii space
+                elif int(b) > 255:
+                    raise Exception(f"ERROR: Byte numbers should be less than 256 or be 9601 in --byte-pos-dict mode, line: {line}\n\n")
+                else:
+                    t2.append(b)
+            text = ' '.join(t2)
+        elif args.utf8_pos_dict:
+            if text[0] == '▁':
+                text = ' ' + text[1:]
+
+        d[id] = text
+
+        if max_id < id:
+            max_id = id
+
+# vocab.txt format
+else:
+
+    i = 0
+    for line in ih:
+
+        text = line.rstrip()
+        id = args.startid + i
+        i += 1
+
+        # modify text so that starting segments have 0x20 in-front
+        if args.bert_vocab:
+            if len(text) > 2 and text[0] == '#' and text[1] == '#':
+                text = text[2:]
+            else:
+                text = ' ' + text
+        else:
+            if text[0] == '▁':
+                text = ' ' + text[1:]
+
+        d[id] = text
+
+        if max_id < id:
+            max_id = id
+
+# produce the output
+for id in range(max_id + 1):
+    if id in d:
+        print(d[id])
+    else:
+        print(args.defaulttok)
