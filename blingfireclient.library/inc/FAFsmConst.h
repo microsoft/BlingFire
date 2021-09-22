@@ -267,6 +267,8 @@ public:
         PARAM_USE_BYTE_ENCODING, // specifies if input characters are UTF-8 bytes, not Unicode symbols
         PARAM_NO_DUMMY_PREFIX,  // for unigram-lm and BPE, if specified then no dummy whitespace is added in the beginning of text
         PARAM_STRING_ARRAY,// string array dump index
+        PARAM_TOKENID_MIN, // if specified provides smalles regular (non special) token id value
+        PARAM_TOKENID_MAX, // if specified provides biggest regular (non special) token id value
         PARAM_COUNT,
     };
 

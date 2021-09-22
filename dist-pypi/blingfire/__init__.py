@@ -253,7 +253,7 @@ def text_to_ids(h, s, max_len, unk = 0, no_padding = False):
     return np.frombuffer(o_bytes, dtype=c_uint32, count = out_count)
 
 
-def ids_to_text(h, ids, output_buffer_size = None):
+def ids_to_text(h, ids, skip_special_tokens = True, output_buffer_size = None):
     # allocate the output buffer
     if output_buffer_size is None:
         output_buffer_size = len(ids) * 50
@@ -261,7 +261,7 @@ def ids_to_text(h, ids, output_buffer_size = None):
     o_bytes = create_string_buffer(output_buffer_size)
     o_bytes_count = len(o_bytes)
     # compute the text from ids
-    o_len = blingfire.IdsToText(c_void_p(h), c_void_p(ids.__array_interface__['data'][0]), len(ids), byref(o_bytes), c_int(o_bytes_count))
+    o_len = blingfire.IdsToText(c_void_p(h), c_void_p(ids.__array_interface__['data'][0]), len(ids), byref(o_bytes), c_int(o_bytes_count), c_bool(skip_special_tokens))
     # check if no error has happened
     if -1 == o_len or o_len > o_bytes_count:
         return ''

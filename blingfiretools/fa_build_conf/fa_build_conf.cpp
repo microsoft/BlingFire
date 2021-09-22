@@ -180,6 +180,8 @@ void SetupConfParams ()
     g_parser.AddNumParam ("max-length", FAFsmConst::PARAM_MAX_LENGTH);
     g_parser.AddNumParam ("max-token-length", FAFsmConst::PARAM_MAX_LENGTH);
     g_parser.AddNumParam ("string-array", FAFsmConst::PARAM_STRING_ARRAY);
+    g_parser.AddNumParam ("token-id-min", FAFsmConst::PARAM_TOKENID_MIN);
+    g_parser.AddNumParam ("token-id-max", FAFsmConst::PARAM_TOKENID_MAX);
 
     // WRE-compiler related parameters (not used at runtime)
     g_parser.AddNumParam ("fsm-count", FAFsmConst::PARAM_FSM_COUNT);

@@ -84,6 +84,8 @@ struct FAModelData
     // id2word lexicon data
     bool m_hasI2w;
     FAStringArray_pack m_i2w;
+    int m_min_token_id; // min regular token id, needed to separate special tokens
+    int m_max_token_id; // max regular token id, needed to separate special tokens
 
 
     FAModelData ():
@@ -92,7 +94,9 @@ struct FAModelData
         m_pAlgo (NULL),
         m_useRawBytes (false),
         m_hasHy (false),
-        m_hasI2w (false)
+        m_hasI2w (false),
+        m_min_token_id (0),
+        m_max_token_id (FALimits::MaxArrSize)
     {}
 };
 
@@ -1010,11 +1014,39 @@ void* SetModelData(FAModelData * pNewModelData, const unsigned char * pImgBytes)
 
 
     // get the configuration paramenters for hyphenation [i2w]
+    pNewModelData->m_min_token_id = 0;
+    pNewModelData->m_max_token_id = FALimits::MaxArrSize;
+    pNewModelData->m_hasI2w = false;
+
     pValues = NULL;
     iSize = pNewModelData->m_Ldb.GetHeader ()->Get (FAFsmConst::FUNC_I2W, &pValues);
 
     // see if the [pos-dict] section is present
     if (-1 != iSize) {
+
+        for (int i = 0; i < iSize; ++i) {
+
+            if (pValues [i] == FAFsmConst::PARAM_STRING_ARRAY && i + 1 < iSize) {
+
+                const int DumpNum = pValues [++i];
+                const unsigned char * pDump = pNewModelData->m_Ldb.GetDump (DumpNum);
+
+                if (NULL == pDump) {
+                    return NULL;
+                }
+
+                pNewModelData->m_i2w.SetImage(pDump);
+                pNewModelData->m_hasI2w = true;
+
+            } else if (pValues [i] == FAFsmConst::PARAM_TOKENID_MIN && i + 1 < iSize) {
+
+                pNewModelData->m_min_token_id = pValues [++i];
+
+            } else if (pValues [i] == FAFsmConst::PARAM_TOKENID_MAX && i + 1 < iSize) {
+
+                pNewModelData->m_max_token_id = pValues [++i];
+            }
+        }
 
         if (1 < iSize && pValues [0] == FAFsmConst::PARAM_STRING_ARRAY) {
 
@@ -1673,7 +1705,7 @@ int SetNoDummyPrefix(void* ModelPtr, bool fNoDummyPrefix)
 // if the actual string length is more than MaxOutUtf8StrByteCount then pOutUtf8Str content is undefined
 // 
 extern "C"
-int IdsToText (void* ModelPtr, const int32_t * pIdsArr, const int IdsCount, char * pOutUtf8Str, const int MaxOutUtf8StrByteCount)
+int IdsToText (void* ModelPtr, const int32_t * pIdsArr, const int IdsCount, char * pOutUtf8Str, const int MaxOutUtf8StrByteCount, bool SkipSpecialTokens)
 {
     if (NULL == ModelPtr) {
         return 0;
@@ -1693,6 +1725,11 @@ int IdsToText (void* ModelPtr, const int32_t * pIdsArr, const int IdsCount, char
 
         // get the next id
         const int id = pIdsArr [i];
+
+        // skip special tokens, if needed
+        if (SkipSpecialTokens && (id < pModel->m_min_token_id || id > pModel->m_max_token_id)) {
+            continue;
+        }
 
         // get token text
         const unsigned char * pToken = NULL;
