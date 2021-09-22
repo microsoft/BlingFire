@@ -256,7 +256,7 @@ def text_to_ids(h, s, max_len, unk = 0, no_padding = False):
 def ids_to_text(h, ids, skip_special_tokens = True, output_buffer_size = None):
     # allocate the output buffer
     if output_buffer_size is None:
-        output_buffer_size = len(ids) * 50
+        output_buffer_size = len(ids) * 32
     # allocate the output buffer
     o_bytes = create_string_buffer(output_buffer_size)
     o_bytes_count = len(o_bytes)
