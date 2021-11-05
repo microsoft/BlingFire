@@ -249,7 +249,7 @@ namespace BlingFire
             Span<int> endOffsets,
             Int32 maxBuffSize)
         {
-            return TextToSentencesWithOffsets(
+            return TextToWordsWithOffsets(
                 MemoryMarshal.GetReference(inUtf8Str),
                 inUtf8StrLen,
                 ref MemoryMarshal.GetReference(outBuff),
