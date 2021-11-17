@@ -344,3 +344,6 @@ cmake-*
 
 # OS X
 .DS_Store
+
+# Centos Build
+centos7release/
