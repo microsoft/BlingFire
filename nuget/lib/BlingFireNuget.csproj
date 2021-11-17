@@ -43,7 +43,9 @@
     <None Include="libblingfiretokdll.dylib" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any" PackageCopyToOutput="true" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="centos7\libblingfiretokdll.so" Pack="true" PackagePath="runtimes\centos.7-x64\native" PackageCopyToOutput="true" />
+    <!-- CentOS 7 has an older version of glibc so we have a specially compiled version of libblingfiretokdll.so for centos.7-x64 -->
+    <!-- To use this version pass -r centos.7-x64 to dotnet publish when packaging your application which consumes this package -->
+    <None Include="centos.7-x64\libblingfiretokdll.so" Pack="true" PackagePath="runtimes\centos.7-x64\native" PackageCopyToOutput="true" />
   </ItemGroup>
   <ItemGroup>
     <None Include="libblingfiretokdll.so" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any" PackageCopyToOutput="true" />

@@ -7,4 +7,4 @@ docker run -it \
     docker.io/library/blingfire-centos7-build /bin/bash -c \
     "cd /BlingFire && mkdir centos7release && cd centos7release && cmake3 -DCMAKE_BUILD_TYPE=Release .. && make"
 
-cp centos7release/libblingfiretokdll.so ../nuget/lib/centos7
+cp ../../centos7release/libblingfiretokdll.so ../../nuget/lib/centos.7-x64
