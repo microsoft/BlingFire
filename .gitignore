@@ -341,3 +341,6 @@ ASALocalRun/
 .mfractor/
 cmake/
 cmake-*
+
+# OS X
+.DS_Store
