@@ -14,8 +14,8 @@
     <PackageReleaseNotes>BlingFire wrapper for .Net Core, see https://github.com/microsoft/BlingFire for details.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.1.8</Version>
-    <FileVersion>0.1.8</FileVersion>
+    <Version>0.1.9</Version>
+    <FileVersion>0.1.9</FileVersion>
     <IsPackable>true</IsPackable>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>contentFiles</ContentTargetFolders>
@@ -41,6 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="libblingfiretokdll.dylib" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any" PackageCopyToOutput="true" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- CentOS 7 has an older version of glibc so we have a specially compiled version of libblingfiretokdll.so for centos.7-x64 -->
+    <!-- To use this version pass -r centos.7-x64 to dotnet publish when packaging your application which consumes this package -->
+    <None Include="centos.7-x64\libblingfiretokdll.so" Pack="true" PackagePath="runtimes\centos.7-x64\native" PackageCopyToOutput="true" />
   </ItemGroup>
   <ItemGroup>
     <None Include="libblingfiretokdll.so" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any" PackageCopyToOutput="true" />
