@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <StartupObject>BlingUtilsTest.Program</StartupObject>
     <ApplicationIcon />
   </PropertyGroup>
@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BlingFireNuget" Version="0.1.8" />
+    <PackageReference Include="BlingFireNuget" Version="0.1.804" />
   </ItemGroup>
 
 </Project>
