@@ -16,7 +16,6 @@ steps:
     command: 'build'
     projects: 'nuget/lib/BlingFireNuget.csproj'
     arguments: '--configuration Release'
-    workingDirectory: '/nuget/'
 
 - task: CmdLine@2
   displayName: Create release folder for win-x64
@@ -75,7 +74,6 @@ steps:
     command: 'build'
     projects: 'nuget/lib/BlingFireNuget.csproj'
     arguments: '--configuration Release'
-    workingDirectory: '/nuget/'
 
 - task: CopyFiles@2
   displayName: 'Copy blingFire Nuget package to: $(Build.ArtifactStagingDirectory)'
