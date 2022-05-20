@@ -14,8 +14,8 @@
     <PackageReleaseNotes>BlingFire wrapper for .Net Core, see https://github.com/microsoft/BlingFire for details.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.1.806</Version>
-    <FileVersion>0.1.806</FileVersion>
+    <Version>0.1.9</Version>
+    <FileVersion>0.1.9</FileVersion>
     <IsPackable>true</IsPackable>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>contentFiles</ContentTargetFolders>
@@ -38,12 +38,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="runtimes\win-arm64\native\*" Pack="true" PackagePath="runtimes\win-arm64\native" PackageCopyToOutput="true" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="runtimes\win10-arm64\native\*" Pack="true" PackagePath="runtimes\win10-arm64\native" PackageCopyToOutput="true" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="runtimes\win11-arm64\native\*" Pack="true" PackagePath="runtimes\win11-arm64\native" PackageCopyToOutput="true" />
   </ItemGroup>
   <ItemGroup>
     <None Include="runtimes\osx-x64\native\*" Pack="true" PackagePath="runtimes\osx-x64\native" PackageCopyToOutput="true" />
