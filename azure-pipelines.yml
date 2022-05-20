@@ -1,43 +1,74 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - master
 
 pool:
-
-  vmImage: 'Ubuntu 16.04'
-
+  vmImage: windows-latest
 
 steps:
+- task: CmdLine@2
+  displayName: Create release folder for win-x64
+  inputs:
+    script: |
+      mkdir Release-win-x64
 
 - task: CMake@1
-
-  displayName: 'CMake-Linux'
-
+  displayName: 'CMake for win-x64'
   inputs:
+    workingDirectory: 'Release-win-x64'
+    cmakeArgs: '..'
 
-    cmakeArgs: ..
+- task: CopyFiles@2
+  displayName: 'Copy win-x64 blingfiretokdll.dll to nuget runtime'
+  inputs:
+    SourceFolder: 'Release-win-x64/Release'
+    Contents: 'blingfiretokdll.dll'
+    TargetFolder: 'nuget/lib/runtimes/win-x64/native'
+    OverWrite: true
 
+- task: CmdLine@2
+  displayName: Create release folder for win-arm64
+  inputs:
+    script: |
+      mkdir Release-win-arm64
 
+- task: CMake@1
+  displayName: 'CMake for win-arm64'
+  inputs:
+    workingDirectory: 'Release-win-arm64'
+    cmakeArgs: '-A ARM64 ..'
 
-- bash: make
+- task: MSBuild@1
+  displayName: 'Build for win-arm64'
+  inputs:
+    solution: 'Release-win-arm64/BLING_FIRE.sln'
+    configuration: 'Release'
 
-  workingDirectory: build
+- task: CopyFiles@2
+  displayName: 'Copy win-arm64 blingfiretokdll.dll to nuget runtime'
+  inputs:
+    SourceFolder: 'Release-win-arm64/Release'
+    Contents: 'blingfiretokdll.dll'
+    TargetFolder: 'nuget/lib/runtimes/win-arm64/native'
+    OverWrite: true
 
-  displayName: TriggerGNUMake
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: 'nuget/lib/BlingFireNuget.csproj'
+    arguments: '--configuration Release'
+    workingDirectory: '/nuget/'
 
-
+- task: CopyFiles@2
+  displayName: 'Copy blingFire Nuget package to: $(Build.ArtifactStagingDirectory)'
+  inputs:
+    SourceFolder: 'nuget/lib/bin/Release/'
+    Contents: '*.nupkg'
+    TargetFolder: '$(build.artifactstagingdirectory)\nupkg'
 
 - task: PublishBuildArtifacts@1
-
-  displayName: 'Publish Artifact: drop'
-
+  displayName: 'Publish Artifact: nupkg'
   inputs:
-
-    PathtoPublish: /home/vsts/work/1/s/build
-
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)\nupkg'
+    ArtifactName: nupkg
 
 
