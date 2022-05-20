@@ -5,6 +5,12 @@ pool:
   vmImage: windows-latest
 
 steps:
+- task: UseDotNet@2
+  displayName: 'Use .NET Core SDK'
+  inputs:
+    packageType: 'sdk'
+    version: '6.x'
+    
 - task: CmdLine@2
   displayName: Create release folder for win-x64
   inputs:
