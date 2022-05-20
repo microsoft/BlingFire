@@ -10,7 +10,14 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '6.x'
-    
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: 'nuget/lib/BlingFireNuget.csproj'
+    arguments: '--configuration Release'
+    workingDirectory: '/nuget/'
+
 - task: CmdLine@2
   displayName: Create release folder for win-x64
   inputs:
