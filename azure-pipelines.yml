@@ -17,6 +17,12 @@ steps:
     workingDirectory: 'Release-win-x64'
     cmakeArgs: '..'
 
+- task: MSBuild@1
+  displayName: 'Build for win-x64'
+  inputs:
+    solution: 'Release-win-x64/BLING_FIRE.sln'
+    configuration: 'Release'
+
 - task: CopyFiles@2
   displayName: 'Copy win-x64 blingfiretokdll.dll to nuget runtime'
   inputs:
