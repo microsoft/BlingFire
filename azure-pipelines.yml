@@ -119,40 +119,21 @@ jobs:
           cmakeArgs: '..'
       
       - task: CmdLine@2
-        displayName: Create release folder
-        inputs:
-          script: |
-            ls ./Release
-      
-      - task: CmdLine@2
-        displayName: make
+        displayName: build project
         inputs:
           script: |
             cd ./Release
-            ls 
             make
       
-      - task: CmdLine@2
-        displayName: Create release folder
-        inputs:
-          script: |
-            ls ./Release
-
-      - task: MSBuild@1
-        displayName: 'Build'
-        inputs:
-          solution: './Release/BLING_FIRE.sln'
-          configuration: 'Release'
-      
       - task: CopyFiles@2
-        displayName: 'Copy blingfiretokdll.dll to: $(Build.ArtifactStagingDirectory)'
+        displayName: 'Copy $(macDllName) to: $(Build.ArtifactStagingDirectory)'
         inputs:
-          SourceFolder: 'Release/Release'
+          SourceFolder: 'Release'
           Contents: $(macDllName)
           TargetFolder: '$(build.artifactstagingdirectory)/native'
       
       - task: PublishBuildArtifacts@1
-        displayName: 'Publish Artifact: blingfiretokdll.dll'
+        displayName: 'Publish Artifact: $(macDllName)'
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/native'
           ArtifactName: $(mac_X64_Artifact)
@@ -180,21 +161,22 @@ jobs:
           workingDirectory: 'Release'
           cmakeArgs: '..'
 
-      - task: MSBuild@1
-        displayName: 'Build'
+      - task: CmdLine@2
+        displayName: build project
         inputs:
-          solution: 'Release/BLING_FIRE.sln'
-          configuration: 'Release'
+          script: |
+            cd ./Release
+            make
       
       - task: CopyFiles@2
-        displayName: 'Copy blingfiretokdll.dll to: $(Build.ArtifactStagingDirectory)'
+        displayName: 'Copy $(linuxDllName) to: $(Build.ArtifactStagingDirectory)'
         inputs:
-          SourceFolder: 'Release/Release'
+          SourceFolder: 'Release'
           Contents: $(linuxDllName)
           TargetFolder: '$(build.artifactstagingdirectory)/native'
       
       - task: PublishBuildArtifacts@1
-        displayName: 'Publish Artifact: blingfiretokdll.dll'
+        displayName: 'Publish Artifact: $(linuxDllName)'
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/native'
           ArtifactName: $(linux_X64_Artifact)
