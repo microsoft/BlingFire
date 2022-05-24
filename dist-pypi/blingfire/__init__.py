@@ -15,6 +15,8 @@ blingfire = None
 if platform.system() == "Windows":
     blingfire = cdll.LoadLibrary(os.path.join(path, "blingfiretokdll.dll"))
 # detect Mac OSX
+elif platform.system() == "Darwin" and platform.machine() == "arm64":
+    blingfire = cdll.LoadLibrary(os.path.join(path, "libblingfiretokdll-arm.dylib"))
 elif platform.system() == "Darwin":
     blingfire = cdll.LoadLibrary(os.path.join(path, "libblingfiretokdll.dylib"))
 else:
