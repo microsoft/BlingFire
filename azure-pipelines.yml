@@ -3,8 +3,12 @@ trigger:
 
 variables:
   windowsDllName: "blingfiretokdll.dll"
+  macDllName: "libblingfiretokdll.dylib"
+  linuxDllName: "libblingfiretokdll.so"
   win_X64_Artifact: "DllForWinX64"
   win_Arm64_Artifact: "DllForWinArm64"
+  mac_X64_Artifact: "DllForMacX64"
+  linux_X64_Artifact: "DllForLinuxX64"
 
 jobs:
   - job: Build_Dll_For_Win_X64
@@ -90,11 +94,97 @@ jobs:
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/native'
           ArtifactName: $(win_ARM64_Artifact)
+      
+  - job: Build_Dll_For_Mac_X64
+    pool:
+      vmImage: macOS-latest
+
+    steps:
+      - task: UseDotNet@2
+        displayName: 'Use .NET Core SDK'
+        inputs:
+          packageType: 'sdk'
+          version: '6.x'
+
+      - task: CmdLine@2
+        displayName: Create release folder
+        inputs:
+          script: |
+            mkdir Release
+
+      - task: CMake@1
+        displayName: 'CMake'
+        inputs:
+          workingDirectory: 'Release'
+          cmakeArgs: '..'
+
+      - task: MSBuild@1
+        displayName: 'Build'
+        inputs:
+          solution: 'Release/BLING_FIRE.sln'
+          configuration: 'Release'
+      
+      - task: CopyFiles@2
+        displayName: 'Copy blingfiretokdll.dll to: $(Build.ArtifactStagingDirectory)'
+        inputs:
+          SourceFolder: 'Release/Release'
+          Contents: $(macDllName)
+          TargetFolder: '$(build.artifactstagingdirectory)/native'
+      
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: blingfiretokdll.dll'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/native'
+          ArtifactName: $(mac_X64_Artifact)
   
+  - job: Build_Dll_For_Linux_X64
+    pool:
+      vmImage: ubuntu-latest
+
+    steps:
+      - task: UseDotNet@2
+        displayName: 'Use .NET Core SDK'
+        inputs:
+          packageType: 'sdk'
+          version: '6.x'
+
+      - task: CmdLine@2
+        displayName: Create release folder
+        inputs:
+          script: |
+            mkdir Release
+
+      - task: CMake@1
+        displayName: 'CMake'
+        inputs:
+          workingDirectory: 'Release'
+          cmakeArgs: '..'
+
+      - task: MSBuild@1
+        displayName: 'Build'
+        inputs:
+          solution: 'Release/BLING_FIRE.sln'
+          configuration: 'Release'
+      
+      - task: CopyFiles@2
+        displayName: 'Copy blingfiretokdll.dll to: $(Build.ArtifactStagingDirectory)'
+        inputs:
+          SourceFolder: 'Release/Release'
+          Contents: $(linuxDllName)
+          TargetFolder: '$(build.artifactstagingdirectory)/native'
+      
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: blingfiretokdll.dll'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/native'
+          ArtifactName: $(linux_X64_Artifact)
+
   - job: buildNugetPackage
     dependsOn: 
       - Build_Dll_For_Win_X64
       - Build_Dll_For_Win_ARM64
+      - Build_Dll_For_Mac_X64
+      - Build_Dll_For_Linux_X64
     condition: succeeded()
 
     pool:
