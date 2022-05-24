@@ -122,7 +122,13 @@ jobs:
         displayName: Create release folder
         inputs:
           script: |
-            ls
+            ls ./Release
+      
+      - task: CmdLine@2
+        displayName: Create release folder
+        inputs:
+          script: |
+            make ./Release
       
       - task: CmdLine@2
         displayName: Create release folder
