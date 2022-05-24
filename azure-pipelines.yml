@@ -11,89 +11,89 @@ variables:
   linux_X64_Artifact: "DllForLinuxX64"
 
 jobs:
-#  - job: Build_Dll_For_Win_X64
-#    pool:
-#      vmImage: windows-latest
-#
-#    steps:
-#      - task: UseDotNet@2
-#        displayName: 'Use .NET Core SDK'
-#        inputs:
-#          packageType: 'sdk'
-#          version: '6.x'
-#
-#      - task: CmdLine@2
-#        displayName: Create release folder for win-x64
-#        inputs:
-#          script: |
-#            mkdir Release
-#
-#      - task: CMake@1
-#        displayName: 'CMake for win-x64'
-#        inputs:
-#          workingDirectory: 'Release'
-#          cmakeArgs: '..'
-#
-#      - task: MSBuild@1
-#        displayName: 'Build for win-x64'
-#        inputs:
-#          solution: 'Release/BLING_FIRE.sln'
-#          configuration: 'Release'
-#      
-#      - task: CopyFiles@2
-#        displayName: 'Copy blingfiretokdll.dll to: $(Build.ArtifactStagingDirectory)'
-#        inputs:
-#          SourceFolder: 'Release/Release'
-#          Contents: $(windowsDllName)
-#          TargetFolder: '$(build.artifactstagingdirectory)/native'
-#      
-#      - task: PublishBuildArtifacts@1
-#        displayName: 'Publish Artifact: blingfiretokdll.dll'
-#        inputs:
-#          PathtoPublish: '$(Build.ArtifactStagingDirectory)/native'
-#          ArtifactName: $(win_X64_Artifact)
-#  
-#  - job: Build_Dll_For_Win_ARM64
-#    pool:
-#      vmImage: windows-latest
-#
-#    steps:
-#      - task: UseDotNet@2
-#        displayName: 'Use .NET Core SDK'
-#        inputs:
-#          packageType: 'sdk'
-#          version: '6.x'
-#
-#      - task: CmdLine@2
-#        displayName: Create release folder for win-arm64
-#        inputs:
-#          script: |
-#            mkdir Release
-#
-#      - task: CMake@1
-#        displayName: 'CMake for win-arm64'
-#        inputs:
-#          workingDirectory: 'Release'
-#          cmakeArgs: '-A ARM64 ..'
-#
-#      - task: MSBuild@1
-#        displayName: 'Build for win-arm64'
-#        inputs:
-#          solution: 'Release/BLING_FIRE.sln'
-#          configuration: 'Release'
-#      
-#      - task: CopyFiles@2
-#        displayName: 'Copy blingFire Nuget package to: $(Build.ArtifactStagingDirectory)'
-#        inputs:
-#          SourceFolder: 'Release/Release'
-#          Contents: $(windowsDllName)
-#          TargetFolder: '$(build.artifactstagingdirectory)/native'
-#      
-#      - task: PublishBuildArtifacts@1
-#        displayName: 'Publish Artifact: blingfiretokdll.dll'
-#        inputs:
-#          PathtoPublish: '$(Build.ArtifactStagingDirectory)/native'
-#          ArtifactName: $(win_ARM64_Artifact)
+  - job: Build_Dll_For_Win_X64
+    pool:
+      vmImage: windows-latest
+
+    steps:
+      - task: UseDotNet@2
+        displayName: 'Use .NET Core SDK'
+        inputs:
+          packageType: 'sdk'
+          version: '6.x'
+
+      - task: CmdLine@2
+        displayName: Create release folder for win-x64
+        inputs:
+          script: |
+            mkdir Release
+
+      - task: CMake@1
+        displayName: 'CMake for win-x64'
+        inputs:
+          workingDirectory: 'Release'
+          cmakeArgs: '..'
+
+      - task: MSBuild@1
+        displayName: 'Build for win-x64'
+        inputs:
+          solution: 'Release/BLING_FIRE.sln'
+          configuration: 'Release'
+      
+      - task: CopyFiles@2
+        displayName: 'Copy blingfiretokdll.dll to: $(Build.ArtifactStagingDirectory)'
+        inputs:
+          SourceFolder: 'Release/Release'
+          Contents: $(windowsDllName)
+          TargetFolder: '$(build.artifactstagingdirectory)/native'
+      
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: blingfiretokdll.dll'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/native'
+          ArtifactName: $(win_X64_Artifact)
+  
+  - job: Build_Dll_For_Win_ARM64
+    pool:
+      vmImage: windows-latest
+
+    steps:
+      - task: UseDotNet@2
+        displayName: 'Use .NET Core SDK'
+        inputs:
+          packageType: 'sdk'
+          version: '6.x'
+
+      - task: CmdLine@2
+        displayName: Create release folder for win-arm64
+        inputs:
+          script: |
+            mkdir Release
+
+      - task: CMake@1
+        displayName: 'CMake for win-arm64'
+        inputs:
+          workingDirectory: 'Release'
+          cmakeArgs: '-A ARM64 ..'
+
+      - task: MSBuild@1
+        displayName: 'Build for win-arm64'
+        inputs:
+          solution: 'Release/BLING_FIRE.sln'
+          configuration: 'Release'
+      
+      - task: CopyFiles@2
+        displayName: 'Copy blingFire Nuget package to: $(Build.ArtifactStagingDirectory)'
+        inputs:
+          SourceFolder: 'Release/Release'
+          Contents: $(windowsDllName)
+          TargetFolder: '$(build.artifactstagingdirectory)/native'
+      
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: blingfiretokdll.dll'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/native'
+          ArtifactName: $(win_ARM64_Artifact)
       
   - job: Build_Dll_For_Mac_X64
     pool:
@@ -183,8 +183,8 @@ jobs:
 
   - job: buildNugetPackage
     dependsOn: 
-#      - Build_Dll_For_Win_X64
-#      - Build_Dll_For_Win_ARM64
+      - Build_Dll_For_Win_X64
+      - Build_Dll_For_Win_ARM64
       - Build_Dll_For_Mac_X64
       - Build_Dll_For_Linux_X64
     condition: succeeded()
