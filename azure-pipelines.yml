@@ -90,15 +90,6 @@ jobs:
         inputs:
           solution: 'Release/BLING_FIRE.sln'
           configuration: 'Release'
-      
-      - task: CmdLine@2
-        displayName: 'Validate dll for win-ARM64'
-        inputs:
-          script: |
-            cd .\nuget\test\
-            dotnet build .\BlingUtilsTest.csproj
-            cp ..\..\Release\Release\blingfiretokdll.dll .\bin\Debug\net6.0\
-            dotnet .\bin\Debug\net6.0\BlingUtilsTest.dll
     
       - task: CopyFiles@2
         displayName: 'Copy blingFire Nuget package to: $(Build.ArtifactStagingDirectory)'
