@@ -40,6 +40,15 @@ jobs:
           solution: 'Release/BLING_FIRE.sln'
           configuration: 'Release'
       
+      - task: CmdLine@2
+        displayName: 'Validate dll for win-x64'
+        inputs:
+          script: |
+            cd .\nuget\test\
+            dotnet build .\BlingUtilsTest.csproj
+            cp ..\..\Release\Release\blingfiretokdll.dll .\bin\Debug\net6.0\
+            dotnet .\bin\Debug\net6.0\BlingUtilsTest.dll
+      
       - task: CopyFiles@2
         displayName: 'Copy blingfiretokdll.dll to: $(Build.ArtifactStagingDirectory)'
         inputs:
@@ -82,6 +91,15 @@ jobs:
           solution: 'Release/BLING_FIRE.sln'
           configuration: 'Release'
       
+      - task: CmdLine@2
+        displayName: 'Validate dll for win-ARM64'
+        inputs:
+          script: |
+            cd .\nuget\test\
+            dotnet build .\BlingUtilsTest.csproj
+            cp ..\..\Release\Release\blingfiretokdll.dll .\bin\Debug\net6.0\
+            dotnet .\bin\Debug\net6.0\BlingUtilsTest.dll
+    
       - task: CopyFiles@2
         displayName: 'Copy blingFire Nuget package to: $(Build.ArtifactStagingDirectory)'
         inputs:
@@ -125,6 +143,15 @@ jobs:
             cd ./Release
             make
       
+      - task: CmdLine@2
+        displayName: 'Validate binaries for macos-x64'
+        inputs:
+          script: |
+            cd ./nuget/test/
+            dotnet build ./BlingUtilsTest.csproj
+            cp ../../Release/libblingfiretokdll.dylib ./bin/Debug/net6.0/
+            dotnet ./bin/Debug/net6.0/BlingUtilsTest.dll
+      
       - task: CopyFiles@2
         displayName: 'Copy $(macDllName) to: $(Build.ArtifactStagingDirectory)'
         inputs:
@@ -167,6 +194,15 @@ jobs:
           script: |
             cd ./Release
             make
+      
+      - task: CmdLine@2
+        displayName: 'Validate binaries for linux-x64'
+        inputs:
+          script: |
+            cd ./nuget/test/
+            dotnet build ./BlingUtilsTest.csproj
+            cp ../../Release/libblingfiretokdll.so ./bin/Debug/net6.0/
+            dotnet ./bin/Debug/net6.0/BlingUtilsTest.dll
       
       - task: CopyFiles@2
         displayName: 'Copy $(linuxDllName) to: $(Build.ArtifactStagingDirectory)'
