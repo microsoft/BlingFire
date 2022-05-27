@@ -186,15 +186,6 @@ jobs:
             cd ./Release
             make
       
-      - task: CmdLine@2
-        displayName: 'Validate binaries for macos-x64'
-        inputs:
-          script: |
-            cd ./nuget/test/
-            dotnet build ./BlingUtilsTest.csproj
-            cp ../../Release/libblingfiretokdll.dylib ./bin/Debug/net6.0/
-            dotnet ./bin/Debug/net6.0/BlingUtilsTest.dll
-      
       - task: CopyFiles@2
         displayName: 'Copy $(macDllName) to: $(Build.ArtifactStagingDirectory)'
         inputs:
