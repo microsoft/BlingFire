@@ -155,6 +155,58 @@ jobs:
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/native'
           ArtifactName: $(mac_X64_Artifact)
+
+  - job: Build_Dll_For_Mac_ARM64
+    pool:
+      vmImage: macOS-latest
+
+    steps:
+      - task: UseDotNet@2
+        displayName: 'Use .NET Core SDK'
+        inputs:
+          packageType: 'sdk'
+          version: '6.x'
+
+      - task: CmdLine@2
+        displayName: Create release folder
+        inputs:
+          script: |
+            mkdir Release
+
+      - task: CMake@1
+        displayName: 'CMake'
+        inputs:
+          workingDirectory: 'Release'
+          cmakeArgs: '-D CMAKE_OSX_ARCHITECTURES=arm64 ..'
+      
+      - task: CmdLine@2
+        displayName: build project
+        inputs:
+          script: |
+            cd ./Release
+            make
+      
+      - task: CmdLine@2
+        displayName: 'Validate binaries for macos-x64'
+        inputs:
+          script: |
+            cd ./nuget/test/
+            dotnet build ./BlingUtilsTest.csproj
+            cp ../../Release/libblingfiretokdll.dylib ./bin/Debug/net6.0/
+            dotnet ./bin/Debug/net6.0/BlingUtilsTest.dll
+      
+      - task: CopyFiles@2
+        displayName: 'Copy $(macDllName) to: $(Build.ArtifactStagingDirectory)'
+        inputs:
+          SourceFolder: 'Release'
+          Contents: $(macDllName)
+          TargetFolder: '$(build.artifactstagingdirectory)/native'
+      
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: $(macDllName)'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/native'
+          ArtifactName: $(mac_X64_Artifact)
   
   - job: Build_Dll_For_Linux_X64
     pool:
