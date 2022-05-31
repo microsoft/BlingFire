@@ -60,18 +60,18 @@ namespace BlingUtilsTest
 
 
             // load BERT base tokenization model
-            var h1 = BlingFireUtils.LoadModel("./bin/Debug/netcoreapp3.1/bert_base_tok.bin");
-            var h1_i2w = BlingFireUtils.LoadModel("./bin/Debug/netcoreapp3.1/bert_base_tok.i2w");
+            var h1 = BlingFireUtils.LoadModel("./bin/Debug/net6.0/bert_base_tok.bin");
+            var h1_i2w = BlingFireUtils.LoadModel("./bin/Debug/net6.0/bert_base_tok.i2w");
             Console.WriteLine(String.Format("Model handle: {0}", h1));
 
             // load XLNET tokenization model
-            var h2 = BlingFireUtils.LoadModel("./bin/Debug/netcoreapp3.1/xlnet.bin");
-            var h2_i2w = BlingFireUtils.LoadModel("./bin/Debug/netcoreapp3.1/xlnet.i2w");
+            var h2 = BlingFireUtils.LoadModel("./bin/Debug/net6.0/xlnet.bin");
+            var h2_i2w = BlingFireUtils.LoadModel("./bin/Debug/net6.0/xlnet.i2w");
             Console.WriteLine(String.Format("Model handle: {0}", h2));
 
             // load XLM Roberta tokenization model
-            var h3 = BlingFireUtils.LoadModel("./bin/Debug/netcoreapp3.1/xlm_roberta_base.bin");
-            var h3_i2w = BlingFireUtils.LoadModel("./bin/Debug/netcoreapp3.1/xlm_roberta_base.i2w");
+            var h3 = BlingFireUtils.LoadModel("./bin/Debug/net6.0/xlm_roberta_base.bin");
+            var h3_i2w = BlingFireUtils.LoadModel("./bin/Debug/net6.0/xlm_roberta_base.i2w");
             Console.WriteLine(String.Format("Model handle: {0}", h3));
 
             // allocate space for ids
@@ -197,7 +197,7 @@ namespace BlingUtilsTest
                 tokens = System.Text.Encoding.UTF8.GetString(outputBytes, 0, actualLength).Split(' ');
             }
 
-            var hy = BlingFireUtils2.LoadModel("./bin/Debug/netcoreapp3.1/syllab.bin");
+            var hy = BlingFireUtils2.LoadModel("./bin/Debug/net6.0/syllab.bin");
             Console.WriteLine(String.Format("Model handle: {0}", hy));
 
             foreach(var token in tokens)

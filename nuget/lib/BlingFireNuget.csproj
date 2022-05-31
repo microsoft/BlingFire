@@ -3,7 +3,7 @@
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>BlingFire</RootNamespace>
     <Authors>Sergei Alonichau</Authors>
     <Company>Microsoft</Company>
@@ -14,8 +14,8 @@
     <PackageReleaseNotes>BlingFire wrapper for .Net Core, see https://github.com/microsoft/BlingFire for details.</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.1.8</Version>
-    <FileVersion>0.1.8</FileVersion>
+    <Version>0.1.9</Version>
+    <FileVersion>0.1.9</FileVersion>
     <IsPackable>true</IsPackable>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>contentFiles</ContentTargetFolders>
@@ -34,16 +34,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="blingfiretokdll.dll" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any" PackageCopyToOutput="true" />
+    <None Include="runtimes\win-x64\native\*" Pack="true" PackagePath="runtimes\win-x64\native" PackageCopyToOutput="true" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="blingfiretokdll.pdb" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any" PackageCopyToOutput="true" />
+    <None Include="runtimes\win-arm64\native\*" Pack="true" PackagePath="runtimes\win-arm64\native" PackageCopyToOutput="true" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="libblingfiretokdll.dylib" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any" PackageCopyToOutput="true" />
+    <None Include="runtimes\osx-x64\native\*" Pack="true" PackagePath="runtimes\osx-x64\native" PackageCopyToOutput="true" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="libblingfiretokdll.so" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any" PackageCopyToOutput="true" />
+    <None Include="runtimes\linux-x64\native\*" Pack="true" PackagePath="runtimes\linux-x64\native" PackageCopyToOutput="true" />
   </ItemGroup>
   <ItemGroup>
     <None Include="*.bin" Pack="true" PackagePath="$(ContentTargetFolders)\cs\any" PackageCopyToOutput="true" />
