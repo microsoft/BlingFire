@@ -10,6 +10,7 @@ variables:
   osx_X64_Artifact: "DllForOsxX64"
   osx_arm64_Artifact: "DllForOsxArm64"
   linux_X64_Artifact: "DllForLinuxX64"
+  linux_Arm64_Artifact: "DllForLinuxArm64"
 
 jobs:
   - job: Build_Dll_For_Win_X64
@@ -178,7 +179,7 @@ jobs:
         displayName: 'CMake'
         inputs:
           workingDirectory: 'Release'
-          cmakeArgs: '-D CMAKE_OSX_ARCHITECTURES=arm64 ..'
+          cmakeArgs: '-DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_BUILD_TYPE=Release ..'
       
       - task: CmdLine@2
         displayName: build project
@@ -252,7 +253,7 @@ jobs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)/native'
           ArtifactName: $(linux_X64_Artifact)
 
-  - job: Build_Dll_For_Linux_Arm64
+  - job: Build_Dll_For_Linux_ARM64
     pool:
       vmImage: ubuntu-latest
 
@@ -263,18 +264,38 @@ jobs:
           script: |
             mkdir Release
 
+      - task: CmdLine@2
+        displayName: Intall project
+        inputs:
+          script: |
+            sudo apt-get update
+            sudo apt-get install -y gcc-aarch64-linux-gnu
+
       - task: CMake@1
         displayName: 'CMake'
         inputs:
           workingDirectory: 'Release'
-          cmakeArgs: '..'
+          cmakeArgs: '-DCMAKE_TOOLCHAIN_FILE=../buildTools/linux-arm64-cross.cmake -DCMAKE_BUILD_TYPE=Release ..'
 
       - task: CmdLine@2
         displayName: build project
         inputs:
           script: |
-            ls /usr
-            ls /usr/bin
+            cd ./Release
+            make
+      
+      - task: CopyFiles@2
+        displayName: 'Copy $(linuxDllName) to: $(Build.ArtifactStagingDirectory)'
+        inputs:
+          SourceFolder: 'Release'
+          Contents: $(linuxDllName)
+          TargetFolder: '$(build.artifactstagingdirectory)/native'
+      
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: $(linuxDllName)'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/native'
+          ArtifactName: $(linux_Arm64_Artifact)
 
   - job: buildNugetPackage
     dependsOn: 
@@ -283,6 +304,7 @@ jobs:
       - Build_Dll_For_Osx_X64
       - Build_Dll_For_Osx_ARM64
       - Build_Dll_For_Linux_X64
+      - Build_Dll_For_Linux_ARM64
     condition: succeeded()
 
     pool:
@@ -317,6 +339,12 @@ jobs:
         inputs:
           artifactName: $(linux_X64_Artifact)
           downloadPath: 'nuget/lib/runtimes/linux-x64/native'
+      
+      - task: DownloadBuildArtifacts@0
+        displayName: 'Download Build Artifacts for linux Arm64'
+        inputs:
+          artifactName: $(linux_Arm64_Artifact)
+          downloadPath: 'nuget/lib/runtimes/linux-arm64/native'
 
       - task: DotNetCoreCLI@2
         inputs:
