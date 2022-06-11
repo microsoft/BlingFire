@@ -109,3 +109,118 @@ When you publish to GitHub the lib directory should contain nuget.config file wi
     </packageSourceCredentials>
 </configuration>
 ```
+
+# Build Bling Fire dlls/NuGet package with Azure DevOps build pipeline
+
+Now we can use Azure DevOps to build BlingFire dlls and NuGet package.
+
+Pipeline file [azure-pipelines.yml](../azure-pipelines.yml) is now updated to be able to build BlingFire dlls for windows-x64, windows-arm64, osx-x64, osx-arm-64, linux-x64, linux-arm64.
+
+Here are some good documentations about how to create Azure DevOps pipelines:
+
+1. [Create your first pipeline.](https://docs.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops&tabs=java%2Ctfs-2018-2%2Cbrowser)
+2. [Build GitHub repositories.](https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml)
+
+A good thing about using Azure DevOps is: it provides [list of Microsoft-hosted agents](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml), which include Windows, Linux and Osx, with all the popular tools pre-installed.
+
+However, there are no ARM64 microsoft-hosted agents yet, so currently in [azure-pipelines.yml](../azure-pipelines.yml) all the ARM64 dlls are built with cmake cross-compiling from X64 agents.
+<br/><br/>
+
+## Build pipeline for Github BlingFire repo 
+A [build pipeline](https://devdiv.visualstudio.com/DevDiv/_build?definitionId=16503&_a=summary) for [Github BlingFire repo](https://github.com/microsoft/BlingFire) is created (only accessble by Microsoft interal users). It will be triggered whenerver thare's new commeits to master branch.
+<br/><br/>
+
+## Get dlls and NuGet from Azure DevOps Build pipeline
+When the one instance of the build pipeline completed sucessfuly, 7 artifacts will be avaible to download from Azure DevOps.
+
+We can find the artifacts by clicking the highlighted <mark>"7 published"</mark> as shows in the following image.
+<img title="" alt="" src="../images/buildResults.png">
+
+Then we can find the artifacts:
+<img title="" alt="" src="../images/artifacts.png">
+
+The first 6 are native dlls for each platform, the last one is the Nuget package of Bling Fire with all the latest dlls. To download, simply click on them.
+<br/><br/>
+
+
+# Build Bling Fire Dlls/Nuget package locally
+We can follow steps in [azure-pipelines.yml](../azure-pipelines.yml) to build dlls locally.
+
+## windows-x64
+Build platform is windows-x64.
+Please make sure visual studio 'Desktop development with C++' is installed. 
+steps:
+```
+1. cd BlingFire
+2. mkdir Release
+3. cd Release
+4. cmake ..
+5. MSBuild.exe /property:Configuration=Release .\BLING_FIRE.sln
+```
+
+## windows-arm64
+Build platform is windows-x64.
+Please make sure visual studio 'Desktop development with C++' is installed.
+Please Install 'c++ arm64 build tools' through visual studio:
+<img title="" alt="" src="../images/cpparm64buildtools.png">
+steps:
+```
+1. cd BlingFire
+2. mkdir Release
+3. cd Release
+4. cmake -A ARM64 ..
+5. MSBuild.exe /property:Configuration=Release .\BLING_FIRE.sln
+```
+
+## osx-x64
+Build platform osx-x64.
+please make sure 'make' and 'cmake' is installed.(xcode should have all the necessary tools)
+```
+1. cd BlingFire
+2. mkdir Release
+3. cd Release
+4. cmake ..
+5. make
+```
+## osx-arm64 (cross-compiling from osx-x64)
+Build platform is osx-64.
+Installing xcode should provide all the necessary tools for cross-compiling.
+```
+1. cd BlingFire
+2. mkdir Release
+3. cd Release
+4. cmake -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_BUILD_TYPE=Release ..
+5. make
+```
+
+## linux-x64
+Build platform is linux-x64.
+Please make sure 'make' and 'cmake' is installed.
+```
+1. cd BlingFire
+2. mkdir Release
+3. cd Release
+4. cmake ..
+5. make
+```
+
+## linux-arm64
+Build platform is linux-x64.
+Please make sure 'make' and 'cmake' is installed. 
+Please run the following steps to install the aarch64 supported tools:
+```
+1. sudo apt-get update
+2. sudo apt-get install -y gcc-aarch64-linux-gnu
+3. sudo apt-get install -y g++-aarch64-linux-gnu
+```
+
+Also, [cmake toolchain file](../buildTools/linux-arm64-cross.cmake) is used for cross-compiling.
+
+```
+2. cd BlingFire
+3. mkdir Release
+4. cd Release
+5. cmake -DCMAKE_TOOLCHAIN_FILE=../buildTools/linux-arm64-cross.cmake -DCMAKE_BUILD_TYPE=Release ..
+6. make
+```
+
