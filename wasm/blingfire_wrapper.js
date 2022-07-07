@@ -141,7 +141,6 @@ export function TextToIds(handle, s, max_len, unk = 0) {
   var inUtf8 = Module["_malloc"](len + 1); // if we don't do +1 this library won't copy the last character
   Module["stringToUTF8"](s, inUtf8, len + 1); //  since it always also needs a space for a 0-char
 
-  // allocate space for ids on stack (it is faster and we don't need to delete it manualy)
   var MaxOutLength = max_len;
   var IdsOut = Module["_malloc"](MaxOutLength * 4); // sizeof(int)
 
