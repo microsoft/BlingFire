@@ -12,15 +12,30 @@ export function TextToWords(s) {
 
   var len = Module["lengthBytesUTF8"](s);
 
-  var inUtf8 = Module["stackAlloc"](len + 1); // if we don't do +1 this library won't copy the last character
+  var inUtf8 = Module["_malloc"](len + 1); // if we don't do +1 this library won't copy the last character
   Module["stringToUTF8"](s, inUtf8, len + 1); //  since it always also needs a space for a 0-char
 
   var MaxOutLength = (len << 1) + 1; // worst case every character is a token
-  var outUtf8 = Module["stackAlloc"](MaxOutLength);
+  var outUtf8 = Module["_malloc"](MaxOutLength);
 
-  var actualLen = Module["_TextToWords"](inUtf8, len, outUtf8, MaxOutLength);
-  if(0 > actualLen || actualLen > MaxOutLength) {
-    return null;
+  try
+  {
+    var actualLen = Module["_TextToWords"](inUtf8, len, outUtf8, MaxOutLength);
+    if(0 > actualLen || actualLen > MaxOutLength) {
+      return null;
+    }
+  }
+  finally
+  {
+    if (inUtf8 != 0)
+    {
+      Module["_free"](inUtf8);
+    }
+
+    if (outUtf8 != 0)
+    {
+      Module["_free"](outUtf8);
+    }
   }
 
   return Module["UTF8ToString"](outUtf8);
@@ -31,15 +46,30 @@ export function TextToSentences(s) {
 
   var len = Module["lengthBytesUTF8"](s);
 
-  var inUtf8 = Module["stackAlloc"](len + 1); // if we don't do +1 this library won't copy the last character
+  var inUtf8 = Module["_malloc"](len + 1); // if we don't do +1 this library won't copy the last character
   Module["stringToUTF8"](s, inUtf8, len + 1); //  since it always also needs a space for a 0-char
 
   var MaxOutLength = (len << 1) + 1; // worst case every character is a token
-  var outUtf8 = Module["stackAlloc"](MaxOutLength);
+  var outUtf8 = Module["_malloc"](MaxOutLength);
 
-  var actualLen = Module["_TextToSentences"](inUtf8, len, outUtf8, MaxOutLength);
-  if(0 > actualLen || actualLen > MaxOutLength) {
-    return null;
+  try
+  {
+    var actualLen = Module["_TextToSentences"](inUtf8, len, outUtf8, MaxOutLength);
+    if(0 > actualLen || actualLen > MaxOutLength) {
+      return null;
+    }
+  }
+  finally
+  {
+    if (inUtf8 != 0)
+    {
+      Module["_free"](inUtf8);
+    }
+
+    if (outUtf8 != 0)
+    {
+      Module["_free"](outUtf8);
+    }
   }
 
   return Module["UTF8ToString"](outUtf8);
@@ -108,33 +138,47 @@ export function TextToIds(handle, s, max_len, unk = 0) {
 
   // convert input JS string to UTF-8
   var len = Module["lengthBytesUTF8"](s);
-  var inUtf8 = Module["stackAlloc"](len + 1); // if we don't do +1 this library won't copy the last character
+  var inUtf8 = Module["_malloc"](len + 1); // if we don't do +1 this library won't copy the last character
   Module["stringToUTF8"](s, inUtf8, len + 1); //  since it always also needs a space for a 0-char
 
-  // allocate space for ids on stack (it is faster and we don't need to delete it manualy)
   var MaxOutLength = max_len;
-  var IdsOut = Module["stackAlloc"](MaxOutLength * 4); // sizeof(int)
+  var IdsOut = Module["_malloc"](MaxOutLength * 4); // sizeof(int)
 
-  // get the IDS from BlingFire
-  var actualLen = Module["_TextToIds"](h, inUtf8, len, IdsOut, MaxOutLength, unk);
-  if(0 >= actualLen) {
-    return null;
+  try
+  {
+    // get the IDS from BlingFire
+    var actualLen = Module["_TextToIds"](h, inUtf8, len, IdsOut, MaxOutLength, unk);
+    if(0 >= actualLen) {
+      return null;
+    }
+
+    // get the smallest between actualLen and MaxOutLength
+    var actualLenOrMax = actualLen < MaxOutLength ? actualLen : MaxOutLength;
+
+    // read bytes 
+    var tmp = Module["HEAPU8"].subarray(IdsOut, IdsOut + (actualLenOrMax * 4));
+
+    // allocate JS array
+    var ids = new Int32Array(actualLenOrMax);
+
+    // decode bytes into int array (I could not find how to make a cast here)
+    var i = 0;
+    var j = 0;
+    for(; i < actualLenOrMax; i++, j+=4) {
+      ids[i] = tmp[j] + (tmp[j + 1] * 256) + (tmp[j + 2] * 65536) + (tmp[j + 3] * 16777216);
+    }
   }
+  finally
+  {
+    if (inUtf8 != 0)
+    {
+      Module["_free"](inUtf8);
+    }
 
-  // get the smallest between actualLen and MaxOutLength
-  var actualLenOrMax = actualLen < MaxOutLength ? actualLen : MaxOutLength;
-
-  // read bytes 
-  var tmp = Module["HEAPU8"].subarray(IdsOut, IdsOut + (actualLenOrMax * 4));
-
-  // allocate JS array
-  var ids = new Int32Array(actualLenOrMax);
-
-  // decode bytes into int array (I could not find how to make a cast here)
-  var i = 0;
-  var j = 0;
-  for(; i < actualLenOrMax; i++, j+=4) {
-    ids[i] = tmp[j] + (tmp[j + 1] * 256) + (tmp[j + 2] * 65536) + (tmp[j + 3] * 16777216);
+    if (IdsOut != 0)
+    {
+      Module["_free"](IdsOut);
+    }
   }
 
   return ids;
@@ -153,15 +197,30 @@ export function WordHyphenation(handle, s, hyp = 0x2D) {
 
   var len = Module["lengthBytesUTF8"](s);
 
-  var inUtf8 = Module["stackAlloc"](len + 1); // if we don't do +1 this library won't copy the last character
+  var inUtf8 = Module["_malloc"](len + 1); // if we don't do +1 this library won't copy the last character
   Module["stringToUTF8"](s, inUtf8, len + 1); //  since it always also needs a space for a 0-char
 
   var MaxOutLength = (len << 1) + 1; // worst case hyphen after every character
-  var outUtf8 = Module["stackAlloc"](MaxOutLength);
+  var outUtf8 = Module["_malloc"](MaxOutLength);
 
-  var actualLen = Module["_WordHyphenationWithModel"](inUtf8, len, outUtf8, MaxOutLength, h, hyp);
-  if(0 > actualLen || actualLen > MaxOutLength) {
-    return null;
+  try
+  {
+    var actualLen = Module["_WordHyphenationWithModel"](inUtf8, len, outUtf8, MaxOutLength, h, hyp);
+    if(0 > actualLen || actualLen > MaxOutLength) {
+      return null;
+    }
+  }
+  finally
+  {
+    if (inUtf8 != 0)
+      {
+        Module["_free"](inUtf8);
+      }
+
+      if (outUtf8 != 0)
+      {
+        Module["_free"](outUtf8);
+      }
   }
 
   return Module["UTF8ToString"](outUtf8);
