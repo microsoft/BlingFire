@@ -7,7 +7,6 @@
 #include "blingfire-client_src_pch.h"
 #include "FAConfig.h"
 #include "FAImageDump.h"
-#include <stdio.h>
 #include <clocale>
 
 namespace BlingFire
