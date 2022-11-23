@@ -51,8 +51,8 @@ file(GLOB CLIENT_SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/blingfireclient.libra
 file(GLOB CLIENT_RESOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/blingfireclient.library/src/*.cxx")
 
 file(GLOB COMPILE_HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/blingfirecompile.library/inc/*.h")
-file(GLOB COMPILE_RESOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/blingfirecompile.library/src/*.cxx")
 file(GLOB COMPILE_SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/blingfirecompile.library/src/*.cpp")
+file(GLOB COMPILE_RESOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/blingfirecompile.library/src/*.cxx")
 
 # build blingfire client
 add_library(fsaClient STATIC ${CLIENT_HEADER_FILES} ${CLIENT_SOURCE_FILES} ${CLIENT_RESOURCE_FILES})
@@ -84,6 +84,8 @@ ENDMACRO()
 # find all tools dirs
 SUBDIRLIST(SUBDIRS ${CMAKE_CURRENT_SOURCE_DIR}/blingfiretools)
 
+include(GNUInstallDirs)
+
 # build tools
 FOREACH(dir ${SUBDIRS})
   get_filename_component(dirname ${dir} NAME)
@@ -91,8 +93,15 @@ FOREACH(dir ${SUBDIRS})
     file(GLOB resourcefile  ${CMAKE_CURRENT_SOURCE_DIR}/blingfiretools/${dir}/*.cxx)
     file(GLOB deffile ${CMAKE_CURRENT_SOURCE_DIR}/blingfiretools/${dir}/*.def)
     IF(${dirname} STREQUAL "blingfiretokdll")
-      add_library(${dirname} SHARED ${sourcefile} ${resourcefile} ${deffile})
+      file(GLOB headerfile ${CMAKE_CURRENT_SOURCE_DIR}/blingfiretools/${dir}/*.h)
+
+      add_library(${dirname} SHARED ${sourcefile} ${headerfile} ${resourcefile} ${deffile})
       add_library(${dirname}_static ${sourcefile} ${resourcefile} ${deffile})
+
+      INSTALL(
+        FILES ${headerfile}
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
       target_link_libraries(${dirname} fsaClient)
       target_link_libraries(${dirname}_static fsaClient)
 
@@ -111,5 +120,13 @@ FOREACH(dir ${SUBDIRS})
         target_link_libraries(${dirname} iconv)
       ENDIF()
     ENDIF()
-
 ENDFOREACH()
+
+INSTALL(
+  TARGETS blingfiretokdll
+  EXPORT blingfire-targets
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
