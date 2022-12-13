@@ -42,7 +42,6 @@ const int NormalizeSpaces(const char * pInUtf8Str, int InUtf8StrByteCount, char 
 const int TextToHashes(const char * pInUtf8Str, int InUtf8StrByteCount, int32_t * pHashArr, const int MaxHashArrLength, int wordNgrams, int bucketSize = 2000000);
 const int WordHyphenationWithModel(const char * pInUtf8Str, int InUtf8StrByteCount,
     char * pOutUtf8Str, const int MaxOutUtf8StrByteCount, void * hModel, const int uHy = __FADefaultHyphen__);
-void* SetModelData(FAModelData * pNewModelData, const unsigned char * pImgBytes);
 void* SetModel(const unsigned char * pImgBytes, int ModelByteCount);
 void* LoadModel(const char * pszLdbFileName);
 const int TextToIdsWithOffsets_wp(
