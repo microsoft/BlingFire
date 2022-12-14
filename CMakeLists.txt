@@ -1,9 +1,8 @@
 cmake_minimum_required (VERSION 3.0)
 
-set (BLING_FIRE_VERSION_MAJOR 1)
-set (BLING_FIRE_VERSION_MINOR 0)
-
 project (BLING_FIRE)
+
+set (BLING_FIRE_VERSION "0.1.8")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/blingfireclient.library/inc)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/blingfireclient.library/src)
@@ -97,12 +96,11 @@ FOREACH(dir ${SUBDIRS})
 
       add_library(${dirname} SHARED ${sourcefile} ${headerfile} ${resourcefile} ${deffile})
       add_library(${dirname}_static ${sourcefile} ${resourcefile} ${deffile})
-
       INSTALL(
         FILES ${headerfile}
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-      target_link_libraries(${dirname} fsaClient)
+      target_link_libraries(${dirname} PRIVATE fsaClient)
       target_link_libraries(${dirname}_static fsaClient)
 
       # A tiny binary
@@ -129,4 +127,24 @@ INSTALL(
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+  "${PROJECT_BINARY_DIR}/cmake/blingfire-config-version.cmake"
+  VERSION ${BLING_FIRE_VERSION}
+  COMPATIBILITY AnyNewerVersion
+)
+
+configure_file(${PROJECT_SOURCE_DIR}/cmake/blingfire-config.cmake.in
+  ${PROJECT_BINARY_DIR}/cmake/blingfire-config.cmake
+  COPYONLY
+)
+install(FILES ${PROJECT_BINARY_DIR}/cmake/blingfire-config.cmake
+  ${PROJECT_BINARY_DIR}/cmake/blingfire-config-version.cmake
+  DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/blingfire
+)
+
+install(EXPORT blingfire-targets
+  DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/blingfire
 )
