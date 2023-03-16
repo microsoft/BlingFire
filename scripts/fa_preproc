@@ -106,7 +106,6 @@ while (0 < 1 + $#ARGV) {
 
 $s = <<'EOF';
 
-$[ = 1;			# set array base to 1
 $, = ' ';		# set output field separator
 $\ = "\n";		# set output record separator
 
@@ -121,9 +120,9 @@ while (<>) {
 
     @Fld = split(' ', $_, 9999);
 
-    if ('_include' eq $Fld[1]) {
+    if ('_include' eq $Fld[0]) {
 
-	$filename = $ENV{'DICTS_ROOT'} . '/' . $Fld[2];
+	$filename = $ENV{'DICTS_ROOT'} . '/' . $Fld[1];
 
         open INPUT, "< $filename" ;
 
@@ -153,7 +152,6 @@ close $fh;
 
 $s = <<'EOF';
 
-$[ = 1;			# set array base to 1
 $, = ' ';		# set output field separator
 $\ = "\n";		# set output record separator
 
@@ -163,7 +161,7 @@ line: while (<>) {
     @Fld = split(' ', $_, 9999);
 
     # skip right parts as-is
-    if ('{' eq $Fld[1] && 1 == $#Fld) {
+    if ('{' eq $Fld[0] && 0 == $#Fld) {
 	while ('}' ne $_) {
 	    print $_;
 	    $_ = &Getline();
@@ -173,7 +171,7 @@ line: while (<>) {
     }
 
     # skip additional code as is
-    if ('%{' eq $Fld[1] && 1 == $#Fld) {
+    if ('%{' eq $Fld[0] && 0 == $#Fld) {
 	while ('%}' ne $_) {
 	    print $_;
 	    $_ = &Getline();
@@ -216,7 +214,6 @@ close $fh;
 
 $s = <<'EOF';
 
-$[ = 1;			# set array base to 1
 $FS = ' ';		# set field separator
 $, = ' ';		# set output field separator
 $\ = "\n";		# set output record separator
@@ -227,23 +224,23 @@ line: while (<>) {
     @Fld = split($FS, $_, 9999);
 
     # single-line define
-    if ('_define' eq $Fld[1] && 2 < $#Fld) {
+    if ('_define' eq $Fld[0] && 1 < $#Fld) {
 
 	$val = '';
-	for ($i = 3; $i < $#Fld; ++$i) {
+	for ($i = 2; $i < $#Fld; ++$i) {
 	    $val = $val . '' . $Fld[$i] . ' ';
 	}
 	$val = $val . '' . $Fld[$#Fld];
 
-	&CheckName($Fld[2]);
-	$defines{$Fld[2]} = $val;
+	&CheckName($Fld[1]);
+	$defines{$Fld[1]} = $val;
 
 	next line;
     }
     # multi-lines define
-    if ('_define' eq $Fld[1] && 2 == $#Fld) {
+    if ('_define' eq $Fld[0] && 1 == $#Fld) {
 
-	$key = $Fld[2];
+	$key = $Fld[1];
         $val = '';
 	$_ = &Getline();
 
@@ -260,7 +257,7 @@ line: while (<>) {
     }
 
     # skip right parts as-is
-    if ('{' eq $Fld[1] && 1 == $#Fld) {
+    if ('{' eq $Fld[0] && 0 == $#Fld) {
 	while ('}' ne $_) {
 	    print $_;
 	    $_ = &Getline();
@@ -269,7 +266,7 @@ line: while (<>) {
 	next line;
     }
     # skip additional code as is
-    if ('%{' eq $Fld[1] && 1 == $#Fld) {
+    if ('%{' eq $Fld[0] && 0 == $#Fld) {
 	while ('%}' ne $_) {
 	    print $_;
 	    $_ = &Getline();
@@ -278,7 +275,7 @@ line: while (<>) {
 	next line;
     }
     # skip %lines as is
-    if ('%' eq substr($Fld[1], 1, 1)) {
+    if ('%' eq substr($Fld[0], 0, 1)) {
 	print $_;
 	next line;
     }
@@ -302,7 +299,7 @@ line: while (<>) {
 
         $name_begin = -1;
 
-        for ($i = 1; $i <= $#Fld; ++$i) {
+        for ($i = 0; $i <= $#Fld; ++$i) {
 
             $c = '' . $Fld[$i];
 
@@ -396,7 +393,6 @@ close $fh;
 
 $s = <<'EOF';
 
-$[ = 1;			# set array base to 1
 $, = ' ';		# set output field separator
 $\ = "\n";		# set output record separator
 
@@ -417,31 +413,31 @@ line: while (<>) {
 
     # get C++ function arguments from the input file
     # %ARGS = void * pData, const int RuleId, const int To
-    if ($Fld[1] eq '%ARGS' && $Fld[2] eq '=') {
+    if ($Fld[0] eq '%ARGS' && $Fld[1] eq '=') {
 
+	$Fld[0] = '';
 	$Fld[1] = '';
-	$Fld[2] = '';
 	$cpp_args = join($,,@Fld);
 
 	next line;
     }
 
     # %OBJECT = Name
-    if ($Fld[1] eq '%OBJECT' && $Fld[2] eq '=') {
-	$cpp_object = $Fld[3];
+    if ($Fld[0] eq '%OBJECT' && $Fld[1] eq '=') {
+	$cpp_object = $Fld[2];
 	next line;
     }
 
     # %BASE = Name
-    if ($Fld[1] eq '%BASE' && $Fld[2] eq '=') {
-	$cpp_base_class = $Fld[3];
+    if ($Fld[0] eq '%BASE' && $Fld[1] eq '=') {
+	$cpp_base_class = $Fld[2];
 	next line;
     }
 
     # %CLASS = Name
-    if ($Fld[1] eq '%CLASS' && $Fld[2] eq '=') {
+    if ($Fld[0] eq '%CLASS' && $Fld[1] eq '=') {
 
-	$cpp_class = $Fld[3];
+	$cpp_class = $Fld[2];
         $fn_name_pref = $cpp_class . "::";
 
         print CPPOUT "class " . $cpp_class ;
@@ -471,7 +467,7 @@ PRINT_END
     }
 
     # skip additional code as is
-    if ('%{' eq $Fld[1] && 1 == $#Fld) {
+    if ('%{' eq $Fld[0] && 0 == $#Fld) {
 
 	while ('%}' ne $_) {
 
@@ -485,13 +481,13 @@ PRINT_END
     }
 
     # print the line into the cpp out as is, but without %
-    if ('%' eq substr($Fld[1], 1, 1)) {
+    if ('%' eq substr($Fld[0], 1, 1)) {
 	print CPPOUT substr($_, 2, 999999) ;
 	next line ;
     }
 
     # print the right part of the rule
-    if ('{' eq $Fld[1] && 1 == $#Fld) {
+    if ('{' eq $Fld[0] && 0 == $#Fld) {
 
 	# print next C++ function
         print CPPOUT 'static void ' . 'fn' . $cpp_fcount . ' (' . $cpp_args . ')' ;
