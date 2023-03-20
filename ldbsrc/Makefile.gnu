@@ -434,7 +434,7 @@ $(tmpdir)/tag.dict.fsm.txt \
 $(tmpdir)/tag.dict.k2i.txt \
 $(tmpdir)/tag.dict.i2t.txt: $(srcdir)/tag.dict.tagset.txt \
                              $(srcdir)/tag.dict.utf8.zip $(build_first)
-	unzip -p $(srcdir)/tag.dict.utf8.zip | \
+	unzip -p $(srcdir)/tag.dict.utf8.zip | \grep "\S" | \
 	fa_build_dict $(opt_build_dict) $(opt_build_tag_dict) \
 	  --tagset=$(srcdir)/tag.dict.tagset.txt \
 	  --out-fsm=$(tmpdir)/tag.dict.fsm.txt \
@@ -592,7 +592,13 @@ $(tmpdir)/ttt2p.num.arr.txt: $(tmpdir)/ttt2p.probs.txt $(srcdir)/tagset.txt
 	fa_num2int $(opt_num2int_ttt2p) --field=4 --out-minmax=$(tmpdir)/ttt2p.minmax.txt < $(tmpdir)/ttt2p.probs.txt | \
 	fa_ttt2arr $(opt_ttt2arr_ttt2p) --tagset=$(srcdir)/tagset.txt > $(tmpdir)/ttt2p.num.arr.txt
 
+# WRE (parser-style rules compilation)
 
+$(tmpdir)/ne-rules.$(mode).dump \
+$(tmpdir)/ne-rules.map.$(mode).dump: $(srcdir)/ne-rules.wre $(srcdir)/tagset.txt
+	fa_build_parser --dict-root=$(srcdir) --in=$(srcdir)/ne-rules.wre \
+	  --tagset=$(srcdir)/tagset.txt --out=$(tmpdir)/ne-rules.$(mode).dump \
+	  --out-map=$(tmpdir)/ne-rules.map.$(mode).dump $(opt_build_ne_rules)
 
 #
 # auto-test targets
