@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using BlingFire;
 
 namespace BlingUtilsTest
@@ -9,6 +10,7 @@ namespace BlingUtilsTest
         {
             Console.WriteLine("Start C# test...");
 
+            Console.OutputEncoding = Encoding.UTF8;
 
             // see the version of the DLL
             Console.WriteLine(String.Format("Bling Fire version: {0}", BlingFireUtils.GetBlingFireTokVersion()));

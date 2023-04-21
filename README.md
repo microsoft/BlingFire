@@ -185,6 +185,7 @@ Note, everything that is supported in Python is supported by C# API as well. C# 
 
 ```csharp
 using System;
+using System.Text;
 using BlingFire;
 
 namespace BlingUtilsTest
@@ -193,6 +194,8 @@ namespace BlingUtilsTest
     {
         static void Main(string[] args)
         {
+            Console.OutputEncoding = Encoding.UTF8;
+
             // load XLM Roberta tokenization model
             var h = BlingFireUtils.LoadModel("./xlm_roberta_base.bin");
 
