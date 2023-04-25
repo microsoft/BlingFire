@@ -1,21 +1,3 @@
-@PACKAGE_INIT@
-
 set(PN BlingFire)
 
-#-----------------------------------------------------------------------------
-# Don't include targets if this file is being picked up by another
-# project which has already built this as a subproject
-#-----------------------------------------------------------------------------
-if(NOT TARGET ${PN}::BlingFire)
-    include("${CMAKE_CURRENT_LIST_DIR}/${PN}Targets.cmake")
-
-    get_property(_loc TARGET ${PN}::BlingFire PROPERTY LOCATION)
-    set(${PN}_LIBRARY ${_loc})
-    get_property(_ill TARGET ${PN}::BlingFire PROPERTY INTERFACE_LINK_LIBRARIES)
-    set(${PN}_LIBRARIES ${_ill})
-
-    get_property(_id TARGET ${PN}::BlingFire PROPERTY INCLUDE_DIRECTORIES)
-    set(${PN}_INCLUDE_DIR ${_id})
-    get_property(_iid TARGET ${PN}::BlingFire PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
-    set(${PN}_INCLUDE_DIRS ${_iid})
-endif()
+include("${CMAKE_CURRENT_LIST_DIR}/blingfire-targets.cmake")
