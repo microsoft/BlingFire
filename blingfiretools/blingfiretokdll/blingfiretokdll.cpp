@@ -15,6 +15,8 @@
 
 #include "blingfiretokdll.h"
 
+#include <memory>
+
 /*
 This library provides easy interface to sentence and word-breaking functionality
 which can be used in C#, Python, Perl, etc.
@@ -1055,8 +1057,8 @@ void* SetModelData(FAModelData * pNewModelData, const unsigned char * pImgBytes)
 extern "C"
 void* SetModel(const unsigned char * pImgBytes, int ModelByteCount)
 {
-    FAModelData * pNewModelData = new FAModelData();
-    if (NULL == pNewModelData) {
+    std::unique_ptr<FAModelData> pNewModelData(new FAModelData());
+    if (NULL == pNewModelData.get()) {
         return 0;
     }
 
@@ -1066,7 +1068,7 @@ void* SetModel(const unsigned char * pImgBytes, int ModelByteCount)
     }
 
     // return the initialized model handle
-    return SetModelData(pNewModelData, pImgBytes);
+    return SetModelData(pNewModelData.release(), pImgBytes);
 }
 
 
@@ -1077,8 +1079,8 @@ void* SetModel(const unsigned char * pImgBytes, int ModelByteCount)
 extern "C"
 void* LoadModel(const char * pszLdbFileName)
 {
-    FAModelData * pNewModelData = new FAModelData();
-    if (NULL == pNewModelData) {
+    std::unique_ptr<FAModelData> pNewModelData(new FAModelData());
+    if (NULL == pNewModelData.get()) {
         return 0;
     }
 
@@ -1090,7 +1092,7 @@ void* LoadModel(const char * pszLdbFileName)
     }
 
     // return the initialized model handle
-    return SetModelData(pNewModelData, pImgBytes);
+    return SetModelData(pNewModelData.release(), pImgBytes);
 }
 
 
