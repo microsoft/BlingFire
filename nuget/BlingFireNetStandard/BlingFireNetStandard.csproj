@@ -1,0 +1,82 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<RootNamespace>BlingFireNetStandard</RootNamespace>
+		<Authors>Haojie Yu</Authors>
+		<Company>Microsoft</Company>
+		<Description>BlingFire wrapper for .Net Standard, see https://github.com/microsoft/BlingFire for details.</Description>
+		<PackageProjectUrl>https://github.com/yhj9999999/BlingFireNetStandard</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/yhj9999999/BlingFireNetStandard</RepositoryUrl>
+		<PackageTags>BlingFire</PackageTags>
+		<PackageReleaseNotes>BlingFire wrapper for .Net Standard, see https://github.com/microsoft/BlingFire for details.</PackageReleaseNotes>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Version>1.0.0</Version>
+		<FileVersion>1.0.0</FileVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="BlingFireBinary\*.bin" Pack="true" PackageCopyToOutput="true">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="blingfiretokdll.dll" Pack="true" PackageCopyToOutput="true">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<Compile Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\BlingFireUtils2.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\bert_base_cased_tok.bin" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\bert_base_cased_tok.i2w" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\bert_base_tok.bin" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\bert_base_tok.i2w" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\bert_chinese.bin" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\bert_chinese.i2w" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\bert_multi_cased.bin" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\bert_multi_cased.i2w" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\blingfiretokdll.pdb" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\gpt2.bin" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\gpt2.i2w" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\laser100k.bin" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\laser100k.i2w" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\laser250k.bin" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\laser250k.i2w" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\laser500k.bin" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\laser500k.i2w" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\libblingfiretokdll.dylib" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\libblingfiretokdll.so" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\roberta.bin" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\roberta.i2w" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\syllab.bin" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\uri100k.bin" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\uri100k.i2w" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\uri250k.bin" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\uri250k.i2w" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\uri500k.bin" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\uri500k.i2w" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\wbd_chuni.bin" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\xlm_roberta_base.bin" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\xlm_roberta_base.i2w" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\xlnet.bin" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\xlnet.i2w" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\xlnet_nonorm.bin" />
+	  <None Remove="C:\Users\haojieyu\.nuget\packages\blingfirenuget\0.1.8\contentFiles\cs\any\xlnet_nonorm.i2w" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\readme.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="BlingFireNuget" Version="0.1.8" />
+	</ItemGroup>
+	<PropertyGroup>
+		<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
+	</PropertyGroup>
+
+</Project>
