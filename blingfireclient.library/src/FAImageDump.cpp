@@ -7,6 +7,7 @@
 #include "blingfire-client_src_pch.h"
 #include "FAConfig.h"
 #include "FAImageDump.h"
+#include <clocale>
 
 namespace BlingFire
 {
@@ -94,6 +95,7 @@ void FAImageDump::FALoadHeap (const char * pFileName)
     LogAssert (pFileName);
 
     FILE * file = NULL;
+    setlocale(LC_ALL, ".UTF8");
     int res = fopen_s (&file, pFileName, "rb");
     LogAssert (0 == res && NULL != file, "Failed to successfully open file %s", pFileName);
 
