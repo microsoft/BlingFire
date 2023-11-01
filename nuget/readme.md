@@ -49,7 +49,6 @@ Model handle: 94403233096000
 'Au-topho-bia' ',' 'al-so' 'called' 'mono-pho-bia' ',' 'iso-lopho-bia' ',' 'or' 'e-re-mopho-bia' ',' 'is' 'the' 'spe-ci-fic' 'pho-bia' 'of' 'iso-la-tion' '.' 'I' 'saw' 'a' 'girl' 'with' 'a' 'te-le-s-cope' '.' 'Я' 'уви-дел' 'де-ву-шку' 'с' 'те-лес-ко-пом' '. ' 
 Test Complete
 ```
-Note: In Windows console default encoding is set to something old so only ascii symbols will be printed, but this is a display issue. You can manually set it to use UTF-8 if you want proper output.
 
 After changes were made to the nuget package, to create a new NuGet package run from the lib folder (here use Release configuration since we are going to publish it):
 ```
