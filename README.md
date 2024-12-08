@@ -141,8 +141,46 @@ Model Handle: 2854016629088
      0     0     0     0     0     0     0     0]
 Model Freed
 ```
+### 4. Python example to call a XLM-R tokenizer and prepare a pytorch batch
 
-### 4. Python example, doing tokenization and hyphenation of a text
+```python
+import os
+import torch
+from torch.nn.utils.rnn import pad_sequence
+from blingfire import load_model, text_to_ids, free_model
+
+# Load the XLM-RoBERTa tokenizer model provided by BlingFire
+model_path = os.path.join("./data", 'xlm_roberta_base.bin')
+tokenizer_model = load_model(model_path)
+
+if __name__ == "__main__":
+    # Sample input text
+    input_texts = [
+        "+1 (678) 274-9543 US https://lookup.robokiller.com/p/678-274-9543 (678) 274-9543 - roboKiller lookup",
+        "+1 (678) 274-9543 US https://lookup.robokiller.com/p/678-274-9543 (678) 274-9543 - super robo killer lookup"
+    ]
+
+    # Tokenize input texts and create tensors
+    token_ids = [
+        torch.cat([
+            torch.tensor([0], dtype=torch.long),  # 0 - <s> token
+            torch.tensor(text_to_ids(tokenizer_model, t, 256, 3, True).astype('int64')), # 3 - <unk>
+            torch.tensor([2], dtype=torch.long)   # 2 - </s> token
+        ])
+        for t in input_texts
+    ]
+
+    # Use torch.nn.utils.rnn.pad_sequence to pad the sequences
+    token_ids = pad_sequence(token_ids, batch_first=True, padding_value=1) # 1 - <pad>
+
+    print("\nAfter Padding:")
+    print(token_ids)
+
+    # Free the model after use
+    free_model(tokenizer_model)
+```
+
+### 5. Python example, doing tokenization and hyphenation of a text
 
 Since hyphenation API's take one word at a time with the limit of 300 Unicode characters, we need to break the text into words first and then run hyphenation for each token.
 
@@ -172,7 +210,7 @@ Li-ke Cu-rios-i-ty , the Per-se-ve-rance ro-ver was built by en-gi-neers and sci
 Note you can specify any other Unicode character as a hyphen that API inserts into the output string.
 
 
-### 5. C# example, calling XLM Roberta tokenizer and getting ids and offsets
+### 6. C# example, calling XLM Roberta tokenizer and getting ids and offsets
 
 Note, everything that is supported in Python is supported by C# API as well. C# also has ability to use parallel computations since all models and functions are stateless you can share the same model across the threads without locks. Let's load XLM Roberta model and tokenize a string, for each token let's get ID and offsets in the original text.
 
@@ -231,7 +269,7 @@ tokens from offsets: ['Auto'/4396 'pho'/22014 'bia'/9166 ','/4 ' also'/2843 ' ca
 ```
 See this project for more C# examples: https://github.com/microsoft/BlingFire/tree/master/nuget/test .
  
-### 6. JavaScript example, fetching and loading model file, using the model to compute ids
+### 7. JavaScript example, fetching and loading model file, using the model to compute ids
 
 The goal of integration with JavaScript is ability to run the code in a browser with ML frameworks like TensorFlow.js and FastText web assembly.
 
@@ -277,11 +315,11 @@ $(document).ready(function() {
 Full example code can be found [here](https://github.com/microsoft/BlingFire/blob/master/wasm/example.html). Details of the API are described in the [wasm](https://github.com/microsoft/BlingFire/tree/master/wasm) folder.
 
 
-### 7. Example of making a difference with using Bling Fire default tokenizer in a classification task
+### 8. Example of making a difference with using Bling Fire default tokenizer in a classification task
 
 [This notebook](/doc/Bling%20Fire%20Tokenizer%20Demo.ipynb) demonstrates how Bling Fire tokenizer helps in Stack Overflow posts classification problem.
 
-### 8. Example of reaching 99% accuracy for language detection
+### 9. Example of reaching 99% accuracy for language detection
 
 [This document](https://github.com/microsoft/BlingFire/wiki/How-to-train-better-language-detection-with-Bling-Fire-and-FastText) describes how to improve [FastText](https://fasttext.cc/) language detection model with Bling Fire and achive 99% accuracy in language detection task for 365 languages.
 
